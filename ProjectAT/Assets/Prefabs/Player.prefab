@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3152687378544916363}
   - component: {fileID: 3566114246867904952}
   - component: {fileID: 6785029973740771886}
+  - component: {fileID: 7749089816910868336}
   - component: {fileID: 2703658073609189136}
   m_Layer: 0
   m_Name: Player
@@ -122,7 +123,24 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   inputReader: {fileID: 11400000, guid: 2caca629a4fe8434d942c640d9084998, type: 2}
   myAgent: {fileID: 0}
-  stopSpeed: 4
+  myStatus: {fileID: 0}
+--- !u!114 &7749089816910868336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831689077992700309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b71b8c2d6e660c458aa94fb34f75fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  currentHp: 100
+  maxHp: 250
+  walkSpeed: 10
+  runSpeed: 15
 --- !u!195 &2703658073609189136
 NavMeshAgent:
   m_ObjectHideFlags: 0

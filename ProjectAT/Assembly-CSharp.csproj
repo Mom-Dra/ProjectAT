@@ -61,9 +61,17 @@
     <Analyzer Include="D:\Untiy\6000.1.13f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Entities\EntityState.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Inputs\PlayerControls.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\WalkState.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\IdleState.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\Inputs\InputReader.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\UI\CanvasManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\EntityController.cs" />
+    <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

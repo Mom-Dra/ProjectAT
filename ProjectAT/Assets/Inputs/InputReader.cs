@@ -6,7 +6,8 @@ using static PlayerControls;
 [CreateAssetMenu(fileName ="New Input Reader", menuName = "Input/Input Reader")]
 public class InputReader : ScriptableObject, IPlayerActions
 {
-    public event Action<bool> MoveEvent;
+    public event Action ClickEvent;
+
     private PlayerControls controls;
     public Vector2 MousePosition { get; private set; }
 
@@ -27,20 +28,24 @@ public class InputReader : ScriptableObject, IPlayerActions
         controls.Player.Disable();
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnClicked(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            MoveEvent?.Invoke(true);
-        }
-        else
-        {
-            MoveEvent?.Invoke(false);
+            ClickEvent?.Invoke();
         }
     }
 
-    public void OnAim(InputAction.CallbackContext context)
+    public void OnMouseMove(InputAction.CallbackContext context)
     {
         MousePosition = context.ReadValue<Vector2>();
+    }
+
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("DobuleClicked");
+        }
     }
 }
