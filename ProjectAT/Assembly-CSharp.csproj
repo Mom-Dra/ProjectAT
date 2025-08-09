@@ -66,6 +66,7 @@
     <Compile Include="Assets\Inputs\PlayerControls.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\WalkState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\RunState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\IdleState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\Inputs\InputReader.cs" />

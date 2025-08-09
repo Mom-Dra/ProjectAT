@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Unity.Cinemachine;
 using Unity.Multiplayer.Playmode;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -13,8 +14,9 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private InputReader inputReader;
     [SerializeField] public NavMeshAgent MyAgent { get; private set; }
     [SerializeField] public EntityStatus MyStatus { get; private set; }
-    [SerializeField] private CameraController cameraController;
-    
+
+    [SerializeField] 
+    private CameraController cameraController;
     private PlayerStateMachine myStateMachine;
 
     private void Awake()
@@ -34,7 +36,7 @@ public class PlayerController : NetworkBehaviour
         if (IsOwner)
         {
             cameraController = FindAnyObjectByType<CameraController>();
-            cameraController.SetCameraTarget(transform);
+            //cameraController.SetCameraTarget(transform);
             LinkInputEvents_All();
         }
     }
@@ -62,18 +64,21 @@ public class PlayerController : NetworkBehaviour
         myStateMachine.HandleClickInput();
     }
 
-    public void PlayerMove()
-    {
-        Vector3 nextPos = GetDestinationWolrdPosition(inputReader.MousePosition);
-        if (nextPos != Vector3.zero) PlayerMoveServerRpc(nextPos);
-    }
-
-    private Vector3 GetDestinationWolrdPosition(Vector2 mousePosition)
+    public Vector3 GetMouseWorldPosition()
     {
         RaycastHit ray;
-        if (Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)mousePosition), out ray, LayerMask.GetMask("Ground")))
+        if (Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out ray, LayerMask.GetMask("Ground")))
+        {
             return ray.point;
-        return Vector3.zero;
+        }
+        else
+            return Vector3.zero;
+    }
+
+    public void PlayerMove()
+    {
+        Vector3 nextPos = GetMouseWorldPosition();
+        if (nextPos != Vector3.zero) PlayerMoveServerRpc(nextPos);
     }
 
     [Rpc(SendTo.Server)]
@@ -92,8 +97,7 @@ public class PlayerController : NetworkBehaviour
     {
         Vector3 moveVec = (pos - transform.position).normalized;
 
-        Debug.Log(MyStatus.WalkSpeed);
-        MyAgent.velocity = moveVec * MyStatus.WalkSpeed;
+        MyAgent.velocity = moveVec * MyAgent.speed;
         MyAgent.SetDestination(pos);
     }
 

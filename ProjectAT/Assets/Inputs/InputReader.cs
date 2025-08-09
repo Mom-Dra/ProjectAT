@@ -11,7 +11,6 @@ public class InputReader : ScriptableObject, IPlayerActions
     private PlayerControls controls;
     public Vector2 MousePosition { get; private set; }
 
-
     private void OnEnable()
     {
         if(controls == null)

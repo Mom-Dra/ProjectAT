@@ -1,18 +1,16 @@
-using System.Linq.Expressions;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.XR;
 
-public class WalkState : EntityState
+public class RunState : EntityState
 {
-    public WalkState(PlayerStateMachine context)
+    public RunState(PlayerStateMachine context)
     {
         this.context = context;
+
     }
 
     public override void Enter()
     {
-        context.Agent.speed = context.Status.WalkSpeed;
+        context.Agent.speed = context.Status.RunSpeed;
         context.PlayerMove();
     }
 
@@ -25,16 +23,16 @@ public class WalkState : EntityState
         if (context.IsArrivedToDest())
             context.ChangeState(context.IdleState);
     }
-
     public override void HandleClickInput()
     {
-        if (context.IsClickSamePosition())
+        if (!context.IsClickSamePosition())
         {
-            context.ChangeState(context.RunState);
+            context.ChangeState(context.WalkState);
         }
         else
         {
             context.PlayerMove();
         }
     }
+
 }
