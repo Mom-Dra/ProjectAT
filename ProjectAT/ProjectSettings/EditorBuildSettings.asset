@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayerMovement.unity
     guid: 42032779656a72643b503b7f1831ea36
+  - enabled: 1
+    path: Assets/Scenes/PlayerAttack.unity
+    guid: 8b9a252de2912ca4092940826d7f5706
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

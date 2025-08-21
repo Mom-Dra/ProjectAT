@@ -1,67 +1,52 @@
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using Unity.Cinemachine;
-using Unity.Multiplayer.Playmode;
-using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
 
-public class PlayerController : NetworkBehaviour
+public enum PlayerInputType : ushort { LeftClick, RightClick}
+
+public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private InputReader inputReader;
     [SerializeField] public NavMeshAgent MyAgent { get; private set; }
     [SerializeField] public EntityStatus MyStatus { get; private set; }
+    [SerializeField] public WeaponStatus MyWeapon { get; private set; }
 
-    [SerializeField] 
-    private CameraController cameraController;
+    [SerializeField] private CameraController cameraController;
     private PlayerStateMachine myStateMachine;
-
+    private readonly Collider[] detectedCollider = new Collider[32];
     private void Awake()
     {
         MyAgent = GetComponent<NavMeshAgent>();
         MyStatus = GetComponent<EntityStatus>();
-        myStateMachine = new PlayerStateMachine(this);
+        myStateMachine = GetComponent<PlayerStateMachine>();
+        MyWeapon = transform.GetChild(1).GetComponent<WeaponStatus>();
     }
-
     private void Start()
     {
-        MyAgent.speed = MyStatus.WalkSpeed;
+        MyAgent.speed = MyStatus.WalkSpeed.Value;
+
     }
 
-    public override void OnNetworkSpawn()
+    public void InitiateSettings()
     {
-        if (IsOwner)
-        {
-            cameraController = FindAnyObjectByType<CameraController>();
-            //cameraController.SetCameraTarget(transform);
-            LinkInputEvents_All();
-        }
+        cameraController = FindAnyObjectByType<CameraController>();
+        //cameraController.SetCameraTarget(transform);
+        LinkInputEventsAll();
     }
 
-    public override void OnNetworkDespawn()
-    {
-        if (IsOwner)
-        {
-            UnLinkInputEvents_All();
-        }
-    }
-
-    private void LinkInputEvents_All()
+    public void LinkInputEventsAll()
     {
         inputReader.ClickEvent += HandleClickInput;
     }
 
-    private void UnLinkInputEvents_All()
+    public void UnLinkInputEventsAll()
     {
         inputReader.ClickEvent -= HandleClickInput;
     }
 
-    private void HandleClickInput()
+    private void HandleClickInput(PlayerInputType type)
     {
-        myStateMachine.HandleClickInput();
+        myStateMachine.HandleClickInput(type);
     }
 
     public Vector3 GetMouseWorldPosition()
@@ -75,25 +60,8 @@ public class PlayerController : NetworkBehaviour
             return Vector3.zero;
     }
 
-    public void PlayerMove()
-    {
-        Vector3 nextPos = GetMouseWorldPosition();
-        if (nextPos != Vector3.zero) PlayerMoveServerRpc(nextPos);
-    }
-
-    [Rpc(SendTo.Server)]
-    private void PlayerMoveServerRpc(Vector3 nextPos)
-    {
-        PlayerMoveClientRpc(nextPos);
-    }
-
-    [Rpc(SendTo.ClientsAndHost)]
-    private void PlayerMoveClientRpc(Vector3 nextPos)
-    {
-        MovePosition(nextPos);
-    }
-
-    private void MovePosition(Vector3 pos)
+    //NavMeshAgent 목표 설정 함수
+    public void MovePosition(Vector3 pos)
     {
         Vector3 moveVec = (pos - transform.position).normalized;
 
@@ -101,8 +69,40 @@ public class PlayerController : NetworkBehaviour
         MyAgent.SetDestination(pos);
     }
 
-    private void Update()
+    public void RotateTo(Transform targetTf)
     {
-        myStateMachine.OnUpdate();
+        Quaternion newRotation = Quaternion.LookRotation(targetTf.position - transform.position, Vector3.up);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, 20.0f);
+    }
+
+    public EntityController FindNearEnemy()
+    {
+        if (Physics.OverlapSphereNonAlloc(transform.position + Vector3.up * 0.5f, MyWeapon.Radius, detectedCollider, LayerMask.GetMask("Enemy")) != 0)
+        {
+            foreach(var coll in detectedCollider)
+            {
+                if (coll)
+                {
+                    EntityController enemyController = coll.transform.GetComponent<EntityController>();
+                    if(enemyController.IsAlive()) return enemyController;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void AttackEnemy(EntityController target)
+    {
+        Debug.Log($"{myStateMachine.myName} : Attack Enemy");
+        target.GetComponent<EntityStatus>().TakeDamage(MyWeapon.Damage);
+        MyStatus.ResetAttackCoolTime();
+    }
+
+    public bool IsClickSamePosition()
+    {
+        Vector3 pos = GetMouseWorldPosition();
+        Vector3 dest = MyAgent.destination;
+
+        return pos.x == dest.x && pos.z == dest.z && (Mathf.Abs(pos.y - dest.y) <= 0.1);
     }
 }
