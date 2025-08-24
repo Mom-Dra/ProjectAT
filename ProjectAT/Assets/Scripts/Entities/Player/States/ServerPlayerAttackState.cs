@@ -13,5 +13,7 @@ public class ServerPlayerAttackState : PlayerAttackStateBase
         {
             context.AttackEnemy(target);
         }
+        else
+            context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);
     }
 }

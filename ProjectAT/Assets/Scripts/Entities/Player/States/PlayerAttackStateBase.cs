@@ -9,10 +9,12 @@ public class PlayerAttackStateBase : EntityState
 
     public override void Enter()
     {
+        context.MyAnim.SetBool("isFiring", true);
     }
 
     public override void Exit()
     {
+        context.MyAnim.SetBool("isFiring", false);
     }
 
     public override void HandleClickInput(PlayerInputType type)

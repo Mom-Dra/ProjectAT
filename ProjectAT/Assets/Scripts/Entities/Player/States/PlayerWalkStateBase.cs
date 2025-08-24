@@ -6,12 +6,13 @@ public class PlayerWalkStateBase : EntityState
     public override void Enter()
     {
         context.MyAgent.speed = context.MyStatus.WalkSpeed.Value;
+        context.MyAnim.SetBool("isWalking", true);
         context.PlayerMove();
     }
 
     public override void Exit()
     {
-
+        context.MyAnim.SetBool("isWalking", false);
     }
 
     public override void OnUpdate()

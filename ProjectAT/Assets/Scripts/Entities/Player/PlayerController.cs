@@ -1,3 +1,4 @@
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,16 +11,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public NavMeshAgent MyAgent { get; private set; }
     [SerializeField] public EntityStatus MyStatus { get; private set; }
     [SerializeField] public WeaponStatus MyWeapon { get; private set; }
+    [SerializeField] public Animator MyAnim { get; private set; }
 
+    [SerializeField] public EffectModule MyEffectModule { get; private set; }
     [SerializeField] private CameraController cameraController;
     private PlayerStateMachine myStateMachine;
+
+    //utils
     private readonly Collider[] detectedCollider = new Collider[32];
+
     private void Awake()
     {
         MyAgent = GetComponent<NavMeshAgent>();
         MyStatus = GetComponent<EntityStatus>();
         myStateMachine = GetComponent<PlayerStateMachine>();
         MyWeapon = transform.GetChild(1).GetComponent<WeaponStatus>();
+        MyAnim = transform.GetChild(0).GetComponent<Animator>();
+        MyEffectModule = GetComponent<EffectModule>();
     }
     private void Start()
     {
@@ -69,12 +77,6 @@ public class PlayerController : MonoBehaviour
         MyAgent.SetDestination(pos);
     }
 
-    public void RotateTo(Transform targetTf)
-    {
-        Quaternion newRotation = Quaternion.LookRotation(targetTf.position - transform.position, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, 20.0f);
-    }
-
     public EntityController FindNearEnemy()
     {
         if (Physics.OverlapSphereNonAlloc(transform.position + Vector3.up * 0.5f, MyWeapon.Radius, detectedCollider, LayerMask.GetMask("Enemy")) != 0)
@@ -93,9 +95,21 @@ public class PlayerController : MonoBehaviour
 
     public void AttackEnemy(EntityController target)
     {
-        Debug.Log($"{myStateMachine.myName} : Attack Enemy");
-        target.GetComponent<EntityStatus>().TakeDamage(MyWeapon.Damage);
-        MyStatus.ResetAttackCoolTime();
+        Vector3 toTarget = target.transform.position - transform.position;
+        toTarget.y = 0; //º¸Á¤
+
+        if (Vector3.Angle(transform.forward, toTarget) > 10.0f)
+        {
+            Debug.Log(Vector3.Angle(transform.forward, toTarget));
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toTarget, Vector3.up), 20.0f);
+        }
+        else if (MyStatus.CanFire())
+        {
+            target.GetComponent<EntityStatus>().TakeDamage(MyWeapon.Damage);
+            MyStatus.ResetAttackCoolTime();
+            myStateMachine.AttackEnemyClientRpc(target);
+        }
+
     }
 
     public bool IsClickSamePosition()

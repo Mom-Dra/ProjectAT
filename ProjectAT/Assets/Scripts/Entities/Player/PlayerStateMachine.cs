@@ -12,6 +12,8 @@ public class PlayerStateMachine : NetworkBehaviour
     [SerializeField] public NavMeshAgent MyAgent { get { return myController.MyAgent; } }
     [SerializeField] public EntityStatus MyStatus { get { return myController.MyStatus; } }
     [SerializeField] public EntityStatus MyWeaponStatus { get { return myController.MyStatus; } }
+    [SerializeField] public Animator MyAnim { get { return myController.MyAnim; } }
+
     public string myName;
 
     public EntityState CurrentState { get; private set; }
@@ -134,8 +136,6 @@ public class PlayerStateMachine : NetworkBehaviour
     public void PlayerMoveClientRpc(Vector3 nextPos)
     {
         //애니메이션 및 이런거 저런거 추가
-        //Debug.Log($"{NetworkBehaviourId} : 움직임 애니메이션 출력");
-        //Debug.Log($"{NetworkBehaviourId} : 움직임 사운드 출력");
         myController.MovePosition(nextPos);
     }
 
@@ -148,12 +148,7 @@ public class PlayerStateMachine : NetworkBehaviour
     {
         if (IsServer && target)
         {
-            myController.RotateTo(target.transform);
-            if (MyStatus.CanFire())
-            {
-                myController.AttackEnemy(target);
-                AttackEnemyClientRpc(target);
-            }
+            myController.AttackEnemy(target);
         }
     }
 
@@ -162,7 +157,7 @@ public class PlayerStateMachine : NetworkBehaviour
     {
         if (target.TryGet(out EntityController enemy))
         {
-            Debug.Log($"{myName} : 사격 애니메이션 출력");
+            myController.MyEffectModule.GenerateFiringEffect();
         }
     }
 
@@ -170,4 +165,5 @@ public class PlayerStateMachine : NetworkBehaviour
     {
         return myController.GetMouseWorldPosition();
     }
+
 }

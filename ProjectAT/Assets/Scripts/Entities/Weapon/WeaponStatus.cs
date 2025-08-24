@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class WeaponStatus : MonoBehaviour
 {
+    //this Script is a dummy script. delete it during or after weapon implemetation.
+
     [Header("References")]
     [SerializeField] private SkinnedMeshRenderer myMesh;
 
