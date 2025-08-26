@@ -62,7 +62,19 @@
     <Analyzer Include="C:\Users\HuiYong\UnityProjects\ProjectAT\ProjectAT\Library\PackageCache\com.unity.dt.app-ui@166eda91cea7\Runtime\SourceGenerators\netstandard2.0\EnumToLowerCase.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerRunStateBase.cs" />
+    <Compile Include="Assets\Scripts\Entities\EntityState.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerAttackState.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerIdleStateBase.cs" />
+    <Compile Include="Assets\Scripts\Entities\Weapon\WeaponStatus.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerAttackStateBase.cs" />
+    <Compile Include="Assets\Inputs\PlayerControls.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerIdleState.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerRunState.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerWalkStateBase.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerWalkState.cs" />
     <Compile Include="Assets\Scripts\Abstract\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\WalkState.cs" />
@@ -73,6 +85,9 @@
     <Compile Include="Assets\Scripts\Entities\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\CheckTargetCondition.cs" />
     <Compile Include="Assets\Scripts\UI\CanvasManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\EntityController.cs" />
+    <Compile Include="Assets\Scripts\Utils\EffectModule.cs" />
+    <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\EntityController.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfView.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
@@ -1283,6 +1298,10 @@
     </Reference>
     <Reference Include="Unity.Services.Multiplayer.Editor.Shared">
       <HintPath>Library\ScriptAssemblies\Unity.Services.Multiplayer.Editor.Shared.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Services.Multiplayer.Multiplay.Authoring.Core">

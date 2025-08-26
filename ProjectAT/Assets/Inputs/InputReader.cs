@@ -6,7 +6,7 @@ using static PlayerControls;
 [CreateAssetMenu(fileName ="New Input Reader", menuName = "Input/Input Reader")]
 public class InputReader : ScriptableObject, IPlayerActions
 {
-    public event Action ClickEvent;
+    public event Action<PlayerInputType> ClickEvent;
 
     private PlayerControls controls;
     public Vector2 MousePosition { get; private set; }
@@ -31,7 +31,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
         {
-            ClickEvent?.Invoke();
+            ClickEvent?.Invoke(PlayerInputType.LeftClick);
         }
     }
 

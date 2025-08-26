@@ -1,0 +1,1321 @@
+fileFormatVersion: 2
+guid: c0a92f0ec4fbb1547b670f30d8493fd7
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 783
+        width: 51
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af15f79e7becf7949b9f4af23f550d59
+      internalID: -44557333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_1
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 782
+        width: 56
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca30ceb8cf2018641bdeb22c4b55b458
+      internalID: -545229559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_2
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 776
+        width: 55
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e88c6a8311cb5ad4a8c5d651b90437de
+      internalID: -23798490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_3
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 774
+        width: 82
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7e7e55828349324cace93e4e8b8aced
+      internalID: -196217575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_4
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 769
+        width: 69
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b368b9c87b976743982f181e0980958
+      internalID: -288118560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_5
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 767
+        width: 68
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f885c2d87d0d1594e9d370f00a1dd06e
+      internalID: 1399846514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_6
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 765
+        width: 65
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93bfdcda5b32c8a438928391780d7ae4
+      internalID: -423923472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_7
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 772
+        width: 68
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 104b3c4b26257dc4b8ddf60d31158817
+      internalID: -547975397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_8
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 691
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf6c09f675a9f39408ebe461a1a3e8cb
+      internalID: 1808509897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_9
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 701
+        width: 50
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db7812d32621aed4399d2ad2d306141b
+      internalID: 1159028993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_10
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 686
+        width: 78
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b9554eaa773de54eadad9bfa988dc00
+      internalID: 1608461094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_11
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 689
+        width: 72
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0990cd457807564a920a8e9a3aa3b08
+      internalID: 204492089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_12
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 689
+        width: 66
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f8b9b24e6a235b4d88fbba410da2669
+      internalID: 809091133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_13
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 689
+        width: 67
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1660a7d70c8b1446b00c4c8fe30075c
+      internalID: 340331498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_14
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 691
+        width: 63
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 225e5435b8a783d479b188cf433726c8
+      internalID: 910796374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_15
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 693
+        width: 69
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2a401917c3b9694787efd549244d12f
+      internalID: -1675897388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_16
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 521
+        width: 79
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a79ec260b44c9584eb875487ecd15c8e
+      internalID: -724956399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_17
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 536
+        width: 56
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e25fd52d22b92234f9b32a179e6a5bb5
+      internalID: -70111914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_18
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 519
+        width: 72
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5eba9bff21899c746a91737ea97fc9bb
+      internalID: 233164263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_19
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 523
+        width: 80
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1b957dea56deaa4facb386072feaad5
+      internalID: 502853242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_20
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 602
+        width: 79
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c381bd47044bad4cbe925688cb6e950
+      internalID: -376038873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_21
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 606
+        width: 74
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb9280846bd05cb4093eb326642d2f02
+      internalID: 1004289724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_22
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 604
+        width: 70
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddefe25fc8e0b9a43be26c93b03e975f
+      internalID: 472182929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_23
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 605
+        width: 76
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee72cb6bfe2b5243b45697c83f811a3
+      internalID: 1981908932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_24
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 520
+        width: 71
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc85e74d07068db4ca2e3405362924e7
+      internalID: -1420016548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_25
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 515
+        width: 77
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a18ac32428dcda49a4141ebe21fa724
+      internalID: -2113414618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_26
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 525
+        width: 65
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba5a8c207fa9532438585f041878a620
+      internalID: 293861950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_27
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 521
+        width: 68
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d72495c4302e43b4787d8292ecc22196
+      internalID: 1847733215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_28
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 349
+        width: 48
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f35e1fe8dbe45cf45940918c2493d28f
+      internalID: 1879350789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_29
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 352
+        width: 50
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43eb71cdddb6a034cb0e3edd7ab9b2f8
+      internalID: 1137930594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_30
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 349
+        width: 57
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 557ac8380abc6ee48b3ac8f9a56a6ba6
+      internalID: 814715675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_31
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 352
+        width: 50
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 405d0ab1fec35bb4d969ee8901025202
+      internalID: -1142298870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_32
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 344
+        width: 57
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b16b236e23138bc408b23b355508aabd
+      internalID: -711246944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_33
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 344
+        width: 64
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c837fb941454444eb46121cb17e7693
+      internalID: -1976286191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_34
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 344
+        width: 63
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd490b4a3aab4c0469142bc52e9fdeee
+      internalID: -2051629802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_35
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 348
+        width: 59
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b7de7ee3d2344b48bbcccf155ef4bb6
+      internalID: 763467714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_36
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 185
+        width: 50
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13c9965a75547944db580080a651f977
+      internalID: -1202691719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_37
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 191
+        width: 57
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3782a8dca34f8a049acb925bd912f9c1
+      internalID: 736108221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_38
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 180
+        width: 65
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0fc57f682c36ba4fb3672a4d081481d
+      internalID: -308759523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_39
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 188
+        width: 51
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f13a6b3bbf01446429cca550feb3ff7f
+      internalID: 1143544445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_40
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 188
+        width: 53
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 069ee70546bcb134da3c54442105db1d
+      internalID: -1085638697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_41
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 181
+        width: 74
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ed933e74b76e3f4f919460ce475ba13
+      internalID: -1615908744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_42
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 181
+        width: 64
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 100d16d2ff069654a944fab4d77fe95b
+      internalID: 1030874733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_44
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 196
+        width: 50
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9ea40d0fc77bd249a037c557cee0268
+      internalID: 510651563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_47
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 7
+        width: 62
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19f09e1a606d9ff4db08b7d26426cc4b
+      internalID: -1079096580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_48
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 2
+        width: 59
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61610e225fba26c4ebe017122d08022c
+      internalID: -1493756465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_49
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 9
+        width: 56
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07771e28eafce554392ae0eff2f351f1
+      internalID: -291487554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_50
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 99
+        width: 67
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d76bb540977ae6f46a25696358e095b0
+      internalID: -1477015733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_51
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 102
+        width: 64
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbbb456cbe6153541beef38cc4ed4b41
+      internalID: -350450567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_52
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 4
+        width: 47
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77158468cfd45764fb84acbc9d0d4875
+      internalID: -1916831619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_53
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 6
+        width: 77
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 354d9fe2faa270f48934295f91c35499
+      internalID: 206548025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: muzzles1_transparent_soft_54
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 18
+        width: 65
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa08df3d5a971594d87eaf698c8801c4
+      internalID: -1205815146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1bd4cc82a73e855478569025cf9c0ed0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      muzzles1_transparent_soft_0: -44557333
+      muzzles1_transparent_soft_1: -545229559
+      muzzles1_transparent_soft_10: 1608461094
+      muzzles1_transparent_soft_11: 204492089
+      muzzles1_transparent_soft_12: 809091133
+      muzzles1_transparent_soft_13: 340331498
+      muzzles1_transparent_soft_14: 910796374
+      muzzles1_transparent_soft_15: -1675897388
+      muzzles1_transparent_soft_16: -724956399
+      muzzles1_transparent_soft_17: -70111914
+      muzzles1_transparent_soft_18: 233164263
+      muzzles1_transparent_soft_19: 502853242
+      muzzles1_transparent_soft_2: -23798490
+      muzzles1_transparent_soft_20: -376038873
+      muzzles1_transparent_soft_21: 1004289724
+      muzzles1_transparent_soft_22: 472182929
+      muzzles1_transparent_soft_23: 1981908932
+      muzzles1_transparent_soft_24: -1420016548
+      muzzles1_transparent_soft_25: -2113414618
+      muzzles1_transparent_soft_26: 293861950
+      muzzles1_transparent_soft_27: 1847733215
+      muzzles1_transparent_soft_28: 1879350789
+      muzzles1_transparent_soft_29: 1137930594
+      muzzles1_transparent_soft_3: -196217575
+      muzzles1_transparent_soft_30: 814715675
+      muzzles1_transparent_soft_31: -1142298870
+      muzzles1_transparent_soft_32: -711246944
+      muzzles1_transparent_soft_33: -1976286191
+      muzzles1_transparent_soft_34: -2051629802
+      muzzles1_transparent_soft_35: 763467714
+      muzzles1_transparent_soft_36: -1202691719
+      muzzles1_transparent_soft_37: 736108221
+      muzzles1_transparent_soft_38: -308759523
+      muzzles1_transparent_soft_39: 1143544445
+      muzzles1_transparent_soft_4: -288118560
+      muzzles1_transparent_soft_40: -1085638697
+      muzzles1_transparent_soft_41: -1615908744
+      muzzles1_transparent_soft_42: 1030874733
+      muzzles1_transparent_soft_43: 1492114407
+      muzzles1_transparent_soft_44: 510651563
+      muzzles1_transparent_soft_45: 1662492461
+      muzzles1_transparent_soft_46: 1756443001
+      muzzles1_transparent_soft_47: -1079096580
+      muzzles1_transparent_soft_48: -1493756465
+      muzzles1_transparent_soft_49: -291487554
+      muzzles1_transparent_soft_5: 1399846514
+      muzzles1_transparent_soft_50: -1477015733
+      muzzles1_transparent_soft_51: -350450567
+      muzzles1_transparent_soft_52: -1916831619
+      muzzles1_transparent_soft_53: 206548025
+      muzzles1_transparent_soft_54: -1205815146
+      muzzles1_transparent_soft_55: -1696503842
+      muzzles1_transparent_soft_56: -176135134
+      muzzles1_transparent_soft_57: -1752321262
+      muzzles1_transparent_soft_6: -423923472
+      muzzles1_transparent_soft_7: -547975397
+      muzzles1_transparent_soft_8: 1808509897
+      muzzles1_transparent_soft_9: 1159028993
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
