@@ -175,6 +175,8 @@ public class FieldOfViewNetcode : NetworkBehaviour
 
         while (true)
         {
+            Debug.Log("ServerDetectLoop");
+
             bool detectedNow = CheckDetectedServer();
 
             if (isDetected.Value != detectedNow)

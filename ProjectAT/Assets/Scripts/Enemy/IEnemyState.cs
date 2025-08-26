@@ -1,5 +1,7 @@
 using UnityEngine;
 using Unity.Collections;
+using UnityEngine.EventSystems;
+using UnityEditor.Rendering;
 
 public interface IEnemyState
 {
@@ -13,6 +15,21 @@ public interface IEnemyState
     void Enter(Enemy enemy);
     void Update(Enemy enemy);
     void Exit(Enemy enemy);
+}
+
+public abstract class EnemyAttackState : IEnemyState
+{
+    public virtual void Enter(Enemy enemy)
+    {
+        enemy.GetFieldOfViewNetcode().enabled = false;
+    }
+
+    public virtual void Exit(Enemy enemy)
+    {
+        enemy.GetFieldOfViewNetcode().enabled = true;
+    }
+
+    public abstract void Update(Enemy enemy);
 }
 
 public class ServerEnemyIdleState : IEnemyState
@@ -53,22 +70,23 @@ public class ServerEnemyPatrolState : IEnemyState
     }
 }
 
-public class ServerEnemyAttackState : IEnemyState
+public class ServerEnemyAttackState : EnemyAttackState
 {
-    public void Enter(Enemy enemy)
+    public override void Enter(Enemy enemy)
     {
+        base.Enter(enemy);
         Debug.Log("Entering Server Enemy Attack State");
         enemy.GetBehaviorGraphAgent().SetVariableValue("Enemy_State", Enemy_State.Attack);
-        // Logic for entering Attack state
     }
 
-    public void Update(Enemy enemy)
+    public override void Update(Enemy enemy)
     {
         // Logic for updating Attack state
     }
 
-    public void Exit(Enemy enemy)
+    public override void Exit(Enemy enemy)
     {
+        base.Exit(enemy);
         // Logic for exiting Attack state
     }
 }
@@ -109,21 +127,24 @@ public class ClientEnemyPatrolState : IEnemyState
     }
 }
 
-public class ClientEnemyAttackState : IEnemyState
+public class ClientEnemyAttackState : EnemyAttackState
 {
-    public void Enter(Enemy enemy)
+    public override void Enter(Enemy enemy)
     {
+        base.Enter(enemy);
         Debug.Log("Entering Client Enemy Attack State");
         // Logic for entering Attack state
     }
 
-    public void Update(Enemy enemy)
+    public override void Update(Enemy enemy)
     {
         // Logic for updating Attack state
     }
 
-    public void Exit(Enemy enemy)
+    public override void Exit(Enemy enemy)
     {
+        base.Exit(enemy);
         // Logic for exiting Attack state
+        enemy.GetFieldOfViewNetcode().enabled = true;
     }
 }

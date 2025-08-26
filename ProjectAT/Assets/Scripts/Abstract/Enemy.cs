@@ -7,16 +7,23 @@ public abstract class Enemy : LivingEntity
     [SerializeField]
     protected BehaviorGraphAgent behaviorGraphAgent;
 
+    protected FieldOfViewNetcode fieldOfViewNetcode;
+
     protected IEnemyState currentState;
 
     private void Awake()
     {
         behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
+        fieldOfViewNetcode = GetComponent<FieldOfViewNetcode>();
     }
 
     public override void OnNetworkSpawn()
     {
-        if (!IsServer)
+        if (IsServer)
+        {
+            fieldOfViewNetcode.onScanCompleted += ScanCompleted;
+        }
+        else
         {
             behaviorGraphAgent.enabled = false;
         }
@@ -35,7 +42,17 @@ public abstract class Enemy : LivingEntity
         return behaviorGraphAgent;
     }
 
-    public void ChangeState(Enemy_State enemyState)
+    internal FieldOfViewNetcode GetFieldOfViewNetcode()
+    {
+        return fieldOfViewNetcode;
+    }
+
+    private void ScanCompleted()
+    {
+        ChangeState(Enemy_State.Attack);
+    }
+
+    internal void ChangeState(Enemy_State enemyState)
     {
         if (currentState != null)
             currentState.Exit(this);
