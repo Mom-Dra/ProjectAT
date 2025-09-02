@@ -21,6 +21,8 @@ public class PlayerStateMachine : NetworkBehaviour
     public PlayerWalkStateBase WalkState { get; private set; }
     public PlayerRunStateBase RunState { get; private set; }
     public PlayerAttackStateBase AttackState { get; private set; }
+    public ServerSkillTargetingState[] SkillTargetingState { get; private set; }
+    public ServerSkillCastingState[] SkillCastingState { get; private set; }
 
     public readonly Dictionary<StateId, EntityState> stateDic = new Dictionary<StateId, EntityState>();
 
@@ -166,4 +168,8 @@ public class PlayerStateMachine : NetworkBehaviour
         return myController.GetMouseWorldPosition();
     }
 
+    public Enemy RaycastEnemy()
+    {
+        return myController.RaycastEnemy();
+    }
 }

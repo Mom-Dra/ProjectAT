@@ -1,6 +1,7 @@
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public enum PlayerInputType : ushort { LeftClick, RightClick}
 
@@ -92,6 +93,11 @@ public class PlayerController : MonoBehaviour
         }
         return null;
     }
+    public Enemy RaycastEnemy()
+    {
+        RaycastHit hit;
+        return Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, LayerMask.GetMask("Enemy"))? hit.transform.GetComponent<Enemy>() : null;
+    }
 
     public void AttackEnemy(EntityController target)
     {
@@ -109,7 +115,6 @@ public class PlayerController : MonoBehaviour
             MyStatus.ResetAttackCoolTime();
             myStateMachine.AttackEnemyClientRpc(target);
         }
-
     }
 
     public bool IsClickSamePosition()
