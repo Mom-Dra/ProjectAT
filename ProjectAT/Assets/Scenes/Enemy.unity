@@ -280,35 +280,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: 'managedReferences[455556623432155465]'
-      value: 'Unity.Behavior Unity.Behavior.BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib]]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].Name
-      value: wayPoints
-      objectReference: {fileID: 0}
-    - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: m_BlackboardVariableOverridesList.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[1]'
-      value: 455556623432155465
-      objectReference: {fileID: 0}
-    - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].GUID.m_Value0
-      value: 5988384972449597221
-      objectReference: {fileID: 0}
-    - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].GUID.m_Value1
-      value: 12161069303245734978
-      objectReference: {fileID: 0}
-    - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
@@ -1626,6 +1597,10 @@ PrefabInstance:
     - target: {fileID: 5854530041950173396, guid: 9229ef7aec608444a8dfc6b1dce9659e, type: 3}
       propertyPath: m_Name
       value: StationaryEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 9229ef7aec608444a8dfc6b1dce9659e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

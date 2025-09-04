@@ -290,7 +290,6 @@ MonoBehaviour:
   edgeDistanceThreshold: 0
   fixedMeshFilter: {fileID: 6432071935689726649}
   viewmeshFilter: {fileID: 5551487191027223746}
-  clientClipWithObstacles: 0
 --- !u!114 &3899280787256876842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +306,7 @@ MonoBehaviour:
   m_Graph: {fileID: 737918245690990942, guid: f5bbc76712bfc0947b47ac1b6ec4f0ba, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 455556555073651012
+  - rid: 455556623432155465
   m_IsInitialised: 0
   m_IsStarted: 0
   NetcodeRunOnlyOnOwner: 1
@@ -321,6 +321,17 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 5854530041950173396}
+    - rid: 455556623432155465
+      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 5988384972449597221
+          m_Value1: 12161069303245734978
+        Name: wayPoints
+        m_Value:
+        - {fileID: 0}
+        - {fileID: 0}
+        - {fileID: 0}
 --- !u!195 &5034287966346046182
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -416,6 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4372eab25cffd9e40911c8740e6429dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   behaviorGraphAgent: {fileID: 0}
 --- !u!1 &8385226022807085862
 GameObject:

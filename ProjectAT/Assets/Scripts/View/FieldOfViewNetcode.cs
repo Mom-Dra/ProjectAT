@@ -81,6 +81,8 @@ public class FieldOfViewNetcode : NetworkBehaviour
     private Coroutine growingCoroutine;
 
     public event Action onScanCompleted;
+    public event Action onScanStarted;
+    public event Action onScanCanceled;
 
     private void Awake()
     {
@@ -129,9 +131,7 @@ public class FieldOfViewNetcode : NetworkBehaviour
         // 여기서 말한 경계심 수치는 부채꼴 차오르는 정도..!
 
         if (IsServer)
-        {
             onScanCompleted?.Invoke();
-        }
 
         growingCoroutine = null;
     }
@@ -139,6 +139,9 @@ public class FieldOfViewNetcode : NetworkBehaviour
     private IEnumerator ShrinkingCoroutine()
     {
         yield return AnimateRadiusCoroutine(0f);
+
+        if (IsServer)
+            onScanCanceled?.Invoke();
 
         growingCoroutine = null;
     }
@@ -175,8 +178,6 @@ public class FieldOfViewNetcode : NetworkBehaviour
 
         while (true)
         {
-            Debug.Log("ServerDetectLoop");
-
             bool detectedNow = CheckDetectedServer();
 
             if (isDetected.Value != detectedNow)
@@ -189,6 +190,10 @@ public class FieldOfViewNetcode : NetworkBehaviour
     private void StartScan()
     {
         if (growingCoroutine != null) StopCoroutine(growingCoroutine);
+
+        if (IsServer)
+            onScanStarted?.Invoke();
+
         growingCoroutine = StartCoroutine(GrowingCoroutine());
     }
 
@@ -197,6 +202,7 @@ public class FieldOfViewNetcode : NetworkBehaviour
         if (growingCoroutine != null)
         {
             StopCoroutine(growingCoroutine);
+
             growingCoroutine = StartCoroutine(ShrinkingCoroutine());
         }
     }

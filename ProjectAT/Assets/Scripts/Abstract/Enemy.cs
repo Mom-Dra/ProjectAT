@@ -11,6 +11,9 @@ public abstract class Enemy : LivingEntity
 
     protected IEnemyState currentState;
 
+    internal float Time;
+    internal const float WONDERTIME = 10f;
+
     private void Awake()
     {
         behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
@@ -22,6 +25,8 @@ public abstract class Enemy : LivingEntity
         if (IsServer)
         {
             fieldOfViewNetcode.onScanCompleted += ScanCompleted;
+            fieldOfViewNetcode.onScanCanceled += ScanCanceled;
+            fieldOfViewNetcode.onScanStarted += ScanStarted;
         }
         else
         {
@@ -37,20 +42,31 @@ public abstract class Enemy : LivingEntity
         }
     }
 
-    internal BehaviorGraphAgent GetBehaviorGraphAgent()
+    internal void SetBehaviorGraphAgentState(Enemy_State enemyState)
     {
-        return behaviorGraphAgent;
+        behaviorGraphAgent.SetVariableValue("Enemy_State", enemyState);
     }
 
-    internal FieldOfViewNetcode GetFieldOfViewNetcode()
+    internal void EnableFieldOfViewNetcode(bool enabled)
     {
-        return fieldOfViewNetcode;
+        fieldOfViewNetcode.enabled = enabled;
     }
+
+    public void Attack()
+    {
+        // currentState.Attack(this);
+    }
+
+    protected abstract void ScanStarted();
+    protected abstract void ScanCanceled();
 
     private void ScanCompleted()
     {
+        Debug.Log("ScanCompleted");
         ChangeState(Enemy_State.Attack);
     }
+
+    internal abstract void ChangeDefaultState();
 
     internal void ChangeState(Enemy_State enemyState)
     {
@@ -68,17 +84,21 @@ public abstract class Enemy : LivingEntity
             case Enemy_State.Attack:
                 currentState = IEnemyState.ServerEnemyAttackState;
                 break;
+            case Enemy_State.Chase:
+                currentState = IEnemyState.ServerEnemyChaseState;
+                break;
+            case Enemy_State.Wander:
+                currentState = IEnemyState.ServerEnemyWonderState;
+                break;
         }
 
         currentState.Enter(this);
         ChangeStateRpc(enemyState);
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
+    [Rpc(SendTo.NotServer)]
     private void ChangeStateRpc(Enemy_State enemyState)
     {
-        if (IsServer) return;
-
         if (currentState != null)
             currentState.Exit(this);
 
@@ -92,6 +112,12 @@ public abstract class Enemy : LivingEntity
                 break;
             case Enemy_State.Attack:
                 currentState = IEnemyState.ClientEnemyAttackState;
+                break;
+            case Enemy_State.Chase:
+                currentState = IEnemyState.ClientEnemyChaseState;
+                break;
+            case Enemy_State.Wander:
+                currentState = IEnemyState.ClientEnemyWonderState;
                 break;
         }
 
