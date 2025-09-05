@@ -62,6 +62,7 @@
     <Analyzer Include="C:\Users\HuiYong\UnityProjects\ProjectAT\ProjectAT\Library\PackageCache\com.unity.dt.app-ui@166eda91cea7\Runtime\SourceGenerators\netstandard2.0\EnumToLowerCase.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Weapon\GunData.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\PlayerRunStateBase.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Abstract\IDamageable.cs" />
@@ -72,7 +73,6 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\EnemyState.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewNetcode.cs" />
     <Compile Include="Assets\Scripts\Weapon\Weapon.cs" />
-    <Compile Include="Assets\Scripts\Enemy\StationaryEnemy.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\CheckTargetCondition.cs" />
     <Compile Include="Assets\Scripts\Abstract\IAttackable.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\TreeTest.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfView.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
+    <Compile Include="Assets\Scripts\Test2.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityState.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\Scripts\Enemy\WeaponBase.cs" />
     <Compile Include="Assets\Inputs\PlayerControls.cs" />
     <Compile Include="Assets\Scripts\Abstract\LivingEntity.cs" />
+    <Compile Include="Assets\Scripts\Enemy\FirstClassEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\MySwitchComposite.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerIdleState.cs" />
@@ -101,7 +103,6 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\WanderAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerWalkState.cs" />
     <Compile Include="Assets\Scripts\Abstract\Enemy.cs" />
-    <Compile Include="Assets\Scripts\Enemy\PatrolEnemy.cs" />
     <Compile Include="Assets\Inputs\InputReader.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponStraight.cs" />
     <Compile Include="Assets\Scripts\View\SightOfView.cs" />

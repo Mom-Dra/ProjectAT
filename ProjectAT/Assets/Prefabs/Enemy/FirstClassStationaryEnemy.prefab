@@ -135,9 +135,9 @@ GameObject:
   - component: {fileID: 5034287966346046182}
   - component: {fileID: 475323312878689423}
   - component: {fileID: 1933638636908125670}
-  - component: {fileID: 4393406221367530428}
+  - component: {fileID: 6024672695013317722}
   m_Layer: 8
-  m_Name: StationaryEnemy
+  m_Name: FirstClassStationaryEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4089213832
+  GlobalObjectIdHash: 3102632677
   InScenePlacedSourceGlobalObjectIdHash: 3102632677
   DeferredDespawnTick: 0
   Ownership: 1
@@ -290,7 +290,6 @@ MonoBehaviour:
   edgeDistanceThreshold: 0
   fixedMeshFilter: {fileID: 6432071935689726649}
   viewmeshFilter: {fileID: 5551487191027223746}
-  clientClipWithObstacles: 0
 --- !u!114 &3899280787256876842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +403,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5462043658949298033, guid: 6f656340650a5864dbf198d365bd98b2, type: 3}
   projectileSpawnPoint: {fileID: 2920887816259056932}
   maxCooldownTime: 5
---- !u!114 &4393406221367530428
+--- !u!114 &6024672695013317722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -413,10 +412,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5854530041950173396}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98bac5c2a8493f84d83b35eabb92318e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1af6fb6d1d2b39d4e8b343882623a174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviorGraphAgent: {fileID: 0}
+  ShowTopMostFoldoutHeaderGroup: 1
+  isPatrolEnemy: 0
 --- !u!1 &8385226022807085862
 GameObject:
   m_ObjectHideFlags: 0

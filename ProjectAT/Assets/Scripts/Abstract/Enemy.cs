@@ -1,15 +1,19 @@
 using Unity.Behavior;
 using Unity.Netcode;
 using UnityEngine;
+using MomDra;
 
-public abstract class Enemy : LivingEntity
+public abstract class Enemy : LivingEntity, IAttackable
 {
-    [SerializeField]
     protected BehaviorGraphAgent behaviorGraphAgent;
-
     protected FieldOfViewNetcode fieldOfViewNetcode;
 
     protected IEnemyState currentState;
+    private Weapon weapon;
+
+    // Inspector에서 설정
+    [SerializeField]
+    private bool isPatrolEnemy;
 
     internal float Time;
     internal const float WONDERTIME = 10f;
@@ -27,6 +31,8 @@ public abstract class Enemy : LivingEntity
             fieldOfViewNetcode.onScanCompleted += ScanCompleted;
             fieldOfViewNetcode.onScanCanceled += ScanCanceled;
             fieldOfViewNetcode.onScanStarted += ScanStarted;
+
+            if (isPatrolEnemy) ChangeState(Enemy_State.Patrol);
         }
         else
         {
@@ -55,10 +61,20 @@ public abstract class Enemy : LivingEntity
     public void Attack()
     {
         // currentState.Attack(this);
+        weapon.Attack();
     }
 
-    protected abstract void ScanStarted();
-    protected abstract void ScanCanceled();
+    private void ScanStarted()
+    {
+        if (isPatrolEnemy)
+            ChangeState(Enemy_State.Idle);
+    }
+
+    private void ScanCanceled()
+    {
+        if (isPatrolEnemy)
+            ChangeState(Enemy_State.Patrol);
+    }
 
     private void ScanCompleted()
     {
@@ -66,7 +82,11 @@ public abstract class Enemy : LivingEntity
         ChangeState(Enemy_State.Attack);
     }
 
-    internal abstract void ChangeDefaultState();
+    internal void ChangeDefaultState()
+    {
+        if (isPatrolEnemy) ChangeState(Enemy_State.Patrol);
+        else ChangeState(Enemy_State.Idle);
+    }
 
     internal void ChangeState(Enemy_State enemyState)
     {
