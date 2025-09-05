@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 41b7d8da93f2cfc419e9cb8545f3f9ef
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 164502
+  packageName: Low Poly Drone 01
+  packageVersion: 1.0
+  assetPath: Assets/Drone_01/Materials/visor.mat
+  uploadId: 357000

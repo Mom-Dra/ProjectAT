@@ -61,7 +61,9 @@ public abstract class Enemy : LivingEntity, IAttackable
     public void Attack()
     {
         // currentState.Attack(this);
-        weapon.Attack();
+
+        // Enemy 상태 안에서 call 해야 할듯?
+        weapon.AttackRpc();
     }
 
     private void ScanStarted()

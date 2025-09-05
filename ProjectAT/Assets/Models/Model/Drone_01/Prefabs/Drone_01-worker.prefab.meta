@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8c32b1236c4853b49a44ed262ab9544c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 164502
+  packageName: Low Poly Drone 01
+  packageVersion: 1.0
+  assetPath: Assets/Drone_01/Prefabs/Drone_01-worker.prefab
+  uploadId: 357000

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cc3e18dd82774d7448716b0574ca04f0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 164502
+  packageName: Low Poly Drone 01
+  packageVersion: 1.0
+  assetPath: Assets/Drone_01/Materials/lightsBlue.mat
+  uploadId: 357000

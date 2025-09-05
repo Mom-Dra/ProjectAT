@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8f26fe4e065900448ad6dd47b529851c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 164502
+  packageName: Low Poly Drone 01
+  packageVersion: 1.0
+  assetPath: Assets/Drone_01/Prefabs/Drone_01-fighter.prefab
+  uploadId: 357000

@@ -1591,6 +1591,30 @@
       <Project>{8A21683C-4F70-C74E-FA2E-A1CA1173F13E}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="EPO.csproj">
+      <Project>{5E855177-FD44-1FBD-667B-7C147210BEFE}</Project>
+      <Name>EPO</Name>
+    </ProjectReference>
+    <ProjectReference Include="EPODemo.csproj">
+      <Project>{A002AFC9-383F-43D8-5CC2-B90BC48E60EB}</Project>
+      <Name>EPODemo</Name>
+    </ProjectReference>
+    <ProjectReference Include="EPOURP.csproj">
+      <Project>{4A52DBC5-4131-1EB1-85FB-2E64A6BE7661}</Project>
+      <Name>EPOURP</Name>
+    </ProjectReference>
+    <ProjectReference Include="EPOUtilities.csproj">
+      <Project>{60AAC31F-BD4A-15F0-8072-6AA52C4C2E2E}</Project>
+      <Name>EPOUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="EPOHDRP.csproj">
+      <Project>{E487D99D-F123-F835-C8EE-08D093D48E54}</Project>
+      <Name>EPOHDRP</Name>
+    </ProjectReference>
+    <ProjectReference Include="EPOEditor.csproj">
+      <Project>{374BC3F9-202C-52F3-25FA-181F16F5559A}</Project>
+      <Name>EPOEditor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

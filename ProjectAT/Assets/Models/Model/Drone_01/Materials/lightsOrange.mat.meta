@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: eacfd341cfbc3a94090f8e2790226bf2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 164502
+  packageName: Low Poly Drone 01
+  packageVersion: 1.0
+  assetPath: Assets/Drone_01/Materials/lightsOrange.mat
+  uploadId: 357000

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7d87b0b009871b241aedfd2cf9ce14e8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 164502
+  packageName: Low Poly Drone 01
+  packageVersion: 1.0
+  assetPath: Assets/Drone_01/Materials/black.mat
+  uploadId: 357000
