@@ -9,6 +9,7 @@ public class PlayerStateMachine : NetworkBehaviour
     public enum StateId : ushort { Idle, Walk, Run, Attack }
 
     [SerializeField] private PlayerController myController;
+    [SerializeField] public PlayerController MyController { get { return myController; } }
     [SerializeField] public NavMeshAgent MyAgent { get { return myController.MyAgent; } }
     [SerializeField] public EntityStatus MyStatus { get { return myController.MyStatus; } }
     [SerializeField] public EntityStatus MyWeaponStatus { get { return myController.MyStatus; } }
@@ -141,23 +142,31 @@ public class PlayerStateMachine : NetworkBehaviour
         myController.MovePosition(nextPos);
     }
 
-    public EntityController FindNearEnemy()
+    public Enemy FindNearEnemy()
     {
         return myController.FindNearEnemy();
     }
 
-    public void AttackEnemy(EntityController target)
+    public void AttackEnemy(Enemy target)
     {
         if (IsServer && target)
         {
-            myController.AttackEnemy(target);
+            Vector3 toTarget = target.transform.position - transform.position;
+            toTarget.y = 0; //º¸Á¤
+
+            if (Vector3.Angle(transform.forward, toTarget) > 10.0f)
+            {
+                myController.LookAtTarget(toTarget);
+            }
+            else
+                myController.AttackEnemy(target);
         }
     }
 
     [Rpc(SendTo.ClientsAndHost)]
     public void AttackEnemyClientRpc(NetworkBehaviourReference target)
     {
-        if (target.TryGet(out EntityController enemy))
+        if (target.TryGet(out Enemy enemy))
         {
             myController.MyEffectModule.GenerateFiringEffect();
         }

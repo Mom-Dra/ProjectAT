@@ -34,6 +34,6 @@ public class ServerSkillTargetingState : EntityState
 
     public override void OnUpdate()
     {
-        //skillStrategy.OnAimUpdate(context);
+        //skillStrategy.OnAimUpdate(context); //마우스 바라보기
     }
 }

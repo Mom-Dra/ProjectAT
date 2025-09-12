@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         MyAgent.SetDestination(pos);
     }
 
-    public EntityController FindNearEnemy()
+    public Enemy FindNearEnemy()
     {
         if (Physics.OverlapSphereNonAlloc(transform.position + Vector3.up * 0.5f, MyWeapon.Radius, detectedCollider, LayerMask.GetMask("Enemy")) != 0)
         {
@@ -86,8 +86,9 @@ public class PlayerController : MonoBehaviour
             {
                 if (coll)
                 {
-                    EntityController enemyController = coll.transform.GetComponent<EntityController>();
-                    if(enemyController.IsAlive()) return enemyController;
+                    Enemy enemyController = coll.transform.GetComponent<Enemy>();
+                    //if(enemyController.IsAlive()) return enemyController;
+                    return enemyController;
                 }
             }
         }
@@ -99,22 +100,20 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, LayerMask.GetMask("Enemy"))? hit.transform.GetComponent<Enemy>() : null;
     }
 
-    public void AttackEnemy(EntityController target)
+    public void AttackEnemy(Enemy target)
     {
-        Vector3 toTarget = target.transform.position - transform.position;
-        toTarget.y = 0; //º¸Á¤
-
-        if (Vector3.Angle(transform.forward, toTarget) > 10.0f)
+        if (MyStatus.CanFire())
         {
-            Debug.Log(Vector3.Angle(transform.forward, toTarget));
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toTarget, Vector3.up), 20.0f);
-        }
-        else if (MyStatus.CanFire())
-        {
-            target.GetComponent<EntityStatus>().TakeDamage(MyWeapon.Damage);
+            target.GetComponent<Enemy>().TakeDamage(MyWeapon.Damage);
             MyStatus.ResetAttackCoolTime();
             myStateMachine.AttackEnemyClientRpc(target);
         }
+    }
+
+    public void LookAtTarget(Vector3 toTarget)
+    {
+        //Debug.Log(Vector3.Angle(transform.forward, toTarget));
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toTarget, Vector3.up), 20.0f);
     }
 
     public bool IsClickSamePosition()

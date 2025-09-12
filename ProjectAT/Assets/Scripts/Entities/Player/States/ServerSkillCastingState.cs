@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class ServerSkillCastingState : EntityState
 {
     private readonly ISkill skillStrategy;
@@ -30,9 +28,9 @@ public class ServerSkillCastingState : EntityState
 
     public override void OnUpdate()
     {
-        if(context) //아으 여길 어케 고치지;
+        if(context)
         {
-            skillStrategy.OnExecute(context);
+            skillStrategy.OnUpdate(context);
             //context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle); // 스킬 시전 애니메이션 나오는게 필요함. 어떻게? exacute에서 전환?
         }
     }
