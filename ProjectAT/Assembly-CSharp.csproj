@@ -64,10 +64,12 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Weapon\GunData.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Health.cs" />
+    <Compile Include="Assets\Scripts\Weapon\IGunState.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\Flamethrower.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\PlayerRunStateBase.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Abstract\IDamageable.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAttackAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponStatus.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\PlayerAttackStateBase.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />
@@ -76,9 +78,11 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\EnemyState.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewNetcode.cs" />
+    <Compile Include="Assets\Scripts\Utils\HitObjectPool.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeSetting.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\BulletProjector.cs" />
     <Compile Include="Assets\Scripts\Weapon\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Behavior\SearchTargetAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\SpawnProjectiles.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\CheckTargetCondition.cs" />
@@ -91,10 +95,13 @@
     <Compile Include="Assets\Scripts\View\FieldOfView.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseTargetPositionAction.cs" />
+    <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Test2.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
-    <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\RotateToMouse.cs" />
+    <Compile Include="Assets\Scripts\Utils\Singleton.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerAttackState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\PlayerIdleStateBase.cs" />
@@ -105,6 +112,7 @@
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\NextPrefab.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerInput.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\AutoDestroy.cs" />
+    <Compile Include="Assets\Scripts\Utils\Util.cs" />
     <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\ProjectileMove.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\MySwitchComposite.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerIdleState.cs" />
@@ -114,11 +122,13 @@
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\Bullet.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\Grenade.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyProjectile.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Behavior\ChangeStateAction.cs" />
     <Compile Include="Assets\Scripts\Enemy\IEnemyState.cs" />
     <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Abstract\IThrowable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WanderAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerWalkState.cs" />
+    <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
     <Compile Include="Assets\Scripts\Abstract\Enemy.cs" />
     <Compile Include="Assets\Inputs\InputReader.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponStraight.cs" />
@@ -127,11 +137,14 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\UpdateDistanceAction.cs" />
     <Compile Include="Assets\Scripts\View\NetworkView.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityController.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Behavior\RotateToTargetAction.cs" />
     <Compile Include="Assets\Scripts\Utils\EffectModule.cs" />
     <Compile Include="Assets\Scripts\Abstract\IHealable.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />
     <Compile Include="Assets\Scripts\View\Controller.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeLauncher.cs" />
+    <Compile Include="Assets\Scripts\Network\NetworkObjectPool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -1324,12 +1337,12 @@
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.Services.Multiplayer.Editor.Shared">
-      <HintPath>Library\ScriptAssemblies\Unity.Services.Multiplayer.Editor.Shared.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Services.Multiplayer.Editor.Shared">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Multiplayer.Editor.Shared.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Services.Multiplayer.Multiplay.Authoring.Core">
@@ -1638,13 +1651,13 @@
       <Project>{4A52DBC5-4131-1EB1-85FB-2E64A6BE7661}</Project>
       <Name>EPOURP</Name>
     </ProjectReference>
-    <ProjectReference Include="EPOUtilities.csproj">
-      <Project>{60AAC31F-BD4A-15F0-8072-6AA52C4C2E2E}</Project>
-      <Name>EPOUtilities</Name>
-    </ProjectReference>
     <ProjectReference Include="EPOHDRP.csproj">
       <Project>{E487D99D-F123-F835-C8EE-08D093D48E54}</Project>
       <Name>EPOHDRP</Name>
+    </ProjectReference>
+    <ProjectReference Include="EPOUtilities.csproj">
+      <Project>{60AAC31F-BD4A-15F0-8072-6AA52C4C2E2E}</Project>
+      <Name>EPOUtilities</Name>
     </ProjectReference>
     <ProjectReference Include="EPOEditor.csproj">
       <Project>{374BC3F9-202C-52F3-25FA-181F16F5559A}</Project>

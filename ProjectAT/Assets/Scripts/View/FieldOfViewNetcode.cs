@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Behavior;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -79,10 +80,16 @@ public class FieldOfViewNetcode : NetworkBehaviour
     private NetworkVariable<bool> isDetected = new NetworkVariable<bool>(false);
 
     private Coroutine growingCoroutine;
+    private Coroutine detectLoopCoroutine;
 
-    public event Action onScanCompleted;
-    public event Action onScanStarted;
-    public event Action onScanCanceled;
+    public event System.Action onScanComplete;
+    public event System.Action onScanStart;
+    public event System.Action onScanCancel;
+
+    private Collider[] colliders = new Collider[4];
+
+    //public event System.Action<Transform> onTargetDetect;
+    //public event System.Action onTargetLost;
 
     private void Awake()
     {
@@ -93,18 +100,49 @@ public class FieldOfViewNetcode : NetworkBehaviour
         viewmeshFilter.mesh = viewMesh;
     }
 
+    private void OnEnable()
+    {
+        if(detectLoopCoroutine == null)
+        {
+            detectLoopCoroutine = StartCoroutine(ServerDetectLoop());
+        }
+    }
+
     public override void OnNetworkSpawn()
     {
         if (IsServer)
-            StartCoroutine(ServerDetectLoop());
+        {
+            if (detectLoopCoroutine == null)
+            {
+                detectLoopCoroutine = StartCoroutine(ServerDetectLoop());
+            }
+        }
 
         isDetected.OnValueChanged += OnIsDetected;
+    }
+
+    private void OnDisable()
+    {
+        if (detectLoopCoroutine != null)
+        {
+            StopCoroutine(detectLoopCoroutine);
+            detectLoopCoroutine = null;
+        }
     }
 
     public override void OnNetworkDespawn()
     {
         if (IsClient)
             isDetected.OnValueChanged -= OnIsDetected;
+
+        //if(IsServer)
+        //{
+        //    if (detectLoopCoroutine != null)
+        //    {
+        //        StopCoroutine(detectLoopCoroutine);
+        //        detectLoopCoroutine = null;
+        //    }
+        //}
     }
 
     private void OnIsDetected(bool previous, bool current)
@@ -131,7 +169,7 @@ public class FieldOfViewNetcode : NetworkBehaviour
         // 여기서 말한 경계심 수치는 부채꼴 차오르는 정도..!
 
         if (IsServer)
-            onScanCompleted?.Invoke();
+            onScanComplete?.Invoke();
 
         growingCoroutine = null;
     }
@@ -141,7 +179,7 @@ public class FieldOfViewNetcode : NetworkBehaviour
         yield return AnimateRadiusCoroutine(0f);
 
         if (IsServer)
-            onScanCanceled?.Invoke();
+            onScanCancel?.Invoke();
 
         growingCoroutine = null;
     }
@@ -192,7 +230,7 @@ public class FieldOfViewNetcode : NetworkBehaviour
         if (growingCoroutine != null) StopCoroutine(growingCoroutine);
 
         if (IsServer)
-            onScanStarted?.Invoke();
+            onScanStart?.Invoke();
 
         growingCoroutine = StartCoroutine(GrowingCoroutine());
     }
@@ -217,11 +255,11 @@ public class FieldOfViewNetcode : NetworkBehaviour
     {
         visibleTargets.Clear();
 
-        Collider[] cols = Physics.OverlapSphere(transform.position, fixedRadius, targetMask);
+        int count = Physics.OverlapSphereNonAlloc(transform.position, fixedRadius, colliders, targetMask);
 
-        for (int i = 0; i < cols.Length; ++i)
+        for (int i = 0; i < count; ++i)
         {
-            Transform t = cols[i].transform;
+            Transform t = colliders[i].transform;
             Vector3 dir = (t.position - transform.position).normalized;
 
             if (Vector3.Angle(transform.forward, dir) < viewAngle * 0.5f)
@@ -232,6 +270,9 @@ public class FieldOfViewNetcode : NetworkBehaviour
                     visibleTargets.Add(t);
             }
         }
+
+        //if (visibleTargets.Count > 0) onTargetDetect?.Invoke(visibleTargets[0]);
+        //else onTargetLost?.Invoke();
 
         return visibleTargets.Count > 0;
     }

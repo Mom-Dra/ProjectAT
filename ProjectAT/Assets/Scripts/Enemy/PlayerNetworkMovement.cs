@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
-using MomDra.Input;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NetworkTransform))]
@@ -12,14 +11,26 @@ public class PlayerNetworkMovement : NetworkBehaviour
     private float moveSpeed = 6f;
 
     private Rigidbody rigid;
-    private PlayerInput playerInput;
+    private MomDra.Input.PlayerInput playerInput;
 
     private Vector2 serverCurrentInput;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponent<MomDra.Input.PlayerInput>();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if(!IsOwner)
+        {
+            if (TryGetComponent(out UnityEngine.InputSystem.PlayerInput playerInput))
+                playerInput.enabled = false;
+
+            if (TryGetComponent(out MomDra.Input.PlayerInput input))
+                input.enabled = false;
+        }
     }
 
     private void LateUpdate()

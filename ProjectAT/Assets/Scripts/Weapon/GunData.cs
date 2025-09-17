@@ -9,7 +9,7 @@ public class GunData : ScriptableObject
     private AudioClip reloadClip; // 재장전 소리
 
     [SerializeField]
-    private float damage = 25; // 공격력
+    private int damage = 25; // 공격력
 
     [SerializeField]
     private int startRemainAmmo = 100; // 처음에 주어질 전체 탄약
@@ -21,14 +21,19 @@ public class GunData : ScriptableObject
     [SerializeField]
     private float reloadTime = 1.8f; // 재장전 소요 시간
 
+    [SerializeField]
+    private float maxDistance = 100f;
+
     public AudioClip ShotClip => shotClip;
     public AudioClip ReloadClip => reloadClip;
 
-    public float Damage => damage;
+    public int Damage => damage;
 
     public int StartRemainAmmo => startRemainAmmo;
     public int MagCapacity => magCapacity;
 
     public float TimeBetFire => timeBetFire;
     public float ReloadTime => reloadTime;
+
+    public float MaxDistance => maxDistance;
 }

@@ -15,6 +15,16 @@ public abstract class Enemy : LivingEntity, IAttackable
     [SerializeField]
     private bool isPatrolEnemy;
 
+    // ScriptableObject
+    [SerializeField]
+    private float attackRange;
+
+    [SerializeField]
+    private float rotateSpeed;
+
+    [SerializeField]
+    private float searchRadius;
+
     internal float Time;
     internal const float WONDERTIME = 10f;
 
@@ -22,15 +32,20 @@ public abstract class Enemy : LivingEntity, IAttackable
     {
         behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
         fieldOfViewNetcode = GetComponent<FieldOfViewNetcode>();
+
+        behaviorGraphAgent.SetVariableValue("attackRange", attackRange);
+        behaviorGraphAgent.SetVariableValue("rotateSpeed", rotateSpeed);
+        behaviorGraphAgent.SetVariableValue("muzzle", transform.FindChildRecursive("FX_Shoot_01_muzzle"));
+        behaviorGraphAgent.SetVariableValue("searchRadius", searchRadius);
     }
 
     public override void OnNetworkSpawn()
     {
         if (IsServer)
         {
-            fieldOfViewNetcode.onScanCompleted += ScanCompleted;
-            fieldOfViewNetcode.onScanCanceled += ScanCanceled;
-            fieldOfViewNetcode.onScanStarted += ScanStarted;
+            fieldOfViewNetcode.onScanComplete += ScanCompleted;
+            fieldOfViewNetcode.onScanCancel += ScanCanceled;
+            fieldOfViewNetcode.onScanStart += ScanStarted;
 
             if (isPatrolEnemy) ChangeState(Enemy_State.Patrol);
         }
@@ -63,7 +78,7 @@ public abstract class Enemy : LivingEntity, IAttackable
         // currentState.Attack(this);
 
         // Enemy 상태 안에서 call 해야 할듯?
-        weapon.AttackRpc();
+        weapon.Attack();
     }
 
     private void ScanStarted()
