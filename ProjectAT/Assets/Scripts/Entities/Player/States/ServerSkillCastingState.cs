@@ -1,22 +1,13 @@
-public class ServerSkillCastingState : EntityState
+using System.Diagnostics;
+
+public class ServerSkillCastingState : SkillCastingStateBase
 {
-    private readonly ISkill skillStrategy;
 
-    public ServerSkillCastingState(PlayerStateMachine cxt, ISkill skillStrategy) : base(cxt)
-    {
-        this.skillStrategy = skillStrategy;
-    }
-
-    public override void Enter()
+    public ServerSkillCastingState(PlayerStateMachine cxt) : base(cxt)
     {
     }
 
-    public override void Exit()
-    {
-
-    }
-
-    public override void HandleClickInput(PlayerInputType type)
+    public override void HandleInput(PlayerInputType type)
     {
         switch (type)
         {
@@ -30,7 +21,7 @@ public class ServerSkillCastingState : EntityState
     {
         if(context)
         {
-            skillStrategy.OnUpdate(context);
+            SkillStrategy.OnCastingUpdate(context);
             //context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle); // 스킬 시전 애니메이션 나오는게 필요함. 어떻게? exacute에서 전환?
         }
     }

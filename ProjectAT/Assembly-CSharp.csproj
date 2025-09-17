@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponStatus.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\PlayerAttackStateBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseAction.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\SkillCastingStateBase.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerRunState.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\EnemyState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\Skills\DesignatedFire.cs" />
@@ -80,11 +81,13 @@
     <Compile Include="Assets\Scripts\UI\CanvasManager.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfView.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\SkillTargetingStateBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerAttackState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\PlayerIdleStateBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\WeaponBase.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\Skills\PlayerSkillStrategyMap.cs" />
     <Compile Include="Assets\Inputs\PlayerControls.cs" />
     <Compile Include="Assets\Scripts\Abstract\LivingEntity.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerInput.cs" />

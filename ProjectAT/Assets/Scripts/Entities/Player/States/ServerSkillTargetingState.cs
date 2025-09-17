@@ -1,39 +1,30 @@
 using System.Net.Mime;
 using UnityEngine;
 
-public class ServerSkillTargetingState : EntityState
+public class ServerSkillTargetingState : SkillTargetingStateBase
 {
-    private readonly ISkill skillStrategy;
-    public ServerSkillTargetingState(PlayerStateMachine cxt, ISkill skillStrategy) : base(cxt)
-    {
-        this.skillStrategy = skillStrategy;
-    }
+    public ServerSkillTargetingState(PlayerStateMachine cxt) : base(cxt) { }
 
-    public override void Enter()
-    {
-        //skillStrategy.OnAimEnter(context);
-    }
-
-    public override void Exit()
-    {
-        //skillStrategy.OnAimExit(context);
-    }
-
-    public override void HandleClickInput(PlayerInputType type)
+    public override void HandleInput(PlayerInputType type)
     {
         switch (type)
         {
             case PlayerInputType.LeftClick:
-                if (skillStrategy.TryCommit(context)) //context에서 raycast를 사용하는것이 좋을듯
+                if (SkillStrategy.TryCommit(context)) //context에서 raycast를 사용하는것이 좋을듯
                 {
-                    //context.ChangeStateServerRpc(PlayerStateMachine.StateId.SkillCasting);
+                    Debug.Log("ServerSKillTargetng: Success");
+                    context.ChangeStateServerRpc(PlayerStateMachine.StateId.SkillCasting, 0);
                 }
-                break;
+                else
+                {
+                    context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);
+                }
+                    break;
         }
     }
 
     public override void OnUpdate()
     {
-        //skillStrategy.OnAimUpdate(context); //마우스 바라보기
+        SkillStrategy.OnTargetingUpdate(context); //마우스 바라보기
     }
 }

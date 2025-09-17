@@ -15,12 +15,16 @@ public class PlayerIdleStateBase : EntityState
     {
     }
 
-    public override void HandleClickInput(PlayerInputType type)
+    public override void HandleInput(PlayerInputType type)
     {
         switch (type)
         {
             case PlayerInputType.LeftClick:
                 context.ChangeStateServerRpc(PlayerStateMachine.StateId.Walk);
+                break;
+            case PlayerInputType.DesignatedFireKey:
+                Debug.Log("idle -> Desginate");
+                context.ChangeStateServerRpc(PlayerStateMachine.StateId.SkillTargeting, 0);
                 break;
             default:
                 break;

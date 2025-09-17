@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
-public enum PlayerInputType : ushort { LeftClick, RightClick}
+public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey }
 
 public class PlayerController : MonoBehaviour
 {
@@ -45,17 +45,17 @@ public class PlayerController : MonoBehaviour
 
     public void LinkInputEventsAll()
     {
-        inputReader.ClickEvent += HandleClickInput;
+        inputReader.InputEvent += HandleInput;
     }
 
     public void UnLinkInputEventsAll()
     {
-        inputReader.ClickEvent -= HandleClickInput;
+        inputReader.InputEvent -= HandleInput;
     }
 
-    private void HandleClickInput(PlayerInputType type)
+    private void HandleInput(PlayerInputType type)
     {
-        myStateMachine.HandleClickInput(type);
+        myStateMachine.HandleInput(type);
     }
 
     public Vector3 GetMouseWorldPosition()
@@ -100,11 +100,11 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, LayerMask.GetMask("Enemy"))? hit.transform.GetComponent<Enemy>() : null;
     }
 
-    public void AttackEnemy(Enemy target)
+    public void AttackEnemy(Enemy target, int damage)
     {
         if (MyStatus.CanFire())
         {
-            target.GetComponent<Enemy>().TakeDamage(MyWeapon.Damage);
+            target.GetComponent<Enemy>().TakeDamage(damage);
             MyStatus.ResetAttackCoolTime();
             myStateMachine.AttackEnemyClientRpc(target);
         }

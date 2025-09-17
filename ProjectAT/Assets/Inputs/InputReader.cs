@@ -6,7 +6,7 @@ using static PlayerControls;
 [CreateAssetMenu(fileName ="New Input Reader", menuName = "Input/Input Reader")]
 public class InputReader : ScriptableObject, IPlayerActions
 {
-    public event Action<PlayerInputType> ClickEvent;
+    public event Action<PlayerInputType> InputEvent;
 
     private PlayerControls controls;
     public Vector2 MousePosition { get; private set; }
@@ -31,7 +31,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
         {
-            ClickEvent?.Invoke(PlayerInputType.LeftClick);
+            InputEvent?.Invoke(PlayerInputType.LeftClick);
         }
     }
 
@@ -40,11 +40,19 @@ public class InputReader : ScriptableObject, IPlayerActions
         MousePosition = context.ReadValue<Vector2>();
     }
 
-    public void OnRun(InputAction.CallbackContext context)
+    public void OnRun(InputAction.CallbackContext context) //삭제해야할듯
     {
         if (context.performed)
         {
             Debug.Log("DobuleClicked");
+        }
+    }
+
+    public void OnDesignatedFire(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            InputEvent?.Invoke(PlayerInputType.DesignatedFireKey);
         }
     }
 }

@@ -17,7 +17,7 @@ public class PlayerAttackStateBase : EntityState
         context.MyAnim.SetBool("isFiring", false);
     }
 
-    public override void HandleClickInput(PlayerInputType type)
+    public override void HandleInput(PlayerInputType type)
     {
         switch (type)
         {

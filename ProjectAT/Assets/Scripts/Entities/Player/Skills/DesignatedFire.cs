@@ -1,34 +1,23 @@
+using System.Collections;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class DesignatedFire : ISkill
 {
     public string SkillName => "Designated Fire";
     public Enemy Target { get; set; } //EntityController와 Enemy 연동이 필요할듯.
 
-    //public void OnAimEnter(PlayerStateMachine context){}
-    //public void OnAimExit(PlayerStateMachine context){}
-
     //서버에서 사용하는 함수들
-    public void OnUpdate(PlayerStateMachine context)
+    public void OnCastingUpdate(PlayerStateMachine context)
     {
         if(Target) 
         {
-            if(context.RaycastEnemy() == Target)
+            if(context.FindNearEnemy() == Target)
             {
-                Vector3 to = Target.transform.position - context.transform.position;
-                if (to.magnitude <= context.MyAgent.stoppingDistance + 0.01f)
-                {
-                    OnExecute(context);
-                    return;
-                }
-                else
-                {
-                   context.MyController.LookAtTarget(to);
-                }
+                OnExecute(context);
             }
             else
             {
+                Debug.Log("Set Destination");
                 context.MyAgent.SetDestination(Target.transform.position);
             }
         }
@@ -49,6 +38,7 @@ public class DesignatedFire : ISkill
     {
         Debug.Log("Designated Fire Finish");
         context.MyAgent.ResetPath();
+        Target = null;
         context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);
     }
 
@@ -60,6 +50,26 @@ public class DesignatedFire : ISkill
             Target = enemy;
             return true;
         }
+        Debug.Log("Raycast Failed");
         return false;
+    }
+
+    public void OnTargetingEnter(PlayerStateMachine context)
+    {
+        //조준UI 활성화
+        throw new System.NotImplementedException();
+    }
+
+    public void OnTargetingUpdate(PlayerStateMachine context)
+    {
+        //마우스 바라보기
+        Vector3 vec = context.GetMouseWorldPosition() - context.transform.position;
+        context.MyController.LookAtTarget(vec);
+    }
+
+    public void OnTargetingExit(PlayerStateMachine context)
+    {
+        //조준UI 비활성화
+        throw new System.NotImplementedException();
     }
 }
