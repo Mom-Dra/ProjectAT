@@ -1,8 +1,9 @@
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
-public enum PlayerInputType : ushort { LeftClick, RightClick}
+public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey }
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,17 +45,17 @@ public class PlayerController : MonoBehaviour
 
     public void LinkInputEventsAll()
     {
-        inputReader.ClickEvent += HandleClickInput;
+        inputReader.InputEvent += HandleInput;
     }
 
     public void UnLinkInputEventsAll()
     {
-        inputReader.ClickEvent -= HandleClickInput;
+        inputReader.InputEvent -= HandleInput;
     }
 
-    private void HandleClickInput(PlayerInputType type)
+    private void HandleInput(PlayerInputType type)
     {
-        myStateMachine.HandleClickInput(type);
+        myStateMachine.HandleInput(type);
     }
 
     public Vector3 GetMouseWorldPosition()
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour
         MyAgent.SetDestination(pos);
     }
 
-    public EntityController FindNearEnemy()
+    public Enemy FindNearEnemy()
     {
         if (Physics.OverlapSphereNonAlloc(transform.position + Vector3.up * 0.5f, MyWeapon.Radius, detectedCollider, LayerMask.GetMask("Enemy")) != 0)
         {
@@ -85,31 +86,34 @@ public class PlayerController : MonoBehaviour
             {
                 if (coll)
                 {
-                    EntityController enemyController = coll.transform.GetComponent<EntityController>();
-                    if(enemyController.IsAlive()) return enemyController;
+                    Enemy enemyController = coll.transform.GetComponent<Enemy>();
+                    //if(enemyController.IsAlive()) return enemyController;
+                    return enemyController;
                 }
             }
         }
         return null;
     }
-
-    public void AttackEnemy(EntityController target)
+    public Enemy RaycastEnemy()
     {
-        Vector3 toTarget = target.transform.position - transform.position;
-        toTarget.y = 0; //º¸Á¤
+        RaycastHit hit;
+        return Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, LayerMask.GetMask("Enemy"))? hit.transform.GetComponent<Enemy>() : null;
+    }
 
-        if (Vector3.Angle(transform.forward, toTarget) > 10.0f)
+    public void AttackEnemy(Enemy target, int damage)
+    {
+        if (MyStatus.CanFire())
         {
-            Debug.Log(Vector3.Angle(transform.forward, toTarget));
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toTarget, Vector3.up), 20.0f);
-        }
-        else if (MyStatus.CanFire())
-        {
-            target.GetComponent<EntityStatus>().TakeDamage(MyWeapon.Damage);
+            target.GetComponent<Enemy>().TakeDamage(damage);
             MyStatus.ResetAttackCoolTime();
             myStateMachine.AttackEnemyClientRpc(target);
         }
+    }
 
+    public void LookAtTarget(Vector3 toTarget)
+    {
+        //Debug.Log(Vector3.Angle(transform.forward, toTarget));
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toTarget, Vector3.up), 20.0f);
     }
 
     public bool IsClickSamePosition()

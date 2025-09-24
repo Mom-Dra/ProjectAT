@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2969405486184428530}
   - component: {fileID: 4232774939901768452}
   - component: {fileID: 740092277222668596}
+  - component: {fileID: 3599042788344645805}
   m_Layer: 7
   m_Name: DummyEnemy
   m_TagString: Untagged
@@ -273,3 +274,17 @@ MonoBehaviour:
     m_InternalValue: 0
   MaxAttackCoolTime:
     m_InternalValue: 0
+--- !u!114 &3599042788344645805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136611456373141910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98bac5c2a8493f84d83b35eabb92318e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  behaviorGraphAgent: {fileID: 0}

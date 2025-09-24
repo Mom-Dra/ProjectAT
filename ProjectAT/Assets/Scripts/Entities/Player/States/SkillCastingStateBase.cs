@@ -1,22 +1,20 @@
-using UnityEditor;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerAttackStateBase : EntityState
+public class SkillCastingStateBase : EntityState
 {
-    public PlayerAttackStateBase(PlayerStateMachine cxt) : base(cxt)
-    {
-    }
+    public ISkill SkillStrategy;
 
+    public SkillCastingStateBase(PlayerStateMachine context) : base(context) { }
+    
     public override void Enter()
     {
-        context.MyAnim.SetBool("isFiring", true);
+        Debug.Log("SkillCastingBase");
     }
-
     public override void Exit()
     {
-        context.MyAnim.SetBool("isFiring", false);
-    }
 
+    }
     public override void HandleInput(PlayerInputType type)
     {
         switch (type)
@@ -26,8 +24,13 @@ public class PlayerAttackStateBase : EntityState
                 break;
         }
     }
-
     public override void OnUpdate()
     {
+
+    }
+
+    public void SetSkillStrategy(ISkill nextStrategy)
+    {
+        SkillStrategy = nextStrategy;
     }
 }

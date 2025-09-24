@@ -11,7 +11,7 @@ public class ServerPlayerAttackState : PlayerAttackStateBase
         var target = context.FindNearEnemy();
         if (target)
         {
-            context.AttackEnemy(target);
+            context.AttackEnemy(target, 10);
         }
         else
             context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);

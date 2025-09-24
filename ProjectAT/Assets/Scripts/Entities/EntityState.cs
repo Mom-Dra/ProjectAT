@@ -8,5 +8,5 @@ public abstract class EntityState
     public abstract void Enter();
     public abstract void Exit();
     public abstract void OnUpdate();
-    public abstract void HandleClickInput(PlayerInputType type);
+    public abstract void HandleInput(PlayerInputType type);
 }

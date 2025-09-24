@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DesignatedFire",
+                    "type": "Button",
+                    "id": "4802bb59-a944-4d47-a555-04e054cf8bfa",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": ";PC",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "075c7a83-4446-47b4-b1da-3c326c741371",
+                    "path": "<Keyboard>/#(A)",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "DesignatedFire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

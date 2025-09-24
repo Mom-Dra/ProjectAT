@@ -19,7 +19,7 @@ public class PlayerWalkStateBase : EntityState
     {
     }
 
-    public override void HandleClickInput(PlayerInputType type)
+    public override void HandleInput(PlayerInputType type)
     {
         switch (type)
         {
@@ -34,13 +34,5 @@ public class PlayerWalkStateBase : EntityState
                 }
                 break;
         }
-        /*if (context.IsClickSamePosition())
-        {
-            context.ChangeStateServerRpc(PlayerStateMachine.StateId.Run);
-        }
-        else
-        {
-            context.PlayerMove();
-        }*/
     }
 }
