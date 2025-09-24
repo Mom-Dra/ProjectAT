@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public interface ISkill
@@ -13,4 +14,6 @@ public interface ISkill
     public void OnCastingUpdate(PlayerStateMachine context); //매 프레임마다 해야할 함수?
     public void OnExecute(PlayerStateMachine context); //스킬 시전 시 로직처리용
     public void OnFinish(PlayerStateMachine context); //스킬 시전 종료 후 해야할일 있을 때 호출
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SetTargetRpc(NetworkBehaviourReference newTarget);
 }

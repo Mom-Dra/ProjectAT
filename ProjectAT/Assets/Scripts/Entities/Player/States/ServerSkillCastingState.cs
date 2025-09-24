@@ -7,16 +7,6 @@ public class ServerSkillCastingState : SkillCastingStateBase
     {
     }
 
-    public override void HandleInput(PlayerInputType type)
-    {
-        switch (type)
-        {
-            case PlayerInputType.LeftClick:
-                context.ChangeStateServerRpc(PlayerStateMachine.StateId.Walk);
-                break;
-        }
-    }
-
     public override void OnUpdate()
     {
         if(context)

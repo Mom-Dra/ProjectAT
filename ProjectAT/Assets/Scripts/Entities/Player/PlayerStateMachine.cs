@@ -176,7 +176,7 @@ public class PlayerStateMachine : NetworkBehaviour
     public void PlayerMoveClientRpc(Vector3 nextPos)
     {
         //애니메이션 및 이런거 저런거 추가
-        myController.MovePosition(nextPos);
+        //myController.MovePosition(nextPos);
     }
 
     public Enemy FindNearEnemy()

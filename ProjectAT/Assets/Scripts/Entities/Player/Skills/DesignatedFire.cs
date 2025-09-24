@@ -1,10 +1,11 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 public class DesignatedFire : ISkill
 {
     public string SkillName => "Designated Fire";
-    public Enemy Target { get; set; } //EntityController와 Enemy 연동이 필요할듯.
+    public Enemy Target { get; set; } //Network로 연동?
 
     //서버에서 사용하는 함수들
     public void OnCastingUpdate(PlayerStateMachine context)
@@ -47,29 +48,50 @@ public class DesignatedFire : ISkill
         Enemy enemy = context.RaycastEnemy();
         if (enemy)
         {
-            Target = enemy;
+            SetTargetRpc(enemy);
             return true;
         }
         Debug.Log("Raycast Failed");
         return false;
     }
 
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SetTargetRpc(NetworkBehaviourReference newTarget)
+    {
+        Debug.Log($"SetTarget Rpc Called");
+        if(newTarget.TryGet(out Enemy enemy))
+        {
+            Target = enemy;
+            Debug.Log($"Setted:{Target.name}");
+        }
+        else
+        {
+            Debug.Log("Can't Set Enemy");
+        }
+    }
+
     public void OnTargetingEnter(PlayerStateMachine context)
     {
         //조준UI 활성화
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void OnTargetingUpdate(PlayerStateMachine context)
     {
+        Debug.Log("OnTargettingUpdate");
+        if (!context.IsOwner) return;
+        Debug.Log("Enter OnTargettingUpdate");
+
         //마우스 바라보기
         Vector3 vec = context.GetMouseWorldPosition() - context.transform.position;
+        Debug.Log(vec);
         context.MyController.LookAtTarget(vec);
     }
 
     public void OnTargetingExit(PlayerStateMachine context)
     {
         //조준UI 비활성화
-        throw new System.NotImplementedException();
+        
+        //throw new System.NotImplementedException();
     }
 }
