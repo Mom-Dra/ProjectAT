@@ -2,6 +2,9 @@ using Unity.Behavior;
 using Unity.Netcode;
 using UnityEngine;
 using MomDra;
+using Unity.Collections;
+using System.Collections;
+using Unity.VisualScripting;
 
 public abstract class Enemy : LivingEntity, IAttackable
 {
@@ -15,28 +18,43 @@ public abstract class Enemy : LivingEntity, IAttackable
     [SerializeField]
     private bool isPatrolEnemy;
 
-    // ScriptableObject
     [SerializeField]
-    private float attackRange;
+    private EnemyData enemyData;
+    public EnemyData EnemyData => enemyData;
 
     [SerializeField]
-    private float rotateSpeed;
+    private AlertData alertData;
+    public AlertData AlertData => alertData;
 
     [SerializeField]
-    private float searchRadius;
+    private float targetCheckInterval = 0.2f;
+    private WaitForSeconds targetCheckWait;
 
     internal float Time;
     internal const float WONDERTIME = 10f;
+
+    private int alertLevel;
+    public int AlertLevel => alertLevel;
+
+    // Debug용 변수
+    [SerializeField]
+    private Enemy_State enemyState;
+
+    private Coroutine targetCheckCoroutine;
 
     private void Awake()
     {
         behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
         fieldOfViewNetcode = GetComponent<FieldOfViewNetcode>();
 
-        behaviorGraphAgent.SetVariableValue("attackRange", attackRange);
-        behaviorGraphAgent.SetVariableValue("rotateSpeed", rotateSpeed);
+        fieldOfViewNetcode.SetEnemyData(enemyData);
+
+        behaviorGraphAgent.SetVariableValue("attackRange", enemyData.AttackRange);
+        behaviorGraphAgent.SetVariableValue("rotateSpeed", enemyData.RotateSpeed);
         behaviorGraphAgent.SetVariableValue("muzzle", transform.FindChildRecursive("FX_Shoot_01_muzzle"));
-        behaviorGraphAgent.SetVariableValue("searchRadius", searchRadius);
+        behaviorGraphAgent.SetVariableValue("searchRadius", enemyData.SearchRadius);
+
+        targetCheckWait = new WaitForSeconds(targetCheckInterval);
     }
 
     public override void OnNetworkSpawn()
@@ -46,6 +64,9 @@ public abstract class Enemy : LivingEntity, IAttackable
             fieldOfViewNetcode.onScanComplete += ScanCompleted;
             fieldOfViewNetcode.onScanCancel += ScanCanceled;
             fieldOfViewNetcode.onScanStart += ScanStarted;
+
+            fieldOfViewNetcode.onTargetDetect += TargetDetected;
+            fieldOfViewNetcode.onTargetLosted += TargetLosted;
 
             if (isPatrolEnemy) ChangeState(Enemy_State.Patrol);
         }
@@ -99,6 +120,76 @@ public abstract class Enemy : LivingEntity, IAttackable
         ChangeState(Enemy_State.Attack);
     }
 
+    private IEnumerator TargetDistanceCheckCoroutine()
+    {
+        while(true)
+        {
+            foreach ((Transform transform, float distance) in fieldOfViewNetcode.VisibleTargets)
+            {
+                // 1차 시야 안에 있을 경우
+                if (distance < enemyData.PrimaryViewRadius)
+                    IncreaseAlert(AlertData.MAX);
+            }
+
+            yield return targetCheckWait;
+        }
+    }
+
+    private void StartTargetDistanceCheckCoroutine()
+    {
+        if (targetCheckCoroutine == null)
+            targetCheckCoroutine = StartCoroutine(TargetDistanceCheckCoroutine());
+    }
+
+    private void StopTargetDistanceCheckCoroutine()
+    {
+        if(targetCheckCoroutine != null)
+        {
+            StopCoroutine(targetCheckCoroutine);
+            targetCheckCoroutine = null;
+        }
+    }
+
+    private void TargetDetected()
+    {
+        // Todo
+        // 1차 시야 인지 판별
+        // Target이 Detected 되었다는건 2차 시야 안에 있다는 것!
+        StartTargetDistanceCheckCoroutine();
+    }
+
+    private void TargetLosted()
+    {
+        StopTargetDistanceCheckCoroutine();
+    }
+
+    private IEnumerator IncreaseAlertCoroutine()
+    {
+        // Target이 Detect 되고 다시 1차시야로 들어오게되는 경우 -> 이것도 탐지해야 함!
+        WaitForSeconds wait = new WaitForSeconds(AlertData.AlertCheckInterval);
+        int increaseAmount = (int)(AlertData.AlertCheckInterval * AlertData.AlertPerSecond);
+
+        while (alertLevel != AlertData.MAX)
+        {
+            IncreaseAlert(increaseAmount);
+            yield return wait;
+        }
+
+        // alertLevel Coroutine 변수 사용..?
+    }
+
+    private void IncreaseAlert(int alertLevel)
+    {
+        this.alertLevel += alertLevel;
+        this.alertLevel = Mathf.Min(this.alertLevel, AlertData.MAX);
+    }
+
+    private void DecreaseAlert(int alertLevel)
+    {
+        this.alertLevel -= alertLevel;
+        this.alertLevel = Mathf.Max(this.alertLevel, AlertData.MIN);
+    }
+
     internal void ChangeDefaultState()
     {
         if (isPatrolEnemy) ChangeState(Enemy_State.Patrol);
@@ -109,6 +200,8 @@ public abstract class Enemy : LivingEntity, IAttackable
     {
         if (currentState != null)
             currentState.Exit(this);
+
+        this.enemyState = enemyState;
 
         switch (enemyState)
         {
@@ -124,7 +217,7 @@ public abstract class Enemy : LivingEntity, IAttackable
             case Enemy_State.Chase:
                 currentState = IEnemyState.ServerEnemyChaseState;
                 break;
-            case Enemy_State.Wander:
+            case Enemy_State.Search:
                 currentState = IEnemyState.ServerEnemyWonderState;
                 break;
         }
@@ -153,7 +246,7 @@ public abstract class Enemy : LivingEntity, IAttackable
             case Enemy_State.Chase:
                 currentState = IEnemyState.ClientEnemyChaseState;
                 break;
-            case Enemy_State.Wander:
+            case Enemy_State.Search:
                 currentState = IEnemyState.ClientEnemyWonderState;
                 break;
         }

@@ -21,7 +21,7 @@ public class FieldOfViewNetcodeEditor : Editor
         Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB * fow.ViewRadius);
 
         Handles.color = Color.red;
-        foreach (Transform visibleTarget in fow.VisibleTargets)
+        foreach ((Transform visibleTarget, float distance) in fow.VisibleTargets)
             Handles.DrawLine(fow.transform.position, visibleTarget.position);
     }
 }

@@ -80,7 +80,10 @@ public class ServerEnemyIdleState : EnemyIdleState
 
     public override void Update(Enemy enemy)
     {
-        // Logic for updating Idle state
+        if (enemy.AlertLevel >= enemy.AlertData.AlertThreshold)
+            enemy.ChangeState(Enemy_State.Search);
+        else if (enemy.AlertLevel >= enemy.AlertData.CombatThreshold)
+            enemy.ChangeState(Enemy_State.Chase);
     }
 
     public override void Exit(Enemy enemy)
@@ -99,15 +102,19 @@ public class ServerEnemyPatrolState : IEnemyState
 
     public void Update(Enemy enemy)
     {
-        // Logic for updating Patrol state
+        if (enemy.AlertLevel >= enemy.AlertData.AlertThreshold)
+            enemy.ChangeState(Enemy_State.Search);
+        else if (enemy.AlertLevel >= enemy.AlertData.CombatThreshold)
+            enemy.ChangeState(Enemy_State.Chase);
     }
 
     public void Exit(Enemy enemy)
     {
-        // Logic for exiting Patrol state
+
     }
 }
 
+// Chase와 Attack이 사실상 Attack State임!
 public class ServerEnemyAttackState : EnemyAttackState
 {
     public override void Enter(Enemy enemy)
@@ -120,13 +127,12 @@ public class ServerEnemyAttackState : EnemyAttackState
 
     public override void Update(Enemy enemy)
     {
-        // Logic for updating Attack state
+        // 시야에 없으면 감소!
     }
 
     public override void Exit(Enemy enemy)
     {
         base.Exit(enemy);
-        // Logic for exiting Attack state
     }
 }
 
@@ -140,7 +146,8 @@ public class ServerEnemyChaseState : IEnemyState
 
     public void Update(Enemy enemy)
     {
-
+        if (enemy.AlertLevel < enemy.AlertData.CombatThreshold)
+            enemy.ChangeState(Enemy_State.Search);
     }
 
     public void Exit(Enemy enemy)
@@ -149,12 +156,13 @@ public class ServerEnemyChaseState : IEnemyState
     }
 }
 
+// 이거 Search State로 변경하자!
 public class ServerEnemyWonderState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
         Debug.Log("Entering Server Enemy Wonder State");
-        enemy.SetBehaviorGraphAgentState(Enemy_State.Wander);
+        enemy.SetBehaviorGraphAgentState(Enemy_State.Search);
         enemy.Time = 0f;
     }
 
@@ -200,12 +208,12 @@ public class ClientEnemyPatrolState : IEnemyState
 
     public void Update(Enemy enemy)
     {
-        // Logic for updating Patrol state
+
     }
 
     public void Exit(Enemy enemy)
     {
-        // Logic for exiting Patrol state
+
     }
 }
 
@@ -215,18 +223,16 @@ public class ClientEnemyAttackState : EnemyAttackState
     {
         base.Enter(enemy);
         Debug.Log("Entering Client Enemy Attack State");
-        // Logic for entering Attack state
     }
 
     public override void Update(Enemy enemy)
     {
-        // Logic for updating Attack state
+
     }
 
     public override void Exit(Enemy enemy)
     {
         base.Exit(enemy);
-        // Logic for exiting Attack state
     }
 }
 

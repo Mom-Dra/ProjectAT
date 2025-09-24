@@ -128,8 +128,10 @@
     <Compile Include="Assets\Scripts\Abstract\IThrowable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WanderAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerWalkState.cs" />
+    <Compile Include="Assets\Scripts\Enemy\AlertData.cs" />
     <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
     <Compile Include="Assets\Scripts\Abstract\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Inputs\InputReader.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponStraight.cs" />
     <Compile Include="Assets\Scripts\View\SightOfView.cs" />

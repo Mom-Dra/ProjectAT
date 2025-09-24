@@ -40,16 +40,8 @@ public class FieldOfViewNetcode : NetworkBehaviour
     }
 
     [SerializeField]
-    private float fixedRadius;
-    public float FixedRadius => fixedRadius;
-
-    [SerializeField]
     private float viewRadius;
     public float ViewRadius => viewRadius;
-
-    [SerializeField, Range(0f, 360f)]
-    private float viewAngle = 90f;
-    public float ViewAngle => viewAngle;
 
     [SerializeField]
     private LayerMask targetMask;
@@ -58,9 +50,12 @@ public class FieldOfViewNetcode : NetworkBehaviour
 
     [SerializeField]
     private float scanTime = 5f;
+    [SerializeField]
+    private float detectInterval = 0.2f;
+    private WaitForSeconds detectWait;
 
-    private List<Transform> visibleTargets = new List<Transform>();
-    public IReadOnlyList<Transform> VisibleTargets => visibleTargets;
+    private List<(Transform transform, float distance)> visibleTargets = new List<(Transform transform, float distance)>();
+    public IReadOnlyList<(Transform transform, float distance)> VisibleTargets => visibleTargets;
 
     [SerializeField]
     private float meshReolution;
@@ -88,8 +83,11 @@ public class FieldOfViewNetcode : NetworkBehaviour
 
     private Collider[] colliders = new Collider[4];
 
-    //public event System.Action<Transform> onTargetDetect;
-    //public event System.Action onTargetLost;
+    private EnemyData enemyData;
+    public float ViewAngle => enemyData.ViewAngle;
+
+    public event System.Action onTargetDetect;
+    public event System.Action onTargetLosted;
 
     private void Awake()
     {
@@ -98,24 +96,20 @@ public class FieldOfViewNetcode : NetworkBehaviour
 
         fixedMeshFilter.mesh = fixedMesh;
         viewmeshFilter.mesh = viewMesh;
+
+        detectWait = new WaitForSeconds(detectInterval);
     }
 
     private void OnEnable()
     {
-        if(detectLoopCoroutine == null)
-        {
-            detectLoopCoroutine = StartCoroutine(ServerDetectLoop());
-        }
+        StartDetectLoop();
     }
 
     public override void OnNetworkSpawn()
     {
         if (IsServer)
         {
-            if (detectLoopCoroutine == null)
-            {
-                detectLoopCoroutine = StartCoroutine(ServerDetectLoop());
-            }
+            StartDetectLoop();
         }
 
         isDetected.OnValueChanged += OnIsDetected;
@@ -123,11 +117,7 @@ public class FieldOfViewNetcode : NetworkBehaviour
 
     private void OnDisable()
     {
-        if (detectLoopCoroutine != null)
-        {
-            StopCoroutine(detectLoopCoroutine);
-            detectLoopCoroutine = null;
-        }
+        StopDetectLoop();
     }
 
     public override void OnNetworkDespawn()
@@ -151,9 +141,31 @@ public class FieldOfViewNetcode : NetworkBehaviour
         else CancelScan();
     }
 
+    public void SetEnemyData(EnemyData enemyData)
+    {
+        this.enemyData = enemyData;
+    }
+
+    private void StartDetectLoop()
+    {
+        if (detectLoopCoroutine == null)
+        {
+            detectLoopCoroutine = StartCoroutine(ServerDetectLoop());
+        }
+    }
+
+    private void StopDetectLoop()
+    {
+        if (detectLoopCoroutine != null)
+        {
+            StopCoroutine(detectLoopCoroutine);
+            detectLoopCoroutine = null;
+        }
+    }
+
     private IEnumerator GrowingCoroutine()
     {
-        yield return AnimateRadiusCoroutine(fixedRadius);
+        yield return AnimateRadiusCoroutine(enemyData.SecondaryViewRadius);
 
         viewRadius = 0f;
 
@@ -190,7 +202,7 @@ public class FieldOfViewNetcode : NetworkBehaviour
         float startRadius = viewRadius;
         float journey = Mathf.Abs(targetRadius - startRadius);
 
-        float duration = scanTime * (journey / fixedRadius);
+        float duration = scanTime * (journey / enemyData.SecondaryViewRadius);
 
         if (duration <= 0f) yield break;
 
@@ -198,7 +210,7 @@ public class FieldOfViewNetcode : NetworkBehaviour
         {
             viewRadius = Mathf.Lerp(startRadius, targetRadius, time / duration);
             DrawFieldOfView(viewMesh, viewRadius);
-            DrawFieldOfView(fixedMesh, fixedRadius);
+            DrawFieldOfView(fixedMesh, enemyData.SecondaryViewRadius);
 
             time += Time.deltaTime;
             yield return null;
@@ -214,12 +226,20 @@ public class FieldOfViewNetcode : NetworkBehaviour
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f);
 
+        int beforeDetectedCount = 0;
+
         while (true)
         {
             bool detectedNow = CheckDetectedServer();
 
+            if (visibleTargets.Count > beforeDetectedCount)
+                onTargetDetect?.Invoke();
+            else if (!detectedNow) onTargetLosted?.Invoke();
+
             if (isDetected.Value != detectedNow)
                 isDetected.Value = detectedNow;
+
+            beforeDetectedCount = visibleTargets.Count;
 
             yield return wait;
         }
@@ -255,38 +275,35 @@ public class FieldOfViewNetcode : NetworkBehaviour
     {
         visibleTargets.Clear();
 
-        int count = Physics.OverlapSphereNonAlloc(transform.position, fixedRadius, colliders, targetMask);
+        int count = Physics.OverlapSphereNonAlloc(transform.position, enemyData.SecondaryViewRadius, colliders, targetMask);
 
         for (int i = 0; i < count; ++i)
         {
-            Transform t = colliders[i].transform;
-            Vector3 dir = (t.position - transform.position).normalized;
+            Transform target = colliders[i].transform;
+            Vector3 dir = (target.position - transform.position).normalized;
 
-            if (Vector3.Angle(transform.forward, dir) < viewAngle * 0.5f)
+            if (Vector3.Angle(transform.forward, dir) < enemyData.ViewAngle * 0.5f)
             {
-                float dst = Vector3.Distance(transform.position, t.position);
+                float dst = Vector3.Distance(transform.position, target.position);
 
                 if (!Physics.Raycast(transform.position, dir, dst, obstacleMask))
-                    visibleTargets.Add(t);
+                    visibleTargets.Add((target, dst));
             }
         }
-
-        //if (visibleTargets.Count > 0) onTargetDetect?.Invoke(visibleTargets[0]);
-        //else onTargetLost?.Invoke();
 
         return visibleTargets.Count > 0;
     }
 
     private void DrawFieldOfView(Mesh mesh, float radius)
     {
-        int stepCount = Mathf.Max(1, Mathf.RoundToInt(viewAngle * meshReolution));
-        float stepAngleSize = viewAngle / stepCount;
+        int stepCount = Mathf.Max(1, Mathf.RoundToInt(enemyData.ViewAngle * meshReolution));
+        float stepAngleSize = enemyData.ViewAngle / stepCount;
         List<Vector3> viewPoints = new List<Vector3>(stepCount);
         ViewCastInfo oldViewCast = new ViewCastInfo();
 
         for (int i = 0; i <= stepCount; ++i)
         {
-            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
+            float angle = transform.eulerAngles.y - enemyData.ViewAngle / 2 + stepAngleSize * i;
             ViewCastInfo newViewCast = ViewCast(angle, radius);
 
             if (i > 0)
@@ -331,8 +348,8 @@ public class FieldOfViewNetcode : NetworkBehaviour
 
     private void DrawSimpleWedge()
     {
-        int stepCount = Mathf.Max(1, Mathf.RoundToInt(viewAngle * meshReolution));
-        float stepAngleSize = viewAngle / stepCount;
+        int stepCount = Mathf.Max(1, Mathf.RoundToInt(enemyData.ViewAngle * meshReolution));
+        float stepAngleSize = enemyData.ViewAngle / stepCount;
 
         int vertexCount = stepCount + 2;
         Vector3[] vertices = new Vector3[vertexCount];
@@ -342,7 +359,7 @@ public class FieldOfViewNetcode : NetworkBehaviour
 
         for (int i = 0; i <= stepCount; ++i)
         {
-            float localAng = -viewAngle * 0.5f + stepAngleSize * i;
+            float localAng = -enemyData.ViewAngle * 0.5f + stepAngleSize * i;
             float rad = localAng * Mathf.Deg2Rad;
 
             Vector3 localDir = new Vector3(Mathf.Sin(rad), 0f, Mathf.Cos(rad));

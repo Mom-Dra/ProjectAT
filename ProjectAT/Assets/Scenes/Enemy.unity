@@ -371,6 +371,18 @@ PrefabInstance:
       value: PatrolEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: alertData
+      value: 
+      objectReference: {fileID: 11400000, guid: 1d4a6662ebe6c8a47a81ef24cad0ee35, type: 2}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9dcf25dbfb8fa2a48b1b388759bcbe45, type: 2}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: enemyState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: rotateSpeed
       value: 5
       objectReference: {fileID: 0}
@@ -384,7 +396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8916578690304789819, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: scanTime
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

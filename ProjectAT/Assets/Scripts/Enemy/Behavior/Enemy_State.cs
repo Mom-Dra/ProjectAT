@@ -8,5 +8,5 @@ public enum Enemy_State
 	Patrol,
 	Attack,
 	Chase,
-	Wander
+	Search
 }
