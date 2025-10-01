@@ -20,7 +20,7 @@ public class SkillCastingStateBase : EntityState
         switch (type)
         {
             case PlayerInputType.LeftClick:
-                context.ChangeStateServerRpc(PlayerStateMachine.StateId.Walk);
+                context.ChangeState(PlayerStateMachine.StateId.Walk);
                 break;
         }
     }

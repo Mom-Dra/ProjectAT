@@ -8,7 +8,7 @@ public class PlayerIdleStateBase : EntityState
 
     public override void Enter()
     {
-        context.MyAgent.ResetPath();
+        context.PlayerController.PlayerIdle();
     }
 
     public override void Exit()
@@ -19,12 +19,12 @@ public class PlayerIdleStateBase : EntityState
     {
         switch (type)
         {
-            case PlayerInputType.LeftClick:
-                context.ChangeStateServerRpc(PlayerStateMachine.StateId.Walk);
+            case PlayerInputType.RightClick:
+                context.ChangeState(PlayerStateMachine.StateId.Walk);
                 break;
             case PlayerInputType.DesignatedFireKey:
                 Debug.Log("idle -> Desginate");
-                context.ChangeStateServerRpc(PlayerStateMachine.StateId.SkillTargeting, 0);
+                //context.ChangeState(PlayerStateMachine.StateId.SkillTargeting, 0);
                 break;
             default:
                 break;

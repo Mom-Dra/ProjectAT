@@ -1,3 +1,6 @@
+using EPOOutline.Demo;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,48 +19,71 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public EffectModule MyEffectModule { get; private set; }
     [SerializeField] private CameraController cameraController;
+
+    //State Machines
     private PlayerStateMachine myStateMachine;
+    [SerializeField] private float tickRate = 0.2f;
+    private float lastUpdatedTime = 0f;
 
     //utils
-    private readonly Collider[] detectedCollider = new Collider[32];
+    private readonly Collider[] detectedCollider = new Collider[8];
 
+    #region 유니티 이벤트
     private void Awake()
     {
         MyAgent = GetComponent<NavMeshAgent>();
         MyStatus = GetComponent<EntityStatus>();
-        myStateMachine = GetComponent<PlayerStateMachine>();
         MyWeapon = transform.GetChild(1).GetComponent<WeaponStatus>();
         MyAnim = transform.GetChild(0).GetComponent<Animator>();
         MyEffectModule = GetComponent<EffectModule>();
-    }
-    private void Start()
-    {
-        MyAgent.speed = MyStatus.WalkSpeed.Value;
+        cameraController = FindFirstObjectByType<CameraController>();
+        
 
+        myStateMachine = new PlayerStateMachine(this);
     }
 
-    public void InitiateSettings()
+    private void OnEnable()
     {
-        cameraController = FindAnyObjectByType<CameraController>();
-        //cameraController.SetCameraTarget(transform);
+        ChangePlayerSpeed(MyStatus.WalkSpeed);
         LinkInputEventsAll();
     }
 
-    public void LinkInputEventsAll()
+    private void Update()
+    {
+        if (Time.time - lastUpdatedTime <= tickRate)
+        {
+            myStateMachine.OnUpdate();
+            lastUpdatedTime = Time.time;
+        }
+    }
+
+    private void OnDisable()
+    {
+        UnLinkInputEventsAll();
+    }
+    #endregion
+
+    #region 초기화
+    private void LinkInputEventsAll()
     {
         inputReader.InputEvent += HandleInput;
     }
 
-    public void UnLinkInputEventsAll()
+    private void UnLinkInputEventsAll()
     {
         inputReader.InputEvent -= HandleInput;
     }
+    #endregion
+    #region 상태머신 관련
+
 
     private void HandleInput(PlayerInputType type)
     {
         myStateMachine.HandleInput(type);
     }
+    #endregion
 
+    #region 필요 기능 함수
     public Vector3 GetMouseWorldPosition()
     {
         RaycastHit ray;
@@ -69,8 +95,35 @@ public class PlayerController : MonoBehaviour
             return Vector3.zero;
     }
 
+    public void PlayerIdle()
+    {
+        StopMoving();
+        ChangePlayerSpeed(MyStatus.WalkSpeed);
+    }
+
+    public void PlayerWalk()
+    {
+        PlayerMove(MyStatus.WalkSpeed);
+    }
+    public void PlayerRun()
+    {
+        PlayerMove(MyStatus.RunSpeed);
+    }
+
+    private void PlayerMove(float speed)
+    {
+        ChangePlayerSpeed(speed);
+        MovePosition(GetMouseWorldPosition());
+        MyAnim.SetBool("isWalking", true);
+    }
+
+    private void ChangePlayerSpeed(float speed)
+    {
+        MyAgent.speed = MyStatus.CurrentSpeed = speed;
+    }
+
     //NavMeshAgent 목표 설정 함수
-    public void MovePosition(Vector3 pos)
+    private void MovePosition(Vector3 pos)
     {
         Vector3 moveVec = (pos - transform.position).normalized;
 
@@ -78,11 +131,29 @@ public class PlayerController : MonoBehaviour
         MyAgent.SetDestination(pos);
     }
 
+    public void StopMoving()
+    {
+        MyAgent.ResetPath();
+        MyAnim.SetBool("isWalking", false);
+    }
+
+    public bool IsArrivedDestination()
+    {
+        if (!MyAgent.pathPending)
+        {
+            if (MyAgent.remainingDistance <= MyAgent.stoppingDistance)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public Enemy FindNearEnemy()
     {
         if (Physics.OverlapSphereNonAlloc(transform.position + Vector3.up * 0.5f, MyWeapon.Radius, detectedCollider, LayerMask.GetMask("Enemy")) != 0)
         {
-            foreach(var coll in detectedCollider)
+
+            foreach (var coll in detectedCollider)
             {
                 if (coll)
                 {
@@ -106,7 +177,6 @@ public class PlayerController : MonoBehaviour
         {
             target.GetComponent<Enemy>().TakeDamage(damage);
             MyStatus.ResetAttackCoolTime();
-            myStateMachine.AttackEnemyClientRpc(target);
         }
     }
 
@@ -116,11 +186,14 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toTarget, Vector3.up), 20.0f);
     }
 
-    public bool IsClickSamePosition()
+    public bool IsClickSameDestination()
     {
         Vector3 pos = GetMouseWorldPosition();
         Vector3 dest = MyAgent.destination;
 
-        return pos.x == dest.x && pos.z == dest.z && (Mathf.Abs(pos.y - dest.y) <= 0.1);
+        //마우스 클릭 인디케이터 프리펩을 만들면 그 인디케이터를 raycast 해서 같은 지점을 확인하는 알고리즘 써도 될듯.
+
+        return (pos - dest).sqrMagnitude <= 0.01f;
     }
+    #endregion
 }

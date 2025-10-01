@@ -9,10 +9,10 @@ public class ServerPlayerIdleState : PlayerIdleStateBase
 
     public override void OnUpdate()
     {
-        var enemy = context.FindNearEnemy();
+        var enemy = context.PlayerController.FindNearEnemy();
         if (enemy)
         {
-            context.ChangeStateServerRpc(PlayerStateMachine.StateId.Attack);
+            context.ChangeState(PlayerStateMachine.StateId.Attack);
         }
     }
 }

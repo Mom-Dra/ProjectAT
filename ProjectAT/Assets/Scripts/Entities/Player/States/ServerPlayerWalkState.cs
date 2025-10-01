@@ -9,7 +9,7 @@ public class ServerPlayerWalkState : PlayerWalkStateBase
 
     public override void OnUpdate()
     {
-        if (context.IsArrivedToDest())
-            context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);
+        /*if (context.IsArrivedToDest())
+            context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);*/
     }
 }

@@ -23,11 +23,11 @@ public class SkillTargetingStateBase : EntityState
                 if (SkillStrategy.TryCommit(context)) //context에서 raycast를 사용하는것이 좋을듯
                 {
                     Debug.Log("SKillTargetng: Success");
-                    context.ChangeStateServerRpc(PlayerStateMachine.StateId.SkillCasting, 0);
+                    //context.ChangeState(PlayerStateMachine.StateId.SkillCasting, 0);
                 }
                 else
                 {
-                    context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);
+                    context.ChangeState(PlayerStateMachine.StateId.Idle);
                 }
                 break;
         }

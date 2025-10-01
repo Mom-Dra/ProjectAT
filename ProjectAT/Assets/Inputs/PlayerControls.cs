@@ -92,15 +92,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""dc2dc92a-166d-4e73-a012-ea7bd30d7101"",
             ""actions"": [
                 {
-                    ""name"": ""Clicked"",
-                    ""type"": ""Button"",
-                    ""id"": ""c4c9e924-7289-479d-b3f0-7abeecccb015"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""MouseMove"",
                     ""type"": ""Value"",
                     ""id"": ""91733c76-239e-404c-85dd-1e0d2ea2e0f2"",
@@ -110,9 +101,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Run"",
+                    ""name"": ""Clicked"",
                     ""type"": ""Button"",
-                    ""id"": ""e281015e-45a1-4260-9267-de5862fa8ec1"",
+                    ""id"": ""c4c9e924-7289-479d-b3f0-7abeecccb015"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -143,22 +134,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""583fb873-f4cb-454d-9491-9276ba97557f"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": "";PC"",
                     ""action"": ""Clicked"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cfcc21ef-7fe3-4a7e-97ec-8c1eca8e6014"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""MultiTap,Press"",
-                    ""processors"": """",
-                    ""groups"": "";PC"",
-                    ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -186,9 +166,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Clicked = m_Player.FindAction("Clicked", throwIfNotFound: true);
         m_Player_MouseMove = m_Player.FindAction("MouseMove", throwIfNotFound: true);
-        m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+        m_Player_Clicked = m_Player.FindAction("Clicked", throwIfNotFound: true);
         m_Player_DesignatedFire = m_Player.FindAction("DesignatedFire", throwIfNotFound: true);
     }
 
@@ -270,9 +249,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Clicked;
     private readonly InputAction m_Player_MouseMove;
-    private readonly InputAction m_Player_Run;
+    private readonly InputAction m_Player_Clicked;
     private readonly InputAction m_Player_DesignatedFire;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
@@ -286,17 +264,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Player/Clicked".
-        /// </summary>
-        public InputAction @Clicked => m_Wrapper.m_Player_Clicked;
-        /// <summary>
         /// Provides access to the underlying input action "Player/MouseMove".
         /// </summary>
         public InputAction @MouseMove => m_Wrapper.m_Player_MouseMove;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Run".
+        /// Provides access to the underlying input action "Player/Clicked".
         /// </summary>
-        public InputAction @Run => m_Wrapper.m_Player_Run;
+        public InputAction @Clicked => m_Wrapper.m_Player_Clicked;
         /// <summary>
         /// Provides access to the underlying input action "Player/DesignatedFire".
         /// </summary>
@@ -327,15 +301,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @Clicked.started += instance.OnClicked;
-            @Clicked.performed += instance.OnClicked;
-            @Clicked.canceled += instance.OnClicked;
             @MouseMove.started += instance.OnMouseMove;
             @MouseMove.performed += instance.OnMouseMove;
             @MouseMove.canceled += instance.OnMouseMove;
-            @Run.started += instance.OnRun;
-            @Run.performed += instance.OnRun;
-            @Run.canceled += instance.OnRun;
+            @Clicked.started += instance.OnClicked;
+            @Clicked.performed += instance.OnClicked;
+            @Clicked.canceled += instance.OnClicked;
             @DesignatedFire.started += instance.OnDesignatedFire;
             @DesignatedFire.performed += instance.OnDesignatedFire;
             @DesignatedFire.canceled += instance.OnDesignatedFire;
@@ -350,15 +321,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="PlayerActions" />
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @Clicked.started -= instance.OnClicked;
-            @Clicked.performed -= instance.OnClicked;
-            @Clicked.canceled -= instance.OnClicked;
             @MouseMove.started -= instance.OnMouseMove;
             @MouseMove.performed -= instance.OnMouseMove;
             @MouseMove.canceled -= instance.OnMouseMove;
-            @Run.started -= instance.OnRun;
-            @Run.performed -= instance.OnRun;
-            @Run.canceled -= instance.OnRun;
+            @Clicked.started -= instance.OnClicked;
+            @Clicked.performed -= instance.OnClicked;
+            @Clicked.canceled -= instance.OnClicked;
             @DesignatedFire.started -= instance.OnDesignatedFire;
             @DesignatedFire.performed -= instance.OnDesignatedFire;
             @DesignatedFire.canceled -= instance.OnDesignatedFire;
@@ -416,13 +384,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Clicked" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnClicked(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "MouseMove" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -430,12 +391,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouseMove(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Run" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Clicked" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnRun(InputAction.CallbackContext context);
+        void OnClicked(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "DesignatedFire" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

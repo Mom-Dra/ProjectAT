@@ -9,7 +9,7 @@ public class ServerPlayerRunState : PlayerRunStateBase
 
     public override void OnUpdate()
     {
-        if (context.IsArrivedToDest())
-            context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);
+        //if (context.IsArrivedToDest())
+            //context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);
     }
 }

@@ -31,21 +31,13 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
         {
-            InputEvent?.Invoke(PlayerInputType.LeftClick);
+            InputEvent?.Invoke(PlayerInputType.RightClick);
         }
     }
 
     public void OnMouseMove(InputAction.CallbackContext context)
     {
         MousePosition = context.ReadValue<Vector2>();
-    }
-
-    public void OnRun(InputAction.CallbackContext context) //삭제해야할듯
-    {
-        if (context.performed)
-        {
-            Debug.Log("DobuleClicked");
-        }
     }
 
     public void OnDesignatedFire(InputAction.CallbackContext context)

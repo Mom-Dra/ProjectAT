@@ -9,10 +9,10 @@ public class ServerSkillCastingState : SkillCastingStateBase
 
     public override void OnUpdate()
     {
-        if(context)
+/*        if(context)
         {
             SkillStrategy.OnCastingUpdate(context);
             //context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle); // 스킬 시전 애니메이션 나오는게 필요함. 어떻게? exacute에서 전환?
         }
-    }
+*/    }
 }

@@ -28,6 +28,6 @@ public class EntityController : NetworkBehaviour
 
     public bool IsAlive()
     {
-        return !myStatus.IsDead.Value;
+        return !myStatus.IsDead;
     }
 }

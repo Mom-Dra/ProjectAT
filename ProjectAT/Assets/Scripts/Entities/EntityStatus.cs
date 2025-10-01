@@ -1,72 +1,70 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class EntityStatus: NetworkBehaviour
+public class EntityStatus: MonoBehaviour
 {
     //References
     [SerializeField] private WeaponStatus myWeapon;
     [SerializeField] private EntityInitialStatus initStatus;
 
-    //NetworkVariables
-    public NetworkVariable<int> CurrentHp = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    public NetworkVariable<int> MaxHp = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    public NetworkVariable<float> WalkSpeed = new(0.0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    public NetworkVariable<float> RunSpeed = new(0.0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    public NetworkVariable<bool> IsDead = new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    public NetworkVariable<float> CurrAttackCoolTime = new(0.0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-    public NetworkVariable<float> MaxAttackCoolTime = new(0.0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public int CurrentHp { get; set; }
+    public float CurrentSpeed { get; set; }
+    public int MaxHp { get; private set; }
+    public float WalkSpeed { get; private set; }
+    public float RunSpeed { get; private set; }
+    public bool IsDead { get; private set; }
+    public float CurrAttackCoolTime { get; private set; }
+    public float MaxAttackCoolTime { get; private set; }
 
 
-    public override void OnNetworkSpawn()
+    private void OnEnable()
     {
-        if (IsServer)
-        {
-            InitStatus();
-        }
+        InitStatus();
     }
+
 
     private void InitStatus()
     {
-        MaxHp.Value = initStatus.MaxHp; 
-        CurrentHp.Value = MaxHp.Value;
-        WalkSpeed.Value = initStatus.WalkSpeed;
-        RunSpeed.Value = initStatus.RunSpeed;
-        IsDead.Value = false;
+        MaxHp = initStatus.MaxHp;
+        CurrentHp = MaxHp;
+        WalkSpeed = initStatus.WalkSpeed;
+        RunSpeed = initStatus.RunSpeed;
+        IsDead = false;
 
         myWeapon = transform.GetChild(1).GetComponent<WeaponStatus>();
         if (myWeapon)
         {
-            MaxAttackCoolTime.Value = 2.0f;
+            MaxAttackCoolTime = 2.0f;
         }
     }
 
     public void Update()
     {
-        if(IsServer && CurrAttackCoolTime.Value >0.0f)
+        if (CurrAttackCoolTime > 0.0f) 
         {
-            CurrAttackCoolTime.Value -= Time.deltaTime;
+            CurrAttackCoolTime -= Time.deltaTime;
         }
     }
 
     public void TakeDamage(int damage)
     {
-        CurrentHp.Value -= damage;
+        CurrentHp -= damage;
         Debug.Log("Hit");
-        if (CurrentHp.Value <= 0)
+        if (CurrentHp <= 0)
         {
-            IsDead.Value = true;
+            IsDead = true;
             Debug.Log("Dead!");    
         }
     }
 
     public bool CanFire()
     {
-        return CurrAttackCoolTime.Value <= 0;
+        return CurrAttackCoolTime <= 0;
     }
 
     public void ResetAttackCoolTime()
     {
         Debug.Log("ResetCoolTime");
-        CurrAttackCoolTime.Value = MaxAttackCoolTime.Value;
+        CurrAttackCoolTime = MaxAttackCoolTime;
     }
 }

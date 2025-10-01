@@ -6,15 +6,6 @@
             "id": "dc2dc92a-166d-4e73-a012-ea7bd30d7101",
             "actions": [
                 {
-                    "name": "Clicked",
-                    "type": "Button",
-                    "id": "c4c9e924-7289-479d-b3f0-7abeecccb015",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "MouseMove",
                     "type": "Value",
                     "id": "91733c76-239e-404c-85dd-1e0d2ea2e0f2",
@@ -24,9 +15,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Run",
+                    "name": "Clicked",
                     "type": "Button",
-                    "id": "e281015e-45a1-4260-9267-de5862fa8ec1",
+                    "id": "c4c9e924-7289-479d-b3f0-7abeecccb015",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -57,22 +48,11 @@
                 {
                     "name": "",
                     "id": "583fb873-f4cb-454d-9491-9276ba97557f",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";PC",
                     "action": "Clicked",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cfcc21ef-7fe3-4a7e-97ec-8c1eca8e6014",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "MultiTap,Press",
-                    "processors": "",
-                    "groups": ";PC",
-                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
