@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 public class PlayerStateMachine
 {
-    public enum StateId : ushort { Idle, Walk, Run, Attack, SkillTargeting, SkillCasting }
+    public enum StateId : ushort { None, Idle, Walk, Run, Chase, Attack, SkillTargeting, SkillCasting }
 
     [SerializeField] private PlayerController myController;
     [SerializeField] private PlayerSkillStrategyMap mySkillMap = new PlayerSkillStrategyMap();
@@ -24,6 +24,7 @@ public class PlayerStateMachine
     public PlayerIdleStateBase IdleState { get; private set; }
     public PlayerWalkStateBase WalkState { get; private set; }
     public PlayerRunStateBase RunState { get; private set; }
+    public PlayerChaseStateBase ChaseState { get; private set; }
     public PlayerAttackStateBase AttackState { get; private set; }
     public SkillTargetingStateBase SkillTargetingState{ get; private set; }
     public SkillCastingStateBase SkillCastingState { get; private set; }
@@ -47,6 +48,7 @@ public class PlayerStateMachine
         CurrentState = IdleState = new PlayerIdleStateBase(this);
         WalkState = new PlayerWalkStateBase(this);
         RunState = new PlayerRunStateBase(this);
+        ChaseState = new PlayerChaseStateBase(this);
         AttackState = new PlayerAttackStateBase(this);
         //SkillTargetingState = new SkillTargetingStateBase(myController);
         //SkillCastingState = new SkillCastingStateBase(myController);
@@ -57,6 +59,7 @@ public class PlayerStateMachine
         stateDic.Add(StateId.Idle, IdleState);
         stateDic.Add(StateId.Walk, WalkState);
         stateDic.Add(StateId.Run, RunState);
+        stateDic.Add(StateId.Chase, ChaseState);
         stateDic.Add(StateId.Attack, AttackState);
         //stateDic.Add(StateId.SkillTargeting, SkillTargetingState);
         //stateDic.Add(StateId.SkillCasting, SkillCastingState);

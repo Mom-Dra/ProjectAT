@@ -7,6 +7,7 @@ public class PlayerRunStateBase : EntityState
 
     public override void Enter()
     {
+        Debug.Log("run");
         context.PlayerController.PlayerRun();
     }
 
@@ -19,14 +20,14 @@ public class PlayerRunStateBase : EntityState
         switch (type)
         {
             case PlayerInputType.RightClick:
-                if (context.PlayerController.IsClickSameDestination())
+                PlayerStateMachine.StateId nextState = context.PlayerController.CalCulateNextStateByMouseRaycast();
+                if (nextState == PlayerStateMachine.StateId.Chase)
                 {
-                    context.ChangeState(PlayerStateMachine.StateId.Run);
+                    context.ChaseState.SetChaseState(context.PlayerController.MyWeapon.Radius, PlayerStateMachine.StateId.Attack);
+                    context.ChangeState(PlayerStateMachine.StateId.Chase);
                 }
                 else
-                {
-                    context.ChangeState(PlayerStateMachine.StateId.Walk);
-                }
+                    context.ChangeState(nextState);
                 break;
             default:
                 break;
@@ -38,6 +39,11 @@ public class PlayerRunStateBase : EntityState
         if (context.PlayerController.IsArrivedDestination())
         {
             context.ChangeState(PlayerStateMachine.StateId.Idle);
+        }
+
+        if (context.PlayerController.IsInAttackRange(context.PlayerController.SelectedEnemy))
+        {
+            context.ChangeState(PlayerStateMachine.StateId.Attack);
         }
     }
 }

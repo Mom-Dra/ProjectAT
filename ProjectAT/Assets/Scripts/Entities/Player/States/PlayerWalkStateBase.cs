@@ -5,18 +5,12 @@ public class PlayerWalkStateBase : EntityState
     public PlayerWalkStateBase(PlayerStateMachine context) : base(context) { }
     public override void Enter()
     {
+        Debug.Log("Walk");
         context.PlayerController.PlayerWalk();
     }
 
     public override void Exit()
-    { }
-
-    public override void OnUpdate()
-    {
-        if (context.PlayerController.IsArrivedDestination())
-        {
-            context.ChangeState(PlayerStateMachine.StateId.Idle);
-        }
+    { 
     }
 
     public override void HandleInput(PlayerInputType type)
@@ -24,15 +18,22 @@ public class PlayerWalkStateBase : EntityState
         switch (type)
         {
             case PlayerInputType.RightClick:
-                if (context.PlayerController.IsClickSameDestination())
+                PlayerStateMachine.StateId nextState = context.PlayerController.CalCulateNextStateByMouseRaycast();
+                if (nextState == PlayerStateMachine.StateId.Chase)
                 {
-                    context.ChangeState(PlayerStateMachine.StateId.Run);
+                    context.ChaseState.SetChaseState(context.PlayerController.MyWeapon.Radius, PlayerStateMachine.StateId.Attack);
+                    context.ChangeState(PlayerStateMachine.StateId.Chase);
                 }
                 else
-                {
-                    context.ChangeState(PlayerStateMachine.StateId.Walk);
-                }
+                    context.ChangeState(nextState);
                 break;
+        }
+    }
+    public override void OnUpdate()
+    {
+        if (context.PlayerController.IsArrivedDestination())
+        {
+            context.ChangeState(PlayerStateMachine.StateId.Idle);
         }
     }
 }

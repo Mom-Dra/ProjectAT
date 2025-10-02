@@ -19,13 +19,29 @@ public class PlayerAttackStateBase : EntityState
     {
         switch (type)
         {
-            case PlayerInputType.LeftClick:
-                //context.ChangeStateServerRpc(PlayerStateMachine.StateId.Walk);
+            case PlayerInputType.RightClick:
+                PlayerStateMachine.StateId nextState = context.PlayerController.CalCulateNextStateByMouseRaycast();
+                if (nextState != PlayerStateMachine.StateId.Chase) //공격이 아니면
+                {
+                    context.PlayerController.SetTargetEnemy(null); //타겟 초기화
+                    context.ChangeState(nextState);
+                }
                 break;
         }
     }
 
     public override void OnUpdate()
     {
+        if(context.PlayerController.SelectedEnemy == null)  //적이 죽으면
+        {
+            context.ChangeState(PlayerStateMachine.StateId.Idle);
+        }
+        else if (!context.PlayerController.IsInAttackRange(context.PlayerController.SelectedEnemy)) //적이 사정거리 밖으로 나가면
+        {
+            context.ChaseState.SetChaseState(context.PlayerController.MyWeapon.Radius, PlayerStateMachine.StateId.Attack);
+            context.ChangeState(PlayerStateMachine.StateId.Chase);
+        }
+        Debug.Log("공격!!");
+        return;
     }
 }

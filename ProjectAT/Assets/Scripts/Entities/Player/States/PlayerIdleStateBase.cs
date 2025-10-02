@@ -8,6 +8,7 @@ public class PlayerIdleStateBase : EntityState
 
     public override void Enter()
     {
+        Debug.Log("Idle");
         context.PlayerController.PlayerIdle();
     }
 
@@ -20,7 +21,16 @@ public class PlayerIdleStateBase : EntityState
         switch (type)
         {
             case PlayerInputType.RightClick:
-                context.ChangeState(PlayerStateMachine.StateId.Walk);
+                PlayerStateMachine.StateId nextState = context.PlayerController.CalCulateNextStateByMouseRaycast();
+                if (nextState == PlayerStateMachine.StateId.Chase)
+                {
+                    context.ChaseState.SetChaseState(context.PlayerController.MyWeapon.Radius, PlayerStateMachine.StateId.Attack);
+                    context.ChangeState(PlayerStateMachine.StateId.Chase);
+                }
+                else
+                {
+                    context.ChangeState(nextState);
+                }
                 break;
             case PlayerInputType.DesignatedFireKey:
                 Debug.Log("idle -> Desginate");
@@ -33,5 +43,11 @@ public class PlayerIdleStateBase : EntityState
 
     public override void OnUpdate()
     {
+        Enemy enemy = context.PlayerController.FindNearestEnemy();
+        if (enemy)
+        {
+            context.PlayerController.SetTargetEnemy(enemy);
+            context.ChangeState(PlayerStateMachine.StateId.Attack);
+        }
     }
 }

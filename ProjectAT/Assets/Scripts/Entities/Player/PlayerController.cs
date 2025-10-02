@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
     //utils
     private readonly Collider[] detectedCollider = new Collider[8];
 
+    //for battel
+    public Enemy SelectedEnemy { get; private set; }
+    [SerializeField] private LayerMask enemyLayer;
+
     #region 유니티 이벤트
     private void Awake()
     {
@@ -76,14 +80,39 @@ public class PlayerController : MonoBehaviour
     #endregion
     #region 상태머신 관련
 
-
     private void HandleInput(PlayerInputType type)
     {
         myStateMachine.HandleInput(type);
     }
+
+    public PlayerStateMachine.StateId CalCulateNextStateByMouseRaycast()
+    {
+        RaycastHit casted = MouseRaycast();
+
+        if (casted.collider != null)
+        {
+            if (casted.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                SetTargetEnemy(casted.collider.GetComponent<Enemy>());
+                return PlayerStateMachine.StateId.Chase;
+            }
+            else if (casted.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                if (IsClickSameDestination(casted.point))
+                {
+                    return PlayerStateMachine.StateId.Run;
+                }
+                else
+                {
+                    return PlayerStateMachine.StateId.Walk;
+                }
+            }
+        }
+        return PlayerStateMachine.StateId.None;
+    }
     #endregion
 
-    #region 필요 기능 함수
+    #region 이동 관련 함수
     public Vector3 GetMouseWorldPosition()
     {
         RaycastHit ray;
@@ -123,12 +152,16 @@ public class PlayerController : MonoBehaviour
     }
 
     //NavMeshAgent 목표 설정 함수
-    private void MovePosition(Vector3 pos)
+    public void MovePosition(Vector3 pos)
     {
         Vector3 moveVec = (pos - transform.position).normalized;
 
         MyAgent.velocity = moveVec * MyAgent.speed;
         MyAgent.SetDestination(pos);
+    }
+    public bool IsClickSameDestination(Vector3 dest)
+    {
+        return (MyAgent.destination - dest).sqrMagnitude <= 0.01f;
     }
 
     public void StopMoving()
@@ -148,30 +181,61 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
-    public Enemy FindNearEnemy()
-    {
-        if (Physics.OverlapSphereNonAlloc(transform.position + Vector3.up * 0.5f, MyWeapon.Radius, detectedCollider, LayerMask.GetMask("Enemy")) != 0)
-        {
+    #endregion
+    #region 전투 관련 함수
 
-            foreach (var coll in detectedCollider)
-            {
-                if (coll)
-                {
-                    Enemy enemyController = coll.transform.GetComponent<Enemy>();
-                    //if(enemyController.IsAlive()) return enemyController;
-                    return enemyController;
-                }
-            }
+    public Enemy FindNearestEnemy()
+    {
+        if (Physics.OverlapSphereNonAlloc(transform.position + Vector3.up * 0.5f, MyWeapon.Radius, detectedCollider, enemyLayer) != 0)
+        {
+            detectedCollider.OrderBy(c => (c.transform.position - transform.position).sqrMagnitude);
+            return detectedCollider[0].GetComponent<Enemy>();
         }
         return null;
     }
+
+    public bool SetTargetEnemyByRaycast()
+    {
+        Enemy enemy = RaycastEnemy();
+        if (enemy != null)
+        {
+            SelectedEnemy = enemy;
+            return true;
+        }
+        else return false;
+    }
+
+    public void SetTargetEnemy(Enemy enemy)
+    {
+        SelectedEnemy = enemy;
+    }
+
     public Enemy RaycastEnemy()
     {
         RaycastHit hit;
         return Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, LayerMask.GetMask("Enemy"))? hit.transform.GetComponent<Enemy>() : null;
     }
 
-    public void AttackEnemy(Enemy target, int damage)
+    public RaycastHit MouseRaycast()
+    {
+        RaycastHit hit;
+        Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, Mathf.Infinity, LayerMask.GetMask("Ground", "Enemy"));
+        return hit;
+    }
+
+    public void NormalAttackEnemy(Enemy target)
+    {
+        AttackEnemy(target, MyWeapon.Damage);
+    }
+
+    public bool IsInAttackRange(Enemy target)
+    {
+        if (target == null) return false;
+
+        return (target.transform.position - transform.position).sqrMagnitude <= MyWeapon.Radius * MyWeapon.Radius;
+    }
+
+    private void AttackEnemy(Enemy target, int damage)
     {
         if (MyStatus.CanFire())
         {
@@ -184,16 +248,6 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log(Vector3.Angle(transform.forward, toTarget));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toTarget, Vector3.up), 20.0f);
-    }
-
-    public bool IsClickSameDestination()
-    {
-        Vector3 pos = GetMouseWorldPosition();
-        Vector3 dest = MyAgent.destination;
-
-        //마우스 클릭 인디케이터 프리펩을 만들면 그 인디케이터를 raycast 해서 같은 지점을 확인하는 알고리즘 써도 될듯.
-
-        return (pos - dest).sqrMagnitude <= 0.01f;
-    }
+    }    
     #endregion
 }

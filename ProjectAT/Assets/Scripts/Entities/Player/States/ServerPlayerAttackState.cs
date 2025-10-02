@@ -8,13 +8,13 @@ public class ServerPlayerAttackState : PlayerAttackStateBase
 
     public override void OnUpdate()
     {
-        var target = context.PlayerController.FindNearEnemy();
+        /*var target = context.PlayerController.FindNearEnemy();
         if (target)
         {
             context.PlayerController.AttackEnemy(target, 10);
         }
         else
         //context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);
-        { }
+        { }*/
     }
 }

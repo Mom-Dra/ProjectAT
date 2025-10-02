@@ -12,7 +12,7 @@ public class DesignatedFire : ISkill
     {
         if(Target) 
         {
-            if(context.PlayerController.FindNearEnemy() == Target)
+            /*if(context.PlayerController.FindNearEnemy() == Target)
             {
                 OnExecute(context);
             }
@@ -20,7 +20,7 @@ public class DesignatedFire : ISkill
             {
                 Debug.Log("Set Destination");
                 context.PlayerController.MyAgent.SetDestination(Target.transform.position);
-            }
+            }*/
         }
         else
         {
