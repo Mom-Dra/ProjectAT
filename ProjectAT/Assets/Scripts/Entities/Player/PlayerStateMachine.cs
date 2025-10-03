@@ -13,9 +13,6 @@ public class PlayerStateMachine
     [SerializeField] private PlayerController myController;
     [SerializeField] private PlayerSkillStrategyMap mySkillMap = new PlayerSkillStrategyMap();
 
-    //for test
-    public string NowState;
-
     //컨트롤러
     public PlayerController PlayerController => myController;
 
@@ -68,10 +65,15 @@ public class PlayerStateMachine
     #region 상태 제어 함수
     public void ChangeState(StateId nextState)
     {
+        if (nextState == StateId.None)
+        {
+            Debug.Log("State None");
+            return;
+        }
+
         CurrentState?.Exit();
         CurrentState = stateDic[nextState];
         CurrentState.Enter();
-        NowState = CurrentState.GetType().Name;
     }
 
     public void HandleInput(PlayerInputType type)

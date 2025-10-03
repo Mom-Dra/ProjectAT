@@ -1,10 +1,6 @@
-using EPOOutline.Demo;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey }
 
@@ -31,25 +27,18 @@ public class PlayerController : MonoBehaviour
     //for battel
     public Enemy SelectedEnemy { get; private set; }
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask groundLayer;
 
     #region 유니티 이벤트
     private void Awake()
     {
-        MyAgent = GetComponent<NavMeshAgent>();
-        MyStatus = GetComponent<EntityStatus>();
-        MyWeapon = transform.GetChild(1).GetComponent<WeaponStatus>();
-        MyAnim = transform.GetChild(0).GetComponent<Animator>();
-        MyEffectModule = GetComponent<EffectModule>();
-        cameraController = FindFirstObjectByType<CameraController>();
-        
-
-        myStateMachine = new PlayerStateMachine(this);
+        InitComponents();
     }
 
     private void OnEnable()
     {
-        ChangePlayerSpeed(MyStatus.WalkSpeed);
         LinkInputEventsAll();
+        ChangePlayerSpeed(MyStatus.WalkSpeed);
     }
 
     private void Update()
@@ -60,7 +49,6 @@ public class PlayerController : MonoBehaviour
             lastUpdatedTime = Time.time;
         }
     }
-
     private void OnDisable()
     {
         UnLinkInputEventsAll();
@@ -77,6 +65,18 @@ public class PlayerController : MonoBehaviour
     {
         inputReader.InputEvent -= HandleInput;
     }
+
+    private void InitComponents()
+    {
+        MyAgent = GetComponent<NavMeshAgent>();
+        MyStatus = GetComponent<EntityStatus>();
+        MyWeapon = transform.GetChild(1).GetComponent<WeaponStatus>();
+        MyAnim = transform.GetChild(0).GetComponent<Animator>();
+        MyEffectModule = GetComponent<EffectModule>();
+        cameraController = FindFirstObjectByType<CameraController>();
+
+        myStateMachine = new PlayerStateMachine(this);
+    }
     #endregion
     #region 상태머신 관련
 
@@ -91,13 +91,15 @@ public class PlayerController : MonoBehaviour
 
         if (casted.collider != null)
         {
-            if (casted.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            if (((1 << casted.collider.gameObject.layer) & enemyLayer.value) > 0)
             {
+                Debug.Log("Raycast Enemy");
                 SetTargetEnemy(casted.collider.GetComponent<Enemy>());
                 return PlayerStateMachine.StateId.Chase;
             }
-            else if (casted.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            else if (((1 << casted.collider.gameObject.layer) & groundLayer.value) > 0) 
             {
+                Debug.Log("Raycast Ground");
                 if (IsClickSameDestination(casted.point))
                 {
                     return PlayerStateMachine.StateId.Run;
@@ -108,6 +110,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        Debug.Log("Raycast Failed");
         return PlayerStateMachine.StateId.None;
     }
     #endregion
@@ -116,18 +119,12 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetMouseWorldPosition()
     {
         RaycastHit ray;
-        if (Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out ray, LayerMask.GetMask("Ground")))
+        if (Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out ray, groundLayer))
         {
             return ray.point;
         }
         else
             return Vector3.zero;
-    }
-
-    public void PlayerIdle()
-    {
-        StopMoving();
-        ChangePlayerSpeed(MyStatus.WalkSpeed);
     }
 
     public void PlayerWalk()
@@ -167,6 +164,8 @@ public class PlayerController : MonoBehaviour
     public void StopMoving()
     {
         MyAgent.ResetPath();
+        MyAgent.velocity = Vector3.zero;
+        ChangePlayerSpeed(MyStatus.WalkSpeed);
         MyAnim.SetBool("isWalking", false);
     }
 
@@ -194,34 +193,26 @@ public class PlayerController : MonoBehaviour
         return null;
     }
 
-    public bool SetTargetEnemyByRaycast()
-    {
-        Enemy enemy = RaycastEnemy();
-        if (enemy != null)
-        {
-            SelectedEnemy = enemy;
-            return true;
-        }
-        else return false;
-    }
-
     public void SetTargetEnemy(Enemy enemy)
     {
         SelectedEnemy = enemy;
     }
 
-    public Enemy RaycastEnemy()
-    {
-        RaycastHit hit;
-        return Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, LayerMask.GetMask("Enemy"))? hit.transform.GetComponent<Enemy>() : null;
-    }
-
     public RaycastHit MouseRaycast()
     {
         RaycastHit hit;
-        Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, Mathf.Infinity, LayerMask.GetMask("Ground", "Enemy"));
+        Physics.Raycast(
+            cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, Mathf.Infinity, (enemyLayer | groundLayer));
         return hit;
     }
+
+    /*public RaycastHit MouseRaycast(LayerMask layer)
+    {
+        RaycastHit hit;
+        Physics.Raycast(
+            cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out hit, Mathf.Infinity, layer);
+        return hit;
+    }*/
 
     public void NormalAttackEnemy(Enemy target)
     {
@@ -239,15 +230,10 @@ public class PlayerController : MonoBehaviour
     {
         if (MyStatus.CanFire())
         {
-            target.GetComponent<Enemy>().TakeDamage(damage);
+            //target.GetComponent<Enemy>().TakeDamage(damage);
             MyStatus.ResetAttackCoolTime();
+            Debug.Log("공격");
         }
     }
-
-    public void LookAtTarget(Vector3 toTarget)
-    {
-        //Debug.Log(Vector3.Angle(transform.forward, toTarget));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(toTarget, Vector3.up), 20.0f);
-    }    
     #endregion
 }

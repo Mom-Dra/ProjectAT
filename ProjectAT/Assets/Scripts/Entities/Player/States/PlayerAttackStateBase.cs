@@ -7,6 +7,7 @@ public class PlayerAttackStateBase : EntityState
 
     public override void Enter()
     {
+        context.PlayerController.StopMoving();
         context.PlayerController.MyAnim.SetBool("isFiring", true);
     }
 
@@ -32,16 +33,33 @@ public class PlayerAttackStateBase : EntityState
 
     public override void OnUpdate()
     {
-        if(context.PlayerController.SelectedEnemy == null)  //적이 죽으면
+        var enemy = context.PlayerController.SelectedEnemy;
+        var controller = context.PlayerController;
+
+        if (enemy == null)  //적이 죽으면 enemy.IsAlive 도 있어야할듯.
         {
             context.ChangeState(PlayerStateMachine.StateId.Idle);
+            return;
         }
-        else if (!context.PlayerController.IsInAttackRange(context.PlayerController.SelectedEnemy)) //적이 사정거리 밖으로 나가면
+        else if (!controller.IsInAttackRange(enemy)) //적이 사정거리 밖으로 나가면
         {
-            context.ChaseState.SetChaseState(context.PlayerController.MyWeapon.Radius, PlayerStateMachine.StateId.Attack);
+            context.ChaseState.SetChaseState(controller.MyWeapon.Radius, PlayerStateMachine.StateId.Attack);
             context.ChangeState(PlayerStateMachine.StateId.Chase);
         }
-        Debug.Log("공격!!");
-        return;
+
+        Vector3 playerToEnemy = (enemy.transform.position - controller.transform.position);
+        Vector3 playerForward = controller.transform.forward;
+        playerToEnemy.y = playerForward.y = 0;
+
+        if (Vector3.Angle(playerForward, playerToEnemy) >= 0.01f) //적이 정면에 없으면
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(playerToEnemy);
+            controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, lookRotation, Time.deltaTime * 10f);
+        }
+        else
+        {
+            controller.NormalAttackEnemy(enemy);
+        }
+            return;
     }
 }

@@ -45,13 +45,13 @@ public class DesignatedFire : ISkill
 
     public bool TryCommit(PlayerStateMachine context)
     {
-        Enemy enemy = context.PlayerController.RaycastEnemy();
+      /*  Enemy enemy = context.PlayerController.RaycastEnemy();
         if (enemy)
         {
-            SetTargetRpc(enemy);
+            //SetTargetRpc(enemy);
             return true;
         }
-        Debug.Log("Raycast Failed");
+        Debug.Log("Raycast Failed");*/
         return false;
     }
 
@@ -59,7 +59,7 @@ public class DesignatedFire : ISkill
     public void SetTargetRpc(NetworkBehaviourReference newTarget)
     {
         Debug.Log($"SetTarget Rpc Called");
-        if(newTarget.TryGet(out Enemy enemy))
+/*        if(newTarget.TryGet(out Enemy enemy))
         {
             Target = enemy;
             Debug.Log($"Setted:{Target.name}");
@@ -67,7 +67,7 @@ public class DesignatedFire : ISkill
         else
         {
             Debug.Log("Can't Set Enemy");
-        }
+        }*/
     }
 
     public void OnTargetingEnter(PlayerStateMachine context)

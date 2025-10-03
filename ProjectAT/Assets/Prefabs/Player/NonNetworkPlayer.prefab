@@ -257,6 +257,12 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: 2caca629a4fe8434d942c640d9084998, type: 2}
   cameraController: {fileID: 0}
   tickRate: 0.2
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &7749089816910868336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6a980f12ce5442b8012d277e16248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firingEffect: {fileID: 7979115172219589031, guid: 7113b730b33cff64f81a77a42203f9b3, type: 3}
+  firingEffect: {fileID: 5964926015556990157, guid: d4af673ade51d714399434d27d660bc9, type: 3}
   firingEffectSpawnPoint: {fileID: 2500729262193000643}
 --- !u!1 &1970377542261800265
 GameObject:

@@ -9,7 +9,7 @@ public class PlayerIdleStateBase : EntityState
     public override void Enter()
     {
         Debug.Log("Idle");
-        context.PlayerController.PlayerIdle();
+        context.PlayerController.StopMoving();
     }
 
     public override void Exit()
