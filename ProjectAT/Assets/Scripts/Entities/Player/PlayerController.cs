@@ -70,9 +70,9 @@ public class PlayerController : MonoBehaviour
     {
         MyAgent = GetComponent<NavMeshAgent>();
         MyStatus = GetComponent<EntityStatus>();
-        MyWeapon = transform.GetChild(1).GetComponent<WeaponStatus>();
         MyAnim = transform.GetChild(0).GetComponent<Animator>();
-        MyEffectModule = GetComponent<EffectModule>();
+        MyWeapon = transform.GetChild(1).GetComponent<WeaponStatus>();
+        MyEffectModule = transform.GetChild(2).GetComponent<EffectModule>();
         cameraController = FindFirstObjectByType<CameraController>();
 
         myStateMachine = new PlayerStateMachine(this);
@@ -230,7 +230,8 @@ public class PlayerController : MonoBehaviour
     {
         if (MyStatus.CanFire())
         {
-            //target.GetComponent<Enemy>().TakeDamage(damage);
+            //target.GetComponent<Enemy>().TakeDamage(damage); //enemy가 패치되면 주석해제하기
+            MyEffectModule.PlayFiringEffect();
             MyStatus.ResetAttackCoolTime();
             Debug.Log("공격");
         }
