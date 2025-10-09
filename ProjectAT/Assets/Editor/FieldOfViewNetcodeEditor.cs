@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UIElements;
 
-[CustomEditor(typeof(FieldOfViewNetcode))]
+[CustomEditor(typeof(Netcode.FieldOfViewNetcode))]
 public class FieldOfViewNetcodeEditor : Editor
 {
     private void OnSceneGUI()
     {
-        FieldOfViewNetcode fow = target as FieldOfViewNetcode;
+        Netcode.FieldOfViewNetcode fow = target as Netcode.FieldOfViewNetcode;
         Handles.color = Color.white;
         Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, fow.ViewRadius);
 

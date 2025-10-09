@@ -20,11 +20,11 @@ public class Gun : Weapon
     private AudioSource audioSource;
     private ParticleSystem muzzleParticleSystem;
 
-    private NetworkVariable<int> remainAmmo = new NetworkVariable<int>(0); // 남은 전체 탄약
-    private NetworkVariable<int> magAmmo = new NetworkVariable<int>(0); // 탄창에 남은 탄약
+    private int remainAmmo; // 남은 전체 탄약
+    private int magAmmo; // 탄창에 남은 탄약
 
-    internal int RemainAmmo { get => remainAmmo.Value; set => remainAmmo.Value = value; }
-    internal int MagAmmo { get => magAmmo.Value; set => magAmmo.Value = value; }
+    internal int RemainAmmo { get => remainAmmo; set => remainAmmo = value; }
+    internal int MagAmmo { get => magAmmo; set => magAmmo = value; }
 
     public bool CanFire => gunState == IGunState.ReadyState;
 
@@ -38,24 +38,9 @@ public class Gun : Weapon
 
         //lineRenderer.positionCount = 2;
         //lineRenderer.enabled = false;
-    }
 
-    public override void OnNetworkSpawn()
-    {
-        if (IsServer)
-        {
-            remainAmmo.Value = gunData.StartRemainAmmo;
-            magAmmo.Value = gunData.MagCapacity;
-        }
-
-        remainAmmo.OnValueChanged += RemainAmmoValueChanged;
-        magAmmo.OnValueChanged += MagAmmoValueChanged;
-    }
-
-    public override void OnNetworkDespawn()
-    {
-        remainAmmo.OnValueChanged -= RemainAmmoValueChanged;
-        magAmmo.OnValueChanged -= MagAmmoValueChanged;
+        remainAmmo = gunData.StartRemainAmmo;
+        magAmmo = gunData.MagCapacity;
     }
 
     private void RemainAmmoValueChanged(int previousRemainAmmo, int currentRemainAmmo)
@@ -68,16 +53,16 @@ public class Gun : Weapon
         // UI Update...
     }
 
-    [Rpc(SendTo.Server)]
+    //[Rpc(SendTo.Server)]
 
-    private void FireRpc()
+    private void Fire()
     {
         gunState.Fire(this);
     }
 
     public override void Attack()
     {
-        FireRpc();
+        Fire();
     }
 
     public void Reload()
@@ -94,7 +79,7 @@ public class Gun : Weapon
     // Only Server
     internal void PerformFire()
     {
-        --magAmmo.Value;
+        --magAmmo;
 
         RaycastHit hit;
         Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * gunData.MaxDistance, Color.blue, 2f);
@@ -105,18 +90,17 @@ public class Gun : Weapon
             Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * Vector3.Distance(muzzleParticleSystem.transform.position, hit.point), Color.red, 2f);
 
             // Hit Particle
-            ParticleSystem hitParticle = HitObjectPool.Instance.Pool.Get();
-            hitParticle.transform.position = hit.point;
-            hitParticle.transform.rotation = Quaternion.LookRotation(hit.normal);
-            hitParticle.Play();
+            GameObject hitObject = PoolManager.Instance.GetObject(hitPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+            if (hitObject.TryGetComponent(out ParticleSystem hitParticle))
+                hitParticle.Play();
 
             // Bullet 날리기
-            NetworkObject bulletNetworkObject = NetworkObjectPool.Instance.GetNetworkObject(bulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
-            bulletNetworkObject.Spawn(true);
-
-            Bullet bullet = bulletNetworkObject.GetComponent<Bullet>();
-            bullet.Initialize(hit.point, 5f);
-            bullet.SetVelocity(transform.forward * 100f);
+            GameObject bulletObject = PoolManager.Instance.GetObject(bulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
+            if(bulletObject.TryGetComponent(out Bullet bullet))
+            {
+                bullet.Initialize(hit.point, 5f);
+                bullet.SetVelocity(transform.forward * 100f);
+            }
 
             // 데미지 감소
             if (hit.transform.TryGetComponent(out IDamageable damageable))
@@ -124,31 +108,31 @@ public class Gun : Weapon
         }
         else
         {
-            NetworkObject bulletNetworkObject = NetworkObjectPool.Instance.GetNetworkObject(bulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
-            bulletNetworkObject.Spawn(true);
-
-            Bullet bullet = bulletNetworkObject.GetComponent<Bullet>();
-            bullet.Initialize(muzzleParticleSystem.transform.position + muzzleParticleSystem.transform.forward * gunData.MaxDistance, 5f);
-            bullet.SetVelocity(transform.forward * 100f);
+            GameObject bulletObject = PoolManager.Instance.GetObject(bulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
+            if (bulletObject.TryGetComponent(out Bullet bullet))
+            {
+                bullet.Initialize(muzzleParticleSystem.transform.position + muzzleParticleSystem.transform.forward * gunData.MaxDistance, 5f);
+                bullet.SetVelocity(transform.forward * 100f);
+            }
         }
     }
 
     internal bool CanReload()
     {
-        return RemainAmmo > 0 && MagAmmo < gunData.MagCapacity;
+        return remainAmmo > 0 && magAmmo < gunData.MagCapacity;
     }
 
     internal void PerformReload()
     {
-        int neededAmmo = gunData.MagCapacity - MagAmmo;
-        int ammoToMove = Mathf.Min(neededAmmo, RemainAmmo);
+        int neededAmmo = gunData.MagCapacity - magAmmo;
+        int ammoToMove = Mathf.Min(neededAmmo, remainAmmo);
 
-        MagAmmo += ammoToMove;
-        RemainAmmo -= ammoToMove;
+        magAmmo += ammoToMove;
+        remainAmmo -= ammoToMove;
     }
 
-    // Client 쪽에서 Effect만 재생할 거임
-    [Rpc(SendTo.ClientsAndHost)]
+    //Client 쪽에서 Effect만 재생할 거임
+    //[Rpc(SendTo.ClientsAndHost)]
     internal void PlayFireRpc()
     {
         Debug.Log("PlayFireRpc");
@@ -159,7 +143,7 @@ public class Gun : Weapon
         //muzzleParticleSystem.Play();
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
+    //[Rpc(SendTo.ClientsAndHost)]
     internal void PlayReloadRpc()
     {
         Debug.Log("PlayReloadRpc");

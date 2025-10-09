@@ -48,27 +48,27 @@ public class DesignatedFire : ISkill
         Enemy enemy = context.RaycastEnemy();
         if (enemy)
         {
-            SetTargetRpc(enemy);
+            //SetTargetRpc(enemy);
             return true;
         }
         Debug.Log("Raycast Failed");
         return false;
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
-    public void SetTargetRpc(NetworkBehaviourReference newTarget)
-    {
-        Debug.Log($"SetTarget Rpc Called");
-        if(newTarget.TryGet(out Enemy enemy))
-        {
-            Target = enemy;
-            Debug.Log($"Setted:{Target.name}");
-        }
-        else
-        {
-            Debug.Log("Can't Set Enemy");
-        }
-    }
+    //[Rpc(SendTo.ClientsAndHost)]
+    //public void SetTargetRpc(NetworkBehaviourReference newTarget)
+    //{
+    //    Debug.Log($"SetTarget Rpc Called");
+    //    if(newTarget.TryGet(out Enemy enemy))
+    //    {
+    //        Target = enemy;
+    //        Debug.Log($"Setted:{Target.name}");
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Can't Set Enemy");
+    //    }
+    //}
 
     public void OnTargetingEnter(PlayerStateMachine context)
     {

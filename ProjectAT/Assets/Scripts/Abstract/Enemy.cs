@@ -9,7 +9,10 @@ using Unity.VisualScripting;
 public abstract class Enemy : LivingEntity, IAttackable
 {
     protected BehaviorGraphAgent behaviorGraphAgent;
-    protected FieldOfViewNetcode fieldOfViewNetcode;
+    //protected FieldOfViewNetcode fieldOfViewNetcode;
+
+    protected FieldOfView fieldOfView;
+    // 이 것만 Netcode와 아닌거 구분하자
 
     protected IEnemyState currentState;
     private Weapon weapon;
@@ -33,6 +36,7 @@ public abstract class Enemy : LivingEntity, IAttackable
     internal float Time;
     internal const float WONDERTIME = 10f;
 
+    [SerializeField]
     private int alertLevel;
     public int AlertLevel => alertLevel;
 
@@ -45,43 +49,24 @@ public abstract class Enemy : LivingEntity, IAttackable
     private void Awake()
     {
         behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
-        fieldOfViewNetcode = GetComponent<FieldOfViewNetcode>();
+        fieldOfView = GetComponent<FieldOfView>();
 
-        fieldOfViewNetcode.SetEnemyData(enemyData);
+        fieldOfView.SetEnemyData(this);
+        fieldOfView.onScanComplete += ScanCompleted;
+        fieldOfView.onScanCancel += ScanCanceled;
+        fieldOfView.onScanStart += ScanStarted;
+        fieldOfView.onTargetDetect += TargetDetected;
+        fieldOfView.onTargetLosted += TargetLosted;
 
         behaviorGraphAgent.SetVariableValue("attackRange", enemyData.AttackRange);
         behaviorGraphAgent.SetVariableValue("rotateSpeed", enemyData.RotateSpeed);
         behaviorGraphAgent.SetVariableValue("muzzle", transform.FindChildRecursive("FX_Shoot_01_muzzle"));
         behaviorGraphAgent.SetVariableValue("searchRadius", enemyData.SearchRadius);
+        behaviorGraphAgent.SetVariableValue("weapon", GetComponentInChildren<Weapon>());
 
         targetCheckWait = new WaitForSeconds(targetCheckInterval);
-    }
 
-    public override void OnNetworkSpawn()
-    {
-        if (IsServer)
-        {
-            fieldOfViewNetcode.onScanComplete += ScanCompleted;
-            fieldOfViewNetcode.onScanCancel += ScanCanceled;
-            fieldOfViewNetcode.onScanStart += ScanStarted;
-
-            fieldOfViewNetcode.onTargetDetect += TargetDetected;
-            fieldOfViewNetcode.onTargetLosted += TargetLosted;
-
-            if (isPatrolEnemy) ChangeState(Enemy_State.Patrol);
-        }
-        else
-        {
-            behaviorGraphAgent.enabled = false;
-        }
-    }
-
-    public override void OnNetworkDespawn()
-    {
-        if (!IsServer)
-        {
-
-        }
+        if (isPatrolEnemy) ChangeState(Enemy_State.Patrol);
     }
 
     internal void SetBehaviorGraphAgentState(Enemy_State enemyState)
@@ -91,7 +76,7 @@ public abstract class Enemy : LivingEntity, IAttackable
 
     internal void EnableFieldOfViewNetcode(bool enabled)
     {
-        fieldOfViewNetcode.enabled = enabled;
+        fieldOfView.enabled = enabled;
     }
 
     public void Attack()
@@ -104,12 +89,14 @@ public abstract class Enemy : LivingEntity, IAttackable
 
     private void ScanStarted()
     {
+        Debug.Log("ScanStarted");
         if (isPatrolEnemy)
             ChangeState(Enemy_State.Idle);
     }
 
     private void ScanCanceled()
     {
+        Debug.Log("ScanCanceled");
         if (isPatrolEnemy)
             ChangeState(Enemy_State.Patrol);
     }
@@ -124,7 +111,7 @@ public abstract class Enemy : LivingEntity, IAttackable
     {
         while(true)
         {
-            foreach ((Transform transform, float distance) in fieldOfViewNetcode.VisibleTargets)
+            foreach ((Transform transform, float distance) in fieldOfView.VisibleTargets)
             {
                 // 1차 시야 안에 있을 경우
                 if (distance < enemyData.PrimaryViewRadius)
@@ -219,35 +206,6 @@ public abstract class Enemy : LivingEntity, IAttackable
                 break;
             case Enemy_State.Search:
                 currentState = IEnemyState.ServerEnemyWonderState;
-                break;
-        }
-
-        currentState.Enter(this);
-        ChangeStateRpc(enemyState);
-    }
-
-    [Rpc(SendTo.NotServer)]
-    private void ChangeStateRpc(Enemy_State enemyState)
-    {
-        if (currentState != null)
-            currentState.Exit(this);
-
-        switch (enemyState)
-        {
-            case Enemy_State.Idle:
-                currentState = IEnemyState.ClientEnemyIdleState;
-                break;
-            case Enemy_State.Patrol:
-                currentState = IEnemyState.ClientEnemyPatrolState;
-                break;
-            case Enemy_State.Attack:
-                currentState = IEnemyState.ClientEnemyAttackState;
-                break;
-            case Enemy_State.Chase:
-                currentState = IEnemyState.ClientEnemyChaseState;
-                break;
-            case Enemy_State.Search:
-                currentState = IEnemyState.ClientEnemyWonderState;
                 break;
         }
 

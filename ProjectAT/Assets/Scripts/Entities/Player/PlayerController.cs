@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
         {
             target.GetComponent<Enemy>().TakeDamage(damage);
             MyStatus.ResetAttackCoolTime();
-            myStateMachine.AttackEnemyClientRpc(target);
+            //myStateMachine.AttackEnemyClientRpc(target);
         }
     }
 

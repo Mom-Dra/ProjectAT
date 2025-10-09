@@ -200,14 +200,14 @@ public class PlayerStateMachine : NetworkBehaviour
         }
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
-    public void AttackEnemyClientRpc(NetworkBehaviourReference target)
-    {
-        if (target.TryGet(out Enemy enemy))
-        {
-            myController.MyEffectModule.GenerateFiringEffect();
-        }
-    }
+    //[Rpc(SendTo.ClientsAndHost)]
+    //public void AttackEnemyClientRpc(NetworkBehaviourReference target)
+    //{
+    //    if (target.TryGet(out Enemy enemy))
+    //    {
+    //        myController.MyEffectModule.GenerateFiringEffect();
+    //    }
+    //}
 
     public Vector3 GetMouseWorldPosition()
     {

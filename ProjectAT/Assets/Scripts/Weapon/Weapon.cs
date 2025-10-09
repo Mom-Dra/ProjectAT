@@ -3,7 +3,7 @@ using Unity.Netcode;
 using Unity.Services.Matchmaker.Models;
 using UnityEngine;
 
-public abstract class Weapon : NetworkBehaviour
+public abstract class Weapon : MonoBehaviour
 {
     public abstract void Attack();
 }

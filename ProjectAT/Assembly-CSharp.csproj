@@ -77,16 +77,18 @@
     <Compile Include="Assets\Scripts\Entities\Player\States\SkillCastingStateBase.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerRunState.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\EnemyState.cs" />
+    <Compile Include="Assets\Scripts\Enemy\PlayerMovement.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
+    <Compile Include="Assets\Scripts\Enemy\SecurityCamera.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\Skills\DesignatedFire.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewNetcode.cs" />
-    <Compile Include="Assets\Scripts\Utils\HitObjectPool.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeSetting.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\BulletProjector.cs" />
     <Compile Include="Assets\Scripts\Weapon\Weapon.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\SearchTargetAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\SpawnProjectiles.cs" />
+    <Compile Include="Assets\Scripts\Utils\PoolManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\CheckTargetCondition.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\ExplosionWave.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerSkillTargetingState.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseTargetPositionAction.cs" />
     <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\SkillTargetingStateBase.cs" />
+    <Compile Include="Assets\Scripts\Enemy\SecurityCameraData.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Test2.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
