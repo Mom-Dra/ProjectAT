@@ -74,20 +74,26 @@
     <Compile Include="Assets\Scripts\Entities\Player\States\PlayerAttackStateBase.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseAction.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\SkillCastingStateBase.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerRunState.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\EnemyState.cs" />
+    <Compile Include="Assets\Scripts\Enemy\PlayerMovement.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
+    <Compile Include="Assets\Scripts\Enemy\SecurityCamera.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\Skills\DesignatedFire.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewNetcode.cs" />
-    <Compile Include="Assets\Scripts\Utils\HitObjectPool.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeSetting.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\BulletProjector.cs" />
     <Compile Include="Assets\Scripts\Weapon\Weapon.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\SearchTargetAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\SpawnProjectiles.cs" />
+    <Compile Include="Assets\Scripts\Utils\PoolManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\CheckTargetCondition.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\ExplosionWave.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\ServerSkillTargetingState.cs" />
     <Compile Include="Assets\Scripts\Abstract\IAttackable.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\Skills\ISkill.cs" />
     <Compile Include="Assets\Scripts\UI\CanvasManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\IdleAction.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\EnableTrailAfterTime.cs" />
@@ -97,6 +103,8 @@
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseTargetPositionAction.cs" />
     <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\SkillTargetingStateBase.cs" />
+    <Compile Include="Assets\Scripts\Enemy\SecurityCameraData.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Test2.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
@@ -106,6 +114,7 @@
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerAttackState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\PlayerIdleStateBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\WeaponBase.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\Skills\PlayerSkillStrategyMap.cs" />
     <Compile Include="Assets\Inputs\PlayerControls.cs" />
     <Compile Include="Assets\Scripts\Abstract\LivingEntity.cs" />
     <Compile Include="Assets\Scripts\Enemy\FirstClassEnemy.cs" />
@@ -145,6 +154,7 @@
     <Compile Include="Assets\Scripts\Abstract\IHealable.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />
     <Compile Include="Assets\Scripts\View\Controller.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\ServerSkillCastingState.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeLauncher.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkObjectPool.cs" />
   </ItemGroup>

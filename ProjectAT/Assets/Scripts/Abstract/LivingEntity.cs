@@ -2,59 +2,34 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 
-public abstract class LivingEntity : NetworkBehaviour, IDamageable
+public abstract class LivingEntity : MonoBehaviour, IDamageable
 {
-    private NetworkVariable<int> health = new NetworkVariable<int>(100);
-    private NetworkVariable<bool> isDead = new NetworkVariable<bool>(false);
+    private int health = 100;
+    private bool isDead = false;
 
     public event Action onDeath;
-
-    public override void OnNetworkSpawn()
-    {
-        health.OnValueChanged += OnHealthChanged;
-    }
-
-    public override void OnNetworkDespawn()
-    {
-        health.OnValueChanged -= OnHealthChanged;
-    }
 
     // OnlyServer
     public void TakeDamage(int damage)
     {
-        health.Value -= damage;
+        health -= damage;
 
-        if (health.Value <= 0 && !isDead.Value)
+        if (health <= 0 && !isDead)
         {
             Die();
         }
     }
-
+    
     protected virtual void OnHealthChanged(int previousHealth, int currentHealth)
     {
         // Update UI, Effect, Sounds...
 
     }
 
-    private void OnIsDeadChanged(bool previousIsDead, bool currentIsDead)
-    {
-        if (currentIsDead)
-        {
-            onDeath?.Invoke();
-        }
-    }
-
-    private void DestoryNetworkObject()
-    {
-        if (!NetworkObject.IsSpawned) return;
-
-        NetworkObject.Despawn(true);
-    }
-
     // OnlyServer
     private void Die()
     {
-        isDead.Value = true;
-        DestoryNetworkObject();
+        isDead = true;
+        onDeath?.Invoke();
     }
 }

@@ -23,7 +23,7 @@ public class PlayerNetworkMovement : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if(!IsOwner)
+        if (!IsOwner)
         {
             if (TryGetComponent(out UnityEngine.InputSystem.PlayerInput playerInput))
                 playerInput.enabled = false;
@@ -35,7 +35,7 @@ public class PlayerNetworkMovement : NetworkBehaviour
 
     private void LateUpdate()
     {
-        if(IsOwner)
+        if (IsOwner)
         {
             SendInputServerRpc(playerInput.Move);
         }
@@ -43,7 +43,7 @@ public class PlayerNetworkMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if(IsServer)
+        if (IsServer)
         {
             serverCurrentInput.Normalize();
 

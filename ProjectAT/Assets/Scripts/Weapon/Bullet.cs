@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
-public class Bullet : NetworkBehaviour
+public class Bullet : MonoBehaviour
 {
     private Vector3 destination;
     private Rigidbody rb;
@@ -19,22 +19,18 @@ public class Bullet : NetworkBehaviour
     {
         this.destination = destination;
 
-        if (IsServer)
-        {
-            ClientSetVelocityRpc(Vector3.zero);
-            StartCoroutine(BulletDestroyCoroutine(lifetime));
-        }
+        StartCoroutine(BulletDestroyCoroutine(lifetime));
     }
 
-    public override void OnNetworkDespawn()
-    {
-        //if (IsClient)
-        //{
-        //    ParticleSystem explosionParticles = ExplosionsPool.s_Singleton.Pool.Get();
-        //    explosionParticles.transform.position = transform.position;
-        //    explosionParticles.Play();
-        //}
-    }
+    //public override void OnNetworkDespawn()
+    //{
+    //    //if (IsClient)
+    //    //{
+    //    //    ParticleSystem explosionParticles = ExplosionsPool.s_Singleton.Pool.Get();
+    //    //    explosionParticles.transform.position = transform.position;
+    //    //    explosionParticles.Play();
+    //    //}
+    //}
 
     //private void Update()
     //{
@@ -44,7 +40,7 @@ public class Bullet : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (IsServer && Vector3.SqrMagnitude(rb.position - destination) < 0.7f)
+        if (Vector3.SqrMagnitude(rb.position - destination) < 0.7f)
             DestroyBullet();
     }
 
@@ -56,26 +52,20 @@ public class Bullet : NetworkBehaviour
 
     private void DestroyBullet()
     {
-        if (!NetworkObject.IsSpawned)
-        {
-            return;
-        }
-
-        ClientSetVelocityRpc(Vector3.zero);
-        NetworkObject.Despawn(true);
+        rb.linearVelocity = Vector3.zero;
+        gameObject.SetActive(false);
     }
 
     public void SetVelocity(Vector3 velocity)
     {
-        if (IsServer)
-            ClientSetVelocityRpc(velocity);
-    }
-
-    [Rpc(SendTo.ClientsAndHost)]
-    private void ClientSetVelocityRpc(Vector3 velocity)
-    {
         rb.linearVelocity = velocity;
     }
+
+    //[Rpc(SendTo.ClientsAndHost)]
+    //private void ClientSetVelocityRpc(Vector3 velocity)
+    //{
+    //    rb.linearVelocity = velocity;
+    //}
 
     //private void OnCollisionEnter(Collision collision)
     //{
