@@ -101,7 +101,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Clicked"",
+                    ""name"": ""LeftClicked"",
+                    ""type"": ""Button"",
+                    ""id"": ""7220b036-b830-4bae-9b02-3e2ca46bc20f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightClicked"",
                     ""type"": ""Button"",
                     ""id"": ""c4c9e924-7289-479d-b3f0-7abeecccb015"",
                     ""expectedControlType"": """",
@@ -138,7 +147,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": "";PC"",
-                    ""action"": ""Clicked"",
+                    ""action"": ""RightClicked"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -150,6 +159,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";PC"",
                     ""action"": ""DesignatedFire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc0f845f-e779-4a9a-8961-856ec2b3dbe6"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""LeftClicked"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -167,7 +187,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_MouseMove = m_Player.FindAction("MouseMove", throwIfNotFound: true);
-        m_Player_Clicked = m_Player.FindAction("Clicked", throwIfNotFound: true);
+        m_Player_LeftClicked = m_Player.FindAction("LeftClicked", throwIfNotFound: true);
+        m_Player_RightClicked = m_Player.FindAction("RightClicked", throwIfNotFound: true);
         m_Player_DesignatedFire = m_Player.FindAction("DesignatedFire", throwIfNotFound: true);
     }
 
@@ -250,7 +271,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_MouseMove;
-    private readonly InputAction m_Player_Clicked;
+    private readonly InputAction m_Player_LeftClicked;
+    private readonly InputAction m_Player_RightClicked;
     private readonly InputAction m_Player_DesignatedFire;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
@@ -268,9 +290,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @MouseMove => m_Wrapper.m_Player_MouseMove;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Clicked".
+        /// Provides access to the underlying input action "Player/LeftClicked".
         /// </summary>
-        public InputAction @Clicked => m_Wrapper.m_Player_Clicked;
+        public InputAction @LeftClicked => m_Wrapper.m_Player_LeftClicked;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/RightClicked".
+        /// </summary>
+        public InputAction @RightClicked => m_Wrapper.m_Player_RightClicked;
         /// <summary>
         /// Provides access to the underlying input action "Player/DesignatedFire".
         /// </summary>
@@ -304,9 +330,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MouseMove.started += instance.OnMouseMove;
             @MouseMove.performed += instance.OnMouseMove;
             @MouseMove.canceled += instance.OnMouseMove;
-            @Clicked.started += instance.OnClicked;
-            @Clicked.performed += instance.OnClicked;
-            @Clicked.canceled += instance.OnClicked;
+            @LeftClicked.started += instance.OnLeftClicked;
+            @LeftClicked.performed += instance.OnLeftClicked;
+            @LeftClicked.canceled += instance.OnLeftClicked;
+            @RightClicked.started += instance.OnRightClicked;
+            @RightClicked.performed += instance.OnRightClicked;
+            @RightClicked.canceled += instance.OnRightClicked;
             @DesignatedFire.started += instance.OnDesignatedFire;
             @DesignatedFire.performed += instance.OnDesignatedFire;
             @DesignatedFire.canceled += instance.OnDesignatedFire;
@@ -324,9 +353,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MouseMove.started -= instance.OnMouseMove;
             @MouseMove.performed -= instance.OnMouseMove;
             @MouseMove.canceled -= instance.OnMouseMove;
-            @Clicked.started -= instance.OnClicked;
-            @Clicked.performed -= instance.OnClicked;
-            @Clicked.canceled -= instance.OnClicked;
+            @LeftClicked.started -= instance.OnLeftClicked;
+            @LeftClicked.performed -= instance.OnLeftClicked;
+            @LeftClicked.canceled -= instance.OnLeftClicked;
+            @RightClicked.started -= instance.OnRightClicked;
+            @RightClicked.performed -= instance.OnRightClicked;
+            @RightClicked.canceled -= instance.OnRightClicked;
             @DesignatedFire.started -= instance.OnDesignatedFire;
             @DesignatedFire.performed -= instance.OnDesignatedFire;
             @DesignatedFire.canceled -= instance.OnDesignatedFire;
@@ -391,12 +423,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouseMove(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Clicked" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "LeftClicked" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnClicked(InputAction.CallbackContext context);
+        void OnLeftClicked(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RightClicked" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRightClicked(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "DesignatedFire" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

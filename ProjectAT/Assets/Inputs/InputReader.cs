@@ -27,7 +27,7 @@ public class InputReader : ScriptableObject, IPlayerActions
         controls.Player.Disable();
     }
 
-    public void OnClicked(InputAction.CallbackContext context)
+    public void OnRightClicked(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -45,6 +45,14 @@ public class InputReader : ScriptableObject, IPlayerActions
         if (context.performed)
         {
             InputEvent?.Invoke(PlayerInputType.DesignatedFireKey);
+        }
+    }
+
+    public void OnLeftClicked(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            InputEvent?.Invoke(PlayerInputType.LeftClick);
         }
     }
 }

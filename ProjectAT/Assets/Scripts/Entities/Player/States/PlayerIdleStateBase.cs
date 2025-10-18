@@ -8,7 +8,6 @@ public class PlayerIdleStateBase : EntityState
 
     public override void Enter()
     {
-        Debug.Log("Idle");
         context.PlayerController.StopMoving();
     }
 
@@ -33,8 +32,7 @@ public class PlayerIdleStateBase : EntityState
                 }
                 break;
             case PlayerInputType.DesignatedFireKey:
-                Debug.Log("idle -> Desginate");
-                //context.ChangeState(PlayerStateMachine.StateId.SkillTargeting, 0);
+                context.ChangeState(PlayerStateMachine.StateId.SkillTargeting);
                 break;
             default:
                 break;

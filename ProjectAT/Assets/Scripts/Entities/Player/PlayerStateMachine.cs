@@ -11,7 +11,6 @@ public class PlayerStateMachine
     public enum StateId : ushort { None, Idle, Walk, Run, Chase, Attack, SkillTargeting, SkillCasting }
 
     [SerializeField] private PlayerController myController;
-    [SerializeField] private PlayerSkillStrategyMap mySkillMap = new PlayerSkillStrategyMap();
 
     //컨트롤러
     public PlayerController PlayerController => myController;
@@ -47,8 +46,8 @@ public class PlayerStateMachine
         RunState = new PlayerRunStateBase(this);
         ChaseState = new PlayerChaseStateBase(this);
         AttackState = new PlayerAttackStateBase(this);
-        //SkillTargetingState = new SkillTargetingStateBase(myController);
-        //SkillCastingState = new SkillCastingStateBase(myController);
+        SkillTargetingState = new SkillTargetingStateBase(this, myController.MySkillMap);
+        SkillCastingState = new SkillCastingStateBase(this, myController.MySkillMap);
     }
 
     private void StatesAdd()
@@ -58,9 +57,10 @@ public class PlayerStateMachine
         stateDic.Add(StateId.Run, RunState);
         stateDic.Add(StateId.Chase, ChaseState);
         stateDic.Add(StateId.Attack, AttackState);
-        //stateDic.Add(StateId.SkillTargeting, SkillTargetingState);
-        //stateDic.Add(StateId.SkillCasting, SkillCastingState);
+        stateDic.Add(StateId.SkillTargeting, SkillTargetingState);
+        stateDic.Add(StateId.SkillCasting, SkillCastingState);
     }
+
     #endregion
     #region 상태 제어 함수
     public void ChangeState(StateId nextState)

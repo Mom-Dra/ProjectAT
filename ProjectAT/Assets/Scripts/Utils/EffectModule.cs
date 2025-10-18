@@ -3,7 +3,7 @@ using UnityEngine;
 public class EffectModule : MonoBehaviour
 {
     [Header("Firing Effect")]
-    [SerializeField] private ParticleSystem firingEffect;
+    [SerializeField] private GameObject bulletProjectile;
     [SerializeField] private Transform firingEffectSpawnPoint;
 
     private void Awake()
@@ -15,19 +15,23 @@ public class EffectModule : MonoBehaviour
     {
         LinkParticles();
 
-        firingEffect.transform.position = firingEffectSpawnPoint.position;
-        firingEffect.transform.rotation = firingEffectSpawnPoint.rotation;
     }
 
     private void LinkParticles()
     {
-        firingEffect = transform.GetChild(0).GetComponent<ParticleSystem>();
         firingEffectSpawnPoint = transform.parent.GetChild(3).transform;
     }
 
-    public void PlayFiringEffect()
+    public void PlayFiringEffect(Vector3 dest)
     {
-        //Instantiate(firingEffect, firingEffectSpawnPoint.position, firingEffectSpawnPoint.rotation);
-        firingEffect.Play(firingEffectSpawnPoint);
+        Bullet bulletComponent 
+            = Instantiate(bulletProjectile, 
+            firingEffectSpawnPoint.position, 
+            firingEffectSpawnPoint.rotation
+            ).GetComponent<Bullet>();   //나중에 오브젝트 풀링할 것이므로 생성요청 보내는 로직 적어야함.
+        
+        bulletComponent.Initialize(dest, 2f);
+        bulletComponent.SetVelocity((dest - firingEffectSpawnPoint.position).normalized * 100f);
+
     }
 }

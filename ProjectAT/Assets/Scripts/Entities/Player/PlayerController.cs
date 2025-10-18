@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float tickRate = 0.2f;
     private float lastUpdatedTime = 0f;
 
+    //skills
+    private PlayerSkillStrategyMap mySkillMap = new PlayerSkillStrategyMap();
+    public PlayerSkillStrategyMap MySkillMap => mySkillMap;
+
     //utils
     private readonly Collider[] detectedCollider = new Collider[8];
 
@@ -29,10 +33,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask groundLayer;
 
-    #region ����Ƽ �̺�Ʈ
+    #region 유니티 이벤트
     private void Awake()
     {
         InitComponents();
+        mySkillMap.InitiateSkillStrategy(this);
     }
 
     private void OnEnable()
@@ -55,7 +60,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region �ʱ�ȭ
+    #region 초기화
     private void LinkInputEventsAll()
     {
         inputReader.InputEvent += HandleInput;
@@ -78,13 +83,22 @@ public class PlayerController : MonoBehaviour
         myStateMachine = new PlayerStateMachine(this);
     }
     #endregion
-    #region ���¸ӽ� ����
+    #region 상태머신관련
 
     private void HandleInput(PlayerInputType type)
     {
         myStateMachine.HandleInput(type);
     }
 
+    public void ChangeState(PlayerStateMachine.StateId nextState)
+    {
+        myStateMachine.ChangeState(nextState);
+    }
+
+    /// <summary>
+    /// 마우스 레이케스트에 따라 상태를 반환하는 함수.
+    /// </summary>
+    /// <returns>레이케스트에 의해 감지된 물체에 따른 다음 상태 반환. 적을 선택하면 Chase, 땅을 선택하면 Run 또는 Walk를 반환. </returns>
     public PlayerStateMachine.StateId CalCulateNextStateByMouseRaycast()
     {
         RaycastHit casted = MouseRaycast();
@@ -93,13 +107,11 @@ public class PlayerController : MonoBehaviour
         {
             if (((1 << casted.collider.gameObject.layer) & enemyLayer.value) > 0)
             {
-                Debug.Log("Raycast Enemy");
                 SetTargetEnemy(casted.collider.GetComponent<Enemy>());
                 return PlayerStateMachine.StateId.Chase;
             }
             else if (((1 << casted.collider.gameObject.layer) & groundLayer.value) > 0) 
             {
-                Debug.Log("Raycast Ground");
                 if (IsClickSameDestination(casted.point))
                 {
                     return PlayerStateMachine.StateId.Run;
@@ -110,12 +122,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Raycast Failed");
         return PlayerStateMachine.StateId.None;
     }
     #endregion
 
-    #region �̵� ���� �Լ�
+    #region 이동관련함수
     public Vector3 GetMouseWorldPosition()
     {
         RaycastHit ray;
@@ -136,10 +147,20 @@ public class PlayerController : MonoBehaviour
         PlayerMove(MyStatus.RunSpeed);
     }
 
+    public void PlayerWalk(Vector3 pos)
+    {
+        PlayerMove(pos, MyStatus.WalkSpeed);
+    }
+
     private void PlayerMove(float speed)
     {
+        PlayerMove(GetMouseWorldPosition(), speed);
+    }
+
+    private void PlayerMove(Vector3 pos, float speed)
+    {
         ChangePlayerSpeed(speed);
-        MovePosition(GetMouseWorldPosition());
+        MovePosition(pos);
         MyAnim.SetBool("isWalking", true);
     }
 
@@ -148,7 +169,7 @@ public class PlayerController : MonoBehaviour
         MyAgent.speed = MyStatus.CurrentSpeed = speed;
     }
 
-    //NavMeshAgent ��ǥ ���� �Լ�
+    //NavMeshAgent 목표설정함수
     public void MovePosition(Vector3 pos)
     {
         Vector3 moveVec = (pos - transform.position).normalized;
@@ -180,8 +201,41 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
+
+    /// <summary>
+    /// 부드러운 회전을 위한 함수. Update()같은 주기적 호출이 일어나는 곳에서 호출해야하며 충분히 회전했으면 true를 반환함.
+    /// </summary>
+    /// <param name="target">바라볼 대상의 position</param>
+    /// <returns></returns>
+    public bool SmoothRotateToTarget(Vector3 target)
+    {
+        Vector3 PlayerToTarget = (target - transform.position);
+        Vector3 PlayerForward = transform.forward;
+        PlayerToTarget.y = PlayerForward.y = 0;
+        if (Vector3.Angle(PlayerForward, PlayerToTarget) >= 0.01f)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(PlayerToTarget);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 부드러운 회전을 위한 함수. Update()같은 주기적 호출이 일어나는 곳에서 호출해야하며 충분히 회전했으면 true를 반환함.
+    /// </summary>
+    /// <param></param>
+    /// <returns></returns>
+    public bool SmoothRotateToTarget()
+    {
+        if(SelectedEnemy == null) return false;
+        return SmoothRotateToTarget(SelectedEnemy.transform.position);
+    }
     #endregion
-    #region ���� ���� �Լ�
+    #region 공격관련함수
 
     public Enemy FindNearestEnemy()
     {
@@ -230,11 +284,22 @@ public class PlayerController : MonoBehaviour
     {
         if (MyStatus.CanFire())
         {
-            //target.GetComponent<Enemy>().TakeDamage(damage); //enemy�� ��ġ�Ǹ� �ּ������ϱ�
-            MyEffectModule.PlayFiringEffect();
+            //target.GetComponent<Enemy>().TakeDamage(damage); //enemy�� ��ġ�Ǹ� �ּ������ϱ�
+            MyEffectModule.PlayFiringEffect(target.transform.position);
             MyStatus.ResetAttackCoolTime();
-            Debug.Log("����");
+            Debug.Log("공격");
         }
     }
+    #endregion
+    #region 스킬관련함수
+    public void DesignateFireToEnemy()
+    {
+        DesignateFireToEnemy(SelectedEnemy);
+    }
+    public void DesignateFireToEnemy(Enemy enemy)
+    {
+        AttackEnemy(enemy, MyWeapon.Damage * 2); //나중에 Damage 대신 스킬 데미지를 적용
+    }
+
     #endregion
 }

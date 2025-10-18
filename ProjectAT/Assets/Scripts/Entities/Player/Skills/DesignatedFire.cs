@@ -1,93 +1,61 @@
-using System.Collections;
-using Unity.Netcode;
 using UnityEngine;
 
 public class DesignatedFire : ISkill
 {
     public string SkillName => "Designated Fire";
-    public Enemy Target { get; set; } 
+    private PlayerController myController;
 
-    //서버에서 사용하는 함수들
-    public void OnCastingUpdate(PlayerStateMachine context)
+    public DesignatedFire(PlayerController myController)
     {
-        if(Target) 
-        {
-            /*if(context.PlayerController.FindNearEnemy() == Target)
-            {
-                OnExecute(context);
-            }
-            else
-            {
-                Debug.Log("Set Destination");
-                context.PlayerController.MyAgent.SetDestination(Target.transform.position);
-            }*/
-        }
-        else
-        {
-            OnFinish(context);
-        }
+        this.myController = myController;
     }
 
-    public void OnExecute(PlayerStateMachine context)
+    #region Used in TargetingState
+    public bool SelectTarget()
     {
-        Debug.Log("Designated Fire");
-        //context.AttackEnemy(Target.GetComponent<Enemy>());
-        //context.ChangeStateServerRpc(PlayerStateMachine.StateId.Idle);
-    }
-
-    public void OnFinish(PlayerStateMachine context)
-    {
-        Debug.Log("Designated Fire Finish");
-        context.PlayerController.MyAgent.ResetPath();
-        Target = null;
-        context.ChangeState(PlayerStateMachine.StateId.Idle);
-    }
-
-    public bool TryCommit(PlayerStateMachine context)
-    {
-      /*  Enemy enemy = context.PlayerController.RaycastEnemy();
-        if (enemy)
+        RaycastHit hitted = myController.MouseRaycast();
+        if (hitted.collider != null && hitted.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            //SetTargetRpc(enemy);
+            myController.SetTargetEnemy(hitted.collider.gameObject.GetComponent<Enemy>());
             return true;
         }
-        Debug.Log("Raycast Failed");*/
-        return false;
-    }
-
-    [Rpc(SendTo.ClientsAndHost)]
-    public void SetTargetRpc(NetworkBehaviourReference newTarget)
-    {
-        Debug.Log($"SetTarget Rpc Called");
-/*        if(newTarget.TryGet(out Enemy enemy))
+        else
         {
-            Target = enemy;
-            Debug.Log($"Setted:{Target.name}");
+            myController.SetTargetEnemy(null);
+            return false;
+        }
+    }
+    #endregion
+    #region Used in CastingState
+    public void OnSkillUpdate()
+    {
+        if (TryCommit() && myController.SmoothRotateToTarget(myController.SelectedEnemy.transform.position))
+        {
+            ActivateSkill();
         }
         else
         {
-            Debug.Log("Can't Set Enemy");
-        }*/
+            myController.PlayerWalk(myController.SelectedEnemy.transform.position);
+        }
     }
 
-    public void OnTargetingEnter(PlayerStateMachine context)
+    public bool TryCommit()
     {
-        //조준UI 활성화
-        //throw new System.NotImplementedException();
+        return myController.IsInAttackRange(myController.SelectedEnemy);
     }
 
-    public void OnTargetingUpdate(PlayerStateMachine context)
+    public void ActivateSkill()
     {
-        //마우스 바라보기
-        /*Vector3 vec = context.PlayerController.GetMouseWorldPosition() - context.transform.position;
-        Debug.Log(vec);
-        context.PlayerController.LookAtTarget(vec);*/
+        Debug.Log("Designated Fire Activated"); //TODO : Skill상태들 가서 Input처리할 차례
+        myController.StopMoving();
+        //myController.PlayDesignateAnimation();
+        myController.DesignateFireToEnemy();
+        myController.ChangeState(PlayerStateMachine.StateId.Idle);
     }
 
-    public void OnTargetingExit(PlayerStateMachine context)
+    public void OnFinish()
     {
-        //조준UI 비활성화
-        
-        //throw new System.NotImplementedException();
+        myController.SetTargetEnemy(null);
     }
+    #endregion
 }

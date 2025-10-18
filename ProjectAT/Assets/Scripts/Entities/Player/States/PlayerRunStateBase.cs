@@ -29,6 +29,9 @@ public class PlayerRunStateBase : EntityState
                 else
                     context.ChangeState(nextState);
                 break;
+            case PlayerInputType.DesignatedFireKey:
+                context.ChangeState(PlayerStateMachine.StateId.SkillTargeting);
+                break;
             default:
                 break;
         }

@@ -27,6 +27,12 @@ public class PlayerWalkStateBase : EntityState
                 else
                     context.ChangeState(nextState);
                 break;
+            case PlayerInputType.DesignatedFireKey:
+                context.ChangeState(PlayerStateMachine.StateId.SkillTargeting);
+                break;
+            default:
+                break;
+
         }
     }
     public override void OnUpdate()

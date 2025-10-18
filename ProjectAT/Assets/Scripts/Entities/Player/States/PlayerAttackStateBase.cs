@@ -28,6 +28,9 @@ public class PlayerAttackStateBase : EntityState
                     context.ChangeState(nextState);
                 }
                 break;
+            case PlayerInputType.DesignatedFireKey:
+                context.ChangeState(PlayerStateMachine.StateId.SkillTargeting);
+                break;
         }
     }
 
@@ -36,7 +39,7 @@ public class PlayerAttackStateBase : EntityState
         var enemy = context.PlayerController.SelectedEnemy;
         var controller = context.PlayerController;
 
-        if (enemy == null)  //적이 죽으면 enemy.IsAlive 도 있어야할듯.
+        if (enemy == null || controller.IsInAttackRange(enemy))  //적이 죽으면 enemy.IsAlive 도 있어야할듯.
         {
             context.ChangeState(PlayerStateMachine.StateId.Idle);
             return;
@@ -47,19 +50,10 @@ public class PlayerAttackStateBase : EntityState
             context.ChangeState(PlayerStateMachine.StateId.Chase);
         }
 
-        Vector3 playerToEnemy = (enemy.transform.position - controller.transform.position);
-        Vector3 playerForward = controller.transform.forward;
-        playerToEnemy.y = playerForward.y = 0;
-
-        if (Vector3.Angle(playerForward, playerToEnemy) >= 0.01f) //적이 정면에 없으면
-        {
-            Quaternion lookRotation = Quaternion.LookRotation(playerToEnemy);
-            controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, lookRotation, Time.deltaTime * 10f);
-        }
-        else
+        
+        if (controller.SmoothRotateToTarget(enemy.transform.position)) //적이 정면에 없으면
         {
             controller.NormalAttackEnemy(enemy);
         }
-            return;
     }
 }

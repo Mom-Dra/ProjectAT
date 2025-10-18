@@ -1,36 +1,42 @@
+using Unity.Behavior;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class SkillCastingStateBase : EntityState
 {
-    public ISkill SkillStrategy;
+    private PlayerSkillStrategyMap skillStrategyMap;
 
-    public SkillCastingStateBase(PlayerStateMachine context) : base(context) { }
+    public SkillCastingStateBase(PlayerStateMachine context, PlayerSkillStrategyMap skillMap) : base(context) 
+    {
+        skillStrategyMap = skillMap;
+    }
     
     public override void Enter()
     {
-        Debug.Log("SkillCastingBase");
+
     }
     public override void Exit()
     {
-
+        skillStrategyMap.NowActiveSkill.OnFinish();
     }
     public override void HandleInput(PlayerInputType type)
     {
         switch (type)
         {
-            case PlayerInputType.LeftClick:
-                context.ChangeState(PlayerStateMachine.StateId.Walk);
+            case PlayerInputType.RightClick:
+                //context.PlayerController.SetTargetEnemy(null);
+                PlayerStateMachine.StateId nextState = context.PlayerController.CalCulateNextStateByMouseRaycast();
+                context.ChangeState(nextState);
                 break;
         }
     }
     public override void OnUpdate()
     {
-
-    }
-
-    public void SetSkillStrategy(ISkill nextStrategy)
-    {
-        SkillStrategy = nextStrategy;
+        if(context.PlayerController.SelectedEnemy == null)
+        {
+            context.ChangeState(PlayerStateMachine.StateId.Idle);
+            return;
+        }
+        skillStrategyMap.NowActiveSkill.OnSkillUpdate();
     }
 }

@@ -15,7 +15,16 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Clicked",
+                    "name": "LeftClicked",
+                    "type": "Button",
+                    "id": "7220b036-b830-4bae-9b02-3e2ca46bc20f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightClicked",
                     "type": "Button",
                     "id": "c4c9e924-7289-479d-b3f0-7abeecccb015",
                     "expectedControlType": "",
@@ -52,7 +61,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";PC",
-                    "action": "Clicked",
+                    "action": "RightClicked",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": ";PC",
                     "action": "DesignatedFire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bc0f845f-e779-4a9a-8961-856ec2b3dbe6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "LeftClicked",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
