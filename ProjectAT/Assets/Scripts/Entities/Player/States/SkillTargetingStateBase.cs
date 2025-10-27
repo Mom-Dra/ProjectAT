@@ -12,11 +12,12 @@ public class SkillTargetingStateBase : EntityState
     public override void Enter()
     {
         Debug.Log("Skill Targetting Enter");
+        //UI.ON?
     }
 
     public override void Exit()
     {
-
+        //UI.OFF?
     }
 
     public override void HandleInput(PlayerInputType type)

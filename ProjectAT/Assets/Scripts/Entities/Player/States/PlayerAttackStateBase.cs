@@ -39,7 +39,7 @@ public class PlayerAttackStateBase : EntityState
         var enemy = context.PlayerController.SelectedEnemy;
         var controller = context.PlayerController;
 
-        if (enemy == null || controller.IsInAttackRange(enemy))  //적이 죽으면 enemy.IsAlive 도 있어야할듯.
+        if (enemy == null)  //enemy.IsDead 도 체크해야함.
         {
             context.ChangeState(PlayerStateMachine.StateId.Idle);
             return;

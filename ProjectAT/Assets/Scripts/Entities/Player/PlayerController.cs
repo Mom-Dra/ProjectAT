@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour
         cameraController = FindFirstObjectByType<CameraController>();
 
         myStateMachine = new PlayerStateMachine(this);
+
+        MyAgent.angularSpeed = 360f;
     }
     #endregion
     #region 상태머신관련
@@ -130,7 +132,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetMouseWorldPosition()
     {
         RaycastHit ray;
-        if (Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out ray, groundLayer))
+        if (Physics.Raycast(cameraController.MyCamera.ScreenPointToRay((Vector3)inputReader.MousePosition), out ray,100f, groundLayer.value))
         {
             return ray.point;
         }
@@ -174,8 +176,8 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 moveVec = (pos - transform.position).normalized;
 
-        MyAgent.velocity = moveVec * MyAgent.speed;
-        MyAgent.SetDestination(pos);
+        //MyAgent.velocity = transform.forward * MyAgent.speed; //이 코드가 무빙에 버그를 일으킴
+        MyAgent.destination = pos;
     }
     public bool IsClickSameDestination(Vector3 dest)
     {
@@ -211,7 +213,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 PlayerToTarget = (target - transform.position);
         Vector3 PlayerForward = transform.forward;
-        PlayerToTarget.y = PlayerForward.y = 0;
+        PlayerToTarget.y = PlayerForward.y;
         if (Vector3.Angle(PlayerForward, PlayerToTarget) >= 0.01f)
         {
             Quaternion lookRotation = Quaternion.LookRotation(PlayerToTarget);
@@ -239,10 +241,18 @@ public class PlayerController : MonoBehaviour
 
     public Enemy FindNearestEnemy()
     {
-        if (Physics.OverlapSphereNonAlloc(transform.position + Vector3.up * 0.5f, MyWeapon.Radius, detectedCollider, enemyLayer) != 0)
+        if (Physics.OverlapSphereNonAlloc(transform.position + Vector3.up * 0.5f, MyWeapon.Radius, detectedCollider, enemyLayer.value) != 0)
         {
             detectedCollider.OrderBy(c => (c.transform.position - transform.position).sqrMagnitude);
-            return detectedCollider[0].GetComponent<Enemy>();
+            foreach(var scanedCollider in detectedCollider)
+            {
+                if (scanedCollider == null) break;
+                Enemy enemy = scanedCollider.GetComponent<Enemy>();
+                if (IsInAttackRange(enemy))
+                {
+                    return enemy;
+                }
+            }
         }
         return null;
     }
@@ -276,8 +286,16 @@ public class PlayerController : MonoBehaviour
     public bool IsInAttackRange(Enemy target)
     {
         if (target == null) return false;
+        
+        Vector3 dir = (target.transform.position - transform.position);
 
-        return (target.transform.position - transform.position).sqrMagnitude <= MyWeapon.Radius * MyWeapon.Radius;
+        if ((dir.sqrMagnitude <= MyWeapon.Radius * MyWeapon.Radius))
+        {
+            Physics.Raycast(transform.position, dir, out RaycastHit hit, MyWeapon.Radius);
+            return hit.collider != null && hit.collider.gameObject == target.gameObject;
+        }
+
+        return false;
     }
 
     private void AttackEnemy(Enemy target, int damage)

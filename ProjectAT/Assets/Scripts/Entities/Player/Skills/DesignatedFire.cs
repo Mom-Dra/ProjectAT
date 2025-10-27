@@ -29,9 +29,12 @@ public class DesignatedFire : ISkill
     #region Used in CastingState
     public void OnSkillUpdate()
     {
-        if (TryCommit() && myController.SmoothRotateToTarget(myController.SelectedEnemy.transform.position))
+        if (TryCommit())
         {
-            ActivateSkill();
+            if (myController.SmoothRotateToTarget(myController.SelectedEnemy.transform.position))
+            {
+                ActivateSkill();
+            }
         }
         else
         {
@@ -46,7 +49,7 @@ public class DesignatedFire : ISkill
 
     public void ActivateSkill()
     {
-        Debug.Log("Designated Fire Activated"); //TODO : Skill상태들 가서 Input처리할 차례
+        Debug.Log("Designated Fire Activated");
         myController.StopMoving();
         //myController.PlayDesignateAnimation();
         myController.DesignateFireToEnemy();
