@@ -20,7 +20,7 @@ public class EnemyIdleState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
-        enemy.EnableFieldOfViewNetcode(true);
+        enemy.EnableFieldOfView(true);
         enemy.SetBehaviorGraphAgentState(Enemy_State.Idle);
     }
 
@@ -42,7 +42,7 @@ public class EnemyPatrolState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
-        enemy.EnableFieldOfViewNetcode(true);
+        enemy.EnableFieldOfView(true);
         enemy.SetBehaviorGraphAgentState(Enemy_State.Patrol);
     }
 
@@ -83,7 +83,7 @@ public class EnemyAttackState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
-        enemy.EnableFieldOfViewNetcode(false);
+        enemy.EnableFieldOfView(false);
         enemy.SetBehaviorGraphAgentState(Enemy_State.Attack);
     }
 

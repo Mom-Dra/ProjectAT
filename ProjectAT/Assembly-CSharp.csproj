@@ -101,8 +101,10 @@
     <Compile Include="Assets\Scripts\View\FieldOfView.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerChaseStateBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseTargetPositionAction.cs" />
     <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\SkillTargetingStateBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCameraData.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Abstract\IThrowable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WanderAction.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerWalkState.cs" />
     <Compile Include="Assets\Scripts\Enemy\AlertData.cs" />
     <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
@@ -157,6 +160,7 @@
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerSkillCastingState.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeLauncher.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkObjectPool.cs" />
+    <Compile Include="Assets\Scripts\Utils\ColorDebug.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

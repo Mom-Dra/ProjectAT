@@ -129,12 +129,8 @@ GameObject:
   - component: {fileID: 7946540881659101584}
   - component: {fileID: 1176600639735147834}
   - component: {fileID: 1529055892217641613}
-  - component: {fileID: 2322939223921972522}
-  - component: {fileID: 8916578690304789819}
   - component: {fileID: 3899280787256876842}
   - component: {fileID: 5034287966346046182}
-  - component: {fileID: 475323312878689423}
-  - component: {fileID: 1933638636908125670}
   - component: {fileID: 6024672695013317722}
   m_Layer: 8
   m_Name: FirstClassStationaryEnemy
@@ -237,59 +233,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &2322939223921972522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5854530041950173396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3102632677
-  InScenePlacedSourceGlobalObjectIdHash: 3102632677
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
---- !u!114 &8916578690304789819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5854530041950173396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bfc3abc6b566e94fbe6b3a5d981e99a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  fixedRadius: 6
-  viewRadius: 0
-  viewAngle: 70
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 64
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 128
-  scanTime: 5
-  meshReolution: 1
-  edgeResolveIteration: 0
-  edgeDistanceThreshold: 0
-  fixedMeshFilter: {fileID: 6432071935689726649}
-  viewmeshFilter: {fileID: 5551487191027223746}
 --- !u!114 &3899280787256876842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,67 +285,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &475323312878689423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5854530041950173396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  NetworkTransformExpanded: 0
-  AutoOwnerAuthorityTickOffset: 1
-  PositionInterpolationType: 0
-  RotationInterpolationType: 0
-  ScaleInterpolationType: 0
-  PositionLerpSmoothing: 1
-  PositionMaxInterpolationTime: 0.1
-  RotationLerpSmoothing: 1
-  RotationMaxInterpolationTime: 0.1
-  ScaleLerpSmoothing: 1
-  ScaleMaxInterpolationTime: 0.1
-  AuthorityMode: 0
-  TickSyncChildren: 0
-  UseUnreliableDeltas: 0
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 0
-  SyncScaleY: 0
-  SyncScaleZ: 0
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  UseQuaternionSynchronization: 0
-  UseQuaternionCompression: 0
-  UseHalfFloatPrecision: 0
-  InLocalSpace: 0
-  SwitchTransformSpaceWhenParented: 0
-  Interpolate: 1
-  SlerpPosition: 0
---- !u!114 &1933638636908125670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5854530041950173396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad2c4be63ae30f243b6cafb73d53d123, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 5462043658949298033, guid: 6f656340650a5864dbf198d365bd98b2, type: 3}
-  projectileSpawnPoint: {fileID: 2920887816259056932}
-  maxCooldownTime: 5
 --- !u!114 &6024672695013317722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,8 +297,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af6fb6d1d2b39d4e8b343882623a174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
   isPatrolEnemy: 0
+  enemyData: {fileID: 11400000, guid: 9dcf25dbfb8fa2a48b1b388759bcbe45, type: 2}
+  alertData: {fileID: 11400000, guid: 1d4a6662ebe6c8a47a81ef24cad0ee35, type: 2}
+  targetCheckInterval: 0.2
+  alertLevel: 0
+  enemyState: 0
 --- !u!1 &8385226022807085862
 GameObject:
   m_ObjectHideFlags: 0

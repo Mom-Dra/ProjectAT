@@ -25,6 +25,7 @@ public struct ViewCastInfo
         Angle = angle;
     }
 }
+
 public struct EdgeInfo
 {
     public Vector3 PointA;
@@ -57,6 +58,8 @@ public class FieldOfView : MonoBehaviour
     private List<(Transform transform, float distance)> visibleTargets = new List<(Transform transform, float distance)>();
     public IReadOnlyList<(Transform transform, float distance)> VisibleTargets => visibleTargets;
 
+    public Transform GetFirstTarget => visibleTargets.Count == 0 ? null : visibleTargets[0].transform;
+
     [SerializeField]
     private float meshReolution;
     [SerializeField]
@@ -86,7 +89,11 @@ public class FieldOfView : MonoBehaviour
     private EnemyData enemyData;
     public float ViewAngle => enemyData.ViewAngle;
 
+    // 처음에 적이 시야에 들어 왔들 때
+    // 추가로 적이 시야에 들어 왔을 때 
     public event System.Action onTargetDetect;
+    
+    // 모든 적이 시야에 없을 때
     public event System.Action onTargetLosted;
 
     private void Awake()

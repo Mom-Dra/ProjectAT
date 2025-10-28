@@ -5,14 +5,13 @@ using MomDra;
 using Unity.Collections;
 using System.Collections;
 using Unity.VisualScripting;
+using System;
 
-public abstract class Enemy : LivingEntity, IAttackable
+public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 {
     protected BehaviorGraphAgent behaviorGraphAgent;
-    //protected FieldOfViewNetcode fieldOfViewNetcode;
 
     protected FieldOfView fieldOfView;
-    // 이 것만 Netcode와 아닌거 구분하자
 
     protected IEnemyState currentState;
     private Weapon weapon;
@@ -46,6 +45,14 @@ public abstract class Enemy : LivingEntity, IAttackable
 
     private Coroutine targetCheckCoroutine;
 
+    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
+    public event Action<ISquadMember, Vector3> onPlayerLosted;
+
+    public bool IsPlayerStillVisible => enemyState == Enemy_State.Chase || enemyState == Enemy_State.Attack;
+
+    private Transform currentTarget;
+    private Vector3 targetLastKnownPosition;
+
     private void Awake()
     {
         behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
@@ -74,7 +81,7 @@ public abstract class Enemy : LivingEntity, IAttackable
         behaviorGraphAgent.SetVariableValue("Enemy_State", enemyState);
     }
 
-    internal void EnableFieldOfViewNetcode(bool enabled)
+    internal void EnableFieldOfView(bool enabled)
     {
         fieldOfView.enabled = enabled;
     }
@@ -103,8 +110,23 @@ public abstract class Enemy : LivingEntity, IAttackable
 
     private void ScanCompleted()
     {
+        Transform target = fieldOfView.GetFirstTarget;
+
+        if (target == null)
+        {
+            ColorDebug.Log("ScanCompleted, target is null", Color.red);
+
+#if UNITY_EDITOR
+            throw new Exception("ScanCompleted, target is null");
+#endif
+            return;
+        }
+            
+
         Debug.Log("ScanCompleted");
         ChangeState(Enemy_State.Attack);
+
+        onPlayerDetected?.Invoke(this, target, target.position);
     }
 
     private IEnumerator TargetDistanceCheckCoroutine()
@@ -115,7 +137,9 @@ public abstract class Enemy : LivingEntity, IAttackable
             {
                 // 1차 시야 안에 있을 경우
                 if (distance < enemyData.PrimaryViewRadius)
+                {
                     IncreaseAlert(AlertData.MAX);
+                }
             }
 
             yield return targetCheckWait;
@@ -147,6 +171,7 @@ public abstract class Enemy : LivingEntity, IAttackable
 
     private void TargetLosted()
     {
+        onPlayerLosted?.Invoke(this, targetLastKnownPosition);
         StopTargetDistanceCheckCoroutine();
     }
 
@@ -210,5 +235,27 @@ public abstract class Enemy : LivingEntity, IAttackable
         }
 
         currentState.Enter(this);
+    }
+
+    public void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition)
+    {
+        ColorDebug.Log("ReceiveSquadAlert Change AttackState", Color.red);
+        EnableFieldOfView(false);
+        ChangeState(Enemy_State.Attack);
+    }
+
+    public void SetFormationDestination(Vector3 position)
+    {
+        //ColorDebug.Log($"SetFormationDestination: {position}", Color.red);
+        behaviorGraphAgent.SetVariableValue("targetDestination", position);
+    }
+
+    public void SetSearchPoint(Vector3 searchPoint)
+    {
+        targetLastKnownPosition = searchPoint;
+
+        // 여기 behviourTree에 동기화 하자!
+        behaviorGraphAgent.SetVariableValue("lastKnownPosition", searchPoint);
+        ChangeState(Enemy_State.Search);
     }
 }
