@@ -19,3 +19,4 @@ MonoBehaviour:
   magCapacity: 25
   timeBetFire: 0.5
   reloadTime: 1.8
+  maxDistance: 100

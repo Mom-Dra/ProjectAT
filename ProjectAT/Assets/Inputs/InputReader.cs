@@ -7,6 +7,7 @@ using static PlayerControls;
 public class InputReader : ScriptableObject, IPlayerActions
 {
     public event Action<PlayerInputType> InputEvent;
+    public event Action MouseRightClickEvent;
 
     private PlayerControls controls;
     public Vector2 MousePosition { get; private set; }
@@ -18,7 +19,6 @@ public class InputReader : ScriptableObject, IPlayerActions
             controls = new PlayerControls();
             controls.Player.SetCallbacks(this);
         }
-
         controls.Player.Enable();
     }
 
@@ -31,7 +31,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
         {
-            InputEvent?.Invoke(PlayerInputType.RightClick);
+            MouseRightClickEvent?.Invoke();
         }
     }
 
@@ -55,4 +55,5 @@ public class InputReader : ScriptableObject, IPlayerActions
             InputEvent?.Invoke(PlayerInputType.LeftClick);
         }
     }
+
 }

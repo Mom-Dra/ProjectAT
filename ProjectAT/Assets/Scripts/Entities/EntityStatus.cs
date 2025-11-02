@@ -8,7 +8,6 @@ public class EntityStatus: MonoBehaviour
     [SerializeField] private EntityInitialStatus initStatus;
 
     public int CurrentHp { get; set; }
-    public float CurrentSpeed { get; set; }
     public int MaxHp { get; private set; }
     public float WalkSpeed { get; private set; }
     public float RunSpeed { get; private set; }
@@ -35,14 +34,6 @@ public class EntityStatus: MonoBehaviour
         if (myWeapon)
         {
             MaxAttackCoolTime = 2.0f;
-        }
-    }
-
-    public void Update()
-    {
-        if (CurrAttackCoolTime > 0.0f) 
-        {
-            CurrAttackCoolTime -= Time.deltaTime;
         }
     }
 
