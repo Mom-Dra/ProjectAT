@@ -15,11 +15,12 @@ MonoBehaviour:
   viewAngle: 50
   rotateAngle: 60
   rotateSpeed: 30
-  detectionRange: 8.82
+  detectionRange: 10
   detectionAngle: 120
-  playerLayer:
+  detectionTime: 2
+  playerMask:
     serializedVersion: 2
     m_Bits: 256
-  obstacleLayer:
+  obstacleMask:
     serializedVersion: 2
     m_Bits: 512

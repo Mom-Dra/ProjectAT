@@ -4,18 +4,26 @@ using System;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
 using UnityEngine.AI;
+using UnityEditorInternal;
 
 public interface ISquadMember
 {
     event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
     event Action<ISquadMember, Vector3> onPlayerLosted;
-    void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition);
-    void SetFormationDestination(Vector3 position);
+    event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
+
     bool IsPlayerStillVisible { get; }
+
+    void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition);
+    void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition);
 }
 
 public class Squad : MonoBehaviour, ISquadMember
 {
+    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
+    public event Action<ISquadMember, Vector3> onPlayerLosted;
+    public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
+
     [SerializeField]
     private List<GameObject> memberGameObjects;
 
@@ -29,13 +37,10 @@ public class Squad : MonoBehaviour, ISquadMember
     [SerializeField]
     private float maxDistanceOffset = 1f;
 
-    private Vector3 squadLastKnownPosition; // 분대 전체가 공유하는 LKP
     private bool isSquadAlerted = false;
-
+    private Vector3 squadLastKnownPosition;
+    private Transform target;
     private List<ISquadMember> squadMembers = new List<ISquadMember>();
-
-    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
-    public event Action<ISquadMember, Vector3> onPlayerLosted;
 
     public bool IsPlayerStillVisible
     {
@@ -70,6 +75,7 @@ public class Squad : MonoBehaviour, ISquadMember
 
         squadMembers.Add(squadMember);
         squadMember.onPlayerDetected += PlayerDetected;
+        squadMember.onPlayerPositionUpdated += PlayerPositionUpdated;
     }
 
     public void Remove(ISquadMember squadMember)
@@ -81,12 +87,14 @@ public class Squad : MonoBehaviour, ISquadMember
 
         squadMembers.Remove(squadMember);
         squadMember.onPlayerDetected -= PlayerDetected;
+        squadMember.onPlayerPositionUpdated -= PlayerPositionUpdated;
     }
 
     public void PlayerDetected(ISquadMember enemy, Transform target, Vector3 lastKnownPosition)
     {
         isSquadAlerted = true;
         squadLastKnownPosition = lastKnownPosition;
+        this.target = target;
 
         CalculateFormation(target, lastKnownPosition);
 
@@ -124,6 +132,16 @@ public class Squad : MonoBehaviour, ISquadMember
         //StartSquadSearch(lastKnownPosition);
     }
 
+    private void PlayerPositionUpdated(ISquadMember enemy, Vector3 position)
+    {
+        // target이 바뀔 가능성도 있음!
+
+        ColorDebug.GreenLog($"PlayerPositionUpdated: {position}");
+
+        squadLastKnownPosition = position;
+        CalculateFormation(target, position);
+    }
+
     public void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition)
     {
         foreach (var member in squadMembers)
@@ -132,7 +150,7 @@ public class Squad : MonoBehaviour, ISquadMember
         }
     }
 
-    public void SetFormationDestination(Vector3 position)
+    public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
     {
         // 상위 스쿼드가 이 스쿼드의 위치를 지정? (복잡해짐)
     }
@@ -142,8 +160,6 @@ public class Squad : MonoBehaviour, ISquadMember
         Vector3 targetPosition = target.position;
         float angleStep = 360f / squadMembers.Count;
 
-        // Todo
-        // 칼각으로 원형배치가 너무 부자연스러움 자연스럽게 가자
         for(int i = 0; i < squadMembers.Count; ++i)
         {
             ISquadMember member = squadMembers[i];
@@ -159,48 +175,18 @@ public class Squad : MonoBehaviour, ISquadMember
             if (NavMesh.SamplePosition(idealPosition, out hit, formationSampleRadius, NavMesh.AllAreas))
             {
                 finalPosition = hit.position;
-
-                ColorDebug.Log($"ideal", Color.red);
             }
             else
             {
                 if (NavMesh.SamplePosition(targetPosition, out hit, formationOffsetDistance, NavMesh.AllAreas))
                 {
                     finalPosition = hit.position;
-
-                    ColorDebug.Log($"recalculate", Color.red);
                 }
             }
 
-            ColorDebug.Log($"offset: {offset}", Color.red);
-            ColorDebug.Log($"finalPosition: {finalPosition}", Color.red);
-            member.SetFormationDestination(finalPosition);
+            //ColorDebug.Log($"offset: {offset}", Color.red);
+            //ColorDebug.Log($"finalPosition: {finalPosition}", Color.red);
+            member.SetFormationDestination(finalPosition, lastKnownPosition);
         }
     }
-
-    //private void StartSquadSearch(Vector3 lastKnownPosition)
-    //{
-    //    foreach(ISquadMember squadMember in squadMembers)
-    //    {
-    //        Vector3 searchPoint;
-
-    //        // LKP 주변 랜덤 위치 (원형으로)
-    //        Vector3 randomDir = UnityEngine.Random.insideUnitCircle * searchRadius;
-    //        Vector3 searchPosCandidate = lastKnownPosition + new Vector3(randomDir.x, 0f, randomDir.y);
-
-    //        NavMeshHit hit;
-    //        // NavMesh 상의 유효한 위치인지 확인
-    //        if (NavMesh.SamplePosition(searchPosCandidate, out hit, 5f, NavMesh.AllAreas))
-    //        {
-    //            searchPoint = hit.position;
-    //        }
-    //        else
-    //        {
-    //            searchPoint = lastKnownPosition; // 실패 시 그냥 LKP로 보냄
-    //        }
-
-    //        // 분대원에게 수색 지점 할당
-    //        squadMember.SetSearchPoint(searchPoint);
-    //    }
-    //}
 }

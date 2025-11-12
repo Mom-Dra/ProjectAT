@@ -6,134 +6,233 @@ using Unity.Collections;
 using System.Collections;
 using Unity.VisualScripting;
 using System;
+using UnityEngine.AI;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 
 public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 {
-    protected BehaviorGraphAgent behaviorGraphAgent;
+    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
+    public event Action<ISquadMember, Vector3> onPlayerLosted;
+    public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
 
-    protected FieldOfView fieldOfView;
+    internal const float WONDERTIME = 10f;
+    internal const float TIMETOLOSETARGET = 3f;
 
+    internal int CurrentWaypointIndex;
+
+    protected NavMeshAgent navMeshAgent;
+    protected FieldOfViewVisuals fieldOfViewVisual;
+    protected TargetDetector targetDetector;
     protected IEnemyState currentState;
-    private Weapon weapon;
 
     // Inspector에서 설정
     [SerializeField]
-    private bool isPatrolEnemy;
-
-    [SerializeField]
     private EnemyData enemyData;
-    public EnemyData EnemyData => enemyData;
-
     [SerializeField]
     private AlertData alertData;
-    public AlertData AlertData => alertData;
-
+    [SerializeField]
+    private bool isPatrolEnemy;
+    [SerializeField]
+    private Transform[] patrolWaypoints;
     [SerializeField]
     private float targetCheckInterval = 0.2f;
-    private WaitForSeconds targetCheckWait;
-
-    internal float Time;
-    internal const float WONDERTIME = 10f;
-
     [SerializeField]
     private int alertLevel;
-    public int AlertLevel => alertLevel;
 
     // Debug용 변수
     [SerializeField]
     private Enemy_State enemyState;
 
+    private float timeSinceTargetLost;
+    private Vector3 targetLastKnownPosition;
+    private Vector3 targetDestination;
+    private Weapon weapon;
+    private Transform currentTarget;
+    private Transform muzzle;
+    private WaitForSeconds targetCheckWait;
+    private WaitForSeconds informPlayerPositionWait;
     private Coroutine targetCheckCoroutine;
-
-    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
-    public event Action<ISquadMember, Vector3> onPlayerLosted;
+    private Coroutine informPlayerPositionCoroutine;
 
     public bool IsPlayerStillVisible => enemyState == Enemy_State.Chase || enemyState == Enemy_State.Attack;
 
-    private Transform currentTarget;
-    private Vector3 targetLastKnownPosition;
+    public EnemyData EnemyData => enemyData;
+    public AlertData AlertData => alertData;
+    public int AlertLevel => alertLevel;
+    internal NavMeshAgent NavMeshAgent => navMeshAgent;
+    internal TargetDetector TargetDetector => targetDetector;
+
+    internal IReadOnlyList<Transform> PatrolWaypoints => patrolWaypoints;
+    internal Vector3 TargetLastKnownPosition => targetLastKnownPosition;
 
     private void Awake()
     {
-        behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
-        fieldOfView = GetComponent<FieldOfView>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        fieldOfViewVisual = GetComponent<FieldOfViewVisuals>();
+        targetDetector = GetComponent<TargetDetector>();
 
-        fieldOfView.SetEnemyData(this);
-        fieldOfView.onScanComplete += ScanCompleted;
-        fieldOfView.onScanCancel += ScanCanceled;
-        fieldOfView.onScanStart += ScanStarted;
-        fieldOfView.onTargetDetect += TargetDetected;
-        fieldOfView.onTargetLosted += TargetLosted;
+        fieldOfViewVisual.SetEnemyData(this);
+        targetDetector.SetEnemyData(this);
 
-        behaviorGraphAgent.SetVariableValue("attackRange", enemyData.AttackRange);
-        behaviorGraphAgent.SetVariableValue("rotateSpeed", enemyData.RotateSpeed);
-        behaviorGraphAgent.SetVariableValue("muzzle", transform.FindChildRecursive("FX_Shoot_01_muzzle"));
-        behaviorGraphAgent.SetVariableValue("searchRadius", enemyData.SearchRadius);
-        behaviorGraphAgent.SetVariableValue("weapon", GetComponentInChildren<Weapon>());
+        fieldOfViewVisual.onScanComplete += ScanCompleted;
+        fieldOfViewVisual.onScanCancel += ScanCanceled;
+        fieldOfViewVisual.onScanStart += ScanStarted;
+
+        targetDetector.onTargetDetect += TargetDetected;
+        targetDetector.onTargetLosted += TargetLosted;
+
+        muzzle = transform.FindChildRecursive("FX_Shoot_01_muzzle");
+        weapon = GetComponentInChildren<Weapon>();
 
         targetCheckWait = new WaitForSeconds(targetCheckInterval);
+        informPlayerPositionWait = new WaitForSeconds(enemyData.TargetInformInterval);
 
-        if (isPatrolEnemy) ChangeState(Enemy_State.Patrol);
+        if (isPatrolEnemy) ChangeState(IEnemyState.PatrolState);
     }
 
-    internal void SetBehaviorGraphAgentState(Enemy_State enemyState)
+    private void Update()
     {
-        behaviorGraphAgent.SetVariableValue("Enemy_State", enemyState);
+        currentState.Update(this);
     }
 
     internal void EnableFieldOfView(bool enabled)
     {
-        fieldOfView.enabled = enabled;
+        if (enabled)
+            ColorDebug.OrangeLog($"EnableFieldOfView: {enabled}");
+        fieldOfViewVisual.enabled = enabled;
+    }
+
+    internal void SetAttackMode(bool isAttackMode)
+    {
+        EnableFieldOfView(!isAttackMode);
+        targetDetector.SetAttackMode(isAttackMode);
     }
 
     public void Attack()
     {
-        // currentState.Attack(this);
-
-        // Enemy 상태 안에서 call 해야 할듯?
         weapon.Attack();
+    }
+
+    internal void Chase()
+    {
+        if(navMeshAgent.destination != targetDestination)
+        {
+            ColorDebug.RedLog($"Chase, targetDeestination: {targetDestination}");
+            navMeshAgent.SetDestination(targetDestination);
+        }
+    }
+
+    internal bool IsTargetExist()
+    {
+        return targetDetector.IsTargetDetected();
+    }
+
+    internal bool IsTargetInAttackRange()
+    {
+        if (!IsTargetExist()) return false;
+
+        (Transform transform, float distance)? targetInfo = TargetDetector.GetFirstTargetInfo;
+
+        if (targetInfo.Value.distance <= enemyData.AttackRange) return true;
+
+        return false;
+    }
+
+    private void InformTargetPosition()
+    {
+        (Transform transform, float distance)? targetInfo = TargetDetector.GetFirstTargetInfo;
+
+        onPlayerPositionUpdated?.Invoke(this, targetInfo.Value.transform.position);
+    }
+
+    internal void StartInformTargetPositionCoroutine()
+    {
+        if (informPlayerPositionCoroutine is null)
+            informPlayerPositionCoroutine = StartCoroutine(InformTargetPositionCoroutine());
+    }
+
+    internal void StopInformTargetPositionCoroutine()
+    {
+        if(informPlayerPositionCoroutine is not null)
+        {
+            StopCoroutine(informPlayerPositionCoroutine);
+            informPlayerPositionCoroutine = null;
+        }
+    }
+
+    internal void UpdateTargetLostTimer(float deltaTime)
+    {
+        timeSinceTargetLost += deltaTime;
+    }
+
+    internal void ResetTargetLostTimer()
+    {
+        timeSinceTargetLost = 0f;
+    }
+
+    internal bool IsOverTargetLost()
+    {
+        return timeSinceTargetLost > TIMETOLOSETARGET;
+    }
+
+    internal void SetDestinationOnAgent(Vector3 destination)
+    {
+        ColorDebug.RedLog($"SetDestinationOnAgent: {destination}");
+
+        targetDestination = destination;
+        navMeshAgent.SetDestination(destination);
+    }
+
+    private IEnumerator InformTargetPositionCoroutine()
+    {
+        while(true)
+        {
+            if (targetDetector.IsTargetDetected())
+                InformTargetPosition();
+            yield return informPlayerPositionWait;
+        }    
     }
 
     private void ScanStarted()
     {
         Debug.Log("ScanStarted");
         if (isPatrolEnemy)
-            ChangeState(Enemy_State.Idle);
+            ChangeState(IEnemyState.IdleState);
     }
 
     private void ScanCanceled()
     {
         Debug.Log("ScanCanceled");
         if (isPatrolEnemy)
-            ChangeState(Enemy_State.Patrol);
+            ChangeState(IEnemyState.PatrolState);
     }
 
     private void ScanCompleted()
     {
-        Transform target = fieldOfView.GetFirstTarget;
-
-        if (target == null)
+        if(!IsTargetExist())
         {
-            ColorDebug.Log("ScanCompleted, target is null", Color.red);
+            Debug.LogWarning("ScanCompleted, target is null");
+            //ColorDebug.Log("ScanCompleted, target is null", Color.red);
 
 #if UNITY_EDITOR
             throw new Exception("ScanCompleted, target is null");
 #endif
-            return;
         }
-            
+
+        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
 
         Debug.Log("ScanCompleted");
-        ChangeState(Enemy_State.Attack);
+        ChangeState(IEnemyState.AttackState);
 
-        onPlayerDetected?.Invoke(this, target, target.position);
+        onPlayerDetected?.Invoke(this, targetInfo.Value.transform, targetInfo.Value.transform.position);
     }
 
     private IEnumerator TargetDistanceCheckCoroutine()
     {
         while(true)
         {
-            foreach ((Transform transform, float distance) in fieldOfView.VisibleTargets)
+            foreach ((Transform transform, float distance) in targetDetector.VisibleTargets)
             {
                 // 1차 시야 안에 있을 경우
                 if (distance < enemyData.PrimaryViewRadius)
@@ -204,35 +303,20 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 
     internal void ChangeDefaultState()
     {
-        if (isPatrolEnemy) ChangeState(Enemy_State.Patrol);
-        else ChangeState(Enemy_State.Idle);
+        if (isPatrolEnemy) ChangeState(IEnemyState.PatrolState);
+        else ChangeState(IEnemyState.IdleState);
     }
 
-    internal void ChangeState(Enemy_State enemyState)
+    internal void ChangeState(IEnemyState enemyState)
     {
-        if (currentState != null)
-            currentState.Exit(this);
-
-        this.enemyState = enemyState;
-
-        switch (enemyState)
+        if (currentState is not null)
         {
-            case Enemy_State.Idle:
-                currentState = IEnemyState.ServerEnemyIdleState;
-                break;
-            case Enemy_State.Patrol:
-                currentState = IEnemyState.ServerEnemyPatrolState;
-                break;
-            case Enemy_State.Attack:
-                currentState = IEnemyState.ServerEnemyAttackState;
-                break;
-            case Enemy_State.Chase:
-                currentState = IEnemyState.ServerEnemyChaseState;
-                break;
-            case Enemy_State.Search:
-                currentState = IEnemyState.ServerEnemyWonderState;
-                break;
+            if (currentState == enemyState) return;
+
+            currentState.Exit(this);
         }
+
+        currentState = enemyState;
 
         currentState.Enter(this);
     }
@@ -240,22 +324,45 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
     public void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition)
     {
         ColorDebug.Log("ReceiveSquadAlert Change AttackState", Color.red);
+
+        targetLastKnownPosition = lastKnownPosition;
+
         EnableFieldOfView(false);
-        ChangeState(Enemy_State.Attack);
+        ChangeState(IEnemyState.AttackState);
     }
 
-    public void SetFormationDestination(Vector3 position)
+    public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
     {
-        //ColorDebug.Log($"SetFormationDestination: {position}", Color.red);
-        behaviorGraphAgent.SetVariableValue("targetDestination", position);
+        ColorDebug.GreenLog($"SetFormationDestination: {targetDestination}");
+
+        this.targetDestination = targetDestination;
+        targetLastKnownPosition = lastKnownPosition;
+
+        ColorDebug.GreenLog($"IsTargetExist: {IsTargetExist()}");
+
+        if (!IsTargetExist())
+        {
+            SetDestinationOnAgent(targetDestination);
+        }
     }
 
-    public void SetSearchPoint(Vector3 searchPoint)
+    internal bool RotateTowardTarget()
     {
-        targetLastKnownPosition = searchPoint;
+        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
 
-        // 여기 behviourTree에 동기화 하자!
-        behaviorGraphAgent.SetVariableValue("lastKnownPosition", searchPoint);
-        ChangeState(Enemy_State.Search);
+        Vector3 dir = targetInfo.Value.transform.position - muzzle.position;
+        dir.y = 0f;
+
+        Quaternion targetRotation = Quaternion.LookRotation(dir);
+
+        float rotateSpeed = enemyData.RotateSpeed;
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * UnityEngine.Time.deltaTime);
+
+        float angleDifference = Vector3.Angle(transform.forward, dir);
+
+        if (angleDifference < 1f) return true;
+
+        return false;
     }
 }

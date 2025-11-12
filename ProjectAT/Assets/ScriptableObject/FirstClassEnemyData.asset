@@ -15,6 +15,7 @@ MonoBehaviour:
   attackRange: 10
   rotateSpeed: 5
   searchRadius: 10
+  targetInformInterval: 0.1
   viewAngle: 70
   primaryViewRadius: 3
   secondaryViewRadius: 10

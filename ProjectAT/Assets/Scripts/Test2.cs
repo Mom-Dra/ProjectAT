@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,10 +20,20 @@ public class Test2 : MonoBehaviour
     private void Start()
     {
         //StartCoroutine(TestCoroutine());
-        Vector3 abc = Quaternion.Euler(0f, 90f, 0f) * Vector3.forward;
-        Vector3 cba = Quaternion.Euler(0f, 90f, 0f) * abc;
+        //Vector3 abc = Quaternion.Euler(0f, 90f, 0f) * Vector3.forward;
+        //Vector3 cba = Quaternion.Euler(0f, 90f, 0f) * abc;
 
-        Debug.Log($"{cba}");
+
+        //try
+        //{
+        //    Debug.LogError("Error!!");
+        //}
+        //catch (Exception e)
+        //{
+        //    Debug.Log($"KiaOra!: {e}");
+        //}
+
+        //Debug.Log($"{cba}");
     }
 
     //private IEnumerator TestCoroutine()

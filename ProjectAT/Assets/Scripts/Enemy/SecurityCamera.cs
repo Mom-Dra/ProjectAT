@@ -1,23 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-// Camera: 회전하다가 멈춘다..!
-
-public class SecurityCamera : MonoBehaviour
+public class SecurityCamera : MonoBehaviour, ISquadMember
 {
+    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
+    public event Action<ISquadMember, Vector3> onPlayerLosted;
+    public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
+
     [SerializeField]
     private SecurityCameraData securityCameraData;
 
+    private List<Transform> playersInRange = new List<Transform>();
+    private bool alarmTriggered = false;
+    private float currTime;
+
+    private Light cameraLight;
+
     private Coroutine rotateCoroutine;
+    private Coroutine playerVisibleCoroutine;
+    private Coroutine playerNonVisibleCoroutine;
 
-    private Collider[] targetsInViewRadius = new Collider[4];
-
-    private bool isPlayerDetected = false;
+    public bool IsPlayerStillVisible => throw new NotImplementedException();
 
     private void Awake()
-    { 
+    {
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        sphereCollider.radius = securityCameraData.DetectionRange;
 
+        cameraLight = GetComponentInChildren<Light>();
     }
 
     private void Start()
@@ -26,15 +39,77 @@ public class SecurityCamera : MonoBehaviour
         StartRotate();
     }
 
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
-        DetectPlayers();
+        ColorDebug.GreenLog("OnTriggerEnter");
+
+        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            ColorDebug.GreenLog("OnTriggerEnter Inner");
+
+            playersInRange.Add(other.transform);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        ColorDebug.GreenLog("OnTriggerStay");
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            ColorDebug.GreenLog("OnTriggerStay Inner");
+
+            bool anyPlayerVisible = false;
+            Transform player = default;
+
+            foreach(Transform currPlayer in playersInRange)
+            {
+                if(CanSeePlayer(currPlayer))
+                {
+                    anyPlayerVisible = true;
+                    player = currPlayer;
+                    break;
+                }
+            }
+
+            // 시야에 보이면
+            // 비율 증가
+            // 시야에 보이지 않으면 비율 감소
+
+            if (anyPlayerVisible)
+            {
+                StopPlayerNonVisibleCoroutine();
+                StartPlayerVisibleCoroutine(player);
+            }
+            else
+            {
+                StopPlayerVisibleCoroutine();
+                StartPlayerNonVisibleCoroutine();
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        ColorDebug.GreenLog("OnTriggerExit");
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            ColorDebug.GreenLog("OnTriggerExit Inner");
+
+            playersInRange.Remove(other.transform);
+
+            if (playersInRange.Count == 0)
+            {
+                StopPlayerVisibleCoroutine();
+                StartPlayerNonVisibleCoroutine();
+            }
+        }
     }
 
     private void StartRotate()
     {
-        if(rotateCoroutine == null)
+        if(rotateCoroutine is null)
         {
             rotateCoroutine = StartCoroutine(RotateCoroutine());
         }
@@ -42,102 +117,10 @@ public class SecurityCamera : MonoBehaviour
 
     private void StopRotate()
     {
-        if (rotateCoroutine != null)
+        if (rotateCoroutine is not null)
         {
             StopCoroutine(rotateCoroutine);
         }
-    }
-
-    private void DetectPlayers()
-    {
-        // 1단계: 탐지 범위 내 모든 플레이어 후보 찾기
-        int count = Physics.OverlapSphereNonAlloc(transform.position, securityCameraData.DetectionRange, targetsInViewRadius, securityCameraData.PlayerLayer);
-
-        // 탐지된 플레이어가 있는지 확인하는 플래그
-        bool isplayerFoundThisFrame = false;
-        Transform target = null;
-
-        for (int i = 0; i < count; ++i)
-        {
-            target = targetsInViewRadius[i].transform;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
-
-            // 2단계: 시야각 확인
-            if (Vector3.Angle(transform.forward, directionToTarget) < securityCameraData.DetectionAngle / 2)
-            {
-                // 3단계: 장애물 확인 (레이캐스트)
-                float distanceToTarget = Vector3.Distance(transform.position, target.position);
-
-                // target(플레이어)에게 레이를 쐈을 때, 장애물에 먼저 부딪히지 않았다면!
-                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, securityCameraData.ObstacleLayer))
-                {
-                    // 모든 검사 통과: 최종 탐지 성공!
-                    isplayerFoundThisFrame = true;
-                    break; // 한 명이라도 찾으면 더 검사할 필요 없이 루프 종료
-                }
-            }
-        }
-
-        // 발견했어: 회전을 멈춘다!
-        // 점점 게이지가 차오르는 느낌스!
-
-        // 사라졌어: 다시 회전한다!
-        // 점점 게이지가 낮아지는 느낌스!
-
-        // 이번 프레임의 탐지 결과에 따라 상태 업데이트
-        if (isplayerFoundThisFrame)
-        {
-            Debug.DrawRay(transform.position, target.position - transform.position, Color.red);
-
-            if (!isPlayerDetected) // 이전 프레임에서는 탐지 못했다가 이번에 처음 탐지했다면
-            {
-                OnPlayerDetected();
-            }
-        }
-        else
-        {
-            if (isPlayerDetected) // 이전 프레임에서는 탐지했으나 지금은 보이지 않는다면
-            {
-                OnPlayerNotDetected();
-            }
-        }
-    }
-
-    private void OnPlayerDetected()
-    {
-        Debug.Log("OnPlayerDetected");
-        isPlayerDetected = true;
-    }
-
-    private void OnPlayerNotDetected()
-    {
-        Debug.Log("OnPlayerNotDetected");
-        isPlayerDetected = false;
-    }
-
-    private void CheckDetection()
-    {
-        //Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
-
-        //// 2단계: 시야각 확인
-        //// 카메라의 정면 방향과 플레이어 방향 사이의 각도를 계산
-        //if (Vector3.Angle(transform.forward, directionToPlayer) < fieldOfViewAngle / 2)
-        //{
-        //    // 3단계: 장애물 확인 (레이캐스트)
-        //    // 카메라와 플레이어 사이의 거리를 계산
-        //    float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
-        //    // 시야 거리를 초과하면 탐지하지 않음
-        //    if (distanceToPlayer > viewDistance) return;
-
-        //    // 카메라에서 플레이어 방향으로 레이캐스트를 발사해서 장애물이 있는지 확인
-        //    if (!Physics.Raycast(transform.position, directionToPlayer, distanceToPlayer, obstacleMask))
-        //    {
-        //        // 장애물이 없으면 최종적으로 탐지 성공!
-        //        Debug.Log("플레이어 발견!");
-        //        // 여기에 플레이어 발견 시 실행할 코드 작성 (예: 경보 울리기)
-        //    }
-        //}
     }
 
     private IEnumerator RotateCoroutine()
@@ -153,118 +136,148 @@ public class SecurityCamera : MonoBehaviour
         }
     }
 
-    //[SerializeField]
-    //private LayerMask targetMask;
-    //[SerializeField]
-    //private LayerMask obstacleMask;
+    private void StartPlayerVisibleCoroutine(Transform player)
+    {
+        if (playerVisibleCoroutine is null)
+        {
+            playerVisibleCoroutine = StartCoroutine(PlayerVisibleCoroutine(player));
+        }
+    }
 
-    //[SerializeField]
-    //private MeshFilter fixedMeshFilter;
-    //[SerializeField]
-    //private MeshFilter viewmeshFilter;
+    private void StopPlayerVisibleCoroutine()
+    {
+        if(playerVisibleCoroutine is not null)
+        {
+            StopCoroutine(playerVisibleCoroutine);
+            playerVisibleCoroutine = null;
+        }
+    }
 
-    //private Mesh fixedMesh;
-    //private Mesh viewMesh;
+    private void StartPlayerNonVisibleCoroutine()
+    {
+        if (playerNonVisibleCoroutine is null)
+        {
+            playerNonVisibleCoroutine = StartCoroutine(PlayerNonVisibleCoroutine());
+        }
+    }
 
-    //[SerializeField]
-    //private float meshReolution;
-    //[SerializeField]
-    //private int edgeResolveIteration;
-    //[SerializeField]
-    //private float edgeDistanceThreshold;
+    private void StopPlayerNonVisibleCoroutine()
+    {
+        if (playerNonVisibleCoroutine is not null)
+        {
+            StopCoroutine(playerNonVisibleCoroutine);
+            playerNonVisibleCoroutine = null;
+        }
+    }
 
-    //private void DrawFieldOfView(Mesh mesh, float radius)
-    //{
-    //    int stepCount = Mathf.Max(1, Mathf.RoundToInt(securityCameraData.ViewAngle * meshReolution));
-    //    float stepAngleSize = securityCameraData.ViewAngle / stepCount;
-    //    List<Vector3> viewPoints = new List<Vector3>(stepCount);
-    //    ViewCastInfo oldViewCast;
+    private IEnumerator PlayerVisibleCoroutine(Transform player)
+    {
+        while (currTime < securityCameraData.DetectionTime)
+        {
+            currTime += Time.deltaTime;
+            UpdateDetectionVisual();
 
-    //    // i = 0
-    //    float firstAngle = transform.eulerAngles.y - securityCameraData.ViewAngle / 2;
-    //    ViewCastInfo firstViewCast = ViewCast(firstAngle, radius);
-    //    viewPoints.Add(firstViewCast.Point);
-    //    oldViewCast = firstViewCast;
+            yield return null;
+        }
 
-    //    for (int i = 1; i <= stepCount; ++i)
-    //    {
-    //        float angle = transform.eulerAngles.y - securityCameraData.ViewAngle / 2 + stepAngleSize * i;
-    //        ViewCastInfo newViewCast = ViewCast(angle, radius);
+        currTime = securityCameraData.DetectionTime;
+        UpdateDetectionVisual();
 
-    //        bool tooFar = Mathf.Abs(oldViewCast.Distance - newViewCast.Distance) > edgeDistanceThreshold;
+        ColorDebug.GreenLog("Camera: onPlayerDetected!!!");
+        onPlayerDetected?.Invoke(this, player, player.position);
+    }
 
-    //        if (oldViewCast.Hit != newViewCast.Hit || (oldViewCast.Hit && newViewCast.Hit && tooFar))
-    //        {
-    //            EdgeInfo edge = FindEdge(oldViewCast, newViewCast, radius);
+    private IEnumerator PlayerNonVisibleCoroutine()
+    {
+        while(currTime > 0f)
+        {
+            currTime -= Time.deltaTime;
+            UpdateDetectionVisual();
 
-    //            if (edge.PointA != Vector3.zero) viewPoints.Add(edge.PointA);
-    //            if (edge.PointB != Vector3.zero) viewPoints.Add(edge.PointB);
-    //        }
+            yield return null;
+        }
 
-    //        viewPoints.Add(newViewCast.Point);
-    //        oldViewCast = newViewCast;
-    //    }
+        currTime = 0f;
+        UpdateDetectionVisual();
+    }
 
-    //    int vertexCount = viewPoints.Count + 1;
-    //    Vector3[] vertices = new Vector3[vertexCount];
-    //    int[] triangles = new int[(vertexCount - 2) * 3];
+    private void UpdateDetectionVisual()
+    {
+        float ratio = Mathf.Clamp01(currTime / securityCameraData.DetectionTime);
 
-    //    vertices[0] = Vector3.zero;
-    //    for (int i = 0; i < viewPoints.Count; ++i)
-    //        vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+        UpdateVisual(ratio);
+    }
 
-    //    for (int i = 0; i < vertexCount - 2; ++i)
-    //    {
-    //        triangles[i * 3] = 0;
-    //        triangles[i * 3 + 1] = i + 1;
-    //        triangles[i * 3 + 2] = i + 2;
-    //    }
+    private void UpdateVisual(float ratio)
+    {
+        cameraLight.color = Color.Lerp(Color.white, Color.red, ratio);
+    }
 
-    //    mesh.Clear();
-    //    mesh.vertices = vertices;
-    //    mesh.triangles = triangles;
-    //    mesh.RecalculateNormals();
-    //}
+    private bool CanSeePlayer(Transform player)
+    {
+        // 거리
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-    //private EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast, float radius)
-    //{
-    //    float minAngle = minViewCast.Angle;
-    //    float maxAngle = maxViewCast.Angle;
-    //    Vector3 minPt = default;
-    //    Vector3 maxPt = default;
+        if (distanceToPlayer > securityCameraData.DetectionRange)
+            return false;
 
-    //    for (int i = 0; i < edgeResolveIteration; ++i)
-    //    {
-    //        float angle = (minAngle + maxAngle) / 2f;
-    //        ViewCastInfo newViewCast = ViewCast(angle, radius);
-    //        bool tooFar = Mathf.Abs(minViewCast.Distance - newViewCast.Distance) > edgeDistanceThreshold;
+        // 시야각
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-    //        if (newViewCast.Hit == minViewCast.Hit && !tooFar)
-    //        {
-    //            minAngle = angle;
-    //            minPt = newViewCast.Point;
-    //        }
-    //        else
-    //        {
-    //            maxAngle = angle;
-    //            maxPt = newViewCast.Point;
-    //        }
-    //    }
+        if (angleToPlayer > securityCameraData.DetectionAngle / 2f)
+            return false;
 
-    //    return new EdgeInfo(minPt, maxPt);
-    //}
+        // 장애물
+        RaycastHit hit;
 
-    //private ViewCastInfo ViewCast(float globalAngle, float radius)
-    //{
-    //    Vector3 dir = DirFromGlobalAngle(globalAngle);
-    //    if (Physics.Raycast(transform.position, dir, out RaycastHit hit, radius, obstacleMask))
-    //        return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+        if (Physics.Raycast(transform.position, directionToPlayer, out hit, distanceToPlayer, securityCameraData.ObstacleMask))
+            return false;
 
-    //    return new ViewCastInfo(false, transform.position + dir * radius, radius, globalAngle);
-    //}
+        return true;
+    }
 
-    //private Vector3 DirFromGlobalAngle(float deg)
-    //{
-    //    return new Vector3(Mathf.Sin(deg * Mathf.Deg2Rad), -Mathf.Tan(transform.eulerAngles.x * Mathf.Deg2Rad), Mathf.Cos(deg * Mathf.Deg2Rad));
-    //}
+    private void OnDrawGizmosSelected()
+    {
+        // 탐지 범위 원 그리기
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, securityCameraData.DetectionRange);
+
+        // 시야각 그리기
+        float halfFOV = securityCameraData.DetectionAngle / 2f;
+        Quaternion leftRayRotation = Quaternion.AngleAxis(-halfFOV, Vector3.up);
+        Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);
+
+        Vector3 leftRayDirection = leftRayRotation * transform.forward;
+        Vector3 rightRayDirection = rightRayRotation * transform.forward;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position, leftRayDirection * securityCameraData.DetectionRange);
+        Gizmos.DrawRay(transform.position, rightRayDirection * securityCameraData.DetectionRange);
+
+        // 플레이어 탐지 시선 그리기
+        foreach(Transform currPlayer in playersInRange)
+        {
+            if (CanSeePlayer(currPlayer))
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position, currPlayer.position);
+            }
+            else
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(transform.position, currPlayer.position);
+            }
+        }
+    }
+
+    public void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition)
+    {
+
+    }
+
+    public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
+    {
+
+    }
 }

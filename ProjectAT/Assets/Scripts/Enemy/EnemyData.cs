@@ -12,6 +12,9 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private float searchRadius = 10;
 
+    [SerializeField]
+    private float targetInformInterval = 0.2f;
+
     [Header("½Ã¾ß")]
     [SerializeField, Range(0, 360)]
     private float viewAngle;
@@ -23,6 +26,7 @@ public class EnemyData : ScriptableObject
     public float AttackRange => attackRange;
     public float RotateSpeed => rotateSpeed;
     public float SearchRadius => searchRadius;
+    public float TargetInformInterval => targetInformInterval;
 
     public float ViewAngle => viewAngle;
     public float PrimaryViewRadius => primaryViewRadius;

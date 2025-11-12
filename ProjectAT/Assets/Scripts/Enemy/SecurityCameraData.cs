@@ -19,16 +19,20 @@ public class SecurityCameraData : ScriptableObject
     private float detectionAngle = 120f;
 
     [SerializeField]
-    private LayerMask playerLayer;
+    private float detectionTime;
 
     [SerializeField]
-    private LayerMask obstacleLayer;
+    private LayerMask playerMask;
+
+    [SerializeField]
+    private LayerMask obstacleMask;
 
     public float ViewAngle => viewAngle;
     public float RotateAngle => rotateAngle;
     public float RotateSpeed => rotateSpeed;
     public float DetectionRange => detectionRange;
     public float DetectionAngle => detectionAngle;
-    public LayerMask PlayerLayer => playerLayer;
-    public LayerMask ObstacleLayer => obstacleLayer;
+    public float DetectionTime => detectionTime;
+    public LayerMask PlayerMask => playerMask;
+    public LayerMask ObstacleMask => obstacleMask;
 }

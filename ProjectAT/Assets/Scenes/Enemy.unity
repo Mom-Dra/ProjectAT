@@ -154,11 +154,11 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &3282153
 MeshRenderer:
@@ -222,12 +222,13 @@ Transform:
   m_GameObject: {fileID: 3282151}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.66, y: 2.03, z: -13.73}
+  m_LocalPosition: {x: -11.62, y: 3.93, z: -12.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1931657728}
   - {fileID: 2078385622}
+  - {fileID: 1931657728}
+  - {fileID: 527666328}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3282156
@@ -294,7 +295,7 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -315,13 +316,29 @@ PrefabInstance:
       propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: targetMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: defaultScanTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: targetMask.m_Bits
@@ -331,20 +348,154 @@ PrefabInstance:
       propertyPath: obstacleMask.m_Bits
       value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: patrolWaypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 150929825}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 313142480}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
---- !u!1 &46522316 stripped
+--- !u!1 &56247120
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-  m_PrefabInstance: {fileID: 46522315}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 56247121}
+  - component: {fileID: 56247124}
+  - component: {fileID: 56247123}
+  - component: {fileID: 56247122}
+  - component: {fileID: 56247125}
+  m_Layer: 5
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &56247121
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56247120}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 690676146}
+  m_Father: {fileID: 165196208}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.3}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &56247122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56247120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &56247123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56247120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!223 &56247124
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56247120}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &56247125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56247120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f1fc358e62fb74d972c51b489925cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 165196208}
+  uiRect: {fileID: 690676146}
+  offset: {x: 0, y: 1.3, z: 0}
 --- !u!33 &76515186 stripped
 MeshFilter:
   m_CorrespondingSourceObject: {fileID: 6432071935689726649, guid: 9229ef7aec608444a8dfc6b1dce9659e, type: 3}
   m_PrefabInstance: {fileID: 1551294586}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &101687267 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+  m_PrefabInstance: {fileID: 46522315}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &105905026
 GameObject:
@@ -580,7 +731,11 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 3767861688200674707, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+    - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -601,9 +756,21 @@ PrefabInstance:
       propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: targetMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
@@ -621,14 +788,39 @@ PrefabInstance:
       propertyPath: obstacleMask.m_Bits
       value: 512
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: patrolWaypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 150929825}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 313142480}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1783273665}
+    m_RemovedComponents:
+    - {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2643342330749398859, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 56247121}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
 --- !u!1 &165196200 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+  m_PrefabInstance: {fileID: 165196199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &165196208 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2643342330749398859, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
   m_PrefabInstance: {fileID: 165196199}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &193925761
@@ -682,7 +874,7 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -707,6 +899,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
       value: 0.5
@@ -724,11 +920,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
---- !u!1 &193925762 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-  m_PrefabInstance: {fileID: 193925761}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &194247106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,7 +1464,7 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -1298,6 +1489,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
       value: 0.5
@@ -1315,10 +1510,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
---- !u!1 &453394501 stripped
+--- !u!1 &527666327
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 527666328}
+  - component: {fileID: 527666329}
+  m_Layer: 7
+  m_Name: SphereCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &527666328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527666327}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.66, y: -3.27, z: 1.77}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3282155}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &527666329
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527666327}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &541391365 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-  m_PrefabInstance: {fileID: 453394500}
+  m_PrefabInstance: {fileID: 1445085227}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &552025372
 GameObject:
@@ -1479,7 +1727,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 887
+    m_Bits: 631
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -1677,7 +1925,7 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -1702,6 +1950,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
       value: 0.5
@@ -1719,16 +1971,147 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
---- !u!1 &613865007 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-  m_PrefabInstance: {fileID: 613865006}
-  m_PrefabAsset: {fileID: 0}
 --- !u!33 &665498774 stripped
 MeshFilter:
   m_CorrespondingSourceObject: {fileID: 5551487191027223746, guid: 9229ef7aec608444a8dfc6b1dce9659e, type: 3}
   m_PrefabInstance: {fileID: 1551294586}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &690676145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 690676146}
+  - component: {fileID: 690676148}
+  - component: {fileID: 690676147}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &690676146
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690676145}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 56247121}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &690676147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690676145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Attack
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 40
+  m_fontSizeBase: 40
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &690676148
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690676145}
+  m_CullTransparentMesh: 1
 --- !u!1 &753704096
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,7 +2245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5640075836924021567, guid: 3bb9270b5a1f3c141a217bf3e73518ce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.08
+      value: -13.53
       objectReference: {fileID: 0}
     - target: {fileID: 5640075836924021567, guid: 3bb9270b5a1f3c141a217bf3e73518ce, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1870,7 +2253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5640075836924021567, guid: 3bb9270b5a1f3c141a217bf3e73518ce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.18208
+      value: 4.22
       objectReference: {fileID: 0}
     - target: {fileID: 5640075836924021567, guid: 3bb9270b5a1f3c141a217bf3e73518ce, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1956,7 +2339,7 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -1977,13 +2360,29 @@ PrefabInstance:
       propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: targetMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: defaultScanTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: targetMask.m_Bits
@@ -1993,16 +2392,27 @@ PrefabInstance:
       propertyPath: obstacleMask.m_Bits
       value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: patrolWaypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 150929825}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 313142480}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
---- !u!1 &854979992 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-  m_PrefabInstance: {fileID: 854979991}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &904983587
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,15 +2783,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   memberGameObjects:
   - {fileID: 165196200}
-  - {fileID: 46522316}
-  - {fileID: 2018308403}
-  - {fileID: 1445085228}
-  - {fileID: 854979992}
-  - {fileID: 193925762}
-  - {fileID: 1654919861}
-  - {fileID: 453394501}
-  - {fileID: 613865007}
-  - {fileID: 1953736256}
+  - {fileID: 101687267}
+  - {fileID: 2125598437}
+  - {fileID: 541391365}
+  - {fileID: 3282151}
   formationOffsetDistance: 5
   formationSampleRadius: 5
   maxDistanceOffset: 1
@@ -2436,7 +2841,7 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -2457,13 +2862,29 @@ PrefabInstance:
       propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: targetMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: defaultScanTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: targetMask.m_Bits
@@ -2473,16 +2894,27 @@ PrefabInstance:
       propertyPath: obstacleMask.m_Bits
       value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: patrolWaypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 150929825}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 313142480}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
---- !u!1 &1445085228 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-  m_PrefabInstance: {fileID: 1445085227}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1518861421
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,20 +3011,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4294330386d9e141b65d1990d67a69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 0
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
   defaultScanTime: 5
-  detectInterval: 0.2
   meshReolution: 0
   edgeResolveIteration: 0
   edgeDistanceThreshold: 0
   fixedMeshFilter: {fileID: 76515186}
   viewmeshFilter: {fileID: 665498774}
+--- !u!114 &1520191961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520191941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84669b5af0c1ee942b753bd183c765ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectInterval: 0.2
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &1551294586
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2672,6 +3115,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5854530041950173396, guid: 9229ef7aec608444a8dfc6b1dce9659e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1520191953}
+    - targetCorrespondingSourceObject: {fileID: 5854530041950173396, guid: 9229ef7aec608444a8dfc6b1dce9659e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1520191961}
   m_SourcePrefab: {fileID: 100100000, guid: 9229ef7aec608444a8dfc6b1dce9659e, type: 3}
 --- !u!1001 &1654919860
 PrefabInstance:
@@ -2724,7 +3170,7 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -2749,6 +3195,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
       value: 0.5
@@ -2766,11 +3216,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
---- !u!1 &1654919861 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-  m_PrefabInstance: {fileID: 1654919860}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1665773894
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,7 +3650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1931657728
 Transform:
   m_ObjectHideFlags: 0
@@ -3325,7 +3770,7 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -3350,6 +3795,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
       value: 0.5
@@ -3367,11 +3816,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
---- !u!1 &1953736256 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-  m_PrefabInstance: {fileID: 1953736255}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2018308402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3423,7 +3867,7 @@ PrefabInstance:
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -8299392160037580795, guid: 1d91f7d79c84b114b8df0e83cfa4cb31, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: NetcodeRunOnlyOnOwner
       value: 0
@@ -3444,13 +3888,29 @@ PrefabInstance:
       propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: targetMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: meshReolution
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: defaultScanTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6690113444285343292, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
       propertyPath: targetMask.m_Bits
@@ -3460,16 +3920,27 @@ PrefabInstance:
       propertyPath: obstacleMask.m_Bits
       value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: patrolWaypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 150929825}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 313142480}
+    - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+      propertyPath: 'patrolWaypoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
---- !u!1 &2018308403 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-  m_PrefabInstance: {fileID: 2018308402}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2078385621
 GameObject:
   m_ObjectHideFlags: 0
@@ -3623,6 +4094,11 @@ Transform:
   - {fileID: 1406339956}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2125598437 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
+  m_PrefabInstance: {fileID: 2018308402}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
