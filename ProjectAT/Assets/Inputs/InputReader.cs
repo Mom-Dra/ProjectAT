@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using static PlayerControls;
 
 [CreateAssetMenu(fileName ="New Input Reader", menuName = "Input/Input Reader")]
 public class InputReader : ScriptableObject, IPlayerActions
 {
-    public event Action<PlayerInputType> InputEvent;
+    public event Action<SkillNumber> SkillInputEvent;
     public event Action MouseRightClickEvent;
+    public event Action MouseLeftClickEvent;
 
     private PlayerControls controls;
     public Vector2 MousePosition { get; private set; }
@@ -44,7 +46,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
         {
-            InputEvent?.Invoke(PlayerInputType.DesignatedFireKey);
+            SkillInputEvent?.Invoke(SkillNumber.DesignatedFire);
         }
     }
 
@@ -52,7 +54,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
         {
-            InputEvent?.Invoke(PlayerInputType.LeftClick);
+            MouseLeftClickEvent?.Invoke();
         }
     }
 

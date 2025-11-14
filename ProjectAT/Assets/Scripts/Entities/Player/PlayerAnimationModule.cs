@@ -15,7 +15,7 @@ public class PlayerAnimationModule : MonoBehaviour
 
     public void SetRunningAnimation(bool shouldBeRunning)
     {
-        if (isRunning != shouldBeRunning)
+        if (myAnim.GetBool(IsWalking) != shouldBeRunning)
         {
             myAnim.SetBool(IsWalking, shouldBeRunning);
             isRunning = shouldBeRunning;

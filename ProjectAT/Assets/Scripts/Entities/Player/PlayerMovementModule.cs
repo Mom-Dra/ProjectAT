@@ -1,13 +1,11 @@
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.PlayerSettings;
 
 public class PlayerMovementModule : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent myAgent;
     [SerializeField] private EntityStatus myStatus;
+    public float deltaRotation = 20f;
 
     private void Awake()
     {
@@ -44,21 +42,23 @@ public class PlayerMovementModule : MonoBehaviour
 
         if ((direction - transform.forward).sqrMagnitude < 0.01f)
         {
+            myAgent.updateRotation = true;
             return true;
         }
         else
         {
+            myAgent.updateRotation = false;
             Quaternion lookRotation = Quaternion.LookRotation(direction, Vector2.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * deltaRotation);
             return false;
         }
     }
 
     public void PlayerMoveStop()
     {
+        if (myAgent.isStopped) return;
         myAgent.isStopped = true;
         //myAgent.ResetPath();
         myAgent.velocity = Vector3.zero;
     }
-
 }

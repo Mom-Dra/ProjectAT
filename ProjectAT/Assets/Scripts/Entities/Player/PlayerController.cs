@@ -1,10 +1,12 @@
 using EPOOutline.Demo;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
 public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey }
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerMovementModule myMovementModule;
     [SerializeField] private PlayerAnimationModule myAnimationModule;
     [SerializeField] private PlayerCombatModule myCombatModule;
+    [SerializeField] private PlayerSkillModule mySkillModule;
     [SerializeField] private EffectModule myEffectModule;
     [SerializeField] private Camera myCamera;
 
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [Header("Params")]
     [SerializeField] private float TickRate = 0.2f;
     private float LastTickTime = 0f;
+    private SkillNumber lastSkillInput;
 
 
     #region 초기화
@@ -38,17 +42,22 @@ public class PlayerController : MonoBehaviour
         myAnimationModule = GetComponent<PlayerAnimationModule>();
         myEffectModule = GetComponent<EffectModule>();
         myCombatModule = GetComponent<PlayerCombatModule>();
+        mySkillModule = GetComponent<PlayerSkillModule>();
     }
     private void LinkInputEventsAll()
     {
         //inputReader.InputEvent += HandleInput;
-        inputReader.MouseRightClickEvent += RaycastAtMouseCursorLocation;
+        inputReader.MouseRightClickEvent += HandlePlayerRightClickInput;
+        inputReader.SkillInputEvent += HandlePlayerSkillInput;
+        inputReader.MouseLeftClickEvent += HandleLeftClickInput;
     }
 
     private void UnLinkInputEventsAll()
     {
         //inputReader.InputEvent -= HandleInput;
-        inputReader.MouseRightClickEvent -= RaycastAtMouseCursorLocation;
+        inputReader.MouseRightClickEvent -= HandlePlayerRightClickInput;
+        inputReader.SkillInputEvent -= HandlePlayerSkillInput;
+        inputReader.MouseLeftClickEvent -= HandleLeftClickInput;
     }
     #endregion
 
@@ -58,6 +67,7 @@ public class PlayerController : MonoBehaviour
         InitiateComponents();
         myCamera = Camera.main;
         LastTickTime = Time.time;
+        lastSkillInput = SkillNumber.None;
     }
     private void OnEnable()
     {
@@ -67,32 +77,48 @@ public class PlayerController : MonoBehaviour
     {
         UnLinkInputEventsAll();
     }
-
     private void Update()
     {
-        if(Time.time - LastTickTime < TickRate)
+        if(Time.time - LastTickTime > TickRate)
         {
             myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
-            if (SelectedEnemy != null)
+            
+            if (mySkillModule.ModuleState == SkillModuleState.Casting)
+            {
+                mySkillModule.SkillOnUpdate();
+                return;
+            }
+            else if (SelectedEnemy != null)
             {
                 ChaseEnemy();
                 NormalAttackEnemy();
             }
-
             LastTickTime = Time.time;
         }
     }
 
     #endregion
     #region 입력 관련 함수
-    public void RaycastAtMouseCursorLocation()
-    {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
 
+    public void HandlePlayerRightClickInput()
+    {
+        if(EventSystem.current.IsPointerOverGameObject()) return;
+        
+        if(mySkillModule.isTargetting)
+        {
+            mySkillModule.CancelTargettingMode();
+            return;
+        }
+        mySkillModule.CancelSkill();
         CancelEnemySelect();
 
+        NormalRightClickAction();
+    }
+
+    private void NormalRightClickAction()
+    {
         RaycastHit ray;
-        if (Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f))
+        if (RaycastAtMouseLocation(out ray))
         {
             switch (ray.collider.gameObject.layer)
             {
@@ -100,7 +126,7 @@ public class PlayerController : MonoBehaviour
                     PlayerMove(ray.point, false);
                     break;
                 case 7: //Enemy Layer
-                    SelectEnemy(ray.collider.GetComponent<Enemy>());
+                    SetTargetEnemy(ray.collider.GetComponent<Enemy>());
                     break;
                 case 10: //Indicator Layer
                     PlayerMove(ray.point, true);
@@ -109,17 +135,56 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
-
     }
+
+    public bool RaycastAtMouseLocation(out RaycastHit ray)
+    {
+        return Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f);
+    }
+
+    public bool RaycastAtMouseLocation()
+    {
+        //TODO : 저거 위에있는 함수랑 기깔나게 합치는 방법?
+        RaycastHit ray;
+        if (Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f, enemyLayer))
+        {
+            SetTargetEnemy(ray.collider.GetComponent<Enemy>());
+            return true;
+        }
+        return false;
+    }
+
+    public void HandleLeftClickInput()
+    {
+        if(mySkillModule.isTargetting)
+        {
+            if(RaycastAtMouseLocation())
+            {
+                mySkillModule.ActivateSelectedSkill();
+            }
+            else
+            {
+                Debug.Log("Skill 사용 실패 : Enemy가 아님.");
+            }
+        }
+    }
+
+    public void HandlePlayerSkillInput(SkillNumber index)
+    {
+        mySkillModule.ActivateTargettingMode(index);
+    }
+
+
     private void PlayerMove(Vector3 pos, bool isRun)
     {
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
         myEffectModule.PlayMoveIndicatorEffect(pos);
     }
+    #endregion
 
     #region 전투관련 함수
-    private void SelectEnemy(Enemy castedEnemy)
+    private void SetTargetEnemy(Enemy castedEnemy)
     {
         if (!castedEnemy) return;
         SelectedEnemy = castedEnemy;
@@ -129,13 +194,12 @@ public class PlayerController : MonoBehaviour
     {
         SelectedEnemy = null;
     }
+
     private void ChaseEnemy()
     {
-        //MEMO : 추격이나 이런 상태를 공격모듈의 상태패턴으로..?ㅋㅋ
         if (myCombatModule.IsEnemyInRange(SelectedEnemy))
         {
             myMovementModule.PlayerMoveStop();
-            
         }
         else
         {
@@ -168,7 +232,4 @@ public class PlayerController : MonoBehaviour
         else
             return Vector3.zero;
     }*/
-    #endregion
-
-
 }

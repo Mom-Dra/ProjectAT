@@ -1,7 +1,3 @@
-using EPOOutline;
-using NUnit.Framework;
-using System.Linq;
-using System.Runtime.Serialization;
 using UnityEngine;
 
 public class PlayerCombatModule : MonoBehaviour
@@ -36,6 +32,7 @@ public class PlayerCombatModule : MonoBehaviour
     {
         return (enemy.transform.position - transform.position).sqrMagnitude <= myWeapon.Range * myWeapon.Range
             && CheckEnemyVisibility(enemy);
+        
     }
 
     public Enemy FindClosestEnemy()
@@ -59,11 +56,11 @@ public class PlayerCombatModule : MonoBehaviour
 
     private bool CheckEnemyVisibility(Enemy targetEnemy)
     {
-        Vector3 directionToEnemy = (targetEnemy.transform.position - firePoint.position).normalized;
+        Vector3 directionToEnemy = (targetEnemy.transform.position - firePoint.position);
         Ray ray = new Ray(firePoint.position, directionToEnemy);
         if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
-            if (hitInfo.collider.GetComponent<Enemy>() == targetEnemy)
+            if (hitInfo.collider.gameObject == targetEnemy.gameObject)
             {
                 return true;
             }
@@ -71,15 +68,17 @@ public class PlayerCombatModule : MonoBehaviour
         return false;
     }
 
-/*    private void OnDrawGizmos()
+    
+/*    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, myWeapon.Range);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(firePoint.position, firePoint.position + firePoint.forward * myWeapon.Range);
-    }*/
+    }
 
+*/
     public bool CanFire()
     {
         return Time.time - LastFireTime > myWeapon.FireRate;
