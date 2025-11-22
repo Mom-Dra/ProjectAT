@@ -1,24 +1,24 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class FieldIndicator : MonoBehaviour
 {
-    [SerializeField] private Material mat;
+    [SerializeField] private readonly string eventName = "Click";
     [SerializeField] private Collider myCol;
-    [SerializeField] private float disappearSpeed = 0.1f;
+    [SerializeField] private float availableTime = 0.1f;
+    [SerializeField] private VisualEffect[] myVfx;
 
     private Coroutine indicatorCoroutine;
-    private WaitForSeconds WaitForSeconds = new WaitForSeconds(0.02f);
-    private Color currentColor;
-    private Color initialColor;
+    private WaitForSeconds waitForSeconds;
+    private int eventId = -1;
 
     private void Awake()
     {
-        mat = GetComponent<Renderer>().material;
         myCol = GetComponent<Collider>();
-        initialColor = mat.color;
-        mat.color = Color.clear;
+        myVfx = GetComponentsInChildren<VisualEffect>();
+        waitForSeconds = new WaitForSeconds(availableTime);
+        eventId = Shader.PropertyToID(eventName);
     }
 
     public void SpawnIndicator(Vector3 newPos)
@@ -34,16 +34,13 @@ public class FieldIndicator : MonoBehaviour
     {
         gameObject.transform.position = pos;
         myCol.enabled = true;
-        mat.color = initialColor;
-        currentColor = initialColor;
-
-        while(currentColor.a > 0f)
+        for(int i = 0 ; i < myVfx.Length; ++i)
         {
-            currentColor.a -= disappearSpeed;
-            mat.color = currentColor;
-            yield return WaitForSeconds;
+            myVfx[i].SendEvent(eventId);
+            //myVfx[i].Play();
         }
 
+        yield return waitForSeconds;
         myCol.enabled = false;
     }
 }

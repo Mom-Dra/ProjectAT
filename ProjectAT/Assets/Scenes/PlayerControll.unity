@@ -3195,7 +3195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletProjectile: {fileID: 946230873439750309, guid: a45c701df17b62d439fc78c12adea761, type: 3}
   firingEffectSpawnPoint: {fileID: 2500729262257591832}
-  moveIndicatorPrefab: {fileID: 5698932320023430927, guid: d09764276594ea14498e1c7a9d5fde6b, type: 3}
+  moveIndicatorPrefab: {fileID: 7977531431303113237, guid: 6a4dd4f9b305ff640964010989a8a332, type: 3}
   moveIndicatorInstance: {fileID: 0}
 --- !u!114 &8965965632880616698
 MonoBehaviour:

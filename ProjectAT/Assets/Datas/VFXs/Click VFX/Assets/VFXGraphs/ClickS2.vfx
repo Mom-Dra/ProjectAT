@@ -1313,7 +1313,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"189f769d69dcc25459bdf90a4102950e","type":3}}'
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"853bf51ab0467944b931082cbb5c8683","type":3}}'
     m_Space: -1
   m_Property:
     name: mainTexture
@@ -2242,7 +2242,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"189f769d69dcc25459bdf90a4102950e","type":3}}'
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"853bf51ab0467944b931082cbb5c8683","type":3}}'
     m_Space: -1
   m_Property:
     name: mainTexture
@@ -3143,7 +3143,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"189f769d69dcc25459bdf90a4102950e","type":3}}'
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"853bf51ab0467944b931082cbb5c8683","type":3}}'
     m_Space: -1
   m_Property:
     name: mainTexture
@@ -4044,7 +4044,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"189f769d69dcc25459bdf90a4102950e","type":3}}'
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"853bf51ab0467944b931082cbb5c8683","type":3}}'
     m_Space: -1
   m_Property:
     name: mainTexture
@@ -6041,7 +6041,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"7fc421583c756aa46ae0c2318fffe32c","type":3}}'
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"9d5cdbdf32c8b65419023db90099d5a1","type":3}}'
     m_Space: -1
   m_Property:
     name: mainTexture
