@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class EntityStatus: MonoBehaviour
+public class EntityStatus: MonoBehaviour, IDamageable
 {
     //References
     [SerializeField] private WeaponStatus myWeapon;

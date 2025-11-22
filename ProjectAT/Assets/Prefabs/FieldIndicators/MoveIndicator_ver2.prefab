@@ -66,10 +66,10 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.023529412, y: 1, z: 0.7019608, w: 1}
+      - m_Value: {x: 1, y: 0.08841409, z: 0.02352941, w: 1}
         m_Name: Color
         m_Overridden: 1
-      - m_Value: {x: 0.023529412, y: 1, z: 0.7019608, w: 1}
+      - m_Value: {x: 1, y: 0.077786006, z: 0.02352941, w: 1}
         m_Name: Outer Color
         m_Overridden: 1
     m_Uint:
@@ -195,10 +195,10 @@ VisualEffect:
       - m_Value: {x: 1, y: 1, z: 1, w: 0}
         m_Name: Color
         m_Overridden: 1
-      - m_Value: {x: 0.02352941, y: 1, z: 0.7195607, w: 1}
+      - m_Value: {x: 1, y: 0.02352941, z: 0.032239717, w: 1}
         m_Name: Layer01 Color
         m_Overridden: 1
-      - m_Value: {x: 0.02352941, y: 1, z: 0.28578612, w: 1}
+      - m_Value: {x: 1, y: 0.051682256, z: 0.02352941, w: 1}
         m_Name: Layer02 Color
         m_Overridden: 1
     m_Uint:
