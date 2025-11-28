@@ -5,6 +5,8 @@ public class PlayerCombatModule : MonoBehaviour
     [Header("References")]
     [SerializeField] private WeaponHolder myWeapon;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private EntityStatus myStatus;
+    [SerializeField] private Transform throwPoint;
     //[SerializeField] private GameObject bulletPrefab;
 
     [Header("Params")]
@@ -21,18 +23,44 @@ public class PlayerCombatModule : MonoBehaviour
     private void InitiateComponents()
     {
         myWeapon = GetComponentInChildren<WeaponHolder>();
+        myStatus = GetComponent<EntityStatus>();
     }
 
     private void InitiateParams()
     {
         //enemyLayer = LayerMask.GetMask("Enemy");
+        throwPoint = transform.GetChild(2);
     }
 
-    public bool IsEnemyInRange(Enemy enemy)
+    public bool IsEnemyInWeaponSight(Enemy enemy)
     {
-        return (enemy.transform.position - transform.position).sqrMagnitude <= myWeapon.Range * myWeapon.Range
+        return CheckEnemyInRange(enemy, myStatus.ThrowRange)
             && CheckEnemyVisibility(enemy);
-        
+    }
+
+    private bool CheckEnemyInRange(Enemy enemy, float range)
+    {
+        return (enemy.transform.position - transform.position).sqrMagnitude <= range * range;
+    }
+
+    private bool CheckEnemyVisibility(Enemy targetEnemy)
+    {
+        Vector3 directionToEnemy = (targetEnemy.transform.position - firePoint.position);
+        Ray ray = new Ray(firePoint.position, directionToEnemy);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        {
+            if (hitInfo.collider.gameObject == targetEnemy.gameObject)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool CanFire()
+    {
+        return Time.time - LastFireTime > myWeapon.FireRate 
+        && myWeapon.IsAmmoLoaded();
     }
 
     public Enemy FindClosestEnemy()
@@ -54,20 +82,6 @@ public class PlayerCombatModule : MonoBehaviour
         return scanned;
     }
 
-    private bool CheckEnemyVisibility(Enemy targetEnemy)
-    {
-        Vector3 directionToEnemy = (targetEnemy.transform.position - firePoint.position);
-        Ray ray = new Ray(firePoint.position, directionToEnemy);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo))
-        {
-            if (hitInfo.collider.gameObject == targetEnemy.gameObject)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     
 /*    private void OnDrawGizmosSelected()
     {
@@ -79,11 +93,6 @@ public class PlayerCombatModule : MonoBehaviour
     }
 
 */
-    public bool CanFire()
-    {
-        return Time.time - LastFireTime > myWeapon.FireRate;
-    }
-
 
     public void NormalAttackEnemy(Enemy target)
     {
@@ -92,9 +101,17 @@ public class PlayerCombatModule : MonoBehaviour
         //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         //target.TakeDamage(myWeapon.Damage);
     }
-
-    /*public void ChangeWeapon(GunData newWeapon) //나중에 총기스왑 구현되면 그때 ㄱ
+        public bool CanThrowSomethingToEnemy(Enemy enemy)
     {
-        myWeapon.SetWeapon(newWeapon);
-    }*/
+        return CheckEnemyInRange(enemy, myStatus.ThrowRange) 
+        && CheckEnemyVisibility(enemy);
+    }
+
+    public void ThrowSomthingToTarget(GameObject thowingObject, Vector3 targetPos)
+    {
+        GameObject thrownObj = Instantiate(thowingObject, throwPoint.position + Vector3.up, Quaternion.identity);
+        thrownObj.GetComponent<ProjectileGrenade>().Throw(targetPos);
+    }
+
+
 }

@@ -25,4 +25,9 @@ public class PlayerAnimationModule : MonoBehaviour
     {
         myAnim.SetTrigger(FiringTrigger);
     }
+
+    public void PlayThrowingAnimation()
+    {
+        myAnim.SetTrigger("ThrowingTrigger");
+    }
 }

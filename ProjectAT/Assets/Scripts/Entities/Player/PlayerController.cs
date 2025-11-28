@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void PlayerMove(Vector3 pos, bool isRun)
+    public void PlayerMove(Vector3 pos, bool isRun)
     {
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
 
     private void ChaseEnemy()
     {
-        if (myCombatModule.IsEnemyInRange(SelectedEnemy))
+        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
         {
             myMovementModule.PlayerMoveStop();
         }
@@ -209,14 +209,11 @@ public class PlayerController : MonoBehaviour
 
     private void NormalAttackEnemy()
     {
-        if (myCombatModule.IsEnemyInRange(SelectedEnemy))
+        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy) && myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position) && myCombatModule.CanFire())
         {
-            if(myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position) && myCombatModule.CanFire())
-            {
-                myCombatModule.NormalAttackEnemy(SelectedEnemy);
-                myAnimationModule.PlayFiringAnimation();
-                myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);
-            }
+            myCombatModule.NormalAttackEnemy(SelectedEnemy);
+            myAnimationModule.PlayFiringAnimation();
+            myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);
         }
     }
     #endregion

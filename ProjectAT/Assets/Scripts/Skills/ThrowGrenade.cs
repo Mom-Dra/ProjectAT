@@ -1,29 +1,26 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class DesignatedFire : Skill
+public class ThrowGrenade : Skill
 {
-    public DesignatedFire(PlayerSkillModule context, SkillData data) : base(context, data){}
+    public ThrowGrenade(PlayerSkillModule context, SkillData data) : base(context, data){}
+
+
+    public override bool CanExecute(Enemy target)
+    {
+        return context.MyCombatModule.CanThrowSomethingToEnemy(target);
+    }
+
+    public override void Execute(Enemy target)
+    {
+        context.MyCombatModule.ThrowSomthingToTarget(skillData.SkillEffectPrefab, target.transform.position);
+        context.MyAnimModule.PlayThrowingAnimation();
+        CurrSkillTime = Time.time;
+    }
 
     public override void OnChasing(Enemy target)
     {
         context.MyMovementModule.PlayerWalk(target.transform.position);
     }
-
-    public override bool CanExecute(Enemy target)
-    {
-        return context.MyCombatModule.IsEnemyInWeaponSight(target);
-    }
-
-    public override void Execute(Enemy target)
-    {
-        //Snping
-        Debug.Log("Designated Fire Executed!");
-        target.TakeDamage(500);
-        CurrSkillTime = Time.time;
-    }
-
 
     public override void OnUiActivate()
     {

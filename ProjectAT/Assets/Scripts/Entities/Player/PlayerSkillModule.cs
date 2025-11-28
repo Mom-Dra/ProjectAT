@@ -1,6 +1,3 @@
-using System.IO;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum  SkillModuleState : ushort
@@ -14,7 +11,7 @@ public enum SkillNumber : ushort
 {
     None,
     DesignatedFire,
-    //MainSkillOne,
+    MainSkillOne,
     //MainSkillTwo,
     //Heal
 }
@@ -33,7 +30,7 @@ public class PlayerSkillModule : MonoBehaviour
     private Skill CurrentActivateSkill;
 
     [Header("SkillDatas")]
-    [SerializeField] private SkillData[] datas;     //Addressables ÆĞÅ°Áö¸¦ ÀÌ¿ëÇÑ µ¿Àû ÀĞ¾î¿À±â °í·Á.
+    [SerializeField] private SkillData[] datas;     //Addressables íŒ¨í‚¤ì§€ë¥¼ ì´ìš©í•˜ì—¬ ì—ì…‹ì„ ì½ì–´ì˜¤ëŠ” ë°©ë²• ê³ ë ¤
 
     [Header("Params")]
     public SkillModuleState ModuleState { get; private set; }
@@ -50,8 +47,9 @@ public class PlayerSkillModule : MonoBehaviour
 
     private void InitiateSkills()
     {
-        DesignatedFire = new DesignatedFire(this, datas[0]);
-        mySkills[(int)SkillNumber.DesignatedFire] = DesignatedFire;
+
+        mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, datas[0]);
+        mySkills[(int)SkillNumber.MainSkillOne] = new ThrowGrenade(this, datas[1]);
     }
 
     private void Start()

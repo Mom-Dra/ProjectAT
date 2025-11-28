@@ -24,7 +24,6 @@ public abstract class Skill
 
     public abstract void OnChasing(Enemy target);
     public abstract bool CanExecute(Enemy target);
-    public abstract void CancelSkill();
     public abstract void Execute(Enemy target);
 
 }

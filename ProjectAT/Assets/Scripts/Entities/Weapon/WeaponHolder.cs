@@ -40,7 +40,7 @@ public class WeaponHolder : MonoBehaviour
         ChangeWeaponMesh();
     }
 
-    #region �ʱ�ȭ �Լ�
+    #region 초기화함수
     private int CalculateTotalDamage()
     {
         // Example calculation, modify as needed
@@ -74,5 +74,10 @@ public class WeaponHolder : MonoBehaviour
     public void ReloadingAmmo()
     {
         currentAmmo = maxAmmo;
+    }
+
+    public bool IsAmmoLoaded()
+    {
+        return currentAmmo > 0;
     }
 }
