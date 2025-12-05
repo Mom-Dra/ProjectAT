@@ -1,10 +1,18 @@
 using UnityEngine;
 
+public enum SkillType : ushort
+{
+    Throwing,
+    Sniping
+ }
+
 public abstract class Skill
 {
     protected PlayerSkillModule context;
     [SerializeField] protected SkillData skillData;
     public float CurrSkillTime { get; protected set; }
+    public SkillType SkillType => skillData.SkillType;
+    public float SkillCastingTime => skillData.CastingTime;
 
     public Skill(PlayerSkillModule context, SkillData skillData)
     {

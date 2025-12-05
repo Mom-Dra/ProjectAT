@@ -12,6 +12,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
     public float RunSpeed { get; private set; }
     public bool IsDead { get; private set; }
     public float ThrowRange {get; private set;}
+    public float MaxViewingDistance {get; private set;}
 
 
     private void OnEnable()
@@ -27,6 +28,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
         WalkSpeed = initStatus.WalkSpeed;
         RunSpeed = initStatus.RunSpeed;
         ThrowRange = initStatus.ThrowRange;
+        MaxViewingDistance = initStatus.MaxViewingDistance;
         IsDead = false;
     }
 

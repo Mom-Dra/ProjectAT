@@ -1,3 +1,4 @@
+using Unity.Behavior;
 using UnityEngine;
 
 public class PlayerCombatModule : MonoBehaviour
@@ -13,6 +14,7 @@ public class PlayerCombatModule : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     private Collider[] enemyColliderBuffer = new Collider[8];
     private float LastFireTime;
+    [SerializeField] private LayerMask ObstacleLayer;
 
     private void Awake()
     {
@@ -47,7 +49,7 @@ public class PlayerCombatModule : MonoBehaviour
     {
         Vector3 directionToEnemy = (targetEnemy.transform.position - firePoint.position);
         Ray ray = new Ray(firePoint.position, directionToEnemy);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
         {
             if (hitInfo.collider.gameObject == targetEnemy.gameObject)
             {
@@ -91,7 +93,6 @@ public class PlayerCombatModule : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(firePoint.position, firePoint.position + firePoint.forward * myWeapon.Range);
     }
-
 */
 
     public void NormalAttackEnemy(Enemy target)
@@ -101,7 +102,7 @@ public class PlayerCombatModule : MonoBehaviour
         //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         //target.TakeDamage(myWeapon.Damage);
     }
-        public bool CanThrowSomethingToEnemy(Enemy enemy)
+    public bool CanThrowSomethingToEnemy(Enemy enemy)
     {
         return CheckEnemyInRange(enemy, myStatus.ThrowRange) 
         && CheckEnemyVisibility(enemy);
@@ -112,6 +113,4 @@ public class PlayerCombatModule : MonoBehaviour
         GameObject thrownObj = Instantiate(thowingObject, throwPoint.position + Vector3.up, Quaternion.identity);
         thrownObj.GetComponent<ProjectileGrenade>().Throw(targetPos);
     }
-
-
 }

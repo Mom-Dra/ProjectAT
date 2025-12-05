@@ -109,7 +109,8 @@ public class PlayerController : MonoBehaviour
             mySkillModule.CancelTargettingMode();
             return;
         }
-        mySkillModule.CancelSkill();
+        mySkillModule.CancelCurrentSkill();
+        CancelNormalAttack();
         CancelEnemySelect();
 
         NormalRightClickAction();
@@ -144,7 +145,6 @@ public class PlayerController : MonoBehaviour
 
     public bool RaycastAtMouseLocation()
     {
-        //TODO : 저거 위에있는 함수랑 기깔나게 합치는 방법?
         RaycastHit ray;
         if (Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f, enemyLayer))
         {
@@ -209,24 +209,24 @@ public class PlayerController : MonoBehaviour
 
     private void NormalAttackEnemy()
     {
-        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy) && myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position) && myCombatModule.CanFire())
+        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy) && myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
         {
-            myCombatModule.NormalAttackEnemy(SelectedEnemy);
-            myAnimationModule.PlayFiringAnimation();
-            myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);
-        }
-    }
-    #endregion
-
-
-    /*public Vector3 GetMouseWorldPosition()
-    {
-        RaycastHit ray;
-        if (Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f, groundLayer.value))
-        {
-            return ray.point;
+            myAnimationModule.SetFiringAnimation(true);
+            if (myCombatModule.CanFire())
+            {
+                myCombatModule.NormalAttackEnemy(SelectedEnemy);
+                myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);                
+            }
         }
         else
-            return Vector3.zero;
-    }*/
+        {
+            CancelNormalAttack();
+        }
+    }
+
+    private void CancelNormalAttack()
+    {
+        myAnimationModule.SetFiringAnimation(false);
+    }
+    #endregion
 }

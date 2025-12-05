@@ -1394,6 +1394,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1786596268 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3817334140896594444, guid: d8ef79722ad20204c836afed10f7aafd, type: 3}
+  m_PrefabInstance: {fileID: 3093241673099862432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1788255438
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,7 +2281,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4952007506207532153, guid: d8ef79722ad20204c836afed10f7aafd, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3817334140896594444, guid: d8ef79722ad20204c836afed10f7aafd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8678899394846634987}
     m_AddedComponents: []
@@ -3043,11 +3048,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2678885939752177883, guid: 0fe976d389187b048bf3ed387c602658, type: 3}
   m_PrefabInstance: {fileID: 5195056419165721607}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7950109528792237529 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4952007506207532153, guid: d8ef79722ad20204c836afed10f7aafd, type: 3}
-  m_PrefabInstance: {fileID: 3093241673099862432}
-  m_PrefabAsset: {fileID: 0}
 --- !u!33 &8355949405141058358
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3097,14 +3097,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 43431935221011334}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.44870022, y: 0.51270396, z: 0.57067215, w: 0.458406}
-  m_LocalPosition: {x: -0.9189333, y: 2.5509357, z: 1.9965229}
+  m_LocalRotation: {x: 0.33523998, y: 0.534257, z: 0.62122816, w: 0.46503684}
+  m_LocalPosition: {x: -4.18, y: -0.06, z: -0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9196969330685720749}
-  m_Father: {fileID: 7950109528792237529}
-  m_LocalEulerAnglesHint: {x: -94.764, y: -210.434, z: 310.556}
+  m_Father: {fileID: 1786596268}
+  m_LocalEulerAnglesHint: {x: -20.609, y: 77.388, z: 89.793}
 --- !u!23 &8724359775582336185
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3214,6 +3214,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  ObstacleLayer:
+    serializedVersion: 2
+    m_Bits: 960
 --- !u!114 &8965965632880616697
 MonoBehaviour:
   m_ObjectHideFlags: 0

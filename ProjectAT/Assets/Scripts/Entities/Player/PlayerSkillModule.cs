@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum  SkillModuleState : ushort
@@ -26,7 +27,6 @@ public class PlayerSkillModule : MonoBehaviour
 
     [Header("Skills")]
     private Skill[] mySkills = new Skill[5];
-    private Skill DesignatedFire;
     private Skill CurrentActivateSkill;
 
     [Header("SkillDatas")]
@@ -36,6 +36,8 @@ public class PlayerSkillModule : MonoBehaviour
     public SkillModuleState ModuleState { get; private set; }
     public bool isTargetting {get; private set;}
     private SkillNumber lastSkillInput;
+
+    private Coroutine nowActivatedSkillCoroutine; 
 
     private void Awake()
     {
@@ -58,19 +60,26 @@ public class PlayerSkillModule : MonoBehaviour
         ModuleState = SkillModuleState.Ready;
         lastSkillInput = SkillNumber.None;
         isTargetting = false;
+        nowActivatedSkillCoroutine = null;
     }
 
     public void SkillOnUpdate()
     {
-        if (CurrentActivateSkill == null || ModuleState == SkillModuleState.Ready) return;
+        if (CurrentActivateSkill == null) return;
+        if(ModuleState == SkillModuleState.Ready || nowActivatedSkillCoroutine != null) return;
+        
         Debug.Log("Skill On update");
         if (CurrentActivateSkill.CanExecute(MyPlayerController.SelectedEnemy))
-        {
+        {   
             if(MyMovementModule.PlayerRotateToward(MyPlayerController.SelectedEnemy.transform.position))
             {
-                MyAnimModule.PlayFiringAnimation();
-                CurrentActivateSkill.Execute(MyPlayerController.SelectedEnemy);
-                ModuleState = SkillModuleState.Ready;
+                MyMovementModule.PlayerMoveStop();
+                UsingCurrentSkill();
+
+                //MyAnimModule.PlayFiringAnimation();
+                // CurrentActivateSkill.Execute(MyPlayerController.SelectedEnemy);
+                // ModuleState = SkillModuleState.Ready;
+                //startCoroutine? nowActionCoroutine
             }
         }
         else
@@ -103,20 +112,47 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void ActivateSelectedSkill()
     {
-        Debug.Log("Skill Selected");
         ModuleState = SkillModuleState.Casting;
         CurrentActivateSkill = mySkills[(int)lastSkillInput];
         CancelTargettingMode();
     }
 
-    public void CancelSkill()
+    public void CancelCurrentSkill()
     {
+        if(nowActivatedSkillCoroutine == null) return;
+
         ModuleState = SkillModuleState.Ready;
+        
+        StopCoroutine(nowActivatedSkillCoroutine);
+        nowActivatedSkillCoroutine = null;
+        
         CurrentActivateSkill = null;
+    }
+
+    private void UsingCurrentSkill()
+    {
+        nowActivatedSkillCoroutine = StartCoroutine(SkillActionCoroutine(MyPlayerController.SelectedEnemy));
     }
 
     public bool CanActivateSkill (SkillNumber skillIndex)
     {
         return mySkills[(int)skillIndex].CanActivateSkill();
+    }
+
+    private IEnumerator SkillActionCoroutine(Enemy target)
+    {
+        //TODO : 스킬 사용을 코루틴 이용하려고함. 애니메이션 동기화 때문에ㅠㅠ 그러니 잘 구현해보기 (제일 최근 작업분기)
+        
+        Debug.Log("Skill Coroutine Start");
+        MyAnimModule.PlaySkillAnimation(CurrentActivateSkill.SkillType);
+        yield return new WaitForSeconds(CurrentActivateSkill.SkillCastingTime);
+        
+        CurrentActivateSkill.Execute(target);
+
+        //후처리
+        ModuleState = SkillModuleState.Ready;
+        CurrentActivateSkill = null;
+        nowActivatedSkillCoroutine = null;
+        Debug.Log("Skill Coroutine End");
     }
 }

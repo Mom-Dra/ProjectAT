@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3498173702606450174}
   - component: {fileID: 1278235302691392023}
   - component: {fileID: 1443350348304045981}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: NormalGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 786717176829389752, guid: 74ff058cf9a6b1e458aad4d9772b6cf6, type: 3}
   myRigid: {fileID: 0}
   explosionRadius: 5
+  explodeDamage: 50
   damageableLayers:
     serializedVersion: 2
     m_Bits: 384
@@ -115,7 +116,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1549367709313256, guid: 5a2bf64643e1fb0439ea39c0fc9b00ff, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1698056052845220, guid: 5a2bf64643e1fb0439ea39c0fc9b00ff, type: 3}
       propertyPath: m_Name
@@ -123,11 +124,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1698056052845220, guid: 5a2bf64643e1fb0439ea39c0fc9b00ff, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1793803600195958, guid: 5a2bf64643e1fb0439ea39c0fc9b00ff, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4379243761268538, guid: 5a2bf64643e1fb0439ea39c0fc9b00ff, type: 3}
       propertyPath: m_LocalScale.x

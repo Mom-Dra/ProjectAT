@@ -13,7 +13,6 @@ public class ThrowGrenade : Skill
     public override void Execute(Enemy target)
     {
         context.MyCombatModule.ThrowSomthingToTarget(skillData.SkillEffectPrefab, target.transform.position);
-        context.MyAnimModule.PlayThrowingAnimation();
         CurrSkillTime = Time.time;
     }
 
