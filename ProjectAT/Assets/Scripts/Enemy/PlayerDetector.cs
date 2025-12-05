@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AppUI.UI;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class TargetDetector : MonoBehaviour
@@ -62,6 +66,53 @@ public class TargetDetector : MonoBehaviour
         return visibleTargets.Count > 0;
     }
 
+    public CoverPoint FindBestCover()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.SearchRadius, LayerMask.GetMask("CoverPoint"));
+        Array.Sort(hits, (x, y) =>
+        {
+            float dis1 = (transform.position - x.transform.position).sqrMagnitude;
+            float dis2 = (transform.position - y.transform.position).sqrMagnitude;
+
+            return dis1.CompareTo(dis2);
+        });
+
+        foreach (Collider collider in hits)
+        {
+            if(collider.TryGetComponent(out CoverPoint point) && !point.IsOccupied)
+            {
+                if ((collider.transform.position - GetFirstTargetInfo.Value.transform.position).sqrMagnitude < enemyData.AttackRange * enemyData.AttackRange)
+                {
+                    Vector3 rayStart = GetFirstTargetInfo.Value.transform.position;
+                    Vector3 rayEnd = collider.transform.position;
+                    Vector3 dir = rayEnd - rayStart;
+
+                    if (Physics.Raycast(rayStart, dir, Vector3.Distance(rayStart, rayEnd), LayerMask.GetMask("CoverPoint"), QueryTriggerInteraction.Ignore))
+                    {
+                        return point;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private bool IsSafeFromPlayer(Vector3 targetPos)
+    {
+        //Vector3 direction = targetPos - transform.position;
+        //float distance = direction.magnitude;
+
+        //if (Physics.Raycast())
+        //{
+
+        //}
+
+        return true;
+
+        return false;
+    }
+
     private void StartDetectLoop()
     {
         if (detectLoopCoroutine == null)
@@ -117,6 +168,7 @@ public class TargetDetector : MonoBehaviour
             Vector3 dir = (target.position - transform.position).normalized;
 
             bool isInView = false;
+
             if (isAttackMode) isInView = true;
             else isInView = Vector3.Angle(transform.forward, dir) < enemyData.ViewAngle * 0.5f;
 

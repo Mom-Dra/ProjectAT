@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\EnemyState.cs" />
     <Compile Include="Assets\Scripts\UI\EnemyUIFollower.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Cover\CoverPoint.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCamera.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\Skills\DesignatedFire.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Assets\Scripts\Weapon\Weapon.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\SearchTargetAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\Weapon\WeaponType.cs" />
     <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\SpawnProjectiles.cs" />
     <Compile Include="Assets\Scripts\Utils\PoolManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\CheckTargetCondition.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\MySwitchComposite.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerIdleState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyAnimator.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerNetworkMovement.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\PlayerWalkStateBase.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\Bullet.cs" />
@@ -161,6 +164,7 @@
     <Compile Include="Assets\Scripts\View\Controller.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\States\ServerSkillCastingState.cs" />
     <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeLauncher.cs" />
+    <Compile Include="Assets\Scripts\Cover\CoverGenerator.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkObjectPool.cs" />
     <Compile Include="Assets\Scripts\Utils\ColorDebug.cs" />
   </ItemGroup>

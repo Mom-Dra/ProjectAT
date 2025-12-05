@@ -41,6 +41,11 @@ public struct EdgeInfo
 [RequireComponent(typeof(TargetDetector))]
 public class FieldOfViewVisuals : MonoBehaviour
 {
+    // 스캔 애니메이션 관련 이벤트
+    public event System.Action onScanComplete;
+    public event System.Action onScanStart;
+    public event System.Action onScanCancel;
+
     private TargetDetector targetDetector;
 
     [Header("Scan Animation")]
@@ -67,13 +72,9 @@ public class FieldOfViewVisuals : MonoBehaviour
 
     private Coroutine growingCoroutine;
 
-    // 스캔 애니메이션 관련 이벤트
-    public event System.Action onScanComplete;
-    public event System.Action onScanStart;
-    public event System.Action onScanCancel;
-
     private Enemy enemy;
     private EnemyData enemyData;
+
     public float ViewAngle => enemyData?.ViewAngle ?? 0f;
 
     private void Awake()

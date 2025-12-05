@@ -9,6 +9,10 @@ using System;
 using UnityEngine.AI;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UnityEngine.InputSystem.XR.Haptics;
+using static UnityEngine.EventSystems.EventTrigger;
+using TMPro;
+using MomDra.Weapon;
 
 public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 {
@@ -16,14 +20,14 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
     public event Action<ISquadMember, Vector3> onPlayerLosted;
     public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
 
-    internal const float WONDERTIME = 10f;
-    internal const float TIMETOLOSETARGET = 3f;
-
     internal int CurrentWaypointIndex;
+
+    internal ICoverSubState CurrCoverSubState;
 
     protected NavMeshAgent navMeshAgent;
     protected FieldOfViewVisuals fieldOfViewVisual;
     protected TargetDetector targetDetector;
+    protected EnemyAnimator enemyAnimator;
     protected IEnemyState currentState;
 
     // Inspector에서 설정
@@ -44,16 +48,27 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
     [SerializeField]
     private Enemy_State enemyState;
 
+    [SerializeField]
+    private WeaponType weaponType;
+
     private float timeSinceTargetLost;
+    private float hideTimer;
+    private float hideDuration;
+    private float peekTimer;
     private Vector3 targetLastKnownPosition;
     private Vector3 targetDestination;
     private Weapon weapon;
     private Transform currentTarget;
     private Transform muzzle;
+
+    private CoverPoint reservedCoverPoint;
+
     private WaitForSeconds targetCheckWait;
     private WaitForSeconds informPlayerPositionWait;
     private Coroutine targetCheckCoroutine;
     private Coroutine informPlayerPositionCoroutine;
+
+    private TextMeshProUGUI stateText;
 
     public bool IsPlayerStillVisible => enemyState == Enemy_State.Chase || enemyState == Enemy_State.Attack;
 
@@ -66,11 +81,16 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
     internal IReadOnlyList<Transform> PatrolWaypoints => patrolWaypoints;
     internal Vector3 TargetLastKnownPosition => targetLastKnownPosition;
 
+    internal CoverPoint ReservedCoverPoint => reservedCoverPoint;
+
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         fieldOfViewVisual = GetComponent<FieldOfViewVisuals>();
         targetDetector = GetComponent<TargetDetector>();
+        stateText = GetComponentInChildren<TextMeshProUGUI>();
+        enemyAnimator = GetComponent<EnemyAnimator>();
 
         fieldOfViewVisual.SetEnemyData(this);
         targetDetector.SetEnemyData(this);
@@ -89,11 +109,19 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
         informPlayerPositionWait = new WaitForSeconds(enemyData.TargetInformInterval);
 
         if (isPatrolEnemy) ChangeState(IEnemyState.PatrolState);
+        else ChangeState(IEnemyState.IdleState);
+    }
+
+    private void Start()
+    {
+        enemyAnimator.SetWeaponType(weaponType);
     }
 
     private void Update()
     {
         currentState.Update(this);
+
+        enemyAnimator?.SetSpeed(navMeshAgent.velocity.magnitude);
     }
 
     internal void EnableFieldOfView(bool enabled)
@@ -114,6 +142,11 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
         weapon.Attack();
     }
 
+    internal bool IsReloading()
+    {
+        return weapon.IsReloading;
+    }
+
     internal void Chase()
     {
         if(navMeshAgent.destination != targetDestination)
@@ -125,6 +158,9 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 
     internal bool IsTargetExist()
     {
+        //if (targetDetector == null)
+        //    ColorDebug.GreenLog("HaHaHaHaHaHaHa");
+
         return targetDetector.IsTargetDetected();
     }
 
@@ -132,7 +168,7 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
     {
         if (!IsTargetExist()) return false;
 
-        (Transform transform, float distance)? targetInfo = TargetDetector.GetFirstTargetInfo;
+        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
 
         if (targetInfo.Value.distance <= enemyData.AttackRange) return true;
 
@@ -141,7 +177,7 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 
     private void InformTargetPosition()
     {
-        (Transform transform, float distance)? targetInfo = TargetDetector.GetFirstTargetInfo;
+        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
 
         onPlayerPositionUpdated?.Invoke(this, targetInfo.Value.transform.position);
     }
@@ -173,7 +209,43 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 
     internal bool IsOverTargetLost()
     {
-        return timeSinceTargetLost > TIMETOLOSETARGET;
+        return timeSinceTargetLost > enemyData.TimeToLostTarget;
+    }
+
+    internal void UpdateHideTimer(float deltaTime)
+    {
+        hideTimer += deltaTime;
+    }
+
+    internal void ResetHideTimer()
+    {
+        hideTimer = 0f;
+        hideDuration = UnityEngine.Random.Range(enemyData.MinHideTime, enemyData.MaxHideTime);
+    }
+
+    internal void SetHideDuration(float duration)
+    {
+        hideDuration = duration;
+    }
+
+    internal bool IsHideCompleted()
+    {
+        return hideTimer >= hideDuration;
+    }
+
+    internal void ResetPeekTimer()
+    {
+        peekTimer = 0f;
+    }
+
+    internal void UpdatePeekTimer(float deltaTime)
+    {
+        peekTimer += deltaTime;
+    }
+
+    internal bool IsPeekCompleted()
+    {
+        return peekTimer >= enemyData.ReactionTime;
     }
 
     internal void SetDestinationOnAgent(Vector3 destination)
@@ -182,6 +254,73 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 
         targetDestination = destination;
         navMeshAgent.SetDestination(destination);
+    }
+
+    internal bool TryFindCover(out CoverPoint bestCover)
+    {
+        bestCover = targetDetector.FindBestCover();
+
+        if (bestCover is null)
+        {
+            reservedCoverPoint = null;
+            return false;
+        }
+        else
+        {
+            if (bestCover.Reserve(gameObject))
+            {
+                reservedCoverPoint = bestCover;
+                return true;
+            }
+            else
+            {
+                reservedCoverPoint = null;
+                bestCover = null;
+                return false;
+            }
+        }
+    }
+
+    internal bool IsAgentArrived()
+    {
+        return !navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance;
+    }
+
+    internal void SetStateText(string text)
+    {
+        stateText.text = text;
+    }
+
+    internal void SetIsCrouch(bool isCrouch)
+    {
+        enemyAnimator.SetCrouch(isCrouch);
+    }
+
+    internal void SetAttackAnimation()
+    {
+        enemyAnimator.SetUpperBodyOffset(-0.5f, 0.1f);
+        enemyAnimator.SetShoot(true);
+    }
+
+    internal void SetIdleAnimation()
+    {
+        enemyAnimator.SetUpperBodyOffset(0f, 0f);
+        enemyAnimator.SetShoot(false);
+    }
+
+    internal void SetAttackAnimation(float headOffset, float bodyOffset)
+    {
+        enemyAnimator.SetUpperBodyOffset(headOffset, bodyOffset);
+    }
+
+    internal void SetShoot(bool isShoot)
+    {
+        enemyAnimator.SetShoot(isShoot);
+    }
+
+    internal void ResetUpperBody()
+    {
+        enemyAnimator.ResetUpperBody();
     }
 
     private IEnumerator InformTargetPositionCoroutine()
@@ -333,12 +472,12 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 
     public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
     {
-        ColorDebug.GreenLog($"SetFormationDestination: {targetDestination}");
+        //ColorDebug.GreenLog($"SetFormationDestination: {targetDestination}");
 
         this.targetDestination = targetDestination;
         targetLastKnownPosition = lastKnownPosition;
 
-        ColorDebug.GreenLog($"IsTargetExist: {IsTargetExist()}");
+        //ColorDebug.GreenLog($"IsTargetExist: {IsTargetExist()}");
 
         if (!IsTargetExist())
         {
@@ -364,5 +503,19 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
         if (angleDifference < 1f) return true;
 
         return false;
+    }
+
+
+    [ContextMenu("ChangeStateImmediately")]
+    private void ChangeStateImmediately()
+    {
+        ChangeState(IEnemyState.CoverState);
+    }
+
+    [ContextMenu("SetDestination")]
+    private void SetDestinationImmediately()
+    {
+        navMeshAgent.SetDestination(new Vector3(14f, 0f, 10f));
+        ChangeState(IEnemyState.CoverState);
     }
 }

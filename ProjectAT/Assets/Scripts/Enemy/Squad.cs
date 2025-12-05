@@ -59,7 +59,7 @@ public class Squad : MonoBehaviour, ISquadMember
     {
         foreach (GameObject memberObject in memberGameObjects)
         {
-            if(memberObject.TryGetComponent(out ISquadMember enemy))
+            if (memberObject.TryGetComponent(out ISquadMember enemy))
             {
                 Add(enemy);
             }
@@ -136,7 +136,7 @@ public class Squad : MonoBehaviour, ISquadMember
     {
         // target이 바뀔 가능성도 있음!
 
-        ColorDebug.GreenLog($"PlayerPositionUpdated: {position}");
+        //ColorDebug.GreenLog($"PlayerPositionUpdated: {position}");
 
         squadLastKnownPosition = position;
         CalculateFormation(target, position);
