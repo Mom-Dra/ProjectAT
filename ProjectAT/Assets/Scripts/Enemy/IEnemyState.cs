@@ -81,7 +81,6 @@ public class EnemyChaseState : IEnemyState
     public void Enter(Enemy enemy)
     {
         //ColorDebug.RedLog("EnemyChaseState Enter");
-
         enemy.SetAttackMode(true);
         enemy.ResetTargetLostTimer();
 
@@ -91,39 +90,13 @@ public class EnemyChaseState : IEnemyState
     public void Update(Enemy enemy)
     {
         //ColorDebug.RedLog("EnemyChaseState Update");
-
         if (enemy.IsTargetExist())
         {
-            enemy.StartInformTargetPositionCoroutine();
-            enemy.ResetTargetLostTimer();
-
-            if (enemy.IsTargetInAttackRange())
-            {
-                if(enemy.TryFindCover(out CoverPoint bestCover))
-                {
-                    enemy.ChangeState(IEnemyState.CoverState);
-                }
-                else
-                {
-                    enemy.ChangeState(IEnemyState.AttackState);
-                }
-            }
-            else
-            {
-                ColorDebug.RedLog("Chase!!");
-                enemy.Chase();
-            }
+            HandleTargetTracking(enemy);
         }
         else
         {
-            ColorDebug.BlueLog("StopInformTargetPositionCoroutine");
-            enemy.StopInformTargetPositionCoroutine();
-            enemy.UpdateTargetLostTimer(Time.deltaTime);
-
-            if (enemy.IsOverTargetLost())
-            {
-                enemy.ChangeState(IEnemyState.SearchState);
-            }
+            HandleTargetLost(enemy);
         }
     }
 
@@ -131,6 +104,39 @@ public class EnemyChaseState : IEnemyState
     {
         enemy.SetAttackMode(false);
         enemy.ResetTargetLostTimer();
+    }
+
+    private void HandleTargetTracking(Enemy enemy)
+    {
+        enemy.StartInformTargetPositionCoroutine();
+        enemy.ResetTargetLostTimer();
+
+        if(!enemy.IsTargetInAttackRange())
+        {
+            ColorDebug.RedLog("Chase!!");
+            enemy.Chase();
+
+            return;
+        }
+
+        if (enemy.TryFindCover(out CoverPoint bestCover))
+        {
+            enemy.ChangeState(IEnemyState.CoverState);
+        }
+        else
+        {
+            enemy.ChangeState(IEnemyState.AttackState);
+        }
+    }
+
+    private void HandleTargetLost(Enemy enemy)
+    {
+        ColorDebug.BlueLog("StopInformTargetPositionCoroutine");
+        enemy.StopInformTargetPositionCoroutine();
+        enemy.UpdateTargetLostTimer(Time.deltaTime);
+
+        if (enemy.IsOverTargetLost())
+            enemy.ChangeState(IEnemyState.SearchState);
     }
 }
 
@@ -140,46 +146,39 @@ public class EnemyAttackState : IEnemyState
     {
         //ColorDebug.RedLog("EnemyAttackState Enter");
         enemy.SetAttackMode(true);
-
         enemy.SetStateText("Attack");
     }
 
     public void Update(Enemy enemy)
     {
         //ColorDebug.RedLog("AttackState Update");
-
-        if (enemy.IsTargetExist())
-        {
-            enemy.StartInformTargetPositionCoroutine();
-            enemy.ResetTargetLostTimer();
-
-            if (enemy.IsTargetInAttackRange())
-            {
-                if(!enemy.IsReloading())
-                {
-                    bool rotationComplete = enemy.RotateTowardTarget();
-
-                    if (rotationComplete)
-                    {
-                        enemy.Attack();
-                        enemy.SetAttackAnimation();
-                    }
-                }
-                else
-                {
-                    enemy.SetIdleAnimation();
-                }
-            }
-            else
-            {
-                enemy.SetIdleAnimation();
-                enemy.ChangeState(IEnemyState.ChaseState);
-            }
-        }
-        else
+        if(!enemy.IsTargetExist())
         {
             enemy.StopInformTargetPositionCoroutine();
             enemy.ChangeState(IEnemyState.ChaseState);
+            return;
+        }
+
+        enemy.StartInformTargetPositionCoroutine();
+        enemy.ResetTargetLostTimer();
+
+        if (!enemy.IsTargetInAttackRange())
+        {
+            enemy.SetIdleAnimation();
+            enemy.ChangeState(IEnemyState.ChaseState);
+            return;
+        }
+
+        if(enemy.IsReloading())
+        {
+            enemy.SetIdleAnimation();
+            return;
+        }
+
+        if (enemy.RotateTowardTarget())
+        {
+            enemy.Attack();
+            enemy.SetAttackAnimation();
         }
     }
 
@@ -393,38 +392,35 @@ public class EnemyCoverAttackState : ICoverSubState
 
     public void Update(Enemy enemy, EnemyCoverState enemyCoverState)
     {
-        if (enemy.IsTargetExist())
-        {
-            enemy.StartInformTargetPositionCoroutine();
-            enemy.ResetTargetLostTimer();
-
-            if (enemy.IsTargetInAttackRange())
-            {
-                if(!enemy.IsReloading())
-                {
-                    bool rotationComplete = enemy.RotateTowardTarget();
-
-                    if (rotationComplete)
-                    {
-                        enemy.Attack();
-                        enemy.SetAttackAnimation();
-                    }
-                    else
-                    {
-                        enemy.SetIdleAnimation();
-                    }
-                }
-                else
-                {
-                    enemy.SetIdleAnimation();
-                    enemyCoverState.ChangeSubState(enemy, ICoverSubState.HideState);
-                }
-            }
-        }
-        else
+        if (!enemy.IsTargetExist())
         {
             enemyCoverState.ChangeSubState(enemy, ICoverSubState.HideState);
+            return;
         }
+
+        enemy.StartInformTargetPositionCoroutine();
+        enemy.ResetTargetLostTimer();
+
+        if (!enemy.IsTargetInAttackRange())
+            return;
+
+        if(enemy.IsReloading())
+        {
+            enemy.SetIdleAnimation();
+            enemyCoverState.ChangeSubState(enemy, ICoverSubState.HideState);
+            return;
+        }
+
+        bool rotationComplete = enemy.RotateTowardTarget();
+
+        if (!rotationComplete)
+        {
+            enemy.SetIdleAnimation();
+            return;
+        }
+
+        enemy.Attack();
+        enemy.SetAttackAnimation();
     }
 
     public void Exit(Enemy enemy, EnemyCoverState enemyCoverState)
