@@ -13,7 +13,7 @@ public partial class ChangeStateAction : Action
 
     protected override Status OnStart()
     {
-        Enemy.Value.ChangeState(State.Value);
+        //Enemy.Value.ChangeState(State.Value);
 
         return Status.Running;
     }

@@ -4,13 +4,16 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     [SerializeField]
-    private float attackRange = 10;
+    private float attackRange = 10f;
 
     [SerializeField]
-    private float rotateSpeed = 5;
+    private float rotateSpeed = 5f;
 
     [SerializeField]
-    private float searchRadius = 10;
+    private float searchRadius = 10f;
+
+    [SerializeField]
+    private float targetInformInterval = 0.2f;
 
     [Header("½Ã¾ß")]
     [SerializeField, Range(0, 360)]
@@ -20,11 +23,29 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private float secondaryViewRadius;
 
+
+    [SerializeField]
+    private float timeToLostTarget = 3f;
+    [SerializeField]
+    private float minHideTime = 1.5f;
+    [SerializeField]
+    private float maxHideTime = 3.5f;
+
+    [SerializeField]
+    private float reactionTime = 0.6f;
+
     public float AttackRange => attackRange;
     public float RotateSpeed => rotateSpeed;
     public float SearchRadius => searchRadius;
+    public float TargetInformInterval => targetInformInterval;
 
     public float ViewAngle => viewAngle;
     public float PrimaryViewRadius => primaryViewRadius;
     public float SecondaryViewRadius => secondaryViewRadius;
+
+    public float TimeToLostTarget => timeToLostTarget;
+    public float MinHideTime => minHideTime;
+    public float MaxHideTime => maxHideTime;
+
+    public float ReactionTime => reactionTime;
 }

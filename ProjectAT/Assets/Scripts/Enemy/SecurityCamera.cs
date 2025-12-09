@@ -1,135 +1,283 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class SecurityCamera : MonoBehaviour
+public class SecurityCamera : MonoBehaviour, ISquadMember
 {
+    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
+    public event Action<ISquadMember, Vector3> onPlayerLosted;
+    public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
+
     [SerializeField]
     private SecurityCameraData securityCameraData;
 
-    [SerializeField]
-    private LayerMask targetMask;
-    [SerializeField]
-    private LayerMask obstacleMask;
+    private List<Transform> playersInRange = new List<Transform>();
+    private bool alarmTriggered = false;
+    private float currTime;
 
-    [SerializeField]
-    private MeshFilter fixedMeshFilter;
-    [SerializeField]
-    private MeshFilter viewmeshFilter;
+    private Light cameraLight;
 
-    private Mesh fixedMesh;
-    private Mesh viewMesh;
+    private Coroutine rotateCoroutine;
+    private Coroutine playerVisibleCoroutine;
+    private Coroutine playerNonVisibleCoroutine;
 
-    [SerializeField]
-    private float meshReolution;
-    [SerializeField]
-    private int edgeResolveIteration;
-    [SerializeField]
-    private float edgeDistanceThreshold;
+    public bool IsPlayerStillVisible => throw new NotImplementedException();
 
     private void Awake()
     {
-        fixedMesh = new Mesh() { name = "Full Mesh" };
-        fixedMeshFilter.mesh = fixedMesh;
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        sphereCollider.radius = securityCameraData.DetectionRange;
+
+        cameraLight = GetComponentInChildren<Light>();
     }
 
-    private void Update()
+    private void Start()
     {
-        Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
-        DrawFieldOfView(fixedMesh, securityCameraData.ScanRange);
+        transform.rotation = Quaternion.Euler(securityCameraData.ViewAngle, 0f, 0f);
+        StartRotate();
     }
 
-    private void DrawFieldOfView(Mesh mesh, float radius)
+    private void OnTriggerEnter(Collider other)
     {
-        int stepCount = Mathf.Max(1, Mathf.RoundToInt(securityCameraData.ViewAngle * meshReolution));
-        float stepAngleSize = securityCameraData.ViewAngle / stepCount;
-        List<Vector3> viewPoints = new List<Vector3>(stepCount);
-        ViewCastInfo oldViewCast;
+        ColorDebug.GreenLog("OnTriggerEnter");
 
-        // i = 0
-        float firstAngle = transform.eulerAngles.y - securityCameraData.ViewAngle / 2;
-        ViewCastInfo firstViewCast = ViewCast(firstAngle, radius);
-        viewPoints.Add(firstViewCast.Point);
-        oldViewCast = firstViewCast;
-
-        for (int i = 1; i <= stepCount; ++i)
+        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            float angle = transform.eulerAngles.y - securityCameraData.ViewAngle / 2 + stepAngleSize * i;
-            ViewCastInfo newViewCast = ViewCast(angle, radius);
+            ColorDebug.GreenLog("OnTriggerEnter Inner");
 
-            bool tooFar = Mathf.Abs(oldViewCast.Distance - newViewCast.Distance) > edgeDistanceThreshold;
+            playersInRange.Add(other.transform);
+        }
+    }
 
-            if (oldViewCast.Hit != newViewCast.Hit || (oldViewCast.Hit && newViewCast.Hit && tooFar))
+    private void OnTriggerStay(Collider other)
+    {
+        ColorDebug.GreenLog("OnTriggerStay");
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            ColorDebug.GreenLog("OnTriggerStay Inner");
+
+            bool anyPlayerVisible = false;
+            Transform player = default;
+
+            foreach(Transform currPlayer in playersInRange)
             {
-                EdgeInfo edge = FindEdge(oldViewCast, newViewCast, radius);
-
-                if (edge.PointA != Vector3.zero) viewPoints.Add(edge.PointA);
-                if (edge.PointB != Vector3.zero) viewPoints.Add(edge.PointB);
+                if(CanSeePlayer(currPlayer))
+                {
+                    anyPlayerVisible = true;
+                    player = currPlayer;
+                    break;
+                }
             }
 
-            viewPoints.Add(newViewCast.Point);
-            oldViewCast = newViewCast;
-        }
+            // 시야에 보이면
+            // 비율 증가
+            // 시야에 보이지 않으면 비율 감소
 
-        int vertexCount = viewPoints.Count + 1;
-        Vector3[] vertices = new Vector3[vertexCount];
-        int[] triangles = new int[(vertexCount - 2) * 3];
-
-        vertices[0] = Vector3.zero;
-        for (int i = 0; i < viewPoints.Count; ++i)
-            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
-
-        for (int i = 0; i < vertexCount - 2; ++i)
-        {
-            triangles[i * 3] = 0;
-            triangles[i * 3 + 1] = i + 1;
-            triangles[i * 3 + 2] = i + 2;
-        }
-
-        mesh.Clear();
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.RecalculateNormals();
-    }
-
-    private EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast, float radius)
-    {
-        float minAngle = minViewCast.Angle;
-        float maxAngle = maxViewCast.Angle;
-        Vector3 minPt = default;
-        Vector3 maxPt = default;
-
-        for (int i = 0; i < edgeResolveIteration; ++i)
-        {
-            float angle = (minAngle + maxAngle) / 2f;
-            ViewCastInfo newViewCast = ViewCast(angle, radius);
-            bool tooFar = Mathf.Abs(minViewCast.Distance - newViewCast.Distance) > edgeDistanceThreshold;
-
-            if (newViewCast.Hit == minViewCast.Hit && !tooFar)
+            if (anyPlayerVisible)
             {
-                minAngle = angle;
-                minPt = newViewCast.Point;
+                StopPlayerNonVisibleCoroutine();
+                StartPlayerVisibleCoroutine(player);
             }
             else
             {
-                maxAngle = angle;
-                maxPt = newViewCast.Point;
+                StopPlayerVisibleCoroutine();
+                StartPlayerNonVisibleCoroutine();
             }
         }
-
-        return new EdgeInfo(minPt, maxPt);
     }
 
-    private ViewCastInfo ViewCast(float globalAngle, float radius)
+    private void OnTriggerExit(Collider other)
     {
-        Vector3 dir = DirFromGlobalAngle(globalAngle);
-        if (Physics.Raycast(transform.position, dir, out RaycastHit hit, radius, obstacleMask))
-            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+        ColorDebug.GreenLog("OnTriggerExit");
 
-        return new ViewCastInfo(false, transform.position + dir * radius, radius, globalAngle);
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            ColorDebug.GreenLog("OnTriggerExit Inner");
+
+            playersInRange.Remove(other.transform);
+
+            if (playersInRange.Count == 0)
+            {
+                StopPlayerVisibleCoroutine();
+                StartPlayerNonVisibleCoroutine();
+            }
+        }
     }
 
-    private Vector3 DirFromGlobalAngle(float deg)
+    private void StartRotate()
     {
-        return new Vector3(Mathf.Sin(deg * Mathf.Deg2Rad), -Mathf.Tan(transform.eulerAngles.x * Mathf.Deg2Rad), Mathf.Cos(deg * Mathf.Deg2Rad));
+        if(rotateCoroutine is null)
+        {
+            rotateCoroutine = StartCoroutine(RotateCoroutine());
+        }
+    }
+
+    private void StopRotate()
+    {
+        if (rotateCoroutine is not null)
+        {
+            StopCoroutine(rotateCoroutine);
+        }
+    }
+
+    private IEnumerator RotateCoroutine()
+    {
+        while (true)
+        {
+            float pingPong = Mathf.PingPong(Time.time * securityCameraData.RotateSpeed, securityCameraData.RotateAngle * 2);
+            float targetAngle = pingPong - securityCameraData.ViewAngle;
+
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
+
+            yield return null;
+        }
+    }
+
+    private void StartPlayerVisibleCoroutine(Transform player)
+    {
+        if (playerVisibleCoroutine is null)
+        {
+            playerVisibleCoroutine = StartCoroutine(PlayerVisibleCoroutine(player));
+        }
+    }
+
+    private void StopPlayerVisibleCoroutine()
+    {
+        if(playerVisibleCoroutine is not null)
+        {
+            StopCoroutine(playerVisibleCoroutine);
+            playerVisibleCoroutine = null;
+        }
+    }
+
+    private void StartPlayerNonVisibleCoroutine()
+    {
+        if (playerNonVisibleCoroutine is null)
+        {
+            playerNonVisibleCoroutine = StartCoroutine(PlayerNonVisibleCoroutine());
+        }
+    }
+
+    private void StopPlayerNonVisibleCoroutine()
+    {
+        if (playerNonVisibleCoroutine is not null)
+        {
+            StopCoroutine(playerNonVisibleCoroutine);
+            playerNonVisibleCoroutine = null;
+        }
+    }
+
+    private IEnumerator PlayerVisibleCoroutine(Transform player)
+    {
+        while (currTime < securityCameraData.DetectionTime)
+        {
+            currTime += Time.deltaTime;
+            UpdateDetectionVisual();
+
+            yield return null;
+        }
+
+        currTime = securityCameraData.DetectionTime;
+        UpdateDetectionVisual();
+
+        ColorDebug.GreenLog("Camera: onPlayerDetected!!!");
+        onPlayerDetected?.Invoke(this, player, player.position);
+    }
+
+    private IEnumerator PlayerNonVisibleCoroutine()
+    {
+        while(currTime > 0f)
+        {
+            currTime -= Time.deltaTime;
+            UpdateDetectionVisual();
+
+            yield return null;
+        }
+
+        currTime = 0f;
+        UpdateDetectionVisual();
+    }
+
+    private void UpdateDetectionVisual()
+    {
+        float ratio = Mathf.Clamp01(currTime / securityCameraData.DetectionTime);
+
+        UpdateVisual(ratio);
+    }
+
+    private void UpdateVisual(float ratio)
+    {
+        cameraLight.color = Color.Lerp(Color.white, Color.red, ratio);
+    }
+
+    private bool CanSeePlayer(Transform player)
+    {
+        // 거리
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (distanceToPlayer > securityCameraData.DetectionRange)
+            return false;
+
+        // 시야각
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+
+        if (angleToPlayer > securityCameraData.DetectionAngle / 2f)
+            return false;
+
+        // 장애물
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, directionToPlayer, out hit, distanceToPlayer, securityCameraData.ObstacleMask))
+            return false;
+
+        return true;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // 탐지 범위 원 그리기
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, securityCameraData.DetectionRange);
+
+        // 시야각 그리기
+        float halfFOV = securityCameraData.DetectionAngle / 2f;
+        Quaternion leftRayRotation = Quaternion.AngleAxis(-halfFOV, Vector3.up);
+        Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);
+
+        Vector3 leftRayDirection = leftRayRotation * transform.forward;
+        Vector3 rightRayDirection = rightRayRotation * transform.forward;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position, leftRayDirection * securityCameraData.DetectionRange);
+        Gizmos.DrawRay(transform.position, rightRayDirection * securityCameraData.DetectionRange);
+
+        // 플레이어 탐지 시선 그리기
+        foreach(Transform currPlayer in playersInRange)
+        {
+            if (CanSeePlayer(currPlayer))
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position, currPlayer.position);
+            }
+            else
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(transform.position, currPlayer.position);
+            }
+        }
+    }
+
+    public void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition)
+    {
+
+    }
+
+    public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
+    {
+
     }
 }

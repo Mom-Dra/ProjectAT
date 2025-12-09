@@ -25,6 +25,7 @@ public struct ViewCastInfo
         Angle = angle;
     }
 }
+
 public struct EdgeInfo
 {
     public Vector3 PointA;
@@ -37,26 +38,21 @@ public struct EdgeInfo
     }
 }
 
-public class FieldOfView : MonoBehaviour
+[RequireComponent(typeof(TargetDetector))]
+public class FieldOfViewVisuals : MonoBehaviour
 {
-    [SerializeField]
-    private float viewRadius;
-    public float ViewRadius => viewRadius;
+    // 스캔 애니메이션 관련 이벤트
+    public event System.Action onScanComplete;
+    public event System.Action onScanStart;
+    public event System.Action onScanCancel;
 
-    [SerializeField]
-    private LayerMask targetMask;
-    [SerializeField]
-    private LayerMask obstacleMask;
+    private TargetDetector targetDetector;
 
+    [Header("Scan Animation")]
     [SerializeField]
     private float defaultScanTime = 5f;
-    [SerializeField]
-    private float detectInterval = 0.2f;
-    private WaitForSeconds detectWait;
 
-    private List<(Transform transform, float distance)> visibleTargets = new List<(Transform transform, float distance)>();
-    public IReadOnlyList<(Transform transform, float distance)> VisibleTargets => visibleTargets;
-
+    [Header("Mesh Settings")]
     [SerializeField]
     private float meshReolution;
     [SerializeField]
@@ -64,74 +60,83 @@ public class FieldOfView : MonoBehaviour
     [SerializeField]
     private float edgeDistanceThreshold;
 
+    [Header("Mesh Filters")]
     [SerializeField]
-    private MeshFilter fixedMeshFilter;
+    private MeshFilter fixedMeshFilter; // 고정된 최대 시야각 (배경)
     [SerializeField]
-    private MeshFilter viewmeshFilter;
+    private MeshFilter viewmeshFilter;  // 차오르는 시야각
 
     private Mesh fixedMesh;
     private Mesh viewMesh;
+    private float viewRadius; // 현재 차오르는 애니메이션의 반지름
 
     private Coroutine growingCoroutine;
-    private Coroutine detectLoopCoroutine;
-
-    public event System.Action onScanComplete;
-    public event System.Action onScanStart;
-    public event System.Action onScanCancel;
-
-    private Collider[] colliders = new Collider[4];
 
     private Enemy enemy;
-
     private EnemyData enemyData;
-    public float ViewAngle => enemyData.ViewAngle;
 
-    public event System.Action onTargetDetect;
-    public event System.Action onTargetLosted;
+    public float ViewAngle => enemyData?.ViewAngle ?? 0f;
 
     private void Awake()
     {
+        targetDetector = GetComponent<TargetDetector>();
+
         fixedMesh = new Mesh { name = "Full Mesh" };
         viewMesh = new Mesh { name = "View Mesh" };
 
         fixedMeshFilter.mesh = fixedMesh;
         viewmeshFilter.mesh = viewMesh;
-
-        detectWait = new WaitForSeconds(detectInterval);
     }
 
     private void OnEnable()
     {
-        StartDetectLoop();
+        // TargetDetector의 이벤트에 구독
+        // onTargetDetect는 0->1, 1->2 등 모든 "새 탐지"시 호출됨
+        // 스캔 시작(StartScan)은 0->1 상황에서만 시작되어야 하므로
+        // StartScan 내부에서 growingCoroutine이 null일 때만 실행하도록 방어
+        targetDetector.onTargetDetect += StartScan;
+        targetDetector.onTargetLosted += CancelScan;
     }
 
     private void OnDisable()
     {
-        StopDetectLoop();
+        // 이벤트 구독 해제
+        targetDetector.onTargetDetect -= StartScan;
+        targetDetector.onTargetLosted -= CancelScan;
+
+        // 비활성화 시 코루틴 정지 및 메시 클리어
+        if (growingCoroutine != null)
+        {
+            StopCoroutine(growingCoroutine);
+            growingCoroutine = null;
+        }
+
+        ClearMesh();
     }
 
     public void SetEnemyData(Enemy enemy)
     {
-        Debug.Log("SetEnemyData");
-
         this.enemy = enemy;
         enemyData = enemy.EnemyData;
     }
 
-    private void StartDetectLoop()
+    private void StartScan()
     {
-        if (detectLoopCoroutine == null)
+        // 이미 스캔(차오르는) 중이 아닐 때만 시작
+        if (growingCoroutine == null)
         {
-            detectLoopCoroutine = StartCoroutine(ServerDetectLoop());
+            onScanStart?.Invoke();
+            growingCoroutine = StartCoroutine(GrowingCoroutine());
         }
     }
 
-    private void StopDetectLoop()
+    private void CancelScan()
     {
-        if (detectLoopCoroutine != null)
+        // 스캔(차오르는) 중일 때만 취소(줄어드는) 로직 실행
+        if (growingCoroutine != null)
         {
-            StopCoroutine(detectLoopCoroutine);
-            detectLoopCoroutine = null;
+            StopCoroutine(growingCoroutine);
+            growingCoroutine = StartCoroutine(ShrinkingCoroutine());
         }
     }
 
@@ -141,21 +146,8 @@ public class FieldOfView : MonoBehaviour
 
         yield return AnimateRadiusCoroutine(enemyData.SecondaryViewRadius, scanTime);
 
-        viewRadius = 0f;
-
-        // 부채꼴 차오르는 로직이 클라에서 작동함!
-        // 이 이벤틀를 이용해서 Enemy STate가 Attck으로 바꿔야함!
-
-
-        // 서버에 있는 Enemy FixedUpdate 같은 곳에서 Player 탐지!
-        // 플레이어 있음 -> 자신의 경계 수치 차오름
-        // 경계 수치가 NetworkVariable로 하면 항상 동기화 됨
-
-        // 그러면 클라에서 메시 차오르는 건 경계심 수치를 이용해서
-        // 여기서 말한 경계심 수치는 부채꼴 차오르는 정도..!
-
+        viewRadius = enemyData.SecondaryViewRadius;
         onScanComplete?.Invoke();
-
         growingCoroutine = null;
     }
 
@@ -163,6 +155,7 @@ public class FieldOfView : MonoBehaviour
     {
         yield return AnimateRadiusCoroutine(0f, defaultScanTime);
 
+        viewRadius = 0f;
         onScanCancel?.Invoke();
         growingCoroutine = null;
     }
@@ -175,11 +168,13 @@ public class FieldOfView : MonoBehaviour
 
         float duration = scanTime * (journey / enemyData.SecondaryViewRadius);
 
-        if (duration < 0f) yield break;
+        if (duration <= 0f) yield break;
 
         while (time <= duration)
         {
             viewRadius = Mathf.Lerp(startRadius, targetRadius, time / duration);
+
+            // viewMesh는 현재 radius로, fixedMesh는 최대 radius로 그림
             DrawFieldOfView(viewMesh, viewRadius);
             DrawFieldOfView(fixedMesh, enemyData.SecondaryViewRadius);
 
@@ -193,89 +188,19 @@ public class FieldOfView : MonoBehaviour
         ClearMesh();
     }
 
-    private IEnumerator ServerDetectLoop()
-    {
-        int beforeDetectedCount = 0;
-        bool isBeforeDetected = false;
-
-        while (true)
-        {
-            bool detectedNow = CheckDetectedServer();
-
-            if (visibleTargets.Count > beforeDetectedCount)
-                onTargetDetect?.Invoke();
-            else if (!detectedNow) onTargetLosted?.Invoke();
-
-            if (detectedNow != isBeforeDetected)
-            {
-                isBeforeDetected = detectedNow;
-
-                if (detectedNow) StartScan();
-                else CancelScan();
-            }
-
-            beforeDetectedCount = visibleTargets.Count;
-
-            yield return detectWait;
-        }
-    }
-
-    private void StartScan()
-    {
-        if (growingCoroutine != null) StopCoroutine(growingCoroutine);
-
-        onScanStart?.Invoke();
-
-        growingCoroutine = StartCoroutine(GrowingCoroutine());
-    }
-
-    private void CancelScan()
-    {
-        if (growingCoroutine != null)
-        {
-            StopCoroutine(growingCoroutine);
-
-            growingCoroutine = StartCoroutine(ShrinkingCoroutine());
-        }
-    }
-
     private void ClearMesh()
     {
-        if (viewMesh.vertexCount > 0) viewMesh.Clear();
-        if (fixedMesh.vertexCount > 0) fixedMesh.Clear();
-    }
-
-    private bool CheckDetectedServer()
-    {
-        visibleTargets.Clear();
-
-        int count = Physics.OverlapSphereNonAlloc(transform.position, enemyData.SecondaryViewRadius, colliders, targetMask);
-
-        for (int i = 0; i < count; ++i)
-        {
-            Transform target = colliders[i].transform;
-            Vector3 dir = (target.position - transform.position).normalized;
-
-            if (Vector3.Angle(transform.forward, dir) < enemyData.ViewAngle * 0.5f)
-            {
-                float dst = Vector3.Distance(transform.position, target.position);
-
-                if (!Physics.Raycast(transform.position, dir, dst, obstacleMask))
-                    visibleTargets.Add((target, dst));
-            }
-        }
-
-        return visibleTargets.Count > 0;
+        if (viewMesh is not null && viewMesh.vertexCount > 0) viewMesh.Clear();
+        if (fixedMesh is not null && fixedMesh.vertexCount > 0) fixedMesh.Clear();
     }
 
     private void DrawFieldOfView(Mesh mesh, float radius)
     {
         int stepCount = Mathf.Max(1, Mathf.RoundToInt(enemyData.ViewAngle * meshReolution));
         float stepAngleSize = enemyData.ViewAngle / stepCount;
-        List<Vector3> viewPoints = new List<Vector3>(stepCount);
+        List<Vector3> viewPoints = new List<Vector3>(stepCount + 2); // 크기 넉넉하게
         ViewCastInfo oldViewCast;
 
-        // i = 0
         float firstAngle = transform.eulerAngles.y - enemyData.ViewAngle / 2;
         ViewCastInfo firstViewCast = ViewCast(firstAngle, radius);
         viewPoints.Add(firstViewCast.Point);
@@ -291,7 +216,6 @@ public class FieldOfView : MonoBehaviour
             if (oldViewCast.Hit != newViewCast.Hit || (oldViewCast.Hit && newViewCast.Hit && tooFar))
             {
                 EdgeInfo edge = FindEdge(oldViewCast, newViewCast, radius);
-
                 if (edge.PointA != Vector3.zero) viewPoints.Add(edge.PointA);
                 if (edge.PointB != Vector3.zero) viewPoints.Add(edge.PointB);
             }
@@ -321,45 +245,12 @@ public class FieldOfView : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
-    private void DrawSimpleWedge()
-    {
-        int stepCount = Mathf.Max(1, Mathf.RoundToInt(enemyData.ViewAngle * meshReolution));
-        float stepAngleSize = enemyData.ViewAngle / stepCount;
-
-        int vertexCount = stepCount + 2;
-        Vector3[] vertices = new Vector3[vertexCount];
-        int[] triangles = new int[(vertexCount - 2) * 3];
-
-        vertices[0] = Vector3.zero;
-
-        for (int i = 0; i <= stepCount; ++i)
-        {
-            float localAng = -enemyData.ViewAngle * 0.5f + stepAngleSize * i;
-            float rad = localAng * Mathf.Deg2Rad;
-
-            Vector3 localDir = new Vector3(Mathf.Sin(rad), 0f, Mathf.Cos(rad));
-            vertices[i + 1] = localDir * viewRadius;
-
-            if (i < stepCount)
-            {
-                triangles[i * 3] = 0;
-                triangles[i * 3 + 1] = i + 1;
-                triangles[i * 3 + 2] = i + 2;
-            }
-        }
-
-        viewMesh.Clear();
-        viewMesh.vertices = vertices;
-        viewMesh.triangles = triangles;
-        viewMesh.RecalculateNormals();
-    }
-
     private EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast, float radius)
     {
         float minAngle = minViewCast.Angle;
         float maxAngle = maxViewCast.Angle;
-        Vector3 minPt = default;
-        Vector3 maxPt = default;
+        Vector3 minPt = default; // 기본값 0
+        Vector3 maxPt = default; // 기본값 0
 
         for (int i = 0; i < edgeResolveIteration; ++i)
         {
@@ -378,14 +269,15 @@ public class FieldOfView : MonoBehaviour
                 maxPt = newViewCast.Point;
             }
         }
-
         return new EdgeInfo(minPt, maxPt);
     }
 
     private ViewCastInfo ViewCast(float globalAngle, float radius)
     {
         Vector3 dir = DirFromGlobalAngle(globalAngle);
-        if (Physics.Raycast(transform.position, dir, out RaycastHit hit, radius, obstacleMask))
+
+        // TargetDetector로부터 ObstacleMask를 가져와 사용
+        if (Physics.Raycast(transform.position, dir, out RaycastHit hit, radius, targetDetector.ObstacleMask))
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
 
         return new ViewCastInfo(false, transform.position + dir * radius, radius, globalAngle);

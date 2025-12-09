@@ -26,7 +26,8 @@ public class Gun : Weapon
     internal int RemainAmmo { get => remainAmmo; set => remainAmmo = value; }
     internal int MagAmmo { get => magAmmo; set => magAmmo = value; }
 
-    public bool CanFire => gunState == IGunState.ReadyState;
+    public override bool IsReady => gunState == IGunState.ReadyState;
+    public override bool IsReloading => gunState == IGunState.ReloadState;
 
     // Animator 쪽 실제 에셋 붙여보고 생각해보자
 

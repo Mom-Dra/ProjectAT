@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473829927ac049d4282466724a22b31c, type: 3}
   m_Name: SecurityCameraData
   m_EditorClassIdentifier: 
-  scanRange: 10
   viewAngle: 50
+  rotateAngle: 60
+  rotateSpeed: 30
+  detectionRange: 10
+  detectionAngle: 120
+  detectionTime: 2
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
