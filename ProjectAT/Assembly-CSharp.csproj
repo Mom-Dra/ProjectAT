@@ -62,143 +62,139 @@
     <Analyzer Include="C:\Users\HuiYong\UnityProjects\ProjectAT\ProjectAT\Library\PackageCache\com.unity.dt.app-ui@166eda91cea7\Runtime\SourceGenerators\netstandard2.0\EnumToLowerCase.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Entities\Player\PlayerMovementModule.cs" />
     <Compile Include="Assets\Scripts\Weapon\GunData.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Health.cs" />
     <Compile Include="Assets\Scripts\Weapon\IGunState.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\Flamethrower.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerRunStateBase.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillData.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\EnableTrailAfterTime.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Abstract\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAttackAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponStatus.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerAttackStateBase.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseAction.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\SkillCastingStateBase.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerRunState.cs" />
+    <Compile Include="Assets\Datas\VFXs\Click VFX\Assets\Scripts\ClickManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\EnemyState.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
     <Compile Include="Assets\Scripts\UI\EnemyUIFollower.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverPoint.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
+    <Compile Include="Assets\Scripts\Weapon\ProjectileGrenade.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCamera.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\Skills\DesignatedFire.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\PlayerCombatModule.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewNetcode.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeSetting.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\BulletProjector.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeLauncher.cs" />
+    <Compile Include="Assets\Scripts\Skills\DesignatedFire.cs" />
     <Compile Include="Assets\Scripts\Weapon\Weapon.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\SearchTargetAction.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\PlayerStateMachine.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeSetting.cs" />
     <Compile Include="Assets\Scripts\Weapon\WeaponType.cs" />
-    <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\SpawnProjectiles.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\BulletProjector.cs" />
     <Compile Include="Assets\Scripts\Utils\PoolManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\CheckTargetCondition.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\ExplosionWave.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\ServerSkillTargetingState.cs" />
     <Compile Include="Assets\Scripts\Abstract\IAttackable.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\Skills\ISkill.cs" />
+    <Compile Include="Assets\Scripts\Skills\ThrowGrenade.cs" />
     <Compile Include="Assets\Scripts\UI\CanvasManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\IdleAction.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\EnableTrailAfterTime.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\TreeTest.cs" />
+    <Compile Include="Assets\Scripts\Utils\FieldIndicator.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewVisuals.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerChaseStateBase.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseTargetPositionAction.cs" />
     <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\SkillTargetingStateBase.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCameraData.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Test2.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\RotateToMouse.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Flamethrower.cs" />
+    <Compile Include="Assets\Scripts\Entities\Weapon\WeaponHolder.cs" />
     <Compile Include="Assets\Scripts\Utils\Singleton.cs" />
-    <Compile Include="Assets\Scripts\Entities\EntityState.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerAttackState.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerIdleStateBase.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Enemy\WeaponBase.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\Skills\PlayerSkillStrategyMap.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\PlayerSkillModule.cs" />
     <Compile Include="Assets\Inputs\PlayerControls.cs" />
     <Compile Include="Assets\Scripts\Abstract\LivingEntity.cs" />
     <Compile Include="Assets\Scripts\Enemy\FirstClassEnemy.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\NextPrefab.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerInput.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\AutoDestroy.cs" />
     <Compile Include="Assets\Scripts\Utils\Util.cs" />
-    <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\ProjectileMove.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\MySwitchComposite.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerIdleState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAnimator.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerNetworkMovement.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\PlayerWalkStateBase.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\Bullet.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\Grenade.cs" />
+    <Compile Include="Assets\Scripts\Skills\Skill.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyProjectile.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChangeStateAction.cs" />
     <Compile Include="Assets\Scripts\Enemy\IEnemyState.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerDetector.cs" />
-    <Compile Include="Assets\Models\Effect\VFX_Klaus\Scripts\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Abstract\IThrowable.cs" />
+    <Compile Include="Assets\Scripts\UI\InGameUI.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WanderAction.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\ProjectileMove.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\ServerPlayerWalkState.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Enemy\AlertData.cs" />
     <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
     <Compile Include="Assets\Scripts\Abstract\Enemy.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Inputs\InputReader.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Grenade.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponStraight.cs" />
     <Compile Include="Assets\Scripts\View\SightOfView.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAction.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\ExplosionWave.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\UpdateDistanceAction.cs" />
     <Compile Include="Assets\Scripts\View\NetworkView.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityController.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\SpawnProjectiles.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\RotateToTargetAction.cs" />
     <Compile Include="Assets\Scripts\Utils\EffectModule.cs" />
     <Compile Include="Assets\Scripts\Abstract\IHealable.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\PlayerAnimationModule.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Health.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\NextPrefab.cs" />
+    <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\AutoDestroy.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />
     <Compile Include="Assets\Scripts\View\Controller.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\States\ServerSkillCastingState.cs" />
-    <Compile Include="Assets\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeLauncher.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverGenerator.cs" />
+    <Compile Include="Assets\Datas\VFXs\Click VFX\Assets\Scripts\PreviewEvent.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkObjectPool.cs" />
     <Compile Include="Assets\Scripts\Utils\ColorDebug.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\Models\Effect\Weapon Standart Projectile\Shader\ParticleAdBlend.shader" />
-    <None Include="Assets\Models\Effect\Weapon Standart Projectile\Shader\ProjectorMultiply.shader" />
+    <None Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Shader\ParticleAdBlend.shader" />
+    <None Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Shader\ProjectorMultiply.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\Models\Effect\Weapon Standart Projectile\Shader\Distort.shader" />
+    <None Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Shader\Distort.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\Models\Effect\Weapon Standart Projectile\Shader\AddTrail.shader" />
+    <None Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Shader\AddTrail.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\Models\Model\SimpleMilitary\Old\Materials\UnlitVertexColour_Alpha.shader" />
+    <None Include="Assets\Datas\Models\Model\SimpleMilitary\Old\Materials\UnlitVertexColour_Alpha.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\Models\Model\SimpleMilitary\Old\ReadMe.txt" />
+    <None Include="Assets\Datas\Models\Model\SimpleMilitary\Old\ReadMe.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\Models\Effect\Weapon Standart Projectile\Shader\ParticleAdd.shader" />
+    <None Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Shader\ParticleAdd.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\Models\Effect\VFX_Klaus\Prefabs\Stylized Shoot &amp; Hit\ReadMe_Stylized Shoot &amp; Hit.txt" />
-    <None Include="Assets\Models\Effect\Weapon Standart Projectile\Package\Readme.txt" />
+    <None Include="Assets\Datas\Models\Effect\VFX_Klaus\Prefabs\Stylized Shoot &amp; Hit\ReadMe_Stylized Shoot &amp; Hit.txt" />
+    <None Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Package\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
@@ -1275,6 +1271,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.Multiplayer.Tools.DependencyInjection.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Collections.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
       <Private>False</Private>
@@ -1545,6 +1545,10 @@
     </Reference>
     <Reference Include="Unity.AppUI">
       <HintPath>Library\ScriptAssemblies\Unity.AppUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Behavior.Authoring">

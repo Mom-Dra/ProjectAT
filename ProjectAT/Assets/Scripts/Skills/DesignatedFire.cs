@@ -27,7 +27,7 @@ public class DesignatedFire : Skill
 
     public override void OnUiActivate()
     {
-        Cursor.SetCursor(skillData.CursorSkin, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(skillData.CursorSkin, new Vector2(skillData.CursorSkin.width * 0.5f, skillData.CursorSkin.height * 0.5f), CursorMode.Auto);
     }
 
     public override void OnUiDeactivate()
