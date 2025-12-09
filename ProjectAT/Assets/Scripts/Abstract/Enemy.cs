@@ -489,22 +489,25 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
     {
         (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
 
-        Vector3 dir = targetInfo.Value.transform.position - muzzle.position;
-        dir.y = 0f;
+        Vector3 directionToTarget = targetInfo.Value.transform.position - muzzle.position;
+        directionToTarget.y = 0f;
 
-        Quaternion targetRotation = Quaternion.LookRotation(dir);
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
+        Quaternion calibration = Quaternion.Inverse(transform.rotation) * muzzle.rotation;
 
-        float rotateSpeed = enemyData.RotateSpeed;
+        Quaternion finalEnemyRotation = targetRotation * Quaternion.Inverse(calibration);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * UnityEngine.Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, finalEnemyRotation, enemyData.RotateSpeed * Time.deltaTime);
 
-        float angleDifference = Vector3.Angle(transform.forward, dir);
+        Vector3 currentMuzzleDir = muzzle.forward;
+        currentMuzzleDir.y = 0f;
+
+        float angleDifference = Vector3.Angle(currentMuzzleDir, directionToTarget);
 
         if (angleDifference < 1f) return true;
 
         return false;
     }
-
 
     [ContextMenu("ChangeStateImmediately")]
     private void ChangeStateImmediately()
