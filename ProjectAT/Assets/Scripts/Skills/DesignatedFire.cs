@@ -13,7 +13,7 @@ public class DesignatedFire : Skill
 
     public override bool CanExecute(Enemy target)
     {
-        return context.MyCombatModule.IsEnemyInRange(target);
+        return context.MyCombatModule.IsEnemyInWeaponSight(target);
     }
 
     public override void Execute(Enemy target)
@@ -24,10 +24,6 @@ public class DesignatedFire : Skill
         CurrSkillTime = Time.time;
     }
 
-    public override void CancelSkill()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public override void OnUiActivate()
     {
@@ -41,6 +37,6 @@ public class DesignatedFire : Skill
 
     public override void OnUiUpdate()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }

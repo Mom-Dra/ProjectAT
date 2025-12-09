@@ -9,4 +9,6 @@ public class SkillData : ScriptableObject
     public float Damage;
     public GameObject SkillEffectPrefab;
     public Texture2D CursorSkin;
+    public SkillType SkillType;
+    public float CastingTime;
 }

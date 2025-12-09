@@ -1,10 +1,9 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class EntityStatus: MonoBehaviour
+public class EntityStatus: MonoBehaviour, IDamageable
 {
     //References
-    [SerializeField] private WeaponStatus myWeapon;
     [SerializeField] private EntityInitialStatus initStatus;
 
     public int CurrentHp { get; set; }
@@ -12,8 +11,8 @@ public class EntityStatus: MonoBehaviour
     public float WalkSpeed { get; private set; }
     public float RunSpeed { get; private set; }
     public bool IsDead { get; private set; }
-    public float CurrAttackCoolTime { get; private set; }
-    public float MaxAttackCoolTime { get; private set; }
+    public float ThrowRange {get; private set;}
+    public float MaxViewingDistance {get; private set;}
 
 
     private void OnEnable()
@@ -28,13 +27,9 @@ public class EntityStatus: MonoBehaviour
         CurrentHp = MaxHp;
         WalkSpeed = initStatus.WalkSpeed;
         RunSpeed = initStatus.RunSpeed;
+        ThrowRange = initStatus.ThrowRange;
+        MaxViewingDistance = initStatus.MaxViewingDistance;
         IsDead = false;
-
-        myWeapon = transform.GetChild(1).GetComponent<WeaponStatus>();
-        if (myWeapon)
-        {
-            MaxAttackCoolTime = 2.0f;
-        }
     }
 
     public void TakeDamage(int damage)
@@ -46,16 +41,5 @@ public class EntityStatus: MonoBehaviour
             IsDead = true;
             Debug.Log("Dead!");    
         }
-    }
-
-    public bool CanFire()
-    {
-        return CurrAttackCoolTime <= 0;
-    }
-
-    public void ResetAttackCoolTime()
-    {
-        Debug.Log("ResetCoolTime");
-        CurrAttackCoolTime = MaxAttackCoolTime;
     }
 }

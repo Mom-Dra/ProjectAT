@@ -109,7 +109,8 @@ public class PlayerController : MonoBehaviour
             mySkillModule.CancelTargettingMode();
             return;
         }
-        mySkillModule.CancelSkill();
+        mySkillModule.CancelCurrentSkill();
+        CancelNormalAttack();
         CancelEnemySelect();
 
         NormalRightClickAction();
@@ -144,7 +145,6 @@ public class PlayerController : MonoBehaviour
 
     public bool RaycastAtMouseLocation()
     {
-        //TODO : 저거 위에있는 함수랑 기깔나게 합치는 방법?
         RaycastHit ray;
         if (Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f, enemyLayer))
         {
@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void PlayerMove(Vector3 pos, bool isRun)
+    public void PlayerMove(Vector3 pos, bool isRun)
     {
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
 
     private void ChaseEnemy()
     {
-        if (myCombatModule.IsEnemyInRange(SelectedEnemy))
+        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
         {
             myMovementModule.PlayerMoveStop();
         }
@@ -209,27 +209,24 @@ public class PlayerController : MonoBehaviour
 
     private void NormalAttackEnemy()
     {
-        if (myCombatModule.IsEnemyInRange(SelectedEnemy))
+        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy) && myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
         {
-            if(myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position) && myCombatModule.CanFire())
+            myAnimationModule.SetFiringAnimation(true);
+            if (myCombatModule.CanFire())
             {
                 myCombatModule.NormalAttackEnemy(SelectedEnemy);
-                myAnimationModule.PlayFiringAnimation();
-                myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);
+                myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);                
             }
         }
+        else
+        {
+            CancelNormalAttack();
+        }
+    }
+
+    private void CancelNormalAttack()
+    {
+        myAnimationModule.SetFiringAnimation(false);
     }
     #endregion
-
-
-    /*public Vector3 GetMouseWorldPosition()
-    {
-        RaycastHit ray;
-        if (Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f, groundLayer.value))
-        {
-            return ray.point;
-        }
-        else
-            return Vector3.zero;
-    }*/
 }

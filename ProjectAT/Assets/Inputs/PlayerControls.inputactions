@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SkillOne",
+                    "type": "Button",
+                    "id": "6ff7a25f-ed8f-4b98-bff3-52d2808cc092",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -84,6 +93,17 @@
                     "processors": "",
                     "groups": ";PC",
                     "action": "LeftClicked",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b26024bb-e0d5-485b-852e-a874c651a705",
+                    "path": "<Keyboard>/#(Q)",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "SkillOne",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

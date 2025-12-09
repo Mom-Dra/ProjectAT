@@ -15,3 +15,4 @@ MonoBehaviour:
   maxHp: 250
   walkSpeed: 10
   runSpeed: 15
+  throwRange: 15

@@ -126,6 +126,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkillOne"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ff7a25f-ed8f-4b98-bff3-52d2808cc092"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -172,6 +181,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""LeftClicked"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b26024bb-e0d5-485b-852e-a874c651a705"",
+                    ""path"": ""<Keyboard>/#(Q)"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""SkillOne"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -190,6 +210,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_LeftClicked = m_Player.FindAction("LeftClicked", throwIfNotFound: true);
         m_Player_RightClicked = m_Player.FindAction("RightClicked", throwIfNotFound: true);
         m_Player_DesignatedFire = m_Player.FindAction("DesignatedFire", throwIfNotFound: true);
+        m_Player_SkillOne = m_Player.FindAction("SkillOne", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -274,6 +295,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LeftClicked;
     private readonly InputAction m_Player_RightClicked;
     private readonly InputAction m_Player_DesignatedFire;
+    private readonly InputAction m_Player_SkillOne;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -301,6 +323,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/DesignatedFire".
         /// </summary>
         public InputAction @DesignatedFire => m_Wrapper.m_Player_DesignatedFire;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SkillOne".
+        /// </summary>
+        public InputAction @SkillOne => m_Wrapper.m_Player_SkillOne;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -339,6 +365,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DesignatedFire.started += instance.OnDesignatedFire;
             @DesignatedFire.performed += instance.OnDesignatedFire;
             @DesignatedFire.canceled += instance.OnDesignatedFire;
+            @SkillOne.started += instance.OnSkillOne;
+            @SkillOne.performed += instance.OnSkillOne;
+            @SkillOne.canceled += instance.OnSkillOne;
         }
 
         /// <summary>
@@ -362,6 +391,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DesignatedFire.started -= instance.OnDesignatedFire;
             @DesignatedFire.performed -= instance.OnDesignatedFire;
             @DesignatedFire.canceled -= instance.OnDesignatedFire;
+            @SkillOne.started -= instance.OnSkillOne;
+            @SkillOne.performed -= instance.OnSkillOne;
+            @SkillOne.canceled -= instance.OnSkillOne;
         }
 
         /// <summary>
@@ -443,5 +475,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDesignatedFire(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkillOne" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkillOne(InputAction.CallbackContext context);
     }
 }
