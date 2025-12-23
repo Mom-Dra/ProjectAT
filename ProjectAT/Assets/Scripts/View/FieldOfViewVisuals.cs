@@ -47,6 +47,7 @@ public class FieldOfViewVisuals : MonoBehaviour
     public event System.Action onScanCancel;
 
     private TargetDetector targetDetector;
+    private EntityStatus entityStatus;
 
     [Header("Scan Animation")]
     [SerializeField]
@@ -80,6 +81,7 @@ public class FieldOfViewVisuals : MonoBehaviour
     private void Awake()
     {
         targetDetector = GetComponent<TargetDetector>();
+        entityStatus = GetComponent<EntityStatus>();
 
         fixedMesh = new Mesh { name = "Full Mesh" };
         viewMesh = new Mesh { name = "View Mesh" };
@@ -96,6 +98,8 @@ public class FieldOfViewVisuals : MonoBehaviour
         // StartScan 내부에서 growingCoroutine이 null일 때만 실행하도록 방어
         targetDetector.onTargetDetect += StartScan;
         targetDetector.onTargetLosted += CancelScan;
+
+        entityStatus.onDeath += EnemyDied;
     }
 
     private void OnDisable()
@@ -103,6 +107,8 @@ public class FieldOfViewVisuals : MonoBehaviour
         // 이벤트 구독 해제
         targetDetector.onTargetDetect -= StartScan;
         targetDetector.onTargetLosted -= CancelScan;
+
+        entityStatus.onDeath -= EnemyDied;
 
         // 비활성화 시 코루틴 정지 및 메시 클리어
         if (growingCoroutine != null)
@@ -292,5 +298,10 @@ public class FieldOfViewVisuals : MonoBehaviour
     {
         angleInDegrees += transform.eulerAngles.y;
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
+
+    private void EnemyDied()
+    {
+        enabled = false;
     }
 }

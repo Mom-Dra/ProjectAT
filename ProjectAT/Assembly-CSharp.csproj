@@ -137,6 +137,7 @@
     <Compile Include="Assets\Scripts\Enemy\AlertData.cs" />
     <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
     <Compile Include="Assets\Scripts\Abstract\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Cover\CoverObject.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Inputs\InputReader.cs" />

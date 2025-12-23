@@ -100,7 +100,9 @@ public class PlayerCombatModule : MonoBehaviour
         Debug.Log($"Player Attack : {target.gameObject.name}");
         LastFireTime = Time.time;
         //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        //target.TakeDamage(myWeapon.Damage);
+
+        if (target.TryGetComponent(out IDamageable damageable))
+            damageable.TakeDamage(myWeapon.Damage);
     }
     public bool CanThrowSomethingToEnemy(Enemy enemy)
     {

@@ -1,5 +1,6 @@
 using EPOOutline.Demo;
 using System.Linq;
+using Unity.Burst;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private float LastTickTime = 0f;
     private SkillNumber lastSkillInput;
 
+    private CoverObject currCoverObject;
 
     #region 초기화
     private void InitiateComponents()
@@ -95,6 +97,8 @@ public class PlayerController : MonoBehaviour
             }
             LastTickTime = Time.time;
         }
+
+        RayToCover();
     }
 
     #endregion
@@ -228,5 +232,62 @@ public class PlayerController : MonoBehaviour
     {
         myAnimationModule.SetFiringAnimation(false);
     }
+
+    private void RayToCover()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(inputReader.MousePosition);
+        RaycastHit hit;
+
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+
+        // 2. 광선 발사 (Cover 레이어만 충돌 체크)
+        if (Physics.Raycast(ray, out hit, 100f, LayerMask.GetMask("CoverPoint")))
+        {
+            if (hit.transform.TryGetComponent(out CoverObject coverObject))
+            {
+                if(currCoverObject != coverObject)
+                {
+                    currCoverObject = coverObject;
+                    coverObject.ShowCoverPoint();
+                }
+            }
+        }
+        else
+        {
+            if(currCoverObject is not null)
+            {
+                currCoverObject.HideCoverPoint();
+                currCoverObject = null;
+            }
+        }
+
+        //{
+        //GameObject hitObject = hit.collider.gameObject;
+
+        // 3. 최적화: 새로운 오브젝트일 때만 로직 실행 (상태 변화 감지)
+        //if (currentHoveredCover != hitObject)
+        //{
+        //    // 이전 엄폐물의 인디케이터 끄기
+        //    if (currentHoveredCover != null)
+        //    {
+        //        HideIndicators(currentHoveredCover);
+        //    }
+
+        //    // 새로운 엄폐물 등록 및 인디케이터 켜기
+        //    currentHoveredCover = hitObject;
+        //    ShowIndicators(currentHoveredCover);
+        //}
+        //}
+        //else
+        {
+            // 4. 마우스가 허공이나 땅을 가리킬 때 (엄폐물 벗어남)
+            //if (currentHoveredCover != null)
+            //{
+            //    HideIndicators(currentHoveredCover);
+            //    currentHoveredCover = null;
+            //}
+        }
+    }
+
     #endregion
 }

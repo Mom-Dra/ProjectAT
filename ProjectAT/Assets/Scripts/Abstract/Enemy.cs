@@ -14,7 +14,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 using TMPro;
 using MomDra.Weapon;
 
-public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
+public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 {
     public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
     public event Action<ISquadMember, Vector3> onPlayerLosted;
@@ -60,6 +60,7 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
     private Weapon weapon;
     private Transform currentTarget;
     private Transform muzzle;
+    private EntityStatus entityStatus;
 
     private CoverPoint reservedCoverPoint;
 
@@ -91,6 +92,7 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
         targetDetector = GetComponent<TargetDetector>();
         stateText = GetComponentInChildren<TextMeshProUGUI>();
         enemyAnimator = GetComponent<EnemyAnimator>();
+        entityStatus = GetComponent<EntityStatus>();
 
         fieldOfViewVisual.SetEnemyData(this);
         targetDetector.SetEnemyData(this);
@@ -110,6 +112,16 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
 
         if (isPatrolEnemy) ChangeState(IEnemyState.PatrolState);
         else ChangeState(IEnemyState.IdleState);
+    }
+
+    private void OnEnable()
+    {
+        entityStatus.onDeath += EnemyDied;
+    }
+
+    private void OnDisable()
+    {
+        entityStatus.onDeath -= EnemyDied;
     }
 
     private void Start()
@@ -279,6 +291,12 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
                 return false;
             }
         }
+    }
+
+    internal void ReleaseCover()
+    {
+        reservedCoverPoint.Release();
+        reservedCoverPoint = null;
     }
 
     internal bool IsAgentArrived()
@@ -507,6 +525,13 @@ public abstract class Enemy : LivingEntity, IAttackable, ISquadMember
         if (angleDifference < 1f) return true;
 
         return false;
+    }
+
+    private void EnemyDied()
+    {
+        GetComponent<Collider>().enabled = false;
+        navMeshAgent.enabled = false;
+        enabled = false;
     }
 
     [ContextMenu("ChangeStateImmediately")]

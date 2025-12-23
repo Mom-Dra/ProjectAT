@@ -1,8 +1,11 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
 public class EntityStatus: MonoBehaviour, IDamageable
 {
+    public event Action onDeath;
+
     //References
     [SerializeField] private EntityInitialStatus initStatus;
 
@@ -34,12 +37,24 @@ public class EntityStatus: MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        Debug.Log($"{transform.name} TakeDamage: {damage}");
+
         CurrentHp -= damage;
-        Debug.Log("Hit");
+        
         if (CurrentHp <= 0)
         {
             IsDead = true;
-            Debug.Log("Dead!");    
+            Die();
+
+            Debug.Log("Dead!");
         }
+    }
+
+    private void Die()
+    {
+        // Enemy의 모든 동작을 멈추고 죽는 Animation 재생
+        // 여기서 바로 Enemy의 Animator를 가져오느게 나을까?
+
+        onDeath?.Invoke();
     }
 }

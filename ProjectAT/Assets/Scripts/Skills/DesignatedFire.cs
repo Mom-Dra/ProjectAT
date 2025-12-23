@@ -20,7 +20,10 @@ public class DesignatedFire : Skill
     {
         //Snping
         Debug.Log("Designated Fire Executed!");
-        target.TakeDamage(500);
+
+        if (target.TryGetComponent(out IDamageable damageable))
+            damageable.TakeDamage(500);
+
         CurrSkillTime = Time.time;
     }
 

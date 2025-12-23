@@ -272,6 +272,8 @@ public class EnemyCoverState : IEnemyState
     {
         enemy.CurrCoverSubState?.Exit(enemy, this);
         enemy.SetAttackMode(false);
+
+        enemy.ReleaseCover();
     }
 
     internal void ChangeSubState(Enemy enemy, ICoverSubState coverSubState)

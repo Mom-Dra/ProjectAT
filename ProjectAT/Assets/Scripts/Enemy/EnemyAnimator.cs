@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyAnimator : MonoBehaviour
 {
     private Animator animator;
+    private EntityStatus entityStatus;
 
     private static readonly int IsRunHash = Animator.StringToHash("IsRun");
     private static readonly int IsCrouchHash = Animator.StringToHash("Crouch_b");
@@ -14,10 +15,32 @@ public class EnemyAnimator : MonoBehaviour
     private static readonly int HeadHorizontalHash = Animator.StringToHash("Head_Horizontal_f");
     private static readonly int BodyHorizontalHash = Animator.StringToHash("Body_Horizontal_f");
     private static readonly int ShootHash = Animator.StringToHash("Shoot_b");
+    private static readonly int IsDeadHash = Animator.StringToHash("Death_b");
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        entityStatus = GetComponent<EntityStatus>();
+    }
+
+    private void OnEnable()
+    {
+        entityStatus.onDeath += EnemyDied;
+    }
+
+    private void OnDisable()
+    {
+        entityStatus.onDeath -= EnemyDied;
+    }
+
+    private void EnemyDied()
+    {
+        SetIsDead(true);
+    }
+
+    public void SetIsDead(bool isDead)
+    {
+        animator.SetBool(IsDeadHash, isDead);
     }
 
     public void SetSpeed(float speed)

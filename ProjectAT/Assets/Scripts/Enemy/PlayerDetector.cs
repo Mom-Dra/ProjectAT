@@ -30,6 +30,7 @@ public class TargetDetector : MonoBehaviour
     private Collider[] colliders = new Collider[4];
     private WaitForSeconds detectWait;
     private Coroutine detectLoopCoroutine;
+    private EntityStatus entityStatus;
 
     public float ViewAngle => enemyData?.ViewAngle ?? 0f;
     public IReadOnlyList<(Transform transform, float distance)> VisibleTargets => visibleTargets;
@@ -37,16 +38,21 @@ public class TargetDetector : MonoBehaviour
 
     private void Awake()
     {
+        entityStatus = GetComponent<EntityStatus>();
         detectWait = new WaitForSeconds(detectInterval);
     }
 
     private void OnEnable()
     {
+        entityStatus.onDeath += EnemyDied;
+
         StartDetectLoop();
     }
 
     private void OnDisable()
     {
+        entityStatus.onDeath -= EnemyDied;
+
         StopDetectLoop();
     }
 
@@ -96,6 +102,11 @@ public class TargetDetector : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void EnemyDied()
+    {
+        enabled = false;
     }
 
     private bool IsSafeFromPlayer(Vector3 targetPos)
