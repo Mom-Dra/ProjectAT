@@ -19,6 +19,11 @@ public class PlayerMovementModule : MonoBehaviour
             && (myAgent.pathPending || myAgent.velocity.sqrMagnitude > 0.05f);
     }
 
+    public bool IsAgentArrived()
+    {
+        return !myAgent.pathPending && myAgent.remainingDistance <= myAgent.stoppingDistance;
+    }
+
     public void PlayerWalk(Vector3 newPos)
     {
         MovePosition(newPos, myStatus.WalkSpeed);

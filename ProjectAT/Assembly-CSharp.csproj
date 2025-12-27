@@ -95,6 +95,7 @@
     <Compile Include="Assets\Scripts\Skills\ThrowGrenade.cs" />
     <Compile Include="Assets\Scripts\UI\CanvasManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\IdleAction.cs" />
+    <Compile Include="Assets\Scripts\Cover\CoverPulse.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\TreeTest.cs" />
     <Compile Include="Assets\Scripts\Utils\FieldIndicator.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewVisuals.cs" />

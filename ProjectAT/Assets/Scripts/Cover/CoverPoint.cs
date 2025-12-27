@@ -33,12 +33,13 @@ public class CoverPoint : MonoBehaviour
         owner = null;
     }
 
-    public void Show()
+    public void ShowIndicator()
     {
-        decalProjector.enabled = true;
+        if (!isOccupied)
+            decalProjector.enabled = true;
     }
 
-    public void Hide()
+    public void HideIndicator()
     {
         decalProjector.enabled = false;
     }

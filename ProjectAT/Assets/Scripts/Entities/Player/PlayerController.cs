@@ -1,4 +1,5 @@
 using EPOOutline.Demo;
+using System.Collections;
 using System.Linq;
 using Unity.Burst;
 using Unity.VisualScripting;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private SkillNumber lastSkillInput;
 
     private CoverObject currCoverObject;
+    private CoverPulse currCoverPulse;
 
     #region 초기화
     private void InitiateComponents()
@@ -100,12 +102,14 @@ public class PlayerController : MonoBehaviour
                 ChaseEnemy();
                 NormalAttackEnemy();
             }
+
+            RayToCover();
+
             LastTickTime = Time.time;
         }
 
         myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity());
 
-        RayToCover();
     }
 
     #endregion
@@ -143,6 +147,11 @@ public class PlayerController : MonoBehaviour
                 case 10: //Indicator Layer
                     PlayerMove(ray.point, true);
                     break;
+                case 11: // CoverPoint Layer
+                    if (ray.transform.TryGetComponent(out CoverPoint coverPoint))
+                        PlayerMoveToCover(coverPoint);
+                    break;
+
                 default:
                     break;
             }
@@ -185,11 +194,11 @@ public class PlayerController : MonoBehaviour
         mySkillModule.ActivateTargettingMode(index);
     }
 
-
-    public void PlayerMove(Vector3 pos, bool isRun)
+    private void PlayerMove(Vector3 pos, bool isRun)
     {
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
+
         myEffectModule.PlayMoveIndicatorEffect(pos);
     }
     #endregion
@@ -241,6 +250,13 @@ public class PlayerController : MonoBehaviour
         myPlayerAnimator.SetShoot(true);
     }
 
+    private void PlayerMoveToCover(CoverPoint coverPoint)
+    {
+        Debug.Log("CoverPoint Layer");
+
+        StartCoroutine(MoveToCoverCoroutine(coverPoint));
+    }
+
     private void RayToCover()
     {
         Ray ray = Camera.main.ScreenPointToRay(inputReader.MousePosition);
@@ -251,13 +267,23 @@ public class PlayerController : MonoBehaviour
         // 2. 광선 발사 (Cover 레이어만 충돌 체크)
         if (Physics.Raycast(ray, out hit, 100f, LayerMask.GetMask("CoverPoint")))
         {
-            if (hit.transform.TryGetComponent(out CoverObject coverObject))
+            CoverObject coverObject = hit.transform.GetComponentInParent<CoverObject>();
+
+            if (coverObject is not null && currCoverObject != coverObject)
             {
-                if(currCoverObject != coverObject)
+                currCoverObject = coverObject;
+                coverObject.ShowCoverPoint();
+            }
+
+            if (hit.transform.TryGetComponent(out CoverPulse coverPulse))
+            {
+                if (currCoverPulse is not null && currCoverPulse != coverPulse)
                 {
-                    currCoverObject = coverObject;
-                    coverObject.ShowCoverPoint();
+                    currCoverPulse.enabled = false;
                 }
+
+                currCoverPulse = coverPulse;
+                coverPulse.enabled = true;
             }
         }
         else
@@ -267,34 +293,29 @@ public class PlayerController : MonoBehaviour
                 currCoverObject.HideCoverPoint();
                 currCoverObject = null;
             }
+
+            if(currCoverPulse is not null)
+            {
+                currCoverPulse.enabled = false;
+                currCoverPulse = null;
+            }
         }
+    }
 
-        //{
-        //GameObject hitObject = hit.collider.gameObject;
+    private IEnumerator MoveToCoverCoroutine(CoverPoint coverPoint)
+    {
+        coverPoint.GetComponentInParent<CoverObject>().HideCoverPoint();
+        coverPoint.ShowIndicator();
 
-        // 3. 최적화: 새로운 오브젝트일 때만 로직 실행 (상태 변화 감지)
-        //if (currentHoveredCover != hitObject)
-        //{
-        //    // 이전 엄폐물의 인디케이터 끄기
-        //    if (currentHoveredCover != null)
-        //    {
-        //        HideIndicators(currentHoveredCover);
-        //    }
+        PlayerMove(coverPoint.transform.position, false);
 
-        //    // 새로운 엄폐물 등록 및 인디케이터 켜기
-        //    currentHoveredCover = hitObject;
-        //    ShowIndicators(currentHoveredCover);
-        //}
-        //}
-        //else
+        while (!myMovementModule.IsAgentArrived())
         {
-            // 4. 마우스가 허공이나 땅을 가리킬 때 (엄폐물 벗어남)
-            //if (currentHoveredCover != null)
-            //{
-            //    HideIndicators(currentHoveredCover);
-            //    currentHoveredCover = null;
-            //}
+
+            yield return null;
         }
+
+        coverPoint.HideIndicator();
     }
 
     #endregion
