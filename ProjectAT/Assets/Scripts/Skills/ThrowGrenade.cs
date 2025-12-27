@@ -1,24 +1,34 @@
+using System;
+using System.Data.Common;
 using UnityEngine;
 
 public class ThrowGrenade : Skill
 {
     public ThrowGrenade(PlayerSkillModule context, SkillData data) : base(context, data){}
-
-
-    public override bool CanExecute(Enemy target)
+    public Vector3 targetPosition;
+    public override bool CanSelectTarget(in RaycastHit hit)
     {
-        return context.MyCombatModule.CanThrowSomethingToEnemy(target);
+        targetPosition = hit.point;
+        return true;
     }
 
-    public override void Execute(Enemy target)
+    public override bool CanExecute()
     {
-        context.MyCombatModule.ThrowSomthingToTarget(skillData.SkillEffectPrefab, target.transform.position);
+        return context.MyCombatModule.CanThrowSomethingToPosition(targetPosition)
+        && context.MyMovementModule.PlayerRotateToward(targetPosition);
+    }
+    public override void Execute()
+    {
+        context.MyCombatModule.ThrowSomthingToTarget(skillData.SkillEffectPrefab, targetPosition);
+        
+        //후처리
         CurrSkillTime = Time.time;
+        targetPosition = Vector3.zero;
     }
 
-    public override void OnChasing(Enemy target)
+    public override void OnChasing()
     {
-        context.MyMovementModule.PlayerWalk(target.transform.position);
+        context.MyMovementModule.PlayerWalk(targetPosition);
     }
 
     public override void OnUiActivate()
@@ -34,5 +44,10 @@ public class ThrowGrenade : Skill
     public override void OnUiUpdate()
     {
         //throw new System.NotImplementedException();
+    }
+
+    public override void CancelSkill()
+    {
+        targetPosition = Vector3.zero;
     }
 }

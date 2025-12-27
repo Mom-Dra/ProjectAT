@@ -135,6 +135,7 @@ public class PlayerController : MonoBehaviour
             switch (ray.collider.gameObject.layer)
             {
                 case 6: //Ground Layer
+                    Debug.Log("플레이어 컨트롤러 : PlayerMove");
                     PlayerMove(ray.point, false);
                     break;
                 case 7: //Enemy Layer
@@ -161,7 +162,8 @@ public class PlayerController : MonoBehaviour
         {
             SetTargetEnemy(ray.collider.GetComponent<Enemy>());
             return true;
-        }
+        }   
+       
         return false;
     }
 
@@ -169,14 +171,7 @@ public class PlayerController : MonoBehaviour
     {
         if(mySkillModule.isTargetting)
         {
-            if(RaycastAtMouseLocation())
-            {
-                mySkillModule.ActivateSelectedSkill();
-            }
-            else
-            {
-                Debug.Log("Skill 사용 실패 : Enemy가 아님.");
-            }
+            mySkillModule.SelectTarget();
         }
     }
 
@@ -201,7 +196,7 @@ public class PlayerController : MonoBehaviour
         SelectedEnemy = castedEnemy;
     }
 
-    private void CancelEnemySelect()
+    public void CancelEnemySelect()
     {
         SelectedEnemy = null;
     }
@@ -238,7 +233,7 @@ public class PlayerController : MonoBehaviour
 
     private void CancelNormalAttack()
     {
-        myPlayerAnimator.SetShoot(true);
+        myPlayerAnimator.SetShoot(false);
     }
 
     private void RayToCover()

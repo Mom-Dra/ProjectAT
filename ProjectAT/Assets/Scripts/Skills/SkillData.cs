@@ -11,4 +11,6 @@ public class SkillData : ScriptableObject
     public Texture2D CursorSkin;
     public SkillType SkillType;
     public float CastingTime;
+    public LayerMask TargetLayer;
+    public SkillAnimationType AnimationType;
 }

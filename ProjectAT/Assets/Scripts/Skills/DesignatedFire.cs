@@ -5,26 +5,41 @@ using UnityEngine;
 public class DesignatedFire : Skill
 {
     public DesignatedFire(PlayerSkillModule context, SkillData data) : base(context, data){}
+    private Enemy targetEnemy;
 
-    public override void OnChasing(Enemy target)
+    public override void OnChasing()
     {
-        context.MyMovementModule.PlayerWalk(target.transform.position);
+        context.MyMovementModule.PlayerWalk(targetEnemy.transform.position);
     }
 
-    public override bool CanExecute(Enemy target)
+    public override bool CanSelectTarget(in RaycastHit hit)
     {
-        return context.MyCombatModule.IsEnemyInWeaponSight(target);
+        if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0 
+        && hit.collider.TryGetComponent<Enemy>(out targetEnemy))
+        {
+            return true;
+        }
+
+        return false;
     }
 
-    public override void Execute(Enemy target)
+    public override bool CanExecute()
+    {
+        return context.MyCombatModule.IsEnemyInWeaponSight(targetEnemy)
+        && context.MyMovementModule.PlayerRotateToward(targetEnemy.transform.position);
+    }
+
+    public override void Execute()
     {
         //Snping
         Debug.Log("Designated Fire Executed!");
 
-        if (target.TryGetComponent(out IDamageable damageable))
+        if (targetEnemy.TryGetComponent(out IDamageable damageable))
             damageable.TakeDamage(500);
 
+        //후처리
         CurrSkillTime = Time.time;
+        targetEnemy = null;
     }
 
 
@@ -41,5 +56,10 @@ public class DesignatedFire : Skill
     public override void OnUiUpdate()
     {
         //throw new System.NotImplementedException();
+    }
+
+    public override void CancelSkill()
+    {
+        targetEnemy = null;
     }
 }

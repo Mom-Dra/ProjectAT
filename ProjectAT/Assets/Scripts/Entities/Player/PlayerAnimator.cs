@@ -1,6 +1,12 @@
 using MomDra.Weapon;
 using UnityEngine;
 
+public enum SkillAnimationType : ushort
+{
+    ThrowGrenade,
+    TargetAndFire
+}
+
 public class PlayerAnimator : MonoBehaviour
 {
     private Animator animator;
@@ -13,9 +19,12 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int SpeedHash = Animator.StringToHash("Speed_f");
     private static readonly int WeaponTypeHash = Animator.StringToHash("WeaponType_int");
     private static readonly int HeadHorizontalHash = Animator.StringToHash("Head_Horizontal_f");
+    private static readonly int HeadVerticalHash = Animator.StringToHash("Head_Vertical_f");
     private static readonly int BodyHorizontalHash = Animator.StringToHash("Body_Horizontal_f");
+    private static readonly int BodyVerticalHash = Animator.StringToHash("Body_Vertical_f");
     private static readonly int ShootHash = Animator.StringToHash("Shoot_b");
     private static readonly int IsDeadHash = Animator.StringToHash("Death_b");
+    private static readonly int CancelTriggerHash = Animator.StringToHash("CancelTrigger");
 
     private void Awake()
     {
@@ -63,10 +72,17 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool(ShootHash, isShoot);
     }
 
-    public void SetUpperBodyOffset(float headOffset, float bodyOffset)
+    public void SetUpperBodyOffset(float headHorizontalOffset = 0.0f, float headVerticalOffset = 0.0f,  float bodyHorizontalOffset = 0.0f, float bodyVerticalOffset = 0.0f)
     {
-        animator.SetFloat(HeadHorizontalHash, headOffset, 0.1f, Time.deltaTime);
-        animator.SetFloat(BodyHorizontalHash, bodyOffset, 0.1f, Time.deltaTime);
+        // animator.SetFloat(HeadHorizontalHash, headHorizontalOffset, 0.1f, Time.deltaTime);
+        // animator.SetFloat(HeadVerticalHash, headVerticalOffset, 0.1f, Time.deltaTime);
+        // animator.SetFloat(BodyHorizontalHash, bodyHorizontalOffset, 0.1f, Time.deltaTime);
+        // animator.SetFloat(BodyVerticalHash, bodyVerticalOffset, 0.1f, Time.deltaTime);
+
+        animator.SetFloat(HeadHorizontalHash, headHorizontalOffset);
+        animator.SetFloat(HeadVerticalHash, headVerticalOffset);
+        animator.SetFloat(BodyHorizontalHash, bodyHorizontalOffset);
+        animator.SetFloat(BodyVerticalHash, bodyVerticalOffset);
     }
 
     public void ResetUpperBody()
@@ -89,8 +105,41 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetTrigger(HitHash);
     }
 
+    public void PlayIdle()
+    {
+        animator.SetInteger(WeaponTypeHash, 2);
+        SetUpperBodyOffset();
+    }
+
+    public void PlayGrenadeThrow()
+    {
+        animator.SetInteger(WeaponTypeHash, 10);
+    }
+
     public void OnAttackHitFrame()
     {
         SendMessageUpwards("ApplyDamageToTarget", SendMessageOptions.DontRequireReceiver);
+    }
+
+    public void PlaySkillAnimation(SkillAnimationType type)
+    {
+        switch (type)
+        {
+            case SkillAnimationType.ThrowGrenade:
+                PlayGrenadeThrow();
+                break;
+            case SkillAnimationType.TargetAndFire:
+                SetUpperBodyOffset(-0.8f, 0.0f, 0.5f,0.0f); //MEMO : 애니메이션 로테이션 떄문에 하드코딩됨. 따로 정면으로 조준사격 하는 애니메이션 필요함.
+                break;
+            default:
+                Debug.LogError("Undefined Skill Animation Type");
+                break;
+        }
+    }
+
+    public void CancelAnimation()
+    {
+        animator.SetTrigger(CancelTriggerHash);
+        PlayIdle();
     }
 }

@@ -34,17 +34,4 @@ public class PlayerAnimationModule : MonoBehaviour
             isFiring = shouldBeFiring;
         }
     }
-
-    public void PlaySkillAnimation(SkillType skillType)
-    {
-        switch (skillType)
-        {
-            case SkillType.Throwing:
-                myAnim.SetTrigger(ThrowingTrigger);
-                break;
-            case SkillType.Sniping:
-                myAnim.SetTrigger(SnipingTrigger);
-                break;
-        }
-    }
 }

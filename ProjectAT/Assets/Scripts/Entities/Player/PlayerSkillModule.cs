@@ -23,7 +23,7 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public PlayerController MyPlayerController { get; private set; }
     [SerializeField] public PlayerMovementModule MyMovementModule { get; private set; }
     [SerializeField] public PlayerCombatModule MyCombatModule { get; private set; }
-    [SerializeField] public PlayerAnimationModule MyAnimModule { get; private set; }
+    [SerializeField] public PlayerAnimator MyAnimModule { get; private set; }
 
     [Header("Skills")]
     private Skill[] mySkills = new Skill[5];
@@ -44,7 +44,7 @@ public class PlayerSkillModule : MonoBehaviour
         MyPlayerController = GetComponent<PlayerController>();
         MyMovementModule = GetComponent<PlayerMovementModule>();
         MyCombatModule = GetComponent<PlayerCombatModule>();
-        MyAnimModule = GetComponent<PlayerAnimationModule>();
+        MyAnimModule = GetComponent<PlayerAnimator>();
     }
 
     private void InitiateSkills()
@@ -69,22 +69,14 @@ public class PlayerSkillModule : MonoBehaviour
         if(ModuleState == SkillModuleState.Ready || nowActivatedSkillCoroutine != null) return;
         
         Debug.Log("Skill On update");
-        if (CurrentActivateSkill.CanExecute(MyPlayerController.SelectedEnemy))
+        if (CurrentActivateSkill.CanExecute())
         {   
-            if(MyMovementModule.PlayerRotateToward(MyPlayerController.SelectedEnemy.transform.position))
-            {
-                MyMovementModule.PlayerMoveStop();
-                UsingCurrentSkill();
-
-                //MyAnimModule.PlayFiringAnimation();
-                // CurrentActivateSkill.Execute(MyPlayerController.SelectedEnemy);
-                // ModuleState = SkillModuleState.Ready;
-                //startCoroutine? nowActionCoroutine
-            }
+            MyMovementModule.PlayerMoveStop();
+            UsingCurrentSkill();
         }
         else
         {
-            MyMovementModule.PlayerWalk(MyPlayerController.SelectedEnemy.transform.position);
+            CurrentActivateSkill.OnChasing();
         }
     }
 
@@ -119,19 +111,24 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void CancelCurrentSkill()
     {
-        if(nowActivatedSkillCoroutine == null) return;
+        if(ModuleState != SkillModuleState.Casting) return;
 
-        ModuleState = SkillModuleState.Ready;
-        
-        StopCoroutine(nowActivatedSkillCoroutine);
-        nowActivatedSkillCoroutine = null;
-        
+        if(nowActivatedSkillCoroutine != null)
+        {
+            StopCoroutine(nowActivatedSkillCoroutine);
+            nowActivatedSkillCoroutine = null;
+        }
+
+        CurrentActivateSkill.CancelSkill();
         CurrentActivateSkill = null;
+
+        MyAnimModule.CancelAnimation();
+        ModuleState = SkillModuleState.Ready;
     }
 
     private void UsingCurrentSkill()
     {
-        nowActivatedSkillCoroutine = StartCoroutine(SkillActionCoroutine(MyPlayerController.SelectedEnemy));
+        nowActivatedSkillCoroutine = StartCoroutine(SkillActionCoroutine());
     }
 
     public bool CanActivateSkill (SkillNumber skillIndex)
@@ -139,20 +136,37 @@ public class PlayerSkillModule : MonoBehaviour
         return mySkills[(int)skillIndex].CanActivateSkill();
     }
 
-    private IEnumerator SkillActionCoroutine(Enemy target)
+    private IEnumerator SkillActionCoroutine()
     {
-        //TODO : 스킬 사용을 코루틴 이용하려고함. 애니메이션 동기화 때문에ㅠㅠ 그러니 잘 구현해보기 (제일 최근 작업분기)
+        //TODO : 스킬 사용을 코루틴 이용하려고함. 애니메이션 동기화 때문에ㅠㅠ 그러니 잘 구현해보기
         
         Debug.Log("Skill Coroutine Start");
-        MyAnimModule.PlaySkillAnimation(CurrentActivateSkill.SkillType);
+        MyAnimModule.PlaySkillAnimation(CurrentActivateSkill.AnimationType);
         yield return new WaitForSeconds(CurrentActivateSkill.SkillCastingTime);
         
-        CurrentActivateSkill.Execute(target);
+        CurrentActivateSkill.Execute();
 
         //후처리
         ModuleState = SkillModuleState.Ready;
+        MyAnimModule.PlayIdle();
         CurrentActivateSkill = null;
+        //MyPlayerController.CancelEnemySelect();
         nowActivatedSkillCoroutine = null;
         Debug.Log("Skill Coroutine End");
+    }
+
+    private bool CanSelectTarget(in RaycastHit hit)
+    {
+        return mySkills[(int)lastSkillInput].CanSelectTarget(hit);
+    }
+
+    public void SelectTarget()
+    {
+        MyPlayerController.RaycastAtMouseLocation(out RaycastHit hit);
+        
+        if(CanSelectTarget(hit))
+        {
+            ActivateSelectedSkill();
+        }
     }
 }

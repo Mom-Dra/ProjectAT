@@ -36,13 +36,13 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool IsEnemyInWeaponSight(Enemy enemy)
     {
-        return CheckEnemyInRange(enemy, myStatus.ThrowRange)
+        return CheckPositionInRange(enemy.transform.position, myStatus.ThrowRange)
             && CheckEnemyVisibility(enemy);
     }
 
-    private bool CheckEnemyInRange(Enemy enemy, float range)
+    private bool CheckPositionInRange(Vector3 pos, float range)
     {
-        return (enemy.transform.position - transform.position).sqrMagnitude <= range * range;
+        return (pos - transform.position).sqrMagnitude <= range * range;
     }
 
     private bool CheckEnemyVisibility(Enemy targetEnemy)
@@ -52,6 +52,20 @@ public class PlayerCombatModule : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
         {
             if (hitInfo.collider.gameObject == targetEnemy.gameObject)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool CheckPositionVisibility(Vector3 targetPos) //중복되는 부분이 있다. 리펙토링 고려
+    {
+        Vector3 directionToPos = (targetPos - firePoint.position);
+        Ray ray = new Ray(firePoint.position, directionToPos);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
+        {
+            if ((hitInfo.point - targetPos).sqrMagnitude < 0.1f)
             {
                 return true;
             }
@@ -104,10 +118,10 @@ public class PlayerCombatModule : MonoBehaviour
         if (target.TryGetComponent(out IDamageable damageable))
             damageable.TakeDamage(myWeapon.Damage);
     }
-    public bool CanThrowSomethingToEnemy(Enemy enemy)
+    public bool CanThrowSomethingToPosition(Vector3 position)
     {
-        return CheckEnemyInRange(enemy, myStatus.ThrowRange) 
-        && CheckEnemyVisibility(enemy);
+        return CheckPositionInRange(position, myStatus.ThrowRange) 
+        && CheckPositionVisibility(position);
     }
 
     public void ThrowSomthingToTarget(GameObject thowingObject, Vector3 targetPos)

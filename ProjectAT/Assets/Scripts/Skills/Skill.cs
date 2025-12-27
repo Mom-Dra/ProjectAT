@@ -2,17 +2,20 @@ using UnityEngine;
 
 public enum SkillType : ushort
 {
-    Throwing,
-    Sniping
+    Targetting,
+    Ground,
  }
 
 public abstract class Skill
 {
     protected PlayerSkillModule context;
     [SerializeField] protected SkillData skillData;
+    //protected GameObject target;
     public float CurrSkillTime { get; protected set; }
     public SkillType SkillType => skillData.SkillType;
     public float SkillCastingTime => skillData.CastingTime;
+    public LayerMask TargetLayer => skillData.TargetLayer;
+    public SkillAnimationType AnimationType => skillData.AnimationType;
 
     public Skill(PlayerSkillModule context, SkillData skillData)
     {
@@ -30,8 +33,10 @@ public abstract class Skill
     public abstract void OnUiUpdate();
     public abstract void OnUiDeactivate();
 
-    public abstract void OnChasing(Enemy target);
-    public abstract bool CanExecute(Enemy target);
-    public abstract void Execute(Enemy target);
+    public abstract void CancelSkill();
+    public abstract void OnChasing();
+    public abstract bool CanSelectTarget(in RaycastHit hit);
+    public abstract bool CanExecute();
+    public abstract void Execute();
 
 }

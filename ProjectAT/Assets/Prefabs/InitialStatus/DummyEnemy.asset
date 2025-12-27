@@ -15,3 +15,5 @@ MonoBehaviour:
   maxHp: 250
   walkSpeed: 5
   runSpeed: 10
+  throwRange: 7
+  maxViewingDistance: 20
