@@ -17,10 +17,12 @@ public class EffectModule : MonoBehaviour
 
     private void Initialize()
     {
-        if (firingEffectSpawnPoint == null)
+        if (firingEffectSpawnPoint is null)
             firingEffectSpawnPoint = transform.GetChild(2).transform;
+
         moveIndicatorInstance = Instantiate(moveIndicatorPrefab).GetComponent<FieldIndicator>();
     }
+
     public void PlayFiringEffect(Vector3 dest)
     {
         Bullet bulletComponent 
@@ -33,7 +35,6 @@ public class EffectModule : MonoBehaviour
         bulletComponent.Initialize(dest, 2f);
         bulletComponent.transform.forward = (dest - firingEffectSpawnPoint.position).normalized;
         bulletComponent.SetVelocity((dest - firingEffectSpawnPoint.position).normalized * 100f);
-
     }
 
     public void PlayMoveIndicatorEffect(Vector3 dest)

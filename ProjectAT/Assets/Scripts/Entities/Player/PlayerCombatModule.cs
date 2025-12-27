@@ -31,7 +31,7 @@ public class PlayerCombatModule : MonoBehaviour
     private void InitiateParams()
     {
         //enemyLayer = LayerMask.GetMask("Enemy");
-        throwPoint = transform.GetChild(2);
+        //throwPoint = transform.GetChild(2);
     }
 
     public bool IsEnemyInWeaponSight(Enemy enemy)

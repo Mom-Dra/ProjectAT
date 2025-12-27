@@ -23,6 +23,7 @@ public class PlayerMovementModule : MonoBehaviour
     {
         MovePosition(newPos, myStatus.WalkSpeed);
     }
+
     public void PlayerRun(Vector3 newPos)
     {
         MovePosition(newPos, myStatus.RunSpeed);
@@ -60,5 +61,10 @@ public class PlayerMovementModule : MonoBehaviour
         myAgent.isStopped = true;
         //myAgent.ResetPath();
         myAgent.velocity = Vector3.zero;
+    }
+
+    public float GetVelocity()
+    {
+        return myAgent.velocity.magnitude;
     }
 }

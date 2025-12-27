@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class CoverPoint : MonoBehaviour
 {
-    private MeshRenderer meshRenderer;
+    private DecalProjector decalProjector;
 
     private bool isOccupied;
     private GameObject owner;
@@ -12,7 +13,8 @@ public class CoverPoint : MonoBehaviour
 
     private void Awake()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        decalProjector = GetComponent<DecalProjector>();
+        decalProjector.enabled = false;
     }
 
     public bool Reserve(GameObject npc)
@@ -33,12 +35,12 @@ public class CoverPoint : MonoBehaviour
 
     public void Show()
     {
-        meshRenderer.enabled = true;
+        decalProjector.enabled = true;
     }
 
     public void Hide()
     {
-        meshRenderer.enabled = false;
+        decalProjector.enabled = false;
     }
 
     private void OnDrawGizmos()

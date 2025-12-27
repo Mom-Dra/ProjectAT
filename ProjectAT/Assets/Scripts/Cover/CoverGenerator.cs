@@ -35,7 +35,7 @@ public class CoverGenerator : MonoBehaviour
 
         spawnPos.y = transform.position.y;
 
-        GameObject coverPointObject = Instantiate(coverPointPrefab, spawnPos, Quaternion.LookRotation(direction), transform);
+        GameObject coverPointObject = Instantiate(coverPointPrefab, spawnPos, Quaternion.LookRotation(Vector3.down), transform);
         
         if(coverPointObject.TryGetComponent(out CoverPoint coverPoint))
         {

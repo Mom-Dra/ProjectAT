@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private InputReader inputReader;
     [SerializeField] private PlayerMovementModule myMovementModule;
-    [SerializeField] private PlayerAnimationModule myAnimationModule;
+    //[SerializeField] private PlayerAnimationModule myAnimationModule;
+    [SerializeField] private PlayerAnimator myPlayerAnimator;
     [SerializeField] private PlayerCombatModule myCombatModule;
     [SerializeField] private PlayerSkillModule mySkillModule;
     [SerializeField] private EffectModule myEffectModule;
@@ -41,11 +42,12 @@ public class PlayerController : MonoBehaviour
     private void InitiateComponents()
     {
         myMovementModule = GetComponent<PlayerMovementModule>();
-        myAnimationModule = GetComponent<PlayerAnimationModule>();
+        myPlayerAnimator = GetComponent<PlayerAnimator>();
         myEffectModule = GetComponent<EffectModule>();
         myCombatModule = GetComponent<PlayerCombatModule>();
         mySkillModule = GetComponent<PlayerSkillModule>();
     }
+
     private void LinkInputEventsAll()
     {
         //inputReader.InputEvent += HandleInput;
@@ -71,19 +73,22 @@ public class PlayerController : MonoBehaviour
         LastTickTime = Time.time;
         lastSkillInput = SkillNumber.None;
     }
+
     private void OnEnable()
     {
         LinkInputEventsAll();
     }
+
     private void OnDisable()
     {
         UnLinkInputEventsAll();
     }
+
     private void Update()
     {
         if(Time.time - LastTickTime > TickRate)
         {
-            myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
+            //myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
             
             if (mySkillModule.ModuleState == SkillModuleState.Casting)
             {
@@ -97,6 +102,8 @@ public class PlayerController : MonoBehaviour
             }
             LastTickTime = Time.time;
         }
+
+        myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity());
 
         RayToCover();
     }
@@ -215,7 +222,8 @@ public class PlayerController : MonoBehaviour
     {
         if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy) && myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
         {
-            myAnimationModule.SetFiringAnimation(true);
+            myPlayerAnimator.SetShoot(true);
+
             if (myCombatModule.CanFire())
             {
                 myCombatModule.NormalAttackEnemy(SelectedEnemy);
@@ -230,7 +238,7 @@ public class PlayerController : MonoBehaviour
 
     private void CancelNormalAttack()
     {
-        myAnimationModule.SetFiringAnimation(false);
+        myPlayerAnimator.SetShoot(true);
     }
 
     private void RayToCover()
