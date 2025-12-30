@@ -9,8 +9,10 @@ public class PlayerCoverModule : MonoBehaviour
 
     private CoverObject currCoverObject;
     private CoverPoint currCoverPoint;
-    private CoverPoint targetCoverPoint;
+    private CoverPoint reservedCoverPoint;
     private Coroutine moveCoroutine;
+
+    //private CoverPoint reservedCoverPoint;
 
     private void Awake()
     {
@@ -61,30 +63,33 @@ public class PlayerCoverModule : MonoBehaviour
 
     public void CancelCurrentCoverAction()
     {
-        if (moveCoroutine != null)
+        if (moveCoroutine is not null)
         {
             StopCoroutine(moveCoroutine);
 
-            if (targetCoverPoint is not null)
+            if (reservedCoverPoint is not null)
             {
-                targetCoverPoint.SetMoveTarget(false);
-                targetCoverPoint.HideIndicator();
-                targetCoverPoint.HidePulse();
+                reservedCoverPoint.SetMoveTarget(false);
+                reservedCoverPoint.HideIndicator();
+                reservedCoverPoint.HidePulse();
             }
 
             moveCoroutine = null;
-            targetCoverPoint = null;
+            reservedCoverPoint = null;
         }
 
-        animator.SetCrouch(false); // 이동 시작 시 엄폐 애니메이션 해제
+        reservedCoverPoint?.Release();
+        animator.SetCrouch(false);
     }
 
     private IEnumerator MoveToCoverCoroutine(CoverPoint coverPoint)
     {
-        targetCoverPoint = coverPoint;
+        reservedCoverPoint = coverPoint;
         coverPoint.SetMoveTarget(true);
         coverPoint.ShowIndicator();
         coverPoint.ShowPulse();
+
+        reservedCoverPoint.Reserve(gameObject);
 
         movement.PlayerWalk(coverPoint.transform.position);
 
@@ -96,7 +101,6 @@ public class PlayerCoverModule : MonoBehaviour
         coverPoint.HideIndicator();
         coverPoint.HidePulse();
 
-        targetCoverPoint = null;
         moveCoroutine = null;
     }
 
