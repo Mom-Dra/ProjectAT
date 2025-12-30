@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerAnimator myPlayerAnimator;
     [SerializeField] private PlayerCombatModule myCombatModule;
     [SerializeField] private PlayerSkillModule mySkillModule;
+    [SerializeField] private PlayerCoverModule myCoverModule;
     [SerializeField] private EffectModule myEffectModule;
     [SerializeField] private Camera myCamera;
 
@@ -37,8 +38,14 @@ public class PlayerController : MonoBehaviour
     private float LastTickTime = 0f;
     private SkillNumber lastSkillInput;
 
+
+    // 일단 로직 다 짜고
+    // 이 로직이 이 클래스에 있는지 검증하자!
     private CoverObject currCoverObject;
-    private CoverPulse currCoverPulse;
+    private CoverPoint currCoverPoint;
+
+    private Coroutine moveCoroutine;
+    private CoverPoint targetCoverPoint;
 
     #region 초기화
     private void InitiateComponents()
@@ -48,6 +55,7 @@ public class PlayerController : MonoBehaviour
         myEffectModule = GetComponent<EffectModule>();
         myCombatModule = GetComponent<PlayerCombatModule>();
         mySkillModule = GetComponent<PlayerSkillModule>();
+        myCoverModule = GetComponent<PlayerCoverModule>();
     }
 
     private void LinkInputEventsAll()
@@ -103,7 +111,7 @@ public class PlayerController : MonoBehaviour
                 NormalAttackEnemy();
             }
 
-            RayToCover();
+            myCoverModule.HandleCoverRaycast(inputReader.MousePosition);
 
             LastTickTime = Time.time;
         }
@@ -136,6 +144,8 @@ public class PlayerController : MonoBehaviour
         RaycastHit ray;
         if (RaycastAtMouseLocation(out ray))
         {
+            myCoverModule.CancelCurrentCoverAction();
+
             switch (ray.collider.gameObject.layer)
             {
                 case 6: //Ground Layer
@@ -149,7 +159,7 @@ public class PlayerController : MonoBehaviour
                     break;
                 case 11: // CoverPoint Layer
                     if (ray.transform.TryGetComponent(out CoverPoint coverPoint))
-                        PlayerMoveToCover(coverPoint);
+                        myCoverModule.StartMoveToCover(coverPoint);
                     break;
 
                 default:
@@ -248,74 +258,6 @@ public class PlayerController : MonoBehaviour
     private void CancelNormalAttack()
     {
         myPlayerAnimator.SetShoot(true);
-    }
-
-    private void PlayerMoveToCover(CoverPoint coverPoint)
-    {
-        Debug.Log("CoverPoint Layer");
-
-        StartCoroutine(MoveToCoverCoroutine(coverPoint));
-    }
-
-    private void RayToCover()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(inputReader.MousePosition);
-        RaycastHit hit;
-
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
-
-        // 2. 광선 발사 (Cover 레이어만 충돌 체크)
-        if (Physics.Raycast(ray, out hit, 100f, LayerMask.GetMask("CoverPoint")))
-        {
-            CoverObject coverObject = hit.transform.GetComponentInParent<CoverObject>();
-
-            if (coverObject is not null && currCoverObject != coverObject)
-            {
-                currCoverObject = coverObject;
-                coverObject.ShowCoverPoint();
-            }
-
-            if (hit.transform.TryGetComponent(out CoverPulse coverPulse))
-            {
-                if (currCoverPulse is not null && currCoverPulse != coverPulse)
-                {
-                    currCoverPulse.enabled = false;
-                }
-
-                currCoverPulse = coverPulse;
-                coverPulse.enabled = true;
-            }
-        }
-        else
-        {
-            if(currCoverObject is not null)
-            {
-                currCoverObject.HideCoverPoint();
-                currCoverObject = null;
-            }
-
-            if(currCoverPulse is not null)
-            {
-                currCoverPulse.enabled = false;
-                currCoverPulse = null;
-            }
-        }
-    }
-
-    private IEnumerator MoveToCoverCoroutine(CoverPoint coverPoint)
-    {
-        coverPoint.GetComponentInParent<CoverObject>().HideCoverPoint();
-        coverPoint.ShowIndicator();
-
-        PlayerMove(coverPoint.transform.position, false);
-
-        while (!myMovementModule.IsAgentArrived())
-        {
-
-            yield return null;
-        }
-
-        coverPoint.HideIndicator();
     }
 
     #endregion

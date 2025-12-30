@@ -1,4 +1,5 @@
 using MomDra.Weapon;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -93,4 +94,14 @@ public class PlayerAnimator : MonoBehaviour
     {
         SendMessageUpwards("ApplyDamageToTarget", SendMessageOptions.DontRequireReceiver);
     }
+
+    public void PlayCoverAnimation()
+    {
+        
+    }
+
+    //private IEnumerator aaCoroutine()
+    //{
+        
+    //}
 }

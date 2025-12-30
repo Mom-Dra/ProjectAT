@@ -4,10 +4,11 @@ using UnityEngine.Rendering.Universal;
 public class CoverPoint : MonoBehaviour
 {
     private DecalProjector decalProjector;
+    private CoverPulse coverPulse;
 
     private bool isOccupied;
     private GameObject owner;
-    private bool isHighCover;
+    private bool isPlayerMovingTarget;
 
     public bool IsOccupied => isOccupied;
 
@@ -15,6 +16,8 @@ public class CoverPoint : MonoBehaviour
     {
         decalProjector = GetComponent<DecalProjector>();
         decalProjector.enabled = false;
+
+        coverPulse = GetComponent<CoverPulse>();
     }
 
     public bool Reserve(GameObject npc)
@@ -41,7 +44,26 @@ public class CoverPoint : MonoBehaviour
 
     public void HideIndicator()
     {
+        if (isPlayerMovingTarget) return;
+
         decalProjector.enabled = false;
+    }
+
+    public void ShowPulse()
+    {
+        coverPulse.enabled = true;
+    }
+
+    public void HidePulse()
+    {
+        if (isPlayerMovingTarget) return;
+
+        coverPulse.enabled = false;
+    }
+
+    public void SetMoveTarget(bool active)
+    {
+        isPlayerMovingTarget = active;
     }
 
     private void OnDrawGizmos()
