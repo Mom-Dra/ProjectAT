@@ -4,6 +4,7 @@ public enum SkillType : ushort
 {
     Targetting,
     Ground,
+    Self
  }
 
 public abstract class Skill
@@ -15,7 +16,8 @@ public abstract class Skill
     public SkillType SkillType => skillData.SkillType;
     public float SkillCastingTime => skillData.CastingTime;
     public LayerMask TargetLayer => skillData.TargetLayer;
-    public SkillAnimationType AnimationType => skillData.AnimationType;
+
+    public abstract Vector3 TargetPosition {get;} //목표 대상의 위치. 스킬들은 반드시 이 값을 주기적으로 갱신할 수 있도록 해야함.
 
     public Skill(PlayerSkillModule context, SkillData skillData)
     {
@@ -34,9 +36,14 @@ public abstract class Skill
     public abstract void OnUiDeactivate();
 
     public abstract void CancelSkill();
+
+    public abstract void OnChasingStart();
     public abstract void OnChasing();
+
     public abstract bool CanSelectTarget(in RaycastHit hit);
     public abstract bool CanExecute();
-    public abstract void Execute();
 
+    public abstract void OnCastingStart(); //캐스팅을 시작할 때 호출
+    public abstract void Execute();
+    public abstract void OnCastingEnd(); //Execute가 호출된 후 호출
 }

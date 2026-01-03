@@ -12,5 +12,4 @@ public class SkillData : ScriptableObject
     public SkillType SkillType;
     public float CastingTime;
     public LayerMask TargetLayer;
-    public SkillAnimationType AnimationType;
 }

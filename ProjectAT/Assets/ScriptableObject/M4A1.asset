@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29f89cc7c8a6dbd4bb7f7c6b0bfb3029, type: 3}
-  m_Name: AK47
+  m_Name: M4A1
   m_EditorClassIdentifier: 
   shotClip: {fileID: 0}
   reloadClip: {fileID: 0}
-  gunModelPrefab: {fileID: 100010, guid: 7bf057be0eafd5446814890dcdfe2eb1, type: 3}
+  gunModelPrefab: {fileID: 100016, guid: da81144fd2233de46a8b644e6e5c35e4, type: 3}
   damage: 25
   startRemainAmmo: 100
   magCapacity: 25

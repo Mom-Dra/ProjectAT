@@ -12,6 +12,7 @@ namespace MomDra.Weapon
         Rifle,
         Rifle2,
         SubMachineGun,
-        RPG
+        RPG,
+        Grenade
     }
 }

@@ -90,10 +90,9 @@ public class PlayerController : MonoBehaviour
         {
             //myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
             
-            if (mySkillModule.ModuleState == SkillModuleState.Casting)
+            if (mySkillModule.ModuleState != SkillModuleState.Ready)
             {
                 mySkillModule.SkillOnUpdate();
-                return;
             }
             else if (SelectedEnemy != null)
             {

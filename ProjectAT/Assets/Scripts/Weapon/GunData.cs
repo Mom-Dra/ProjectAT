@@ -1,25 +1,26 @@
 using UnityEngine;
+using MomDra.Weapon;
 
 [CreateAssetMenu(fileName = "Gun Data", menuName = "Scriptable Objects/GunData")]
 public class GunData : ScriptableObject
 {
     [SerializeField]
-    private AudioClip shotClip; // ¹ß»ç ¼Ò¸®
+    private AudioClip shotClip; // ï¿½ß»ï¿½ ï¿½Ò¸ï¿½
     [SerializeField]
-    private AudioClip reloadClip; // ÀçÀåÀü ¼Ò¸®
+    private AudioClip reloadClip; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½
 
     [SerializeField]
-    private int damage = 25; // °ø°Ý·Â
+    private int damage = 25; // ï¿½ï¿½ï¿½Ý·ï¿½
 
     [SerializeField]
-    private int startRemainAmmo = 100; // Ã³À½¿¡ ÁÖ¾îÁú ÀüÃ¼ Åº¾à
+    private int startRemainAmmo = 100; // Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ Åºï¿½ï¿½
     [SerializeField]
-    private int magCapacity = 25; // ÅºÃ¢ ¿ë·®
+    private int magCapacity = 25; // ÅºÃ¢ ï¿½ë·®
 
     [SerializeField]
-    private float timeBetFire = 0.12f; // ÃÑ¾Ë ¹ß»ç °£°Ý
+    private float timeBetFire = 0.12f; // ï¿½Ñ¾ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
-    private float reloadTime = 1.8f; // ÀçÀåÀü ¼Ò¿ä ½Ã°£
+    private float reloadTime = 1.8f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¿ï¿½ ï¿½Ã°ï¿½
 
     [SerializeField]
     private float maxDistance = 100f;

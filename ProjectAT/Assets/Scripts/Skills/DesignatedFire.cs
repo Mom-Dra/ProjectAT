@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,17 +7,24 @@ public class DesignatedFire : Skill
 {
     public DesignatedFire(PlayerSkillModule context, SkillData data) : base(context, data){}
     private Enemy targetEnemy;
+    public override Vector3 TargetPosition {get { return targetEnemy? targetEnemy.transform.position : Vector3.zero;}}
+
+    public override void OnChasingStart()
+    {
+        context.MyAnimModule.PlayIdle();
+    }
 
     public override void OnChasing()
     {
-        context.MyMovementModule.PlayerWalk(targetEnemy.transform.position);
+        context.MyMovementModule.PlayerWalk(TargetPosition);
     }
 
     public override bool CanSelectTarget(in RaycastHit hit)
     {
-        if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0 
-        && hit.collider.TryGetComponent<Enemy>(out targetEnemy))
+        if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0 &&
+           hit.collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
+            targetEnemy = enemy;
             return true;
         }
 
@@ -25,8 +33,14 @@ public class DesignatedFire : Skill
 
     public override bool CanExecute()
     {
-        return context.MyCombatModule.IsEnemyInWeaponSight(targetEnemy)
-        && context.MyMovementModule.PlayerRotateToward(targetEnemy.transform.position);
+        return context.MyCombatModule.IsEnemyInWeaponSight(targetEnemy);
+    }
+
+    public override void OnCastingStart()
+    {
+        //Casting Start Logic
+        Debug.Log("Designated Fire Casting Started!");
+        context.MyAnimModule.PlayAiming();
     }
 
     public override void Execute()
@@ -36,10 +50,13 @@ public class DesignatedFire : Skill
 
         if (targetEnemy.TryGetComponent(out IDamageable damageable))
             damageable.TakeDamage(500);
+    }
 
-        //후처리
-        CurrSkillTime = Time.time;
+    public override void OnCastingEnd()
+    {
         targetEnemy = null;
+        CurrSkillTime = Time.time;
+        context.MyAnimModule.PlayIdle();
     }
 
 

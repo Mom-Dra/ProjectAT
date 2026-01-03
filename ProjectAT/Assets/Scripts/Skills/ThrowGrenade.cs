@@ -5,7 +5,9 @@ using UnityEngine;
 public class ThrowGrenade : Skill
 {
     public ThrowGrenade(PlayerSkillModule context, SkillData data) : base(context, data){}
-    public Vector3 targetPosition;
+    private Vector3 targetPosition;
+    public override Vector3 TargetPosition {get {return targetPosition;}}
+
     public override bool CanSelectTarget(in RaycastHit hit)
     {
         targetPosition = hit.point;
@@ -14,18 +16,32 @@ public class ThrowGrenade : Skill
 
     public override bool CanExecute()
     {
-        return context.MyCombatModule.CanThrowSomethingToPosition(targetPosition)
-        && context.MyMovementModule.PlayerRotateToward(targetPosition);
+        return context.MyCombatModule.CanThrowSomethingToPosition(targetPosition);
     }
+
+    public override void OnCastingStart()
+    {
+        //Casting Start Logic
+        Debug.Log("Throw Grenade Casting Started!");
+        context.MyAnimModule.PlayGrenadeThrow();
+    }
+
     public override void Execute()
     {
         context.MyCombatModule.ThrowSomthingToTarget(skillData.SkillEffectPrefab, targetPosition);
-        
-        //후처리
-        CurrSkillTime = Time.time;
-        targetPosition = Vector3.zero;
     }
 
+    public override void OnCastingEnd()
+    {
+        CurrSkillTime = Time.time;
+        targetPosition = Vector3.zero;
+        context.MyAnimModule.PlayIdle();
+    }
+
+    public override void OnChasingStart()
+    {
+        context.MyAnimModule.PlayIdle();
+    }
     public override void OnChasing()
     {
         context.MyMovementModule.PlayerWalk(targetPosition);

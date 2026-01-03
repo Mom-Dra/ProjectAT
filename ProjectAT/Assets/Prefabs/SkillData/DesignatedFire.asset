@@ -17,9 +17,8 @@ MonoBehaviour:
   Damage: 500
   SkillEffectPrefab: {fileID: 0}
   CursorSkin: {fileID: 2800000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
-  SkillType: 1
-  CastingTime: 1.5
+  SkillType: 0
+  CastingTime: 20
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128
-  AnimationType: 1

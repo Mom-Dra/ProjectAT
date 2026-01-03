@@ -31,6 +31,11 @@ public class PlayerMovementModule : MonoBehaviour
 
     private void MovePosition(Vector3 newPos, float speed)
     {
+        if(newPos == Vector3.zero)
+        {
+            Debug.LogWarning("PlayerMovementModule: MovePosition() called with Vector3.zero. Check if the target position is valid.");
+        }
+
         myAgent.isStopped = false;
         myAgent.speed = speed;
         myAgent.SetDestination(newPos);
@@ -42,7 +47,7 @@ public class PlayerMovementModule : MonoBehaviour
         direction.y = 0;
 
         if ((direction - transform.forward).sqrMagnitude < 0.01f)
-        {
+        {  
             myAgent.updateRotation = true;
             return true;
         }

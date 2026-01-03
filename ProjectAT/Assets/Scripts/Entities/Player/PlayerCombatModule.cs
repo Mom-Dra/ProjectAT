@@ -47,7 +47,9 @@ public class PlayerCombatModule : MonoBehaviour
 
     private bool CheckEnemyVisibility(Enemy targetEnemy)
     {
-        Vector3 directionToEnemy = (targetEnemy.transform.position - firePoint.position);
+        Vector3 directionToEnemy = targetEnemy.transform.position - firePoint.position;
+        directionToEnemy.y = 0.0f;
+
         Ray ray = new Ray(firePoint.position, directionToEnemy);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
         {
@@ -61,15 +63,17 @@ public class PlayerCombatModule : MonoBehaviour
 
     private bool CheckPositionVisibility(Vector3 targetPos) //중복되는 부분이 있다. 리펙토링 고려
     {
-        Vector3 directionToPos = (targetPos - firePoint.position);
-        Ray ray = new Ray(firePoint.position, directionToPos);
+        Ray ray = new Ray(throwPoint.position, targetPos - throwPoint.position);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
         {
+            Debug.Log($"Hit Point: {hitInfo.point}, Target Pos: {targetPos}");
             if ((hitInfo.point - targetPos).sqrMagnitude < 0.1f)
             {
+                Debug.Log("Position Visible : true");
                 return true;
             }
         }
+        Debug.Log("Position Visible : false");
         return false;
     }
 
@@ -99,7 +103,7 @@ public class PlayerCombatModule : MonoBehaviour
     }
 
     
-/*    private void OnDrawGizmosSelected()
+   private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, myWeapon.Range);
@@ -107,7 +111,7 @@ public class PlayerCombatModule : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(firePoint.position, firePoint.position + firePoint.forward * myWeapon.Range);
     }
-*/
+
 
     public void NormalAttackEnemy(Enemy target)
     {

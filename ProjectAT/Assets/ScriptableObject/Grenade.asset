@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29f89cc7c8a6dbd4bb7f7c6b0bfb3029, type: 3}
-  m_Name: AK47
+  m_Name: Grenade
   m_EditorClassIdentifier: 
   shotClip: {fileID: 0}
   reloadClip: {fileID: 0}
-  gunModelPrefab: {fileID: 100010, guid: 7bf057be0eafd5446814890dcdfe2eb1, type: 3}
-  damage: 25
-  startRemainAmmo: 100
-  magCapacity: 25
-  timeBetFire: 0.5
-  reloadTime: 1.8
-  maxDistance: 100
+  gunModelPrefab: {fileID: 1698056052845220, guid: 5a2bf64643e1fb0439ea39c0fc9b00ff, type: 3}
+  damage: 500
+  startRemainAmmo: 1
+  magCapacity: 1
+  timeBetFire: 0.1
+  reloadTime: 0.2
+  maxDistance: 25

@@ -11,6 +11,7 @@ public class PlayerAnimator : MonoBehaviour
 {
     private Animator animator;
     private EntityStatus entityStatus;
+    [SerializeField] private WeaponHolder weaponHolder;
 
     private static readonly int IsRunHash = Animator.StringToHash("IsRun");
     private static readonly int IsCrouchHash = Animator.StringToHash("Crouch_b");
@@ -30,6 +31,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         entityStatus = GetComponent<EntityStatus>();
+        //weaponHolder = GetComponentInChildren<WeaponHolder>();
     }
 
     private void OnEnable()
@@ -107,6 +109,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void PlayIdle()
     {
+        weaponHolder.ChangeWeapon(WeaponHolder.WeaponSlot.Primary);
         animator.SetInteger(WeaponTypeHash, 2);
         SetUpperBodyOffset();
     }
@@ -114,27 +117,17 @@ public class PlayerAnimator : MonoBehaviour
     public void PlayGrenadeThrow()
     {
         animator.SetInteger(WeaponTypeHash, 10);
+        weaponHolder.ChangeWeapon(WeaponHolder.WeaponSlot.Grenade);
+    }
+
+    public void PlayAiming()
+    {
+        SetUpperBodyOffset(-0.8f, 0.0f, 0.5f,0.0f); //MEMO : 애니메이션 로테이션 떄문에 하드코딩됨. 따로 정면으로 조준사격 하는 애니메이션 필요함.
     }
 
     public void OnAttackHitFrame()
     {
         SendMessageUpwards("ApplyDamageToTarget", SendMessageOptions.DontRequireReceiver);
-    }
-
-    public void PlaySkillAnimation(SkillAnimationType type)
-    {
-        switch (type)
-        {
-            case SkillAnimationType.ThrowGrenade:
-                PlayGrenadeThrow();
-                break;
-            case SkillAnimationType.TargetAndFire:
-                SetUpperBodyOffset(-0.8f, 0.0f, 0.5f,0.0f); //MEMO : 애니메이션 로테이션 떄문에 하드코딩됨. 따로 정면으로 조준사격 하는 애니메이션 필요함.
-                break;
-            default:
-                Debug.LogError("Undefined Skill Animation Type");
-                break;
-        }
     }
 
     public void CancelAnimation()
