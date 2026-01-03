@@ -80,6 +80,7 @@ public class PlayerCoverModule : MonoBehaviour
         reservedCoverPoint?.Release();
         reservedCoverPoint = null;
         animator.SetCrouch(false);
+
     }
 
     private IEnumerator MoveToCoverCoroutine(CoverPoint coverPoint)
