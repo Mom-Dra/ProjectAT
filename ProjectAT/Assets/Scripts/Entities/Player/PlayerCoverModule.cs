@@ -75,10 +75,10 @@ public class PlayerCoverModule : MonoBehaviour
             }
 
             moveCoroutine = null;
-            reservedCoverPoint = null;
         }
 
         reservedCoverPoint?.Release();
+        reservedCoverPoint = null;
         animator.SetCrouch(false);
     }
 
