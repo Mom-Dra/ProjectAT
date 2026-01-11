@@ -9,13 +9,13 @@ public class EntityStatus: MonoBehaviour, IDamageable
     //References
     [SerializeField] private EntityInitialStatus initStatus;
 
-    public int CurrentHp { get; set; }
-    public int MaxHp { get; private set; }
-    public float WalkSpeed { get; private set; }
-    public float RunSpeed { get; private set; }
-    public bool IsDead { get; private set; }
-    public float ThrowRange {get; private set;}
-    public float MaxViewingDistance {get; private set;}
+    [field: SerializeField] public int CurrentHp { get; set; }
+    [field: SerializeField]public int MaxHp { get; private set; }
+    [field: SerializeField]public float WalkSpeed { get; private set; }
+    [field: SerializeField]public float RunSpeed { get; private set; }
+    [field: SerializeField]public bool IsDead { get; private set; }
+    [field: SerializeField]public float ThrowRange {get; private set;}
+    [field: SerializeField]public float MaxViewingDistance {get; private set;}
 
 
     private void OnEnable()
@@ -50,10 +50,17 @@ public class EntityStatus: MonoBehaviour, IDamageable
         }
     }
 
+    public void Heal(int healAmount)
+    {
+        CurrentHp += healAmount;
+        CurrentHp = Mathf.Min(CurrentHp, MaxHp);
+        Debug.Log($"{transform.name} Healed: {healAmount}, CurrentHp: {CurrentHp}");
+    }
+
     private void Die()
     {
-        // EnemyÀÇ ¸ðµç µ¿ÀÛÀ» ¸ØÃß°í Á×´Â Animation Àç»ý
-        // ¿©±â¼­ ¹Ù·Î EnemyÀÇ Animator¸¦ °¡Á®¿À´À°Ô ³ªÀ»±î?
+        // Enemyï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß°ï¿½ ï¿½×´ï¿½ Animation ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½â¼­ ï¿½Ù·ï¿½ Enemyï¿½ï¿½ Animatorï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
 
         onDeath?.Invoke();
     }

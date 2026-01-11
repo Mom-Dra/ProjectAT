@@ -11,10 +11,11 @@ public enum  SkillModuleState : ushort
 public enum SkillNumber : ushort
 {
     None,
-    DesignatedFire,
+    DesignatedFire, //a
+    UseBandage,     //r
+    Grenade,        //e
     MainSkillOne,
     //MainSkillTwo,
-    //Heal
 }
 
 public class PlayerSkillModule : MonoBehaviour
@@ -24,6 +25,7 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public PlayerMovementModule MyMovementModule { get; private set; }
     [SerializeField] public PlayerCombatModule MyCombatModule { get; private set; }
     [SerializeField] public PlayerAnimator MyAnimModule { get; private set; }
+    [SerializeField] public EntityStatus MyStatus { get; private set; }
 
     [Header("Skills")]
     private Skill[] mySkills = new Skill[5];
@@ -44,13 +46,14 @@ public class PlayerSkillModule : MonoBehaviour
         MyMovementModule = GetComponent<PlayerMovementModule>();
         MyCombatModule = GetComponent<PlayerCombatModule>();
         MyAnimModule = GetComponent<PlayerAnimator>();
+        MyStatus = GetComponent<EntityStatus>();
     }
 
     private void InitiateSkills()
     {
-
         mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, datas[0]);
-        mySkills[(int)SkillNumber.MainSkillOne] = new ThrowGrenade(this, datas[1]);
+        mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, datas[1]);
+        mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, datas[2]);
     }
 
     private void Start()
@@ -80,46 +83,45 @@ public class PlayerSkillModule : MonoBehaviour
 
     private void SkillOnChasing()
     {
-         if (CurrentActivateSkill.CanExecute())
-            {
-                ModuleState = SkillModuleState.Casting;
-                MyMovementModule.PlayerMoveStop();
-                CurrentActivateSkill.OnCastingStart();
-            }
-            else
-            {
-                CurrentActivateSkill.OnChasing();
-            }        
+        if (CurrentActivateSkill.CanExecute())
+        {
+            ModuleState = SkillModuleState.Casting;
+            MyMovementModule.PlayerMoveStop();
+            CurrentActivateSkill.OnCastingStart();
+        }
+        else
+        {
+            CurrentActivateSkill.OnChasing();
+        }        
     }
 
     private void SkillOnCasting()
     {
         if(!CurrentActivateSkill.CanExecute())
-            {
-                ChangeToChasingState();
-                return;
-            }
+        {
+            ChangeToChasingState();
+            return;
+        }
+        
+        //회전체크, 잔류 속도 체크
+        if (CurrentActivateSkill.SkillType != SkillType.Self 
+        && !MyMovementModule.PlayerRotateToward(CurrentActivateSkill.TargetPosition)
+        && MyAnimModule.GetSpeedValue() > 0.005f)
+        {
+            return;
+        }
+        currentSkillTimer += Time.deltaTime;
 
-            currentSkillTimer += Time.deltaTime;
-            
-            //회전체크
-            if (CurrentActivateSkill.SkillType != SkillType.Self 
-            && !MyMovementModule.PlayerRotateToward(CurrentActivateSkill.TargetPosition))
-            {
-                return;
-            }
+        if (currentSkillTimer >= CurrentActivateSkill.SkillCastingTime)
+        {
+            CurrentActivateSkill.Execute();
+            CurrentActivateSkill.OnCastingEnd();
 
-            if(currentSkillTimer >= CurrentActivateSkill.SkillCastingTime)
-            {
-                //스킬 실행
-                CurrentActivateSkill.Execute();
-                CurrentActivateSkill.OnCastingEnd();
-
-                //후처리
-                ModuleState = SkillModuleState.Ready;
-                CurrentActivateSkill = null;
-                currentSkillTimer = 0f;
-            }
+            //후처리
+            ModuleState = SkillModuleState.Ready;
+            CurrentActivateSkill = null;
+            currentSkillTimer = 0f;
+        }
     }
 
     private void ChangeToChasingState()
@@ -193,6 +195,4 @@ public class PlayerSkillModule : MonoBehaviour
             ActivateSelectedSkill();
         }
     }
-
-
 }

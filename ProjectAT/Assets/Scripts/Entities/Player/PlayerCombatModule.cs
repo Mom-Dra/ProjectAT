@@ -36,7 +36,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool IsEnemyInWeaponSight(Enemy enemy)
     {
-        return CheckPositionInRange(enemy.transform.position, myStatus.ThrowRange)
+        return CheckPositionInRange(enemy.transform.position, myWeapon.Range)
             && CheckEnemyVisibility(enemy);
     }
 
@@ -66,14 +66,11 @@ public class PlayerCombatModule : MonoBehaviour
         Ray ray = new Ray(throwPoint.position, targetPos - throwPoint.position);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
         {
-            Debug.Log($"Hit Point: {hitInfo.point}, Target Pos: {targetPos}");
             if ((hitInfo.point - targetPos).sqrMagnitude < 0.1f)
             {
-                Debug.Log("Position Visible : true");
                 return true;
             }
         }
-        Debug.Log("Position Visible : false");
         return false;
     }
 

@@ -65,4 +65,20 @@ public class InputReader : ScriptableObject, IPlayerActions
             SkillInputEvent?.Invoke(SkillNumber.MainSkillOne);
         }
     }
+
+    public void OnGrenadeThrow(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            SkillInputEvent?.Invoke(SkillNumber.Grenade);
+        }    
+    }
+
+    public void OnUseBandage(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            SkillInputEvent?.Invoke(SkillNumber.UseBandage);
+        }    
+    }
 }

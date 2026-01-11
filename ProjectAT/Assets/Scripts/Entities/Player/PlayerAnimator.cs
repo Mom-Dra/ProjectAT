@@ -131,8 +131,18 @@ public class PlayerAnimator : MonoBehaviour
     }
 
     public void CancelAnimation()
-    {
+    {   
         animator.SetTrigger(CancelTriggerHash);
         PlayIdle();
+    }
+    public float GetSpeedValue()
+    {
+        return animator.GetFloat(SpeedHash);
+    }
+
+    public void PlayUseItem()
+    {
+        //붕대 사용하는 애니메이션 재생
+        animator.SetInteger(WeaponTypeHash, 10);
     }
 }

@@ -135,6 +135,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrenadeThrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""1dd91a9c-8ff2-4716-bc75-44d6d4223f31"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseBandage"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a71b838-345d-4c19-b60c-cabfcf859449"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -192,6 +210,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""SkillOne"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9e520be-6f67-4726-85e8-b31d394fbd76"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""GrenadeThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93292c3c-a8fe-4c17-9f01-04329595241f"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""UseBandage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -211,6 +251,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_RightClicked = m_Player.FindAction("RightClicked", throwIfNotFound: true);
         m_Player_DesignatedFire = m_Player.FindAction("DesignatedFire", throwIfNotFound: true);
         m_Player_SkillOne = m_Player.FindAction("SkillOne", throwIfNotFound: true);
+        m_Player_GrenadeThrow = m_Player.FindAction("GrenadeThrow", throwIfNotFound: true);
+        m_Player_UseBandage = m_Player.FindAction("UseBandage", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -296,6 +338,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RightClicked;
     private readonly InputAction m_Player_DesignatedFire;
     private readonly InputAction m_Player_SkillOne;
+    private readonly InputAction m_Player_GrenadeThrow;
+    private readonly InputAction m_Player_UseBandage;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -327,6 +371,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/SkillOne".
         /// </summary>
         public InputAction @SkillOne => m_Wrapper.m_Player_SkillOne;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/GrenadeThrow".
+        /// </summary>
+        public InputAction @GrenadeThrow => m_Wrapper.m_Player_GrenadeThrow;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/UseBandage".
+        /// </summary>
+        public InputAction @UseBandage => m_Wrapper.m_Player_UseBandage;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -368,6 +420,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SkillOne.started += instance.OnSkillOne;
             @SkillOne.performed += instance.OnSkillOne;
             @SkillOne.canceled += instance.OnSkillOne;
+            @GrenadeThrow.started += instance.OnGrenadeThrow;
+            @GrenadeThrow.performed += instance.OnGrenadeThrow;
+            @GrenadeThrow.canceled += instance.OnGrenadeThrow;
+            @UseBandage.started += instance.OnUseBandage;
+            @UseBandage.performed += instance.OnUseBandage;
+            @UseBandage.canceled += instance.OnUseBandage;
         }
 
         /// <summary>
@@ -394,6 +452,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SkillOne.started -= instance.OnSkillOne;
             @SkillOne.performed -= instance.OnSkillOne;
             @SkillOne.canceled -= instance.OnSkillOne;
+            @GrenadeThrow.started -= instance.OnGrenadeThrow;
+            @GrenadeThrow.performed -= instance.OnGrenadeThrow;
+            @GrenadeThrow.canceled -= instance.OnGrenadeThrow;
+            @UseBandage.started -= instance.OnUseBandage;
+            @UseBandage.performed -= instance.OnUseBandage;
+            @UseBandage.canceled -= instance.OnUseBandage;
         }
 
         /// <summary>
@@ -482,5 +546,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSkillOne(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GrenadeThrow" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGrenadeThrow(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "UseBandage" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnUseBandage(InputAction.CallbackContext context);
     }
 }

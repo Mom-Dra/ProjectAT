@@ -6,7 +6,7 @@ public class SkillData : ScriptableObject
     public string Name;
     //public Sprite Icon;
     public float MaxCoolTime;
-    public float Damage;
+    public int Damage;
     public GameObject SkillEffectPrefab;
     public Texture2D CursorSkin;
     public SkillType SkillType;
