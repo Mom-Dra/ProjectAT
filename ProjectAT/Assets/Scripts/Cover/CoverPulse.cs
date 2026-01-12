@@ -3,7 +3,8 @@ using UnityEngine.Rendering.Universal;
 
 public class CoverPulse : MonoBehaviour
 {
-    private DecalProjector decalProjector;
+    private static readonly int Emission = Shader.PropertyToID("_Emission");
+
     [SerializeField]
     private Color baseColor = Color.yellow;
     [SerializeField]
@@ -13,15 +14,12 @@ public class CoverPulse : MonoBehaviour
     [SerializeField]
     private float speed = 4f;
 
+    private DecalProjector decalProjector;
     private Material instanceMaterial;
-    private Color initialColor;
-    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
 
     private void Awake()
     {
         decalProjector = GetComponent<DecalProjector>();
-
-        initialColor = decalProjector.material.GetColor(EmissionColor);
 
         instanceMaterial = new Material(decalProjector.material);
         decalProjector.material = instanceMaterial;
@@ -29,7 +27,7 @@ public class CoverPulse : MonoBehaviour
 
     private void OnDisable()
     {
-        instanceMaterial.SetColor(EmissionColor, initialColor);
+        instanceMaterial.SetFloat(Emission, 0);
     }
 
     private void Update()
@@ -37,7 +35,6 @@ public class CoverPulse : MonoBehaviour
         float t = (Mathf.Sin(Time.time * speed) + 1.0f) / 2.0f;
         float currentIntensity = Mathf.Lerp(minIntensity, maxIntensity, t);
 
-        Color finalColor = baseColor * Mathf.Pow(2, currentIntensity);
-        instanceMaterial.SetColor(EmissionColor, finalColor);
+        instanceMaterial.SetFloat(Emission, currentIntensity);
     }
 }

@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\Entities\Player\PlayerCoverModule.cs" />
     <Compile Include="Assets\Scripts\Weapon\Weapon.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\SearchTargetAction.cs" />
+    <Compile Include="Assets\Scripts\Bush.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeSetting.cs" />
     <Compile Include="Assets\Scripts\Weapon\WeaponType.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\BulletProjector.cs" />
