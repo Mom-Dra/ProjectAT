@@ -176,25 +176,33 @@ public class TargetDetector : MonoBehaviour
         for (int i = 0; i < count; ++i)
         {
             Transform target = colliders[i].transform;
+
+            if (IsTargetStealthed(target)) continue;
+
+            if (!IsInFieldOfView(target)) continue;
+
             Vector3 dir = (target.position - transform.position).normalized;
+            float dst = Vector3.Distance(transform.position, target.position);
 
-            bool isInView = false;
-
-            if (isAttackMode) isInView = true;
-            else isInView = Vector3.Angle(transform.forward, dir) < enemyData.ViewAngle * 0.5f;
-
-            if (isInView)
-            {
-                float dst = Vector3.Distance(transform.position, target.position);
-
-                if (!Physics.Raycast(transform.position, dir, dst, obstacleMask))
-                    visibleTargets.Add((target, dst));
-            }
+            if (!Physics.Raycast(transform.position, dir, dst, obstacleMask))
+                visibleTargets.Add((target, dst));
         }
 
         return visibleTargets.Count > 0;
     }
 
+    private bool IsTargetStealthed(Transform target)
+    {
+        return target.TryGetComponent(out IStealthable stealthable) && stealthable.IsHidden;
+    }
+
+    private bool IsInFieldOfView(Transform target)
+    {
+        if (isAttackMode) return true; // 공격 모드 시 360도 인식
+
+        Vector3 dir = (target.position - transform.position).normalized;
+        return Vector3.Angle(transform.forward, dir) < enemyData.ViewAngle * 0.5f;
+    }
 
     // 제미나이가 작성한 코드
     private void OnDrawGizmosSelected()
