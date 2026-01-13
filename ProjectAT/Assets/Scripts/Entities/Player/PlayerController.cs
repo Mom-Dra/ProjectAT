@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask rightClickInteractableLayer;
 
     [Header("Params")]
     [SerializeField] private float TickRate = 0.2f;
@@ -170,7 +171,7 @@ public class PlayerController : MonoBehaviour
 
     public bool RaycastAtMouseLocation(out RaycastHit ray)
     {
-        return Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f);
+        return Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f, rightClickInteractableLayer);
     }
 
     public bool RaycastAtMouseLocation()

@@ -150,7 +150,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb2061151a2cfd64ea7517cf6851e498, type: 2}
+  - {fileID: 2100000, guid: f8e60fbc31b2cef4bb3bbcc1e53136d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -362,8 +362,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2485e751021e12469cfcf4f04f5e8d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bushMaterial: {fileID: 2100000, guid: 67a17895945998747990dc81d75bf680, type: 2}
-  alpha: 0
+  currentAlpha: 2
+  targetAlpha: 0.9
+  fadeDuration: 0.3
+  meshRenderer: {fileID: 7694849633776302513}
 --- !u!1 &8908570034979520435
 GameObject:
   m_ObjectHideFlags: 0

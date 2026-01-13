@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class Bush : MonoBehaviour
+public class Bush : MonoBehaviour, IFadeable
 {
-    private static readonly int ColorProperty = Shader.PropertyToID("_BaseColor");
+    private static readonly int DitherProperty = Shader.PropertyToID("_DitherStrength");
 
-    [SerializeField, Range(0f, 1f)]
+    private const float OPAQUE = 2;
+
+    [SerializeField, Range(0f, 2f)]
     private float currentAlpha;
     [SerializeField]
     private float targetAlpha = 0.5f;
@@ -16,31 +18,47 @@ public class Bush : MonoBehaviour
     private Renderer meshRenderer;
 
     private MaterialPropertyBlock propertyBlock;
-    private Color initialColor;
 
     private Coroutine fadeCoroutine;
 
     private void Awake()
     {
         propertyBlock = new MaterialPropertyBlock();
-        initialColor = meshRenderer.material.color;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter");
+        if (other.TryGetComponent(out IStealthable stealthable))
+        {
+            stealthable.SetVisibility(true);
+        }
+
+        if (other.TryGetComponent(out IFadeable fadeable))
+        {
+            fadeable.FadeOut();
+        }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            StartFade(targetAlpha);
+            FadeOut();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.TryGetComponent(out IStealthable stealthable))
+        {
+            stealthable.SetVisibility(false);
+        }
+
+        if (other.TryGetComponent(out IFadeable fadeable))
+        {
+            fadeable.FadeIn();
+        }
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            StartFade(1f);
+            FadeIn();
         }
     }
 
@@ -54,10 +72,8 @@ public class Bush : MonoBehaviour
     {
         meshRenderer.GetPropertyBlock(propertyBlock);
 
-        Color color = initialColor;
-        color.a = currentAlpha;
+        propertyBlock.SetFloat(DitherProperty, alpha);
 
-        propertyBlock.SetColor(ColorProperty, color);
         meshRenderer.SetPropertyBlock(propertyBlock);
     }
 
@@ -69,6 +85,7 @@ public class Bush : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
+
             float ratio = elapsed / duration;
 
             currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, ratio);
@@ -77,5 +94,17 @@ public class Bush : MonoBehaviour
 
             yield return null;
         }
+
+        ApplyAlpha(targetAlpha);
+    }
+
+    public void FadeOut()
+    {
+        StartFade(targetAlpha);
+    }
+
+    public void FadeIn()
+    {
+        StartFade(OPAQUE);
     }
 }

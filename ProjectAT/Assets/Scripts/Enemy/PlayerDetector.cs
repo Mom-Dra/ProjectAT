@@ -236,8 +236,6 @@ public class TargetDetector : MonoBehaviour
             Gizmos.DrawLine(transform.position, transform.position + viewAngleB * viewRadius);
         }
 
-        // 4. (보너스) 현재 감지된 타겟으로 선 그리기
-        // 이 기능을 사용하려면 visibleTargets가 클래스 필드(멤버 변수)여야 합니다.
         Gizmos.color = Color.darkKhaki;
         if (visibleTargets is not null)
         {

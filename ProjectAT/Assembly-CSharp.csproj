@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Enemy\SecurityCamera.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerCombatModule.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewNetcode.cs" />
+    <Compile Include="Assets\Scripts\Abstract\IFadeable.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeLauncher.cs" />
     <Compile Include="Assets\Scripts\Skills\DesignatedFire.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerCoverModule.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Flamethrower.cs" />
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponHolder.cs" />
     <Compile Include="Assets\Scripts\Utils\Singleton.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StealthModule.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Enemy\WeaponBase.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerSkillModule.cs" />
