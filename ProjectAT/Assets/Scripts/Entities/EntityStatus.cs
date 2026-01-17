@@ -57,6 +57,13 @@ public class EntityStatus: MonoBehaviour, IDamageable
         Debug.Log($"{transform.name} Healed: {healAmount}, CurrentHp: {CurrentHp}");
     }
 
+    public void Revive(int reviveHp = 1)
+    {
+        IsDead = false;
+        CurrentHp = Mathf.Min(reviveHp, MaxHp);
+        Debug.Log($"{transform.name} Revived! CurrentHp: {CurrentHp}");
+    }
+
     private void Die()
     {
         // Enemy�� ��� ������ ���߰� �״� Animation ���

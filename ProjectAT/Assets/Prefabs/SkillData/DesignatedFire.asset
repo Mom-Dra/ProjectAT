@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DesignatedFire
   m_EditorClassIdentifier: 
   Name: DesignatedFire
-  MaxCoolTime: 10
+  MaxCoolTime: 1
   Damage: 500
   SkillEffectPrefab: {fileID: 0}
   CursorSkin: {fileID: 2800000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}

@@ -133,6 +133,10 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void ActivateTargettingMode(SkillNumber skillIndex)
     {
+        if (!mySkills[(int)skillIndex].CanActivateSkill())
+        {
+            return;
+        }
         //if (!CanActivateSkill(skillIndex) || 1 > (int)skillIndex || (int)skillIndex >= mySkills.Length) return;
         if(lastSkillInput != SkillNumber.None || lastSkillInput == skillIndex)
         {

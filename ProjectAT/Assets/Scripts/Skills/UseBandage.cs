@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class UseBandage : Skill
 {
-    public UseBandage(PlayerSkillModule context, SkillData data) : base(context, data){}
+    public UseBandage(PlayerSkillModule context, SkillData data) : base(context, data)
+    {
+        entityInventory = context.GetComponent<Inventory>();
+        neededItemData = (data as ConsumableSkillData).NeededItemData;
+    }
     private EntityStatus targetStatus;
+    private ItemData neededItemData = null;
+    private Inventory entityInventory = null;
 
     public override Vector3 TargetPosition {get { return targetStatus? targetStatus.transform.position : Vector3.zero;}}
 
@@ -15,7 +21,6 @@ public class UseBandage : Skill
 
     public override bool CanExecute()
     {
-        Debug.Log($"Bandage : {(targetStatus.transform.position - context.transform.position).sqrMagnitude}");
         return (targetStatus.transform.position - context.transform.position).sqrMagnitude <= 3.0f; //하드코딩됨. 플레이어의 hand 반경을 나타내는 값으로 교체 필요
     }
 
@@ -36,7 +41,17 @@ public class UseBandage : Skill
 
     public override void Execute()
     {
-        targetStatus.Heal(skillData.Damage);
+        entityInventory.TryUseItem(neededItemData, 1);
+
+        if(targetStatus.IsDead)
+        {
+            targetStatus.Revive(skillData.Damage/4); //하드코딩됨. 기획에 따라 부활시 체력 어케할지 결정.
+        }
+        else
+        {
+            targetStatus.Heal(skillData.Damage);
+        }
+        Debug.Log("Use Bandage Executed!");
     }
 
     public override void OnCastingEnd()
@@ -61,6 +76,23 @@ public class UseBandage : Skill
     public override void OnChasingStart()
     {
         context.MyAnimModule.PlayIdle();
+    }
+    
+    public override bool CanActivateSkill()
+    {
+        if (!base.CanActivateSkill())
+        {
+            Debug.Log("Cannot Activate Skill. Skill Cooltime Remaining.");
+            return false;
+        }
+        
+        if(entityInventory.GetItemCount(neededItemData) < 1)
+        {
+            Debug.Log("Cannot Activate Skill. Not Enough Items.");
+            return false;
+        }
+        return true;
+        //return base.CanActivateSkill() && entityInventory.GetItemCount(neededItemData) > 0;
     }
 
     public override void OnUiActivate()

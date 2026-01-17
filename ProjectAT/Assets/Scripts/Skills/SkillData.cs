@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Skill Data", menuName = "Skills/Skill Data")]
+[CreateAssetMenu(fileName = "New Skill Data", menuName = "Skills/Basic Skill Data")]
 public class SkillData : ScriptableObject
 {
     public string Name;
@@ -12,4 +12,5 @@ public class SkillData : ScriptableObject
     public SkillType SkillType;
     public float CastingTime;
     public LayerMask TargetLayer;
+
 }
