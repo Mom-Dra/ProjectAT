@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
-        myEffectModule.PlayMoveIndicatorEffect(pos);
+        myEffectModule.PlayIndicator(pos, IndicatorType.MoveIndicator);
     }
     #endregion
 

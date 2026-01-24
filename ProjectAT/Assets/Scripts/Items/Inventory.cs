@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
         // 디버그용 아이템 추가
         foreach(var item in debugItemList)
         {
-            AddItem(item, 3); // 각 아이템 3개씩 추가
+            AddItem(item, 2); // 각 아이템 3개씩 추가
         }
     }
     
