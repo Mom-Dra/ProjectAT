@@ -52,9 +52,6 @@ public class EntityStatus: MonoBehaviour, IDamageable
 
     private void Die()
     {
-        // Enemy의 모든 동작을 멈추고 죽는 Animation 재생
-        // 여기서 바로 Enemy의 Animator를 가져오느게 나을까?
-
         onDeath?.Invoke();
     }
 }

@@ -22,22 +22,6 @@ public class Bullet : MonoBehaviour
         StartCoroutine(BulletDestroyCoroutine(lifetime));
     }
 
-    //public override void OnNetworkDespawn()
-    //{
-    //    //if (IsClient)
-    //    //{
-    //    //    ParticleSystem explosionParticles = ExplosionsPool.s_Singleton.Pool.Get();
-    //    //    explosionParticles.transform.position = transform.position;
-    //    //    explosionParticles.Play();
-    //    //}
-    //}
-
-    //private void Update()
-    //{
-    //    if (IsServer && Vector3.SqrMagnitude(transform.position - destination) < 0.5f)
-    //        DestroyBullet();
-    //}
-
     private void FixedUpdate()
     {
         if (Vector3.SqrMagnitude(rb.position - destination) < 0.7f)
@@ -60,58 +44,4 @@ public class Bullet : MonoBehaviour
     {
         rb.linearVelocity = velocity;
     }
-
-    //[Rpc(SendTo.ClientsAndHost)]
-    //private void ClientSetVelocityRpc(Vector3 velocity)
-    //{
-    //    rb.linearVelocity = velocity;
-    //}
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (!NetworkManager.Singleton.IsServer || !NetworkObject.IsSpawned)
-    //    {
-    //        return;
-    //    }
-
-    //    GameObject collisionObject = collision.gameObject;
-
-    //    if(collisionObject.TryGetComponent(out IDamageable damageable))
-    //    {
-    //        damageable.TakeDamage(damage);
-    //    }
-    //}
-
-    //private void OnCollisionEnter(Collision2D other)
-    //{
-    //    var otherObject = other.gameObject;
-
-    //    if (!NetworkManager.Singleton.IsServer || !NetworkObject.IsSpawned)
-    //    {
-    //        return;
-    //    }
-
-    //    if()
-
-    //    //if (otherObject.TryGetComponent<Asteroid>(out var asteroid))
-    //    //{
-    //    //    asteroid.Explode();
-    //    //    DestroyBullet();
-    //    //    return;
-    //    //}
-
-    //    //if (m_Bounce == false && (otherObject.CompareTag("Wall") || otherObject.CompareTag("Obstacle")))
-    //    //{
-    //    //    DestroyBullet();
-    //    //}
-
-    //    //if (otherObject.TryGetComponent<ShipControl>(out var shipControl))
-    //    //{
-    //    //    if (shipControl != m_Owner)
-    //    //    {
-    //    //        shipControl.TakeDamage(m_Damage);
-    //    //        DestroyBullet();
-    //    //    }
-    //    //}
-    //}
 }

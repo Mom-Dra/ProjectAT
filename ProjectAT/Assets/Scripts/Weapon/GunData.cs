@@ -9,6 +9,12 @@ public class GunData : ScriptableObject
     private AudioClip reloadClip; // 재장전 소리
 
     [SerializeField]
+    private GameObject bulletPrefab;
+
+    [SerializeField]
+    private GameObject hitPrefab;
+
+    [SerializeField]
     private int damage = 25; // 공격력
 
     [SerializeField]
@@ -26,6 +32,9 @@ public class GunData : ScriptableObject
 
     public AudioClip ShotClip => shotClip;
     public AudioClip ReloadClip => reloadClip;
+
+    public GameObject BulletPrefab => bulletPrefab;
+    public GameObject HitPrefab => hitPrefab;
 
     public int Damage => damage;
 

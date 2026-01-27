@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerCombatModule myCombatModule;
     [SerializeField] private PlayerSkillModule mySkillModule;
     [SerializeField] private PlayerCoverModule myCoverModule;
+    [SerializeField] private PlayerInteractionModule myInteractionModule;
     [SerializeField] private EffectModule myEffectModule;
     [SerializeField] private Camera myCamera;
 
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
         myCombatModule = GetComponent<PlayerCombatModule>();
         mySkillModule = GetComponent<PlayerSkillModule>();
         myCoverModule = GetComponent<PlayerCoverModule>();
+        myInteractionModule = GetComponent<PlayerInteractionModule>();
     }
 
     private void LinkInputEventsAll()
@@ -113,6 +115,7 @@ public class PlayerController : MonoBehaviour
             }
 
             myCoverModule.HandleCoverRaycast(inputReader.MousePosition);
+            myInteractionModule.HandleInteractionRaycast(inputReader.MousePosition);
 
             LastTickTime = Time.time;
         }
@@ -147,6 +150,8 @@ public class PlayerController : MonoBehaviour
         {
             myCoverModule.CancelCurrentCoverAction();
 
+            Debug.Log($"NormalRightClickAction: {ray.collider.gameObject.layer}");
+
             switch (ray.collider.gameObject.layer)
             {
                 case 6: //Ground Layer
@@ -161,6 +166,10 @@ public class PlayerController : MonoBehaviour
                 case 11: // CoverPoint Layer
                     if (ray.transform.TryGetComponent(out CoverPoint coverPoint))
                         myCoverModule.StartMoveToCover(coverPoint);
+                    break;
+
+                case 13: // Interactable Layer
+                    myInteractionModule.HandleRightClick();
                     break;
 
                 default:
