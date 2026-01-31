@@ -327,5 +327,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCol: {fileID: 0}
-  duration: 0.1
+  duration: 1
   myVfx: []

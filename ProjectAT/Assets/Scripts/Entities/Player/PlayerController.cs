@@ -1,6 +1,7 @@
 using EPOOutline.Demo;
 using System.Linq;
 using Unity.Burst;
+using Unity.Services.Lobbies.Models;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -34,7 +35,6 @@ public class PlayerController : MonoBehaviour
     [Header("Params")]
     [SerializeField] private float TickRate = 0.2f;
     private float LastTickTime = 0f;
-    private SkillNumber lastSkillInput;
 
     private CoverObject currCoverObject;
 
@@ -71,7 +71,6 @@ public class PlayerController : MonoBehaviour
         InitiateComponents();
         myCamera = Camera.main;
         LastTickTime = Time.time;
-        lastSkillInput = SkillNumber.None;
     }
 
     private void OnEnable()
@@ -89,7 +88,6 @@ public class PlayerController : MonoBehaviour
         if(Time.time - LastTickTime > TickRate)
         {
             //myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
-            
             if (mySkillModule.ModuleState != SkillModuleState.Ready)
             {
                 mySkillModule.SkillOnUpdate();
@@ -101,7 +99,7 @@ public class PlayerController : MonoBehaviour
             }
             LastTickTime = Time.time;
         }
-
+        if(mySkillModule.IsTargetting) mySkillModule.SkillIndicatorUpdate();
         myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity());
 
         RayToCover();
@@ -114,7 +112,7 @@ public class PlayerController : MonoBehaviour
     {
         if(EventSystem.current.IsPointerOverGameObject()) return;
         
-        if(mySkillModule.isTargetting)
+        if(mySkillModule.IsTargetting)
         {
             mySkillModule.CancelTargettingMode();
             return;
@@ -122,7 +120,7 @@ public class PlayerController : MonoBehaviour
         mySkillModule.CancelCurrentSkill();
         CancelNormalAttack();
         CancelEnemySelect();
-
+ 
         NormalRightClickAction();
     }
 
@@ -168,7 +166,7 @@ public class PlayerController : MonoBehaviour
 
     public void HandleLeftClickInput()
     {
-        if(mySkillModule.isTargetting)
+        if(mySkillModule.IsTargetting)
         {
             mySkillModule.SelectTarget();
         }
@@ -184,7 +182,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
-        myEffectModule.PlayIndicator(pos, IndicatorType.MoveIndicator);
+        myEffectModule.ShowIndicator(pos, IndicatorType.MoveIndicator, 1.0f);
     }
     #endregion
 

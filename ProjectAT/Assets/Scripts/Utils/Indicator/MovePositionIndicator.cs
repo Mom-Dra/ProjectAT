@@ -6,7 +6,7 @@ public class MovePositionIndicator : IndicatorBase
 {
     [SerializeField] private readonly string eventName = "Click";
     [SerializeField] private Collider myCol;
-    [SerializeField] private float duration = 0.1f;
+    [SerializeField] private float duration = 1.0f;
     [SerializeField] private VisualEffect[] myVfx;
 
     private Coroutine indicatorCoroutine;
@@ -21,8 +21,9 @@ public class MovePositionIndicator : IndicatorBase
         eventId = Shader.PropertyToID(eventName);
     }
 
-    public override void Show()
-    {     
+    public override void Show(float size = 1f)
+    {  
+        gameObject.SetActive(true);
         if (indicatorCoroutine != null)
         {
             StopCoroutine(indicatorCoroutine);
@@ -45,6 +46,7 @@ public class MovePositionIndicator : IndicatorBase
     public override void Hide()
     {
         myCol.enabled = false;
+        gameObject.SetActive(false);
     }
 
     public override void UpdateIndicator(Vector3 position, Vector3 velocity) { }

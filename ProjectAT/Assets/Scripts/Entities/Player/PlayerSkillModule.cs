@@ -26,6 +26,7 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public PlayerCombatModule MyCombatModule { get; private set; }
     [SerializeField] public PlayerAnimator MyAnimModule { get; private set; }
     [SerializeField] public EntityStatus MyStatus { get; private set; }
+    [SerializeField] public EffectModule MyEffectModule {get; private set;}
 
     [Header("Skills")]
     private Skill[] mySkills = new Skill[5];
@@ -37,8 +38,9 @@ public class PlayerSkillModule : MonoBehaviour
 
     [Header("Params")]
     public SkillModuleState ModuleState { get; private set; }
-    public bool isTargetting {get; private set;}
     private SkillNumber lastSkillInput;
+    public bool IsTargetting {get{ return lastSkillInput != SkillNumber.None; }}
+    public string stateTest;
 
     private void Awake()
     {
@@ -46,6 +48,7 @@ public class PlayerSkillModule : MonoBehaviour
         MyMovementModule = GetComponent<PlayerMovementModule>();
         MyCombatModule = GetComponent<PlayerCombatModule>();
         MyAnimModule = GetComponent<PlayerAnimator>();
+        MyEffectModule = GetComponent<EffectModule>();
         MyStatus = GetComponent<EntityStatus>();
     }
 
@@ -61,23 +64,26 @@ public class PlayerSkillModule : MonoBehaviour
         InitiateSkills();
         ModuleState = SkillModuleState.Ready;
         lastSkillInput = SkillNumber.None;
-        isTargetting = false;
+    }
+    public void Update() //testing 용으로 추가.
+    {
+        stateTest = ModuleState.ToString();
     }
 
     public void SkillOnUpdate() //리펙토링 요소 : 상태패턴으로 정의 가능
     {
-        if (CurrentActivateSkill == null) return;
-        if(ModuleState == SkillModuleState.Ready) return;
-        
-        if(ModuleState == SkillModuleState.Chasing)
+        if(CurrentActivateSkill == null) return;
+
+        switch (ModuleState)
         {
-            SkillOnChasing();
-            return;
-        }
-        
-        if(ModuleState == SkillModuleState.Casting)
-        {
-            SkillOnCasting();
+            case SkillModuleState.Ready:
+                break;
+            case SkillModuleState.Chasing:
+                SkillOnChasing();
+                break;
+            case SkillModuleState.Casting:
+                SkillOnCasting();
+                break;
         }
     }
 
@@ -133,8 +139,9 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void ActivateTargettingMode(SkillNumber skillIndex)
     {
-        if (!mySkills[(int)skillIndex].CanActivateSkill())
+        if (!CanActivateSkill(skillIndex))
         {
+            Debug.Log($"Cannot Activate Skill:{skillIndex}");
             return;
         }
         //if (!CanActivateSkill(skillIndex) || 1 > (int)skillIndex || (int)skillIndex >= mySkills.Length) return;
@@ -146,7 +153,7 @@ public class PlayerSkillModule : MonoBehaviour
         {
             mySkills[(int)skillIndex].OnUiActivate();
             lastSkillInput = skillIndex;
-            isTargetting = true;
+            //IsTargetting = true;
         }
     }
 
@@ -154,7 +161,7 @@ public class PlayerSkillModule : MonoBehaviour
     {
         mySkills[(int)lastSkillInput].OnUiDeactivate();
         lastSkillInput = SkillNumber.None;
-        isTargetting = false;
+        //IsTargetting = false;
     }
 
     public void ActivateSelectedSkill()
@@ -164,6 +171,11 @@ public class PlayerSkillModule : MonoBehaviour
         
         CurrentActivateSkill = mySkills[(int)lastSkillInput];
         CancelTargettingMode();
+    }
+
+    public void SkillIndicatorUpdate()
+    {
+        mySkills[(int)lastSkillInput].OnUiUpdate();
     }
 
     public void CancelCurrentSkill()
