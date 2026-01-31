@@ -107,6 +107,6 @@ public class UseBandage : Skill
 
     public override void OnUiUpdate()
     {
-        throw new System.NotImplementedException();
+        //Do nothing
     }
 }

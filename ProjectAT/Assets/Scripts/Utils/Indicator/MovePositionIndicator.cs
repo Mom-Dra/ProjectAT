@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class FieldIndicator : MonoBehaviour
+public class MovePositionIndicator : IndicatorBase
 {
     [SerializeField] private readonly string eventName = "Click";
     [SerializeField] private Collider myCol;
-    [SerializeField] private float availableTime = 0.1f;
+    [SerializeField] private float duration = 1.0f;
     [SerializeField] private VisualEffect[] myVfx;
 
     private Coroutine indicatorCoroutine;
@@ -17,23 +17,22 @@ public class FieldIndicator : MonoBehaviour
     {
         myCol = GetComponent<Collider>();
         myVfx = GetComponentsInChildren<VisualEffect>();
-        waitForSeconds = new WaitForSeconds(availableTime);
+        waitForSeconds = new WaitForSeconds(duration);
         eventId = Shader.PropertyToID(eventName);
     }
 
-    public void SpawnIndicator(Vector3 newPos)
-    {
+    public override void Show(float size = 1f)
+    {  
+        gameObject.SetActive(true);
         if (indicatorCoroutine != null)
         {
             StopCoroutine(indicatorCoroutine);
         }
-        indicatorCoroutine = StartCoroutine(IndicatorCoroutine(newPos));
+        indicatorCoroutine = StartCoroutine(IndicatorCoroutine());
     }
 
-    private IEnumerator IndicatorCoroutine(Vector3 pos)
+    private IEnumerator IndicatorCoroutine()
     {
-        gameObject.transform.position = pos;
-        myCol.enabled = true;
         for(int i = 0 ; i < myVfx.Length; ++i)
         {
             myVfx[i].SendEvent(eventId);
@@ -41,6 +40,14 @@ public class FieldIndicator : MonoBehaviour
         }
 
         yield return waitForSeconds;
-        myCol.enabled = false;
+        Hide();
     }
+
+    public override void Hide()
+    {
+        myCol.enabled = false;
+        gameObject.SetActive(false);
+    }
+
+    public override void UpdateIndicator(Vector3 position, Vector3 velocity) { }
 }
