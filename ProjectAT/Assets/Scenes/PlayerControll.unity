@@ -1344,12 +1344,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af6fb6d1d2b39d4e8b343882623a174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPatrolEnemy: 0
   enemyData: {fileID: 0}
   alertData: {fileID: 0}
+  isPatrolEnemy: 0
+  patrolWaypoints: []
   targetCheckInterval: 0.2
   alertLevel: 0
   enemyState: 0
+  weaponType: 0
 --- !u!136 &1788255440
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1473,12 +1475,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af6fb6d1d2b39d4e8b343882623a174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPatrolEnemy: 0
   enemyData: {fileID: 0}
   alertData: {fileID: 0}
+  isPatrolEnemy: 0
+  patrolWaypoints: []
   targetCheckInterval: 0.2
   alertLevel: 0
   enemyState: 0
+  weaponType: 0
 --- !u!136 &2122683880
 CapsuleCollider:
   m_ObjectHideFlags: 0

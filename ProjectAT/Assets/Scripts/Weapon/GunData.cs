@@ -1,5 +1,4 @@
 using UnityEngine;
-using MomDra.Weapon;
 
 [CreateAssetMenu(fileName = "Gun Data", menuName = "Scriptable Objects/GunData")]
 public class GunData : ScriptableObject
@@ -8,6 +7,12 @@ public class GunData : ScriptableObject
     private AudioClip shotClip; // �߻� �Ҹ�
     [SerializeField]
     private AudioClip reloadClip; // ������ �Ҹ�
+
+    [SerializeField]
+    private GameObject bulletPrefab;
+
+    [SerializeField]
+    private GameObject hitPrefab;
 
     [SerializeField]
     private int damage = 25; // ���ݷ�
@@ -27,6 +32,9 @@ public class GunData : ScriptableObject
 
     public AudioClip ShotClip => shotClip;
     public AudioClip ReloadClip => reloadClip;
+
+    public GameObject BulletPrefab => bulletPrefab;
+    public GameObject HitPrefab => hitPrefab;
 
     public int Damage => damage;
 

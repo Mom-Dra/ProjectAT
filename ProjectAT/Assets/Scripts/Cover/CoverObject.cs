@@ -13,7 +13,7 @@ public class CoverObject : MonoBehaviour
     {
         foreach(CoverPoint p in coverPoints)
         {
-            p.Show();
+            p.ShowIndicator();
         }
     }
 
@@ -21,7 +21,19 @@ public class CoverObject : MonoBehaviour
     {
         foreach(CoverPoint p in coverPoints)
         {
-            p.Hide();
+            p.HideIndicator();
+        }
+    }
+
+    public void ShowSelectedCoverPoint(CoverPoint coverPoint)
+    {
+        foreach(CoverPoint p in coverPoints)
+        {
+            if (p == coverPoint)
+            {
+                p.ShowIndicator();
+                return;
+            }
         }
     }
 }

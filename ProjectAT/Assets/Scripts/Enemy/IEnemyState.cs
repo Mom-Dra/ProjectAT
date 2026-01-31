@@ -11,6 +11,7 @@ using UnityEditor.Searcher;
 public interface IEnemyState
 {
     static readonly IEnemyState IdleState = new EnemyIdleState();
+    static readonly IEnemyState DeadState = new EnemyDeadState();
     static readonly IEnemyState PatrolState = new EnemyPatrolState();
     static readonly IEnemyState AttackState = new EnemyAttackState();
     static readonly IEnemyState ChaseState = new EnemyChaseState();
@@ -42,6 +43,25 @@ public class EnemyIdleState : IEnemyState
     }
 }
 
+public class EnemyDeadState : IEnemyState
+{
+    public void Enter(Enemy enemy)
+    {
+        enemy.EnableFieldOfView(false);
+        enemy.SetStateText("Dead");
+    }
+
+    public void Update(Enemy enemy)
+    {
+
+    }
+
+    public void Exit(Enemy enemy)
+    {
+
+    }
+}
+
 public class EnemyPatrolState : IEnemyState
 {
     public void Enter(Enemy enemy)
@@ -49,7 +69,7 @@ public class EnemyPatrolState : IEnemyState
         //ColorDebug.RedLog("EnemyPatrolState Enter");
         enemy.EnableFieldOfView(true);
 
-        if (enemy.PatrolWaypoints is null || enemy.PatrolWaypoints.Count == 0)
+        if (enemy.HasWaypoint())
         {
             Debug.LogWarning(enemy.name + "에게 순찰 경로가 없습니다.");
             enemy.ChangeState(IEnemyState.IdleState);

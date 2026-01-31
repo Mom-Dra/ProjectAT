@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1275008916777505477}
   - component: {fileID: 5138893406307501013}
   - component: {fileID: 7826175804715935836}
+  - component: {fileID: 4263154977339640432}
   m_Layer: 11
   m_Name: Cover
   m_TagString: Untagged
@@ -90,4 +91,20 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0.2}
+--- !u!114 &4263154977339640432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141485185188453903}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe38fc63de749942a7005d77007d013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseColor: {r: 0.61635214, g: 0.61635214, b: 0.61635214, a: 1}
+  minIntensity: 2
+  maxIntensity: 4
+  speed: 4

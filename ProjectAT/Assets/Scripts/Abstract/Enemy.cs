@@ -209,6 +209,11 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
         }
     }
 
+    internal bool HasWaypoint()
+    {
+        return patrolWaypoints is not null && patrolWaypoints.Length != 0;
+    }
+
     internal void UpdateTargetLostTimer(float deltaTime)
     {
         timeSinceTargetLost += deltaTime;
@@ -532,6 +537,8 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
         GetComponent<Collider>().enabled = false;
         navMeshAgent.enabled = false;
         enabled = false;
+
+        ChangeState(IEnemyState.DeadState);
     }
 
     [ContextMenu("ChangeStateImmediately")]
