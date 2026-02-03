@@ -1,11 +1,5 @@
 using UnityEngine;
 
-public enum CursorType
-{
-    Default,
-    Crosshair
-}
-
 public class InGameUI : MonoBehaviour
 {
     public static InGameUI Instance { get; private set; }
