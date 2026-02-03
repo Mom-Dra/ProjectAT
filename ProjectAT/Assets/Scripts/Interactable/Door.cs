@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using EPOOutline;
 
 public class Door : MonoBehaviour, IInteractable
 {
@@ -17,19 +18,25 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField]
     private float openTime = 1f;
 
+    private Outlinable outlinable;
+
     private bool isOpen = false;
     private Coroutine runningCoroutine;
 
-    // IInteractable 구현
+    private void Awake()
+    {
+        outlinable = GetComponent<Outlinable>();
+    }
+
     public void OnHoverEnter()
     {
-        // 아까 구현한 아웃라인/커서 로직 (생략 가능하면 생략)
-        // 만약 문짝 각각에 아웃라인이 있다면 여기서 둘 다 켜주면 됩니다.
+        Managers.Instance.CursorManager.SetImage(CursorType.Door);
+        //outlinable.OutlineParameters.Enabled = true;
     }
 
     public void OnHoverExit()
     {
-        // 아웃라인 끄기
+        //outlinable.OutlineParameters.Enabled = false;
     }
 
     public void OnInteract()
@@ -65,7 +72,6 @@ public class Door : MonoBehaviour, IInteractable
             yield return null;
         }
 
-        // 끝난 후 정확한 각도로 보정
         leftDoor.localRotation = endLeftRotation;
         rightDoor.localRotation = endRightRotation;
 
