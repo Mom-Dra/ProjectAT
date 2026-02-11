@@ -32,7 +32,15 @@ public class UIManager : MonoBehaviour
     {
         if (playerHUD != null)
         {
-            playerHUD.UpdateCurrentHealthUI(currentHealth, 100f); //100f는 나중에 maxHealth를 얻으면 그때 갱신
+            playerHUD.SetHealthUI(currentHealth); //100f는 나중에 maxHealth를 얻으면 그때 갱신
+        }
+    }
+
+    public void UpdateAmmoUI(int currentAmmo)
+    {
+        if (playerHUD != null)
+        {
+            playerHUD.SetPlayerAmmoText(currentAmmo);
         }
     }
 

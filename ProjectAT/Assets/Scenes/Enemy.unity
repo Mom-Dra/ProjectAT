@@ -1221,7 +1221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiDocument: {fileID: 0}
-  currentHealth: 100
+  currentHealth: 96.6
   maxHealth: 150
 --- !u!1 &311699243
 GameObject:
