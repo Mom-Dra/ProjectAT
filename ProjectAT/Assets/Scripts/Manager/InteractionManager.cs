@@ -6,7 +6,7 @@ public class InteractionManager
     private Outlinable currOutlinable;
 
     private IInteractable currInteractable;
-    private InteractionUI interactionUI;
+    private HealthUI interactionUI;
     private RectTransform interactionUIRectTransform;
     private Coroutine interactionCoroutine;
 

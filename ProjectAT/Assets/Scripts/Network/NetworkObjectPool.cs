@@ -155,7 +155,7 @@ public class NetworkObjectPool : NetworkBehaviour
 }
 
 [Serializable]
-struct PoolConfigObject
+public struct PoolConfigObject
 {
     public GameObject Prefab;
     public int PrewarmCount;

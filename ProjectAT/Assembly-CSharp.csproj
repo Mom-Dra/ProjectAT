@@ -80,7 +80,9 @@
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverPoint.cs" />
+    <Compile Include="Assets\Scripts\UI\HealthUI.cs" />
     <Compile Include="Assets\Scripts\Weapon\ProjectileGrenade.cs" />
+    <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCamera.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerCombatModule.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewNetcode.cs" />
@@ -105,11 +107,9 @@
     <Compile Include="Assets\Scripts\Cover\CoverPulse.cs" />
     <Compile Include="Assets\Scripts\Manager\CursorManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\TreeTest.cs" />
-    <Compile Include="Assets\Scripts\Utils\FieldIndicator.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewVisuals.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseTargetPositionAction.cs" />
-    <Compile Include="Assets\Scripts\UI\InteractionUI.cs" />
     <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Skills\ConsumableSkillData.cs" />
@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Test2.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
+    <Compile Include="Assets\Scripts\Utils\Indicator\GroundSkillIndicator.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Flamethrower.cs" />
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponHolder.cs" />
     <Compile Include="Assets\Scripts\Manager\InteractionManager.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Enemy\AlertData.cs" />
     <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
+    <Compile Include="Assets\Scripts\Utils\Indicator\IndicatorBase.cs" />
     <Compile Include="Assets\Scripts\Abstract\Enemy.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverObject.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />
@@ -170,6 +172,7 @@
     <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
     <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\SpawnProjectiles.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\RotateToTargetAction.cs" />
+    <Compile Include="Assets\Scripts\Utils\Indicator\MovePositionIndicator.cs" />
     <Compile Include="Assets\Scripts\Utils\EffectModule.cs" />
     <Compile Include="Assets\Scripts\Abstract\IHealable.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerAnimationModule.cs" />

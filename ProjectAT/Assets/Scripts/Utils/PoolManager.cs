@@ -4,51 +4,63 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class PoolManager : Singleton<PoolManager>
+public class PoolManager
 {
-    [SerializeField]
-    private bool collectionCheck = true;
-
-    [SerializeField]
-    private List<PoolConfigObject> PooledPrefabsList;
-
     private HashSet<GameObject> prefabs = new HashSet<GameObject>();
 
     private Dictionary<GameObject, ObjectPool<GameObject>> pooledObjects = new Dictionary<GameObject, ObjectPool<GameObject>>();
 
-    [SerializeField]
     private Transform poolParentTransform;
 
-    protected override void Awake()
+    public PoolManager(PoolConfigObject[] pooledPrefabs, Transform poolParentTransform)
     {
-        base.Awake();
+        this.poolParentTransform = poolParentTransform;
 
-        foreach (PoolConfigObject configObject in PooledPrefabsList)
-        {
-            RegisterPrefabInternal(configObject.Prefab, configObject.PrewarmCount);
-        }
+        foreach (PoolConfigObject pooledPrefab in pooledPrefabs)
+            RegisterPrefabInternal(pooledPrefab.Prefab, pooledPrefab.PrewarmCount);
+    }
+
+    public GameObject GetObject(GameObject prefab)
+    {
+        GameObject returnObject = pooledObjects[prefab].Get();
+        return returnObject;
+    }
+
+    public GameObject GetObject(GameObject prefab, Vector3 position, Quaternion rotation)
+    {
+        GameObject returnObject = GetObject(prefab);
+
+        returnObject.transform.position = position;
+        returnObject.transform.rotation = rotation;
+
+        return returnObject;
+    }
+
+    public void ReturnObject(GameObject gameObject, GameObject prefab)
+    {
+        pooledObjects[prefab].Release(gameObject);
     }
 
     private void RegisterPrefabInternal(GameObject prefab, int prewarmCount)
     {
         GameObject CreateFunc()
         {
-            return Instantiate(prefab, poolParentTransform);
+            return Object.Instantiate(prefab, poolParentTransform);
         }
 
-        void ActionOnGet(GameObject networkObject)
+        void ActionOnGet(GameObject gameObject)
         {
-            networkObject.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
 
-        void ActionOnRelease(GameObject networkObject)
+        void ActionOnRelease(GameObject gameObject)
         {
-            networkObject.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
-        void ActionOnDestroy(GameObject networkObject)
+        void ActionOnDestroy(GameObject gameObject)
         {
-            Destroy(networkObject.gameObject);
+            Object.Destroy(gameObject);
         }
 
         prefabs.Add(prefab);
@@ -64,15 +76,5 @@ public class PoolManager : Singleton<PoolManager>
 
         foreach (GameObject prewarmObject in prewarmObjects)
             pooledObjects[prefab].Release(prewarmObject);
-    }
-
-    public GameObject GetObject(GameObject prefab, Vector3 position, Quaternion rotation)
-    {
-        GameObject returnObject = pooledObjects[prefab].Get();
-
-        returnObject.transform.position = position;
-        returnObject.transform.rotation = rotation;
-
-        return returnObject;
     }
 }

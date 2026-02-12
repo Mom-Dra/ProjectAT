@@ -5,6 +5,7 @@ using UnityEngine;
 public class EntityStatus: MonoBehaviour, IDamageable
 {
     public event Action onDeath;
+    public event Action<float> onHealthChanged;
 
     //References
     [SerializeField] private EntityInitialStatus initStatus;
@@ -40,7 +41,8 @@ public class EntityStatus: MonoBehaviour, IDamageable
         Debug.Log($"{transform.name} TakeDamage: {damage}");
 
         CurrentHp -= damage;
-        
+        onHealthChanged?.Invoke(Mathf.Clamp01(CurrentHp / MaxHp));
+
         if (CurrentHp <= 0)
         {
             IsDead = true;
@@ -54,6 +56,9 @@ public class EntityStatus: MonoBehaviour, IDamageable
     {
         CurrentHp += healAmount;
         CurrentHp = Mathf.Min(CurrentHp, MaxHp);
+
+        onHealthChanged?.Invoke(Mathf.Clamp01(CurrentHp / MaxHp));
+
         Debug.Log($"{transform.name} Healed: {healAmount}, CurrentHp: {CurrentHp}");
     }
 

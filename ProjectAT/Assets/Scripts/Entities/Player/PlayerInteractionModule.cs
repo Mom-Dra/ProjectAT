@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 public class PlayerInteractionModule : MonoBehaviour
 {
     private IInteractable currInteractable;
-    private InteractionUI interactionUI;
+    private HealthUI interactionUI;
     private RectTransform interactionUIRectTransform;
     private Coroutine interactionCoroutine;
 

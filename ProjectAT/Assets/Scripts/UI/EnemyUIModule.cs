@@ -15,15 +15,15 @@ public class EnemyUIModule : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        mainCamera = Camera.main;
+        //mainCamera = Camera.main;
     }
 
     private void LateUpdate()
     {
-        Vector3 worldPosition = transform.position + offset;
-        Vector3 screenPosition = mainCamera.WorldToScreenPoint(worldPosition);
+        //Vector3 worldPosition = transform.position + offset;
+        //Vector3 screenPosition = mainCamera.WorldToScreenPoint(worldPosition);
 
-        uiRect.position = screenPosition;
+        //uiRect.position = screenPosition;
     }
 
     public void OnHoverEnter()
