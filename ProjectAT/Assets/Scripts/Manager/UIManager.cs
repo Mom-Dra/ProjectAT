@@ -6,6 +6,7 @@ public class UIManager
 {
     private GameObject healthUIPrefab;
     private PlayerHUD playerHUD;
+    private PlayerSkillModule playerSkillModule;
 
     public UIManager(GameObject healthUIPrefab, PlayerHUD playerHUD)
     {
@@ -29,17 +30,18 @@ public class UIManager
         Managers.Instance.PoolManager.ReturnObject(healthUI.transform.parent.gameObject, healthUIPrefab);
     }
 
-#region  플레이어 HUD 관련
-    public void SetPlayerHealthUI(float currentHealth, float maxHealth)
+    public void Update()
     {
-        playerHUD.SetHealthUI(currentHealth, maxHealth);
+        for(int i = 0 ; i < playerHUD.SkillInfoCount; i++)
+        {
+            SkillNumber skillNumber = (SkillNumber)i;
+            float cooldownPercent = playerSkillModule.GetSkillCooldownPercent(skillNumber);
+            SetPlayerSkillCooldownUI(skillNumber, cooldownPercent);
+        }
+        //SetPlayerSkillCooldownUI(SkillNumber.DesignatedFire, playerSkillModule.GetSkillCooldownPercent(SkillNumber.DesignatedFire));
     }
 
-    public void SetPlayerAmmoUI(int ammo, int maxAmmo)
-    {
-        playerHUD.SetPlayerAmmoText(ammo, maxAmmo);
-    }
-
+#region  플레이어 HUD - Status
     public void InitPlayerStatusInfo(EntityStatus playerStatus)
     {
         if(playerStatus is null)
@@ -49,8 +51,14 @@ public class UIManager
         }
 
         playerHUD.SetPlayerPortrait(playerStatus.InitStatusRef.PortatitSprite);
-        playerHUD.SetHealthUI(playerStatus.CurrentHp, playerStatus.MaxHp);
+        SetPlayerHealthUI(playerStatus.CurrentHp, playerStatus.MaxHp);
     }
+
+    public void SetPlayerHealthUI(float currentHealth, float maxHealth)
+    {
+        playerHUD.SetPlayerHealthUI(currentHealth, maxHealth);
+    }
+
 
     public void InitPlayerGunInfo(Gun gunData)
     {
@@ -62,9 +70,23 @@ public class UIManager
         playerHUD.SetPlayerWeaponInfo(gunData);
     }
 
-    public void InitPlayerSkillInfo(SkillData[] skillDatas)
+    public void SetPlayerAmmoUI(int ammo, int maxAmmo)
     {
-        playerHUD.SetPlayerSkillInfo(skillDatas);
+        playerHUD.SetPlayerAmmoText(ammo, maxAmmo);
     }
-# endregion
+    #endregion
+
+    #region  플레이어 HUD - Skills
+    public void InitPlayerSkillInfo(PlayerSkillModule playerSkillModule, SkillData[] skillDatas)
+    {
+        this.playerSkillModule = playerSkillModule;
+        playerHUD.SetPlayerSkillInfo(skillDatas);
+        playerHUD.BindPlayerSkillEvent(playerSkillModule);
+    }
+
+    private void SetPlayerSkillCooldownUI(SkillNumber skillNumber, float cooldownPercent)
+    {
+        playerHUD.SetSkillCooldown(skillNumber, cooldownPercent);
+    }
+    # endregion
 }

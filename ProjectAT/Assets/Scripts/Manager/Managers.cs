@@ -24,6 +24,7 @@ public class Managers : Singleton<Managers>
 
     [SerializeField]
     private Transform target;
+    
 
     private InputManager inputManager;
     private CursorManager cursorManager;
@@ -58,5 +59,6 @@ public class Managers : Singleton<Managers>
     private void Update()
     {
         interactionManager.Update();
+        uIManager.Update();
     }
 }

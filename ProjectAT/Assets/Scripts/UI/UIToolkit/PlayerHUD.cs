@@ -14,26 +14,31 @@ public class PlayerHUD : MonoBehaviour
     private Label _playerAmmoText; // 플레이어 탄약 정보 UI 요소
 
     [Header("Skill Info UI Elements")]
-    private VisualElement[] skillInfos = new VisualElement[5];
+    private VisualElement[] skillInfos = new VisualElement[3];
+    private CooldownOverlay[] skillCooldownOverlays = new CooldownOverlay[3]; // 스킬 쿨타임 오버레이 UI 요소 배열
+
+    public int SkillInfoCount => skillInfos.Length;
+
     //private VisualElement _designatedFireSkill; // 플레이어 초상화 UI 요소
     //private VisualElement _bandageSkill; // 플레이어 초상화 UI 요소
 
 
-    [Header("Player Stats")]
-    [SerializeField]private int maxAmmo = 30;
-    [SerializeField]private float maxHealth = 100f;
+    // [Header("Player Stats")]
+    // [SerializeField]private int maxAmmo = 30;
+    // [SerializeField]private float maxHealth = 100f;
 
-    [Header("Test Variables")]
-    // 테스트용 변수 (인스펙터에서 조절해보세요)
-    public float currentHealth = 100f;
-    public int currentAmmo = 30;
-    public Sprite playerPortraitSprite;
+    // [Header("Player Instance Reference")]
+    // [SerializeField] private PlayerController controller;
+
+    // [Header("Test Variables")]
+    // // 테스트용 변수 (인스펙터에서 조절해보세요)
+    // public float currentHealth = 100f;
+    // public int currentAmmo = 30;
+    // public Sprite playerPortraitSprite;
 
     void OnEnable()
     {
         InitUIElements();
-        InitPlayerInfo();
-        InitPlayerSkill();
     }
 
     void Update()
@@ -58,18 +63,10 @@ public class PlayerHUD : MonoBehaviour
         skillInfos[(int)SkillNumber.DesignatedFire] = root.Q<VisualElement>("DesignateFire").Q<VisualElement>("Icon");
         skillInfos[(int)SkillNumber.UseBandage] = root.Q<VisualElement>("UsingBanadge").Q<VisualElement>("Icon");
         skillInfos[(int)SkillNumber.Grenade] = root.Q<VisualElement>("GrenadeThrow").Q<VisualElement>("Icon");
-    }
 
-    private void InitPlayerInfo()
-    {
-        currentHealth = maxHealth;
-        currentAmmo = maxAmmo;
-        SetPlayerPortrait(playerPortraitSprite);
-    }
-
-    private void InitPlayerSkill()
-    {
-        
+        skillCooldownOverlays[(int)SkillNumber.DesignatedFire] = skillInfos[(int)SkillNumber.DesignatedFire].Q<CooldownOverlay>("SkillCoolDown");
+        skillCooldownOverlays[(int)SkillNumber.UseBandage] = skillInfos[(int)SkillNumber.UseBandage].Q<CooldownOverlay>("SkillCoolDown");
+        skillCooldownOverlays[(int)SkillNumber.Grenade] = skillInfos[(int)SkillNumber.Grenade].Q<CooldownOverlay>("SkillCoolDown");
     }
 
     public void SetPlayerPortrait(Sprite portrait)
@@ -81,14 +78,7 @@ public class PlayerHUD : MonoBehaviour
         }
     }
 
-    public void SetHealthUI(float currentHealth, float maxHealth)
-    {
-        this.currentHealth = currentHealth;
-        this.maxHealth = maxHealth;
-        UpdateCurrentHealthUI();
-    }
-
-    public void UpdateCurrentHealthUI()
+    public void SetPlayerHealthUI(float currentHealth, float maxHealth)
     {
         if (_healthBar != null)
         {
@@ -108,9 +98,17 @@ public class PlayerHUD : MonoBehaviour
             Debug.LogError("GunData is null!");
             return;
         }
-            _playerWeaponIcon.style.backgroundImage = new StyleBackground(gun.GunData.GunIcon);
-            _playerAmmoText.text = $"{gun.RemainAmmo} / {gun.MagAmmo}";        
-     
+        _playerWeaponIcon.style.backgroundImage = new StyleBackground(gun.GunData.GunIcon);
+        SetPlayerAmmoText(gun.RemainAmmo, gun.MagAmmo);
+    }
+
+    public void SetPlayerAmmoText(int ammo, int maxAmmo)
+    {
+        // 플레이어 탄약 텍스트 설정 로직 (예: Label 컴포넌트에 텍스트 할당)
+        if (_playerAmmoText != null)
+        {
+            _playerAmmoText.text = $"{ammo} / {maxAmmo}";
+        }
     }
 
     public void SetPlayerSkillInfo(SkillData[] skillDatas)
@@ -136,13 +134,40 @@ public class PlayerHUD : MonoBehaviour
         //skillInfos[(int)SkillNumber.Grenade].style.backgroundImage = new StyleBackground(skillDatas[2].SkillIcon);
     }
 
-    public void SetPlayerAmmoText(int ammo, int maxAmmo)
+    public void BindPlayerSkillEvent(PlayerSkillModule playerSkillModule)
     {
-        // 플레이어 탄약 텍스트 설정 로직 (예: Label 컴포넌트에 텍스트 할당)
-        if (_playerAmmoText != null)
+        for(int i = 0; i < skillInfos.Length; i++)
         {
-            this.maxAmmo = maxAmmo; 
-            _playerAmmoText.text = $"{ammo} / {maxAmmo}";
+            BindSkillClickEvent(skillInfos[i], playerSkillModule, (SkillNumber)i);
+
+        }
+        // BindSkillClickEvent(skillInfos[(int)SkillNumber.DesignatedFire], playerSkillModule, SkillNumber.DesignatedFire);
+        // BindSkillClickEvent(skillInfos[(int)SkillNumber.UseBandage], playerSkillModule, SkillNumber.UseBandage);
+        // BindSkillClickEvent(skillInfos[(int)SkillNumber.Grenade], playerSkillModule, SkillNumber.Grenade);
+    }
+
+    private void BindSkillClickEvent(VisualElement iconElement, PlayerSkillModule playerSkillModule, SkillNumber index)
+    {
+        if(iconElement is not null && playerSkillModule is not null)
+        {
+            iconElement.RegisterCallback<ClickEvent>(evt=>
+            {
+                playerSkillModule.ActivateTargettingMode(index);
+            }
+            );
+        }
+    }
+
+    public void SetSkillCooldown(SkillNumber index, float cooldownProgress)
+    {
+        if (skillCooldownOverlays[(int)index] != null)
+        {
+            Debug.Log($"Setting cooldown for skill {index}: {cooldownProgress}");
+            skillCooldownOverlays[(int)index].FillAmount = 1f - cooldownProgress; // 예시로 투명도를 조절
+        }
+        else
+        {
+            Debug.LogWarning($"Cooldown overlay for skill {index} not found!");
         }
     }
 }

@@ -15,7 +15,7 @@ public enum SkillNumber : short
     DesignatedFire, //a
     UseBandage,     //r
     Grenade,        //e
-    MainSkillOne,
+    //MainSkillOne,
     //MainSkillTwo,
 }
 
@@ -41,7 +41,6 @@ public class PlayerSkillModule : MonoBehaviour
     public SkillModuleState ModuleState { get; private set; }
     private SkillNumber lastSkillInput;
     public bool IsTargetting {get{ return lastSkillInput != SkillNumber.None; }}
-    public string stateTest;
 
     private void Awake()
     {
@@ -60,7 +59,7 @@ public class PlayerSkillModule : MonoBehaviour
         mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, datas[1]);
         mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, datas[2]);
         
-        Managers.Instance.UIManager.InitPlayerSkillInfo(datas);
+        Managers.Instance.UIManager.InitPlayerSkillInfo(this, datas);
     }
 
     private void Start()
@@ -69,10 +68,6 @@ public class PlayerSkillModule : MonoBehaviour
         ModuleState = SkillModuleState.Ready;
         lastSkillInput = SkillNumber.None;
 
-    }
-    public void Update() //testing 용으로 추가.
-    {
-        stateTest = ModuleState.ToString();
     }
 
     public void SkillOnUpdate() //리펙토링 요소 : 상태패턴으로 정의 가능
@@ -215,5 +210,10 @@ public class PlayerSkillModule : MonoBehaviour
             CancelCurrentSkill();
             ActivateSelectedSkill();
         }
+    }
+
+    public float GetSkillCooldownPercent(SkillNumber skillNumber)
+    {
+        return mySkills[(int)skillNumber].GetSkillCooldownPercent();
     }
 }

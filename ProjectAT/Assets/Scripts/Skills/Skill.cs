@@ -13,6 +13,7 @@ public abstract class Skill
     [SerializeField] protected SkillData skillData;
     //protected GameObject target;
     public float CurrSkillTime { get; protected set; }
+
     public SkillType SkillType => skillData.SkillType;
     public float SkillCastingTime => skillData.CastingTime;
     public LayerMask TargetLayer => skillData.TargetLayer;
@@ -25,7 +26,11 @@ public abstract class Skill
         this.skillData = skillData;
         CurrSkillTime = 0f;
     }
-
+    public float GetSkillCooldownPercent()
+    {
+        float cooldownProgress = (Time.time - CurrSkillTime) / skillData.MaxCoolTime;
+        return Mathf.Clamp01(cooldownProgress);
+    }
     public virtual bool CanActivateSkill()
     {
         return skillData.MaxCoolTime <= Time.time - CurrSkillTime;
