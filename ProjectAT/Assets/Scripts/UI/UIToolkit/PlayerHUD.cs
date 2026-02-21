@@ -7,7 +7,10 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField]private UIDocument _uiDocument;
     private RadialProgressBar _healthBar; // ProgressBar 타입 사용
     private VisualElement _playerPortrait; // 플레이어 초상화 UI 요소
-    private Label _playerAmmoText; // 플레이어 이름 UI 요소
+    private Label _playerAmmoText;
+    private VisualElement _designatedFireSkill; // 플레이어 초상화 UI 요소
+    private VisualElement _bandageSkill; // 플레이어 초상화 UI 요소
+
 
     [Header("Player Stats")]
     [SerializeField]private int maxAmmo = 30;
@@ -40,6 +43,8 @@ public class PlayerHUD : MonoBehaviour
         // UI Builder에서 지은 이름 "HealthBar"로 찾기
         _healthBar = root.Q<RadialProgressBar>("HealthBar");
         _playerPortrait = root.Q<VisualElement>("Portrait");
+        _designatedFireSkill = root.Q<VisualElement>("DesignateFire");
+        _bandageSkill = root.Q<VisualElement>("UsingBanadge");
         _playerAmmoText = root.Q<Label>("AmmoText");
     }
 
