@@ -17,7 +17,6 @@ public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey 
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private InputReader inputReader;
     [SerializeField] private PlayerMovementModule myMovementModule;
     //[SerializeField] private PlayerAnimationModule myAnimationModule;
     [SerializeField] private PlayerAnimator myPlayerAnimator;
@@ -64,17 +63,20 @@ public class PlayerController : MonoBehaviour
     private void LinkInputEventsAll()
     {
         //inputReader.InputEvent += HandleInput;
-        inputReader.MouseRightClickEvent += HandlePlayerRightClickInput;
-        inputReader.SkillInputEvent += HandlePlayerSkillInput;
-        inputReader.MouseLeftClickEvent += HandleLeftClickInput;
+        if (Managers.Instance.InputManager is null)
+            Debug.LogError("Managers.Instance.InputManager is null");
+
+        Managers.Instance.InputManager.onSkillInputed += HandlePlayerSkillInput;
+        Managers.Instance.InputManager.onMouseRightClicked += HandlePlayerRightClickInput;
+        Managers.Instance.InputManager.onMouseLeftClicked += HandleLeftClickInput;
     }
 
     private void UnLinkInputEventsAll()
     {
         //inputReader.InputEvent -= HandleInput;
-        inputReader.MouseRightClickEvent -= HandlePlayerRightClickInput;
-        inputReader.SkillInputEvent -= HandlePlayerSkillInput;
-        inputReader.MouseLeftClickEvent -= HandleLeftClickInput;
+        Managers.Instance.InputManager.onSkillInputed -= HandlePlayerSkillInput;
+        Managers.Instance.InputManager.onMouseRightClicked -= HandlePlayerRightClickInput;
+        Managers.Instance.InputManager.onMouseLeftClicked -= HandleLeftClickInput;
     }
     #endregion
 
@@ -86,7 +88,7 @@ public class PlayerController : MonoBehaviour
         LastTickTime = Time.time;
     }
 
-    private void OnEnable()
+    private void Start()
     {
         LinkInputEventsAll();
     }
@@ -111,8 +113,8 @@ public class PlayerController : MonoBehaviour
                 NormalAttackEnemy();
             }
 
-            myCoverModule.HandleCoverRaycast(inputReader.MousePosition);
-            myInteractionModule.HandleInteractionRaycast(inputReader.MousePosition);
+            myCoverModule.HandleCoverRaycast(Managers.Instance.InputManager.MousePosition);
+            myInteractionModule.HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
 
             LastTickTime = Time.time;
         }
@@ -178,13 +180,13 @@ public class PlayerController : MonoBehaviour
 
     public bool RaycastAtMouseLocation(out RaycastHit ray)
     {
-        return Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f, rightClickInteractableLayer);
+        return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
     }
 
     public bool RaycastAtMouseLocation()
     {
         RaycastHit ray;
-        if (Physics.Raycast(myCamera.ScreenPointToRay(inputReader.MousePosition), out ray, 100f, enemyLayer))
+        if (Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, enemyLayer))
         {
             SetTargetEnemy(ray.collider.GetComponent<Enemy>());
             return true;

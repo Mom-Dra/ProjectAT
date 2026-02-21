@@ -85,12 +85,12 @@ public class Gun : Weapon
             Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * Vector3.Distance(muzzleParticleSystem.transform.position, hit.point), Color.red, 2f);
 
             // Hit Particle
-            GameObject hitObject = PoolManager.Instance.GetObject(gunData.HitPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+            GameObject hitObject = Managers.Instance.PoolManager.GetObject(gunData.HitPrefab, hit.point, Quaternion.LookRotation(hit.normal));
             if (hitObject.TryGetComponent(out ParticleSystem hitParticle))
                 hitParticle.Play();
 
             // Bullet ³¯¸®±â
-            GameObject bulletObject = PoolManager.Instance.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
+            GameObject bulletObject = Managers.Instance.PoolManager.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
             if(bulletObject.TryGetComponent(out Bullet bullet))
             {
                 bullet.Initialize(hit.point, 5f);
@@ -103,7 +103,7 @@ public class Gun : Weapon
         }
         else
         {
-            GameObject bulletObject = PoolManager.Instance.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
+            GameObject bulletObject = Managers.Instance.PoolManager.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
             if (bulletObject.TryGetComponent(out Bullet bullet))
             {
                 bullet.Initialize(muzzleParticleSystem.transform.position + muzzleParticleSystem.transform.forward * gunData.MaxDistance, 5f);
