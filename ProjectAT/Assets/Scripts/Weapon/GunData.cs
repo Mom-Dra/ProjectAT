@@ -29,6 +29,8 @@ public class GunData : ScriptableObject
 
     [SerializeField]
     private float maxDistance = 100f;
+    [SerializeField]
+    private Sprite gunIcon;
 
     public AudioClip ShotClip => shotClip;
     public AudioClip ReloadClip => reloadClip;
@@ -45,4 +47,5 @@ public class GunData : ScriptableObject
     public float ReloadTime => reloadTime;
 
     public float MaxDistance => maxDistance;
+    public Sprite GunIcon => gunIcon;
 }

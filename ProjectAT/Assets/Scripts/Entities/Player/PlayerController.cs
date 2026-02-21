@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         LinkInputEventsAll();
+        Managers.Instance.UIManager.InitPlayerStatusInfo(GetComponent<EntityStatus>());
     }
 
     private void OnDisable()

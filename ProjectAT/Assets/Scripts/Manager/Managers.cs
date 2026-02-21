@@ -46,7 +46,7 @@ public class Managers : Singleton<Managers>
         inputManager = new InputManager(inputReader);
         cursorManager = new CursorManager(cursorSettings);
         interactionManager = new InteractionManager(interactionLayerMask);
-        uIManager = new UIManager(healthUIPrefab);
+        uIManager = new UIManager(healthUIPrefab, FindFirstObjectByType<PlayerHUD>());
         poolManager = new PoolManager(pooledPrefabs, poolParentTransform);
 
 

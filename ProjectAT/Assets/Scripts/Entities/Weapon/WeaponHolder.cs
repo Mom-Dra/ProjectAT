@@ -33,6 +33,7 @@ public class WeaponHolder : MonoBehaviour
     public int MaxAmmo { get { return maxAmmo; } }
     public float Range { get { return range; } }
     public float FireRate => nowWeapon.GunData.TimeBetFire;
+    public Gun NowWeapon => nowWeapon;
     #endregion
 
     private void Awake()

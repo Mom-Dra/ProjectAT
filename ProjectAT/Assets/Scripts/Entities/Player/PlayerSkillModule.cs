@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public enum  SkillModuleState : ushort
@@ -8,9 +9,9 @@ public enum  SkillModuleState : ushort
     Casting,
 }
 
-public enum SkillNumber : ushort
+public enum SkillNumber : short
 {
-    None,
+    None = -1,
     DesignatedFire, //a
     UseBandage,     //r
     Grenade,        //e
@@ -29,7 +30,7 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public EffectModule MyEffectModule {get; private set;}
 
     [Header("Skills")]
-    private Skill[] mySkills = new Skill[5];
+    private Skill[] mySkills = new Skill[4]; //갯수 조정 필요
     private Skill CurrentActivateSkill;
     private float currentSkillTimer = 0.0f;
 
@@ -54,9 +55,12 @@ public class PlayerSkillModule : MonoBehaviour
 
     private void InitiateSkills()
     {
-        mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, datas[0]);
+
+        mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, datas[0]); // 팩토리 패턴 필요?
         mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, datas[1]);
         mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, datas[2]);
+        
+        Managers.Instance.UIManager.InitPlayerSkillInfo(datas);
     }
 
     private void Start()
@@ -64,6 +68,7 @@ public class PlayerSkillModule : MonoBehaviour
         InitiateSkills();
         ModuleState = SkillModuleState.Ready;
         lastSkillInput = SkillNumber.None;
+
     }
     public void Update() //testing 용으로 추가.
     {

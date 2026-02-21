@@ -17,7 +17,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
     [field: SerializeField]public bool IsDead { get; private set; }
     [field: SerializeField]public float ThrowRange {get; private set;}
     [field: SerializeField]public float MaxViewingDistance {get; private set;}
-
+    public EntityInitialStatus InitStatusRef => initStatus;
 
     private void OnEnable()
     {

@@ -10,6 +10,7 @@ public class SkillData : ScriptableObject
     public int Damage; // 자기버프형의 경우 버프량으로 사용
     public GameObject SkillEffectPrefab;
     public Texture2D CursorSkin;
+    public Sprite SkillIcon;
     public SkillType SkillType;
     public float CastingTime;
     public LayerMask TargetLayer;

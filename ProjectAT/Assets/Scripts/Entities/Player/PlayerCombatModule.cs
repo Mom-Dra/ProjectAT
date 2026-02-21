@@ -35,6 +35,11 @@ public class PlayerCombatModule : MonoBehaviour
         //throwPoint = transform.GetChild(2);
     }
 
+    private void Start()
+    {
+        Managers.Instance.UIManager.InitPlayerGunInfo(myWeapon.NowWeapon);
+    }
+
     public bool IsEnemyInWeaponSight(Enemy enemy)
     {
         return CheckPositionInRange(enemy.transform.position, myWeapon.Range)

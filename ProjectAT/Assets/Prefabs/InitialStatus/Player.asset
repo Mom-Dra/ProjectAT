@@ -16,3 +16,5 @@ MonoBehaviour:
   walkSpeed: 10
   runSpeed: 15
   throwRange: 15
+  maxViewingDistance: 20
+  portatitSprite: {fileID: 21300000, guid: fa3b6bd2205a7384590518eab9304662, type: 3}
