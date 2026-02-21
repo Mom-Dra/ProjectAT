@@ -146,6 +146,7 @@
     <Compile Include="Assets\Scripts\Enemy\IEnemyState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerInteractionModule.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerDetector.cs" />
+    <Compile Include="Assets\Scripts\Manager\InputManager.cs" />
     <Compile Include="Assets\Scripts\Abstract\IThrowable.cs" />
     <Compile Include="Assets\Scripts\UI\InGameUI.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WanderAction.cs" />

@@ -10,6 +10,8 @@ public class InteractionManager
     private RectTransform interactionUIRectTransform;
     private Coroutine interactionCoroutine;
 
+    private LayerMask interactionLayerMask;
+
     [SerializeField]
     private float interactTime = 3f;
     public float InteractTime { get => interactTime; set => interactTime = value; }
@@ -18,10 +20,14 @@ public class InteractionManager
 
     public bool IsInteracting => interactionCoroutine != null;
 
+    public InteractionManager(LayerMask interactionLayerMask)
+    {
+        this.interactionLayerMask = interactionLayerMask;
+    }
+
     public void Update()
     {
-        // 마우스 입력 어디서 받아옴?
-        HandleInteractionRaycast(Input.mousePosition);
+        HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
     }
 
     private void HandleInteractionRaycast(Vector2 mousePos)
@@ -30,7 +36,7 @@ public class InteractionManager
 
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, LayerMask.GetMask("Interactable")))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, interactionLayerMask))
         {
             Outlinable outlinable = hit.transform.GetComponentInParent<Outlinable>();
 

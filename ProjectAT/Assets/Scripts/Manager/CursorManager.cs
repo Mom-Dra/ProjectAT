@@ -14,7 +14,8 @@ public class CursorManager
 
     public CursorManager(CursorSettings cursorSettings)
     {
-        Debug.Assert(cursorSettings is not null, "CursorSettings is null");
+        if (cursorSettings is null)
+            Debug.LogError("cursorSettings is null");
 
         this.cursorSettings = cursorSettings;
     }

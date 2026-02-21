@@ -7,6 +7,9 @@ public class UIManager
 
     public UIManager(GameObject healthUIPrefab)
     {
+        if (healthUIPrefab is null)
+            Debug.LogError("healthUIPrefab is null");
+
         this.healthUIPrefab = healthUIPrefab;
     }
 

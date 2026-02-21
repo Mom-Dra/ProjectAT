@@ -5,6 +5,12 @@ using UnityEngine;
 public class Managers : Singleton<Managers>
 {
     [SerializeField]
+    private InputReader inputReader;
+
+    [SerializeField]
+    private LayerMask interactionLayerMask;
+
+    [SerializeField]
     private CursorSettings cursorSettings;
 
     [SerializeField]
@@ -19,22 +25,27 @@ public class Managers : Singleton<Managers>
     [SerializeField]
     private Transform target;
 
+    private InputManager inputManager;
     private CursorManager cursorManager;
-    private InteractionManager interactionManager = new InteractionManager();
+    private InteractionManager interactionManager;
     private UIManager uIManager;
     private PoolManager poolManager;
 
+    public InputManager InputManager => inputManager;
     public CursorManager CursorManager => cursorManager;
     public InteractionManager InteractionManager => interactionManager;
     public UIManager UIManager => uIManager;
     public PoolManager PoolManager => poolManager;
 
-    [SerializeField]
     protected override void Awake()
     {
         base.Awake();
 
+        Debug.LogError("InputManager");
+
+        inputManager = new InputManager(inputReader);
         cursorManager = new CursorManager(cursorSettings);
+        interactionManager = new InteractionManager(interactionLayerMask);
         uIManager = new UIManager(healthUIPrefab);
         poolManager = new PoolManager(pooledPrefabs, poolParentTransform);
 
