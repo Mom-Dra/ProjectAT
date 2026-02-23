@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -139,7 +140,6 @@ public class PlayerHUD : MonoBehaviour
         for(int i = 0; i < skillInfos.Length; i++)
         {
             BindSkillClickEvent(skillInfos[i], playerSkillModule, (SkillNumber)i);
-
         }
         // BindSkillClickEvent(skillInfos[(int)SkillNumber.DesignatedFire], playerSkillModule, SkillNumber.DesignatedFire);
         // BindSkillClickEvent(skillInfos[(int)SkillNumber.UseBandage], playerSkillModule, SkillNumber.UseBandage);
@@ -158,16 +158,28 @@ public class PlayerHUD : MonoBehaviour
         }
     }
 
-    public void SetSkillCooldown(SkillNumber index, float cooldownProgress)
+    public void StartSkillCooldown(SkillNumber index, float cooldownDuration)
+    {
+        StartCoroutine(CooldownCoroutine(index, cooldownDuration));
+    }
+
+    private IEnumerator CooldownCoroutine(SkillNumber index, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            SetSkillCooldown(index, elapsed / duration);
+            yield return null;
+        }
+        SetSkillCooldown(index, 1f); // 쿨다운 완료
+    }
+
+    private void SetSkillCooldown(SkillNumber index, float cooldownProgress)
     {
         if (skillCooldownOverlays[(int)index] != null)
         {
-            Debug.Log($"Setting cooldown for skill {index}: {cooldownProgress}");
             skillCooldownOverlays[(int)index].FillAmount = 1f - cooldownProgress; // 예시로 투명도를 조절
-        }
-        else
-        {
-            Debug.LogWarning($"Cooldown overlay for skill {index} not found!");
         }
     }
 }

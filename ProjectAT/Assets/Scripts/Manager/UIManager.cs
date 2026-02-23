@@ -30,17 +30,6 @@ public class UIManager
         Managers.Instance.PoolManager.ReturnObject(healthUI.transform.parent.gameObject, healthUIPrefab);
     }
 
-    public void Update()
-    {
-        for(int i = 0 ; i < playerHUD.SkillInfoCount; i++)
-        {
-            SkillNumber skillNumber = (SkillNumber)i;
-            float cooldownPercent = playerSkillModule.GetSkillCooldownPercent(skillNumber);
-            SetPlayerSkillCooldownUI(skillNumber, cooldownPercent);
-        }
-        //SetPlayerSkillCooldownUI(SkillNumber.DesignatedFire, playerSkillModule.GetSkillCooldownPercent(SkillNumber.DesignatedFire));
-    }
-
 #region  플레이어 HUD - Status
     public void InitPlayerStatusInfo(EntityStatus playerStatus)
     {
@@ -82,11 +71,12 @@ public class UIManager
         this.playerSkillModule = playerSkillModule;
         playerHUD.SetPlayerSkillInfo(skillDatas);
         playerHUD.BindPlayerSkillEvent(playerSkillModule);
+        playerSkillModule.OnSkillCooldownStart += StartSkillCooldown;
     }
 
-    private void SetPlayerSkillCooldownUI(SkillNumber skillNumber, float cooldownPercent)
+    private void StartSkillCooldown(SkillNumber skillNumber, float cooldownPercent)
     {
-        playerHUD.SetSkillCooldown(skillNumber, cooldownPercent);
+        playerHUD.StartSkillCooldown(skillNumber, cooldownPercent);
     }
     # endregion
 }

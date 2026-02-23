@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -31,7 +32,8 @@ public class PlayerSkillModule : MonoBehaviour
 
     [Header("Skills")]
     private Skill[] mySkills = new Skill[4]; //갯수 조정 필요
-    private Skill CurrentActivateSkill;
+    //private Skill CurrentActivateSkill;
+    private SkillNumber currentActivateSkillNumber;
     private float currentSkillTimer = 0.0f;
 
     [Header("SkillDatas")]
@@ -41,6 +43,8 @@ public class PlayerSkillModule : MonoBehaviour
     public SkillModuleState ModuleState { get; private set; }
     private SkillNumber lastSkillInput;
     public bool IsTargetting {get{ return lastSkillInput != SkillNumber.None; }}
+
+    public event Action<SkillNumber,float> OnSkillCooldownStart;
 
     private void Awake()
     {
@@ -60,6 +64,11 @@ public class PlayerSkillModule : MonoBehaviour
         mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, datas[2]);
         
         Managers.Instance.UIManager.InitPlayerSkillInfo(this, datas);
+
+        for(int i = 0 ; i < mySkills.Length -1 ; i++)
+        {
+            OnSkillCooldownStart?.Invoke((SkillNumber)i, mySkills[i].SkillMaxCoolTime);
+        }
     }
 
     private void Start()
@@ -72,7 +81,7 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void SkillOnUpdate() //리펙토링 요소 : 상태패턴으로 정의 가능
     {
-        if(CurrentActivateSkill == null) return;
+        if(currentActivateSkillNumber == SkillNumber.None) return;
 
         switch (ModuleState)
         {
@@ -89,43 +98,44 @@ public class PlayerSkillModule : MonoBehaviour
 
     private void SkillOnChasing()
     {
-        if (CurrentActivateSkill.CanExecute())
+        if (mySkills[(int)currentActivateSkillNumber].CanExecute())
         {
             ModuleState = SkillModuleState.Casting;
             MyMovementModule.PlayerMoveStop();
-            CurrentActivateSkill.OnCastingStart();
+            mySkills[(int)currentActivateSkillNumber].OnCastingStart();
         }
         else
         {
-            CurrentActivateSkill.OnChasing();
+            mySkills[(int)currentActivateSkillNumber].OnChasing();
         }        
     }
 
     private void SkillOnCasting()
     {
-        if(!CurrentActivateSkill.CanExecute())
+        if(!mySkills[(int)currentActivateSkillNumber].CanExecute())
         {
             ChangeToChasingState();
             return;
         }
         
         //회전체크, 잔류 속도 체크
-        if (CurrentActivateSkill.SkillType != SkillType.Self 
-        && !MyMovementModule.PlayerRotateToward(CurrentActivateSkill.TargetPosition)
+        if (mySkills[(int)currentActivateSkillNumber].SkillType != SkillType.Self 
+        && !MyMovementModule.PlayerRotateToward(mySkills[(int)currentActivateSkillNumber].TargetPosition)
         && MyAnimModule.GetSpeedValue() > 0.005f)
         {
             return;
         }
         currentSkillTimer += Time.deltaTime;
 
-        if (currentSkillTimer >= CurrentActivateSkill.SkillCastingTime)
+        if (currentSkillTimer >= mySkills[(int)currentActivateSkillNumber].SkillCastingTime)
         {
-            CurrentActivateSkill.Execute();
-            CurrentActivateSkill.OnCastingEnd();
+            mySkills[(int)currentActivateSkillNumber].Execute();
+            mySkills[(int)currentActivateSkillNumber].OnCastingEnd();
 
             //후처리
+            OnSkillCooldownStart?.Invoke(currentActivateSkillNumber, mySkills[(int)currentActivateSkillNumber].SkillMaxCoolTime);
             ModuleState = SkillModuleState.Ready;
-            CurrentActivateSkill = null;
+            currentActivateSkillNumber = SkillNumber.None;
             currentSkillTimer = 0f;
         }
     }
@@ -133,7 +143,7 @@ public class PlayerSkillModule : MonoBehaviour
     private void ChangeToChasingState()
     {
         ModuleState = SkillModuleState.Chasing;
-        CurrentActivateSkill.OnChasingStart();
+        mySkills[(int)currentActivateSkillNumber].OnChasingStart();
         currentSkillTimer = 0f;
     }
 
@@ -169,7 +179,7 @@ public class PlayerSkillModule : MonoBehaviour
         //ModuleState = SkillModuleState.Casting;
         ModuleState = SkillModuleState.Chasing;
         
-        CurrentActivateSkill = mySkills[(int)lastSkillInput];
+        currentActivateSkillNumber = lastSkillInput;
         CancelTargettingMode();
     }
 
@@ -182,8 +192,8 @@ public class PlayerSkillModule : MonoBehaviour
     {
         if(ModuleState == SkillModuleState.Ready) return;
 
-        CurrentActivateSkill.CancelSkill();
-        CurrentActivateSkill = null;
+        mySkills[(int)currentActivateSkillNumber].CancelSkill();
+        currentActivateSkillNumber = SkillNumber.None;
 
         currentSkillTimer = 0f;
         
@@ -210,10 +220,5 @@ public class PlayerSkillModule : MonoBehaviour
             CancelCurrentSkill();
             ActivateSelectedSkill();
         }
-    }
-
-    public float GetSkillCooldownPercent(SkillNumber skillNumber)
-    {
-        return mySkills[(int)skillNumber].GetSkillCooldownPercent();
     }
 }

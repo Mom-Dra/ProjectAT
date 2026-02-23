@@ -17,6 +17,7 @@ public abstract class Skill
     public SkillType SkillType => skillData.SkillType;
     public float SkillCastingTime => skillData.CastingTime;
     public LayerMask TargetLayer => skillData.TargetLayer;
+    public float SkillMaxCoolTime => skillData.MaxCoolTime;
 
     public abstract Vector3 TargetPosition {get;} //목표 대상의 위치. 스킬들은 반드시 이 값을 주기적으로 갱신할 수 있도록 해야함.
 
@@ -25,11 +26,6 @@ public abstract class Skill
         this.context = context;
         this.skillData = skillData;
         CurrSkillTime = 0f;
-    }
-    public float GetSkillCooldownPercent()
-    {
-        float cooldownProgress = (Time.time - CurrSkillTime) / skillData.MaxCoolTime;
-        return Mathf.Clamp01(cooldownProgress);
     }
     public virtual bool CanActivateSkill()
     {

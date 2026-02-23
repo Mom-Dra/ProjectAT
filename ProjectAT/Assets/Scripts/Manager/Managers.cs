@@ -59,6 +59,5 @@ public class Managers : Singleton<Managers>
     private void Update()
     {
         interactionManager.Update();
-        uIManager.Update();
     }
 }
