@@ -13,16 +13,18 @@ public class UIManager
         this.healthUIPrefab = healthUIPrefab;
     }
 
-    public void ShowHealthUI(EntityStatus entityStatus)
+    public HealthUI ShowHealthUI(Transform targetAnchor, EntityStatus entityStatus)
     {
         GameObject healthUIObject = Managers.Instance.PoolManager.GetObject(healthUIPrefab);
         HealthUI healthUI = healthUIObject.GetComponentInChildren<HealthUI>();
-        healthUI.Bind(entityStatus.transform, entityStatus);
+        healthUI.Bind(targetAnchor, entityStatus);
+
+        return healthUI;
     }
 
     public void HideHealthUI(HealthUI healthUI)
     {
         healthUI.UnBind();
-        Managers.Instance.PoolManager.ReturnObject(healthUI.transform.parent.gameObject, healthUIPrefab);
+        Managers.Instance.PoolManager.ReturnObject(healthUI.transform.gameObject, healthUIPrefab);
     }
 }

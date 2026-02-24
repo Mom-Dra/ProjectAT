@@ -4,17 +4,20 @@ using UnityEngine.UI;
 public class HealthUI : MonoBehaviour
 {
     private Image healthImage;
-    private Transform target;
+    private Transform targetAnchor;
     private EntityStatus entityStatus;
+
+    [SerializeField]
+    private Vector3 offset;
 
     private void Awake()
     {
         healthImage = GetComponent<Image>();
     }
 
-    public void Bind(Transform target, EntityStatus entityStatus)
+    public void Bind(Transform targetAnchor, EntityStatus entityStatus)
     {
-        this.target = target;
+        this.targetAnchor = targetAnchor;
         this.entityStatus = entityStatus;
 
         entityStatus.onHealthChanged += HealthChanged;
@@ -26,7 +29,7 @@ public class HealthUI : MonoBehaviour
         entityStatus.onHealthChanged -= HealthChanged;
         entityStatus.onDeath -= TargetDied;
 
-        target = null;
+        targetAnchor = null;
         entityStatus = null;
     }
 
@@ -43,14 +46,22 @@ public class HealthUI : MonoBehaviour
 
     private void Update()
     {
+    }
+
+    private void LateUpdate()
+    {
         FollowTarget();
     }
 
     private void FollowTarget()
     {
-        if (target is null) return;
+        if (targetAnchor is null) return;
 
-        healthImage.transform.position = target.position;
+        //healthImage.transform.position = target.position + offset;
+
+        Debug.Log("FollowTarget");
+        Debug.Log($"{Camera.main.WorldToScreenPoint(targetAnchor.position)}");
+        transform.position = Camera.main.WorldToScreenPoint(targetAnchor.position);
     }
 
     private void HealthChanged(float ratio)

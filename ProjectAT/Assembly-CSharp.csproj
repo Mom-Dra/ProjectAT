@@ -178,6 +178,7 @@
     <Compile Include="Assets\Scripts\Abstract\IHealable.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerAnimationModule.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Health.cs" />
+    <Compile Include="Assets\Scripts\UI\UIAnchor.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\NextPrefab.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\AutoDestroy.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />

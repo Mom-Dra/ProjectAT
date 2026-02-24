@@ -4,6 +4,8 @@ using UnityEngine;
 public class InteractionManager
 {
     private Outlinable currOutlinable;
+    private EntityStatus currEntityStatus;
+    private HealthUI currHealthUI;
 
     private IInteractable currInteractable;
     private HealthUI interactionUI;
@@ -63,10 +65,26 @@ public class InteractionManager
                     currInteractable.OnHoverEnter();
                 }
             }
+
+            EntityStatus entityStatus = hit.transform.GetComponentInParent<EntityStatus>();
+            UIAnchor uIAnchor = hit.transform.GetComponentInParent<UIAnchor>();
+
+            if(entityStatus is not null)
+            {
+                if(currEntityStatus != entityStatus)
+                {
+                    ClearEntityStatus();
+                    currEntityStatus = entityStatus;
+
+                    currHealthUI = Managers.Instance.UIManager.ShowHealthUI(uIAnchor.TargetAnchor, entityStatus);
+                }
+            }
         }
         else
         {
+            ClearOutline();
             ClearTarget();
+            ClearEntityStatus();
         }
     }
 
@@ -92,5 +110,15 @@ public class InteractionManager
 
         currInteractable.OnHoverExit();
         currInteractable = null;
+    }
+
+    private void ClearEntityStatus()
+    {
+        if (currEntityStatus is null) return;
+
+        Managers.Instance.UIManager.HideHealthUI(currHealthUI);
+
+        currEntityStatus = null;
+        currHealthUI = null;
     }
 }
