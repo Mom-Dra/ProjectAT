@@ -72,11 +72,17 @@ public class UIManager
         playerHUD.SetPlayerSkillInfo(skillDatas);
         playerHUD.BindPlayerSkillEvent(playerSkillModule);
         playerSkillModule.OnSkillCooldownStart += StartSkillCooldown;
+        playerSkillModule.OnSkillItemCountChange += SetSkillItemCount;
     }
 
     private void StartSkillCooldown(SkillNumber skillNumber, float cooldownPercent)
     {
         playerHUD.StartSkillCooldown(skillNumber, cooldownPercent);
+    }
+
+    public void SetSkillItemCount(SkillNumber skillNumber, int itemCount)
+    {
+        playerHUD.SetSkillItemText(skillNumber, itemCount);
     }
     # endregion
 }

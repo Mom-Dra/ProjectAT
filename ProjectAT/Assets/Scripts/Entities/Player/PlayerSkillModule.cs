@@ -13,11 +13,12 @@ public enum  SkillModuleState : ushort
 public enum SkillNumber : short
 {
     None = -1,
-    DesignatedFire, //a
-    UseBandage,     //r
+
+    MainSkillOne,   //q
+    MainSkillTwo,   //w
     Grenade,        //e
-    //MainSkillOne,
-    //MainSkillTwo,
+    UseBandage,     //r
+    DesignatedFire, //a
 }
 
 public class PlayerSkillModule : MonoBehaviour
@@ -29,9 +30,10 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public PlayerAnimator MyAnimModule { get; private set; }
     [SerializeField] public EntityStatus MyStatus { get; private set; }
     [SerializeField] public EffectModule MyEffectModule {get; private set;}
+    [SerializeField] public Inventory MyInventory {get; private set;}
 
     [Header("Skills")]
-    private Skill[] mySkills = new Skill[4]; //갯수 조정 필요
+    private Skill[] mySkills = new Skill[5]; //갯수 조정 필요
     //private Skill CurrentActivateSkill;
     private SkillNumber currentActivateSkillNumber;
     private float currentSkillTimer = 0.0f;
@@ -45,6 +47,7 @@ public class PlayerSkillModule : MonoBehaviour
     public bool IsTargetting {get{ return lastSkillInput != SkillNumber.None; }}
 
     public event Action<SkillNumber,float> OnSkillCooldownStart;
+    public event Action<SkillNumber, int> OnSkillItemCountChange;
 
     private void Awake()
     {
@@ -54,20 +57,26 @@ public class PlayerSkillModule : MonoBehaviour
         MyAnimModule = GetComponent<PlayerAnimator>();
         MyEffectModule = GetComponent<EffectModule>();
         MyStatus = GetComponent<EntityStatus>();
+        MyInventory = GetComponent<Inventory>();
     }
 
     private void InitiateSkills()
     {
-
-        mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, datas[0]); // 팩토리 패턴 필요?
-        mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, datas[1]);
-        mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, datas[2]);
+        mySkills[(int)SkillNumber.MainSkillOne] = new DummySkill(this, datas[(int)SkillNumber.MainSkillOne]); // 팩토리 패턴 필요?
+        mySkills[(int)SkillNumber.MainSkillTwo] = new DummySkill(this, datas[(int)SkillNumber.MainSkillTwo]);
+        mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, datas[(int)SkillNumber.Grenade]);
+        mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, datas[(int)SkillNumber.UseBandage]);
+        mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, datas[(int)SkillNumber.DesignatedFire]);
         
         Managers.Instance.UIManager.InitPlayerSkillInfo(this, datas);
 
-        for(int i = 0 ; i < mySkills.Length -1 ; i++)
+        for(int i = 0 ; i < mySkills.Length ; i++)
         {
             OnSkillCooldownStart?.Invoke((SkillNumber)i, mySkills[i].SkillMaxCoolTime);
+            if(mySkills[i] is ConsumableSkill consumableSkill)
+            {
+                OnSkillItemCountChange?.Invoke((SkillNumber)i, MyInventory.GetItemCount(consumableSkill.NeededItemData));
+            }
         }
     }
 
@@ -134,6 +143,10 @@ public class PlayerSkillModule : MonoBehaviour
 
             //후처리
             OnSkillCooldownStart?.Invoke(currentActivateSkillNumber, mySkills[(int)currentActivateSkillNumber].SkillMaxCoolTime);
+            if(mySkills[(int)currentActivateSkillNumber] is ConsumableSkill consumableSkill)
+            {
+                OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, MyInventory.GetItemCount(consumableSkill.NeededItemData));
+            }
             ModuleState = SkillModuleState.Ready;
             currentActivateSkillNumber = SkillNumber.None;
             currentSkillTimer = 0f;

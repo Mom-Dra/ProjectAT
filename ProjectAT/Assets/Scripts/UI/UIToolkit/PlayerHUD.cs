@@ -15,8 +15,10 @@ public class PlayerHUD : MonoBehaviour
     private Label _playerAmmoText; // 플레이어 탄약 정보 UI 요소
 
     [Header("Skill Info UI Elements")]
-    private VisualElement[] skillInfos = new VisualElement[3];
-    private CooldownOverlay[] skillCooldownOverlays = new CooldownOverlay[3]; // 스킬 쿨타임 오버레이 UI 요소 배열
+    private VisualElement[] skillInfos = new VisualElement[5];
+    private VisualElement[] skillIcons = new VisualElement[5];
+    private CooldownOverlay[] skillCooldownOverlays = new CooldownOverlay[5]; // 스킬 쿨타임 오버레이 UI 요소 배열
+    private Label[] skillItemLabels = new Label[5]; // 스킬 아이템 개수 UI 요소 배열
 
     public int SkillInfoCount => skillInfos.Length;
 
@@ -61,13 +63,38 @@ public class PlayerHUD : MonoBehaviour
         _playerWeaponIcon = root.Q<VisualElement>("WeaponIcon");
         _playerAmmoText = root.Q<Label>("AmmoText");
 
-        skillInfos[(int)SkillNumber.DesignatedFire] = root.Q<VisualElement>("DesignateFire").Q<VisualElement>("Icon");
-        skillInfos[(int)SkillNumber.UseBandage] = root.Q<VisualElement>("UsingBanadge").Q<VisualElement>("Icon");
-        skillInfos[(int)SkillNumber.Grenade] = root.Q<VisualElement>("GrenadeThrow").Q<VisualElement>("Icon");
 
-        skillCooldownOverlays[(int)SkillNumber.DesignatedFire] = skillInfos[(int)SkillNumber.DesignatedFire].Q<CooldownOverlay>("SkillCoolDown");
-        skillCooldownOverlays[(int)SkillNumber.UseBandage] = skillInfos[(int)SkillNumber.UseBandage].Q<CooldownOverlay>("SkillCoolDown");
-        skillCooldownOverlays[(int)SkillNumber.Grenade] = skillInfos[(int)SkillNumber.Grenade].Q<CooldownOverlay>("SkillCoolDown");
+        for(int i = 0 ; i < skillInfos.Length; i++)
+        {
+            skillInfos[i] = root.Q<VisualElement>($"SkillInfo_{i}");
+            skillIcons[i] = skillInfos[i].Q<VisualElement>("Icon");
+            skillItemLabels[i] = skillInfos[i].Q<Label>("ItemCount");
+            skillCooldownOverlays[i] = skillInfos[i].Q<CooldownOverlay>("SkillCoolDown");
+        }
+        // skillInfos[(int)SkillNumber.DesignatedFire] = root.Q<VisualElement>("DesignateFire");
+        // skillInfos[(int)SkillNumber.UseBandage] = root.Q<VisualElement>("UsingBanadge");
+        // skillInfos[(int)SkillNumber.Grenade] = root.Q<VisualElement>("GrenadeThrow");
+        // skillInfos[(int)SkillNumber.MainSkillOne] = root.Q<VisualElement>("MainSkillOne");
+        // skillInfos[(int)SkillNumber.MainSkillTwo] = root.Q<VisualElement>("MainSkillTwo");
+
+        // skillIcons[(int)SkillNumber.DesignatedFire] = skillInfos[(int)SkillNumber.DesignatedFire].Q<VisualElement>("Icon");
+        // skillIcons[(int)SkillNumber.UseBandage] = skillInfos[(int)SkillNumber.UseBandage].Q<VisualElement>("Icon");
+        // skillIcons[(int)SkillNumber.Grenade] = skillInfos[(int)SkillNumber.Grenade].Q<VisualElement>("Icon");
+        // skillIcons[(int)SkillNumber.MainSkillOne] = skillInfos[(int)SkillNumber.MainSkillOne].Q<VisualElement>("Icon");
+        // skillIcons[(int)SkillNumber.MainSkillTwo] = skillInfos[(int)SkillNumber.MainSkillTwo].Q<VisualElement>("Icon");
+
+        // skillItemLabels[(int)SkillNumber.DesignatedFire] = skillInfos[(int)SkillNumber.DesignatedFire].Q<Label>("ItemCount");
+        // skillItemLabels[(int)SkillNumber.UseBandage] = skillInfos[(int)SkillNumber.UseBandage].Q<Label>("ItemCount");
+        // skillItemLabels[(int)SkillNumber.Grenade] = skillInfos[(int)SkillNumber.Grenade].Q<Label>("ItemCount");
+        // skillItemLabels[(int)SkillNumber.MainSkillOne] = skillInfos[(int)SkillNumber.MainSkillOne].Q<Label>("ItemCount");
+        // skillItemLabels[(int)SkillNumber.MainSkillTwo] = skillInfos[(int)SkillNumber.MainSkillTwo].Q<Label>("ItemCount");
+
+
+        // skillCooldownOverlays[(int)SkillNumber.DesignatedFire] = skillInfos[(int)SkillNumber.DesignatedFire].Q<CooldownOverlay>("SkillCoolDown");
+        // skillCooldownOverlays[(int)SkillNumber.UseBandage] = skillInfos[(int)SkillNumber.UseBandage].Q<CooldownOverlay>("SkillCoolDown");
+        // skillCooldownOverlays[(int)SkillNumber.Grenade] = skillInfos[(int)SkillNumber.Grenade].Q<CooldownOverlay>("SkillCoolDown");
+        // skillCooldownOverlays[(int)SkillNumber.MainSkillOne] = skillInfos[(int)SkillNumber.MainSkillOne].Q<CooldownOverlay>("SkillCoolDown");
+        // skillCooldownOverlays[(int)SkillNumber.MainSkillTwo] = skillInfos[(int)SkillNumber.MainSkillTwo].Q<CooldownOverlay>("SkillCoolDown");
     }
 
     public void SetPlayerPortrait(Sprite portrait)
@@ -128,18 +155,20 @@ public class PlayerHUD : MonoBehaviour
                 Debug.LogError($"Skill data for skill index {i} is null!");
                 continue;
             }
-            skillInfos[i].style.backgroundImage = new StyleBackground(skillDatas[i].SkillIcon);
+            if(skillDatas[i] is not ConsumableSkillData)
+            {
+                skillItemLabels[i].style.display = DisplayStyle.None;
+            }
+            skillIcons[i].style.backgroundImage = new StyleBackground(skillDatas[i].SkillIcon);
+
         }
-        //skillInfos[(int)SkillNumber.DesignatedFire].style.backgroundImage = new StyleBackground(skillDatas[0].SkillIcon);
-        //skillInfos[(int)SkillNumber.UseBandage].style.backgroundImage = new StyleBackground(skillDatas[1].SkillIcon);
-        //skillInfos[(int)SkillNumber.Grenade].style.backgroundImage = new StyleBackground(skillDatas[2].SkillIcon);
     }
 
     public void BindPlayerSkillEvent(PlayerSkillModule playerSkillModule)
     {
-        for(int i = 0; i < skillInfos.Length; i++)
+        for(int i = 0; i < skillIcons.Length; i++)
         {
-            BindSkillClickEvent(skillInfos[i], playerSkillModule, (SkillNumber)i);
+            BindSkillClickEvent(skillIcons[i], playerSkillModule, (SkillNumber)i);
         }
         // BindSkillClickEvent(skillInfos[(int)SkillNumber.DesignatedFire], playerSkillModule, SkillNumber.DesignatedFire);
         // BindSkillClickEvent(skillInfos[(int)SkillNumber.UseBandage], playerSkillModule, SkillNumber.UseBandage);
@@ -172,14 +201,30 @@ public class PlayerHUD : MonoBehaviour
             SetSkillCooldown(index, elapsed / duration);
             yield return null;
         }
-        SetSkillCooldown(index, 1f); // 쿨다운 완료
+        SetSkillCooldown(index, 1f);
     }
 
     private void SetSkillCooldown(SkillNumber index, float cooldownProgress)
     {
         if (skillCooldownOverlays[(int)index] != null)
         {
-            skillCooldownOverlays[(int)index].FillAmount = 1f - cooldownProgress; // 예시로 투명도를 조절
+            skillCooldownOverlays[(int)index].FillAmount = 1f - cooldownProgress; // 투명도를 조절
+        }
+    }
+
+    public void SetSkillItemText(SkillNumber index, int itemCount)
+    {
+        if(skillItemLabels[(int)index] != null)
+        {
+            if(itemCount < 0)
+            {
+                skillInfos[(int)index].SetEnabled(false);
+            }
+            else
+            {
+                skillInfos[(int)index].SetEnabled(true);
+            }
+            skillItemLabels[(int)index].text = itemCount.ToString();
         }
     }
 }

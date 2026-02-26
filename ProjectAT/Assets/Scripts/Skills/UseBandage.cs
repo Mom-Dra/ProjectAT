@@ -1,18 +1,10 @@
 using UnityEngine;
 
-public class UseBandage : Skill
+public class UseBandage : ConsumableSkill
 {
-    public UseBandage(PlayerSkillModule context, SkillData data) : base(context, data)
-    {
-        entityInventory = context.GetComponent<Inventory>();
-        neededItemData = (data as ConsumableSkillData).NeededItemData;
-    }
+    public UseBandage(PlayerSkillModule context, SkillData data) : base(context, data){ }
     private EntityStatus targetStatus;
-    private ItemData neededItemData = null;
-    private Inventory entityInventory = null;
-
     public override Vector3 TargetPosition {get { return targetStatus? targetStatus.transform.position : Vector3.zero;}}
-
 
     public override void CancelSkill()
     {
@@ -27,31 +19,58 @@ public class UseBandage : Skill
     public override bool CanSelectTarget(in RaycastHit hit)
     {
         //붕대 갯수 체크하는 로직 추가해야함.
+        Debug.Log($"Use Bandage) {hit.collider.gameObject.name} was hit. Checking if it can be selected as target...");
+        Debug.Log($"Use Bandage) Checking Target Layer... Target Layer: {1 << hit.collider.gameObject.layer}, Allowed Layer: {TargetLayer.value}");
+        bool conditionOne = ((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0;
+        if(!conditionOne)
+        {
+            Debug.Log("Bandage) Cannot Select Target. Invalid Target Layer.");
+            return false;
+        }
+        bool conditionTwo = hit.collider.gameObject.TryGetComponent<EntityStatus>(out EntityStatus status);
+        if(!conditionTwo)
+        {
+            Debug.Log("Bandage) Cannot Select Target. No EntityStatus Component Found.");
+            return false;
+        }
+        bool conditionThree = status.CurrentHp < status.MaxHp;
+        if(!conditionThree)
+        {
+            Debug.Log("Bandage) Cannot Select Target. Target HP is Full.");
+            return false;
+        }
 
-        if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0
-         && hit.collider.gameObject.TryGetComponent<EntityStatus>(out EntityStatus status)&&
-            status.CurrentHp < status.MaxHp)
+        if(conditionOne && conditionTwo && conditionThree)
         {
             targetStatus = status;
             return true;
         }
 
+        // if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0
+        //  && hit.collider.gameObject.TryGetComponent<EntityStatus>(out EntityStatus status)&&
+        //     status.CurrentHp < status.MaxHp)
+        // {
+        //     targetStatus = status;
+        //     return true;
+        // }
         return false;
     }
 
     public override void Execute()
     {
-        entityInventory.TryUseItem(neededItemData, 1);
-
-        if(targetStatus.IsDead)
+        if(entityInventory.TryUseItem(neededItemData, 1))
         {
-            targetStatus.Revive(skillData.Damage/4); //하드코딩됨. 기획에 따라 부활시 체력 어케할지 결정.
+            if(targetStatus.IsDead)
+            {
+                targetStatus.Revive(skillData.Damage/4); //하드코딩됨. 기획에 따라 부활시 체력 어케할지 결정.
+            }
+            else
+            {
+                targetStatus.Heal(skillData.Damage);
+            }
+            Debug.Log("Use Bandage Executed!");            
         }
-        else
-        {
-            targetStatus.Heal(skillData.Damage);
-        }
-        Debug.Log("Use Bandage Executed!");
+        
     }
 
     public override void OnCastingEnd()

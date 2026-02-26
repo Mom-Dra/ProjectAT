@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9232c5f7d6bc62b4089e592f2680c62a, type: 3}
-  m_Name: ThrowGrenade
+  m_Name: DummySkillData
   m_EditorClassIdentifier: 
-  Name: ThrowGrenade
+  Name: Dummy
   MaxCoolTime: 5
-  Damage: 500
-  SkillEffectPrefab: {fileID: 5801574965826310662, guid: d6d05aa84ea333d4cb0f95c900695142, type: 3}
+  Damage: 0
+  SkillEffectPrefab: {fileID: 0}
   CursorSkin: {fileID: 2800000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
-  SkillIcon: {fileID: 21300000, guid: c65dcc322ce2ad14fabef6a1efd1519b, type: 3}
+  SkillIcon: {fileID: 21300000, guid: 0febdc610d2211c47b6780eeec713608, type: 3}
   SkillType: 0
-  CastingTime: 0.8
+  CastingTime: 0
   TargetLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
-  AOERadius: 10
+    m_Bits: 128
+  AOERadius: 1
