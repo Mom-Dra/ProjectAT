@@ -18,6 +18,8 @@ public class EntityStatus: MonoBehaviour, IDamageable
     [field: SerializeField]public float ThrowRange {get; private set;}
     [field: SerializeField]public float MaxViewingDistance {get; private set;}
     public EntityInitialStatus InitStatusRef => initStatus;
+    public Action<float> OnHealthChanged => onHealthChanged;
+
 
     private void OnEnable()
     {
@@ -41,7 +43,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
         Debug.Log($"{transform.name} TakeDamage: {damage}");
 
         CurrentHp -= damage;
-        onHealthChanged?.Invoke(Mathf.Clamp01(CurrentHp / MaxHp));
+        onHealthChanged?.Invoke(Mathf.Clamp01((float)CurrentHp / MaxHp));
 
         if (CurrentHp <= 0)
         {
@@ -57,7 +59,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
         CurrentHp += healAmount;
         CurrentHp = Mathf.Min(CurrentHp, MaxHp);
 
-        onHealthChanged?.Invoke(Mathf.Clamp01(CurrentHp / MaxHp));
+        onHealthChanged?.Invoke(Mathf.Clamp01((float)CurrentHp / MaxHp));
 
         Debug.Log($"{transform.name} Healed: {healAmount}, CurrentHp: {CurrentHp}");
     }
@@ -66,6 +68,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
     {
         IsDead = false;
         CurrentHp = Mathf.Min(reviveHp, MaxHp);
+        onHealthChanged?.Invoke(Mathf.Clamp01((float)CurrentHp / MaxHp));
         Debug.Log($"{transform.name} Revived! CurrentHp: {CurrentHp}");
     }
 

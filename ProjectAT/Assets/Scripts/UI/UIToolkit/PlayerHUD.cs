@@ -106,12 +106,12 @@ public class PlayerHUD : MonoBehaviour
         }
     }
 
-    public void SetPlayerHealthUI(float currentHealth, float maxHealth)
+    public void SetPlayerHealthUI(float healthRatio)
     {
         if (_healthBar != null)
         {
             // ProgressBar의 값 설정
-            _healthBar.Progress = (currentHealth / maxHealth) * 100f;
+            _healthBar.Progress = healthRatio * 100f;
         }
         else
         {

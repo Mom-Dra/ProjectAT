@@ -1,3 +1,4 @@
+using Biostart.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
@@ -40,14 +41,14 @@ public class UIManager
         }
 
         playerHUD.SetPlayerPortrait(playerStatus.InitStatusRef.PortatitSprite);
-        SetPlayerHealthUI(playerStatus.CurrentHp, playerStatus.MaxHp);
+        SetPlayerHealthUI((float)playerStatus.CurrentHp/playerStatus.MaxHp);
+        playerStatus.onHealthChanged += SetPlayerHealthUI;
     }
 
-    public void SetPlayerHealthUI(float currentHealth, float maxHealth)
+    public void SetPlayerHealthUI(float healthRatio)
     {
-        playerHUD.SetPlayerHealthUI(currentHealth, maxHealth);
+        playerHUD.SetPlayerHealthUI(healthRatio);
     }
-
 
     public void InitPlayerGunInfo(Gun gunData)
     {
@@ -84,5 +85,7 @@ public class UIManager
     {
         playerHUD.SetSkillItemText(skillNumber, itemCount);
     }
+
+
     # endregion
 }
