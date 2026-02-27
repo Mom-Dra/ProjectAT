@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,6 +37,9 @@ public class WeaponHolder : MonoBehaviour
     public Gun NowWeapon => nowWeapon;
     #endregion
 
+    public Action<Gun> OnWeaponFired;
+    public Action<Gun> OnWeaponChanged;
+
     private void Awake()
     {
         InitiateGuns();
@@ -65,6 +69,9 @@ public class WeaponHolder : MonoBehaviour
         maxAmmo = CalCuateMaxAmmo(); //수정 필요
         currentAmmo = maxAmmo;       //수정 필요
         range = CalculateRange();
+        
+        OnWeaponFired?.Invoke(nowWeapon);
+        OnWeaponChanged?.Invoke(nowWeapon);
         
         nowWeapon.gameObject.SetActive(true);
     }
@@ -104,11 +111,22 @@ public class WeaponHolder : MonoBehaviour
 
     #endregion
 
-
-    public void ReloadingAmmo()
+    public void FireWeapon()
     {
-        currentAmmo = maxAmmo;
+        nowWeapon.Attack();
+        OnWeaponFired?.Invoke(nowWeapon);
     }
+
+    // public void SpecialFireWeapon()
+    // {
+    //     nowWeapon.PerformSpecialFire();
+    //     OnWeaponFired?.Invoke(nowWeapon);
+    // }
+
+    // public void ReloadingAmmo()
+    // {
+    //     currentAmmo = maxAmmo;
+    // }
 
     public bool IsAmmoLoaded()
     {

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Data.Common;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -49,7 +50,10 @@ public class DesignatedFire : Skill
         Debug.Log("Designated Fire Executed!");
 
         if (targetEnemy.TryGetComponent(out IDamageable damageable))
-            damageable.TakeDamage(500);
+        {
+            damageable.TakeDamage(skillData.Damage);
+            context.MyWeapon.FireWeapon();
+        }
     }
 
     public override void OnCastingEnd()

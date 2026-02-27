@@ -50,14 +50,25 @@ public class UIManager
         playerHUD.SetPlayerHealthUI(healthRatio);
     }
 
-    public void InitPlayerGunInfo(Gun gunData)
+    public void InitPlayerGunInfo(WeaponHolder myGunHolder)
     {
-        if(gunData is null)
+        if(myGunHolder.NowWeapon is null)
         {
             Debug.LogError("Player GunData is null!");
             return;
         }
-        playerHUD.SetPlayerWeaponInfo(gunData);
+        playerHUD.SetPlayerWeaponInfo(myGunHolder.NowWeapon);
+        myGunHolder.OnWeaponFired += UpdatePlayerAmmoUI;
+    }
+
+    public void UpdatePlayerAmmoUI(Gun gun)
+    {
+        if(gun is null)
+        {
+            Debug.LogError("GunData is null!");
+            return;
+        }
+        playerHUD.SetPlayerAmmoText(gun.RemainAmmo, gun.MagAmmo);
     }
 
     public void SetPlayerAmmoUI(int ammo, int maxAmmo)

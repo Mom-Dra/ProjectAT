@@ -38,6 +38,8 @@ public class PlayerSkillModule : MonoBehaviour
     private SkillNumber currentActivateSkillNumber;
     private float currentSkillTimer = 0.0f;
 
+    public WeaponHolder MyWeapon => MyCombatModule.MyWeapon;
+
     [Header("SkillDatas")]
     [SerializeField] private SkillData[] datas;     //Addressables 패키지를 이용하여 에셋을 읽어오는 방법 고려
 

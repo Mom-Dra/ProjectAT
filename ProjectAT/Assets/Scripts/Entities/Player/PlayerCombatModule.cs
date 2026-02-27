@@ -17,6 +17,8 @@ public class PlayerCombatModule : MonoBehaviour
     [SerializeField] private float arcHeight = 2.0f; //투사체의 최대 높이
     [SerializeField] private LayerMask ObstacleLayer;
 
+    public WeaponHolder MyWeapon => myWeapon;
+
     private void Awake()
     {
         InitiateComponents();
@@ -37,7 +39,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     private void Start()
     {
-        Managers.Instance.UIManager.InitPlayerGunInfo(myWeapon.NowWeapon);
+        Managers.Instance.UIManager.InitPlayerGunInfo(myWeapon);
     }
 
     public bool IsEnemyInWeaponSight(Enemy enemy)
@@ -122,6 +124,7 @@ public class PlayerCombatModule : MonoBehaviour
         LastFireTime = Time.time;
         //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
+        myWeapon.FireWeapon();
         if (target.TryGetComponent(out IDamageable damageable))
             damageable.TakeDamage(myWeapon.Damage);
     }

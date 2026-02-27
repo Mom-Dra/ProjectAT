@@ -250,7 +250,6 @@ public class PlayerController : MonoBehaviour
             if (myCombatModule.CanFire())
             {
                 myCombatModule.NormalAttackEnemy(SelectedEnemy);
-                myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);                
             }
         }
         else

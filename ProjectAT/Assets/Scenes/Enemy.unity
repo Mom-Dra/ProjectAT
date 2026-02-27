@@ -3431,6 +3431,8 @@ MonoBehaviour:
   - Prefab: {fileID: 8023233048788148930, guid: 53b951f76e2a80146a67577b68d5b529, type: 3}
     PrewarmCount: 2
   - Prefab: {fileID: 946230873439750309, guid: a45c701df17b62d439fc78c12adea761, type: 3}
+    PrewarmCount: 5
+  - Prefab: {fileID: 1370874438154576190, guid: eb27692c6b742ee448e041d86e46402a, type: 3}
     PrewarmCount: 10
   healthUIPrefab: {fileID: 8023233048788148930, guid: 53b951f76e2a80146a67577b68d5b529, type: 3}
   poolParentTransform: {fileID: 0}
@@ -3503,7 +3505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400050, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.37
+      value: 8.79
       objectReference: {fileID: 0}
     - target: {fileID: 400050, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3511,7 +3513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400050, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.5
+      value: -4.38
       objectReference: {fileID: 0}
     - target: {fileID: 400050, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
       propertyPath: m_LocalRotation.w
