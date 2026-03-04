@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -17,6 +18,8 @@ public class EntityStatus: MonoBehaviour, IDamageable
     [field: SerializeField]public bool IsDead { get; private set; }
     [field: SerializeField]public float ThrowRange {get; private set;}
     [field: SerializeField]public float MaxViewingDistance {get; private set;}
+
+    public float Ratio => (float)CurrentHp / MaxHp;
 
 
     private void OnEnable()
@@ -41,7 +44,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
         Debug.Log($"{transform.name} TakeDamage: {damage}");
 
         CurrentHp -= damage;
-        onHealthChanged?.Invoke(Mathf.Clamp01(CurrentHp / MaxHp));
+        onHealthChanged?.Invoke(Mathf.Clamp01(Ratio));
 
         if (CurrentHp <= 0)
         {
@@ -57,7 +60,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
         CurrentHp += healAmount;
         CurrentHp = Mathf.Min(CurrentHp, MaxHp);
 
-        onHealthChanged?.Invoke(Mathf.Clamp01(CurrentHp / MaxHp));
+        onHealthChanged?.Invoke(Mathf.Clamp01(Ratio));
 
         Debug.Log($"{transform.name} Healed: {healAmount}, CurrentHp: {CurrentHp}");
     }

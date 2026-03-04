@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class PlayerCoverModule : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class PlayerCoverModule : MonoBehaviour
     private CoverPoint reservedCoverPoint;
     private Coroutine moveCoroutine;
 
-    //private CoverPoint reservedCoverPoint;
+    private bool isCover = false;
+    public bool IsCover => isCover;
 
     private void Awake()
     {
@@ -80,7 +82,7 @@ public class PlayerCoverModule : MonoBehaviour
         reservedCoverPoint?.Release();
         reservedCoverPoint = null;
         animator.SetCrouch(false);
-
+        isCover = false;
     }
 
     private IEnumerator MoveToCoverCoroutine(CoverPoint coverPoint)
@@ -97,6 +99,7 @@ public class PlayerCoverModule : MonoBehaviour
         yield return new WaitUntil(() => movement.IsAgentArrived());
 
         animator.SetCrouch(true);
+        isCover = true;
 
         coverPoint.SetMoveTarget(false);
         coverPoint.HideIndicator();

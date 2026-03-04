@@ -4072,12 +4072,18 @@ MonoBehaviour:
   interactionLayerMask:
     serializedVersion: 2
     m_Bits: 8320
-  cursorSettings: {fileID: 0}
+  cursorSettings: {fileID: 11400000, guid: 8acb837a152503f4db0458ed0ab03436, type: 2}
   pooledPrefabs:
-  - Prefab: {fileID: 1032293983606804476, guid: d98bfabc58aff3f46906d98b19788f84, type: 3}
+  - Prefab: {fileID: 8906335231756821871, guid: 14a6cea42d2488b4986f7022362952f7, type: 3}
     PrewarmCount: 2
-  healthUIPrefab: {fileID: 1032293983606804476, guid: d98bfabc58aff3f46906d98b19788f84, type: 3}
-  poolParentTransform: {fileID: 581355109}
+    PoolParentTransform: {fileID: 581355109}
+  - Prefab: {fileID: 1370874438154576190, guid: eb27692c6b742ee448e041d86e46402a, type: 3}
+    PrewarmCount: 2
+    PoolParentTransform: {fileID: 1799885477}
+  - Prefab: {fileID: 946230873439750309, guid: a45c701df17b62d439fc78c12adea761, type: 3}
+    PrewarmCount: 2
+    PoolParentTransform: {fileID: 1799885477}
+  healthUIPrefab: {fileID: 8906335231756821871, guid: 14a6cea42d2488b4986f7022362952f7, type: 3}
   target: {fileID: 188507405}
 --- !u!1 &1018248602 stripped
 GameObject:
@@ -6284,6 +6290,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783273664}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1799885476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1799885477}
+  m_Layer: 0
+  m_Name: Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1799885477
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799885476}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1803343407
 GameObject:
   m_ObjectHideFlags: 0
@@ -7792,3 +7829,4 @@ SceneRoots:
   - {fileID: 321806564}
   - {fileID: 1660636161}
   - {fileID: 1848512997}
+  - {fileID: 1799885477}

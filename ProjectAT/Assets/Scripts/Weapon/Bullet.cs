@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics.Tracing;
 using System.Security.Cryptography.X509Certificates;
 using Unity.Netcode;
 using UnityEngine;
@@ -10,9 +11,12 @@ public class Bullet : MonoBehaviour
     private Vector3 destination;
     private Rigidbody rb;
 
+    private PooledObject pooledObject;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        pooledObject = GetComponent<PooledObject>();
     }
 
     public void Initialize(Vector3 destination, float lifetime)
@@ -38,6 +42,8 @@ public class Bullet : MonoBehaviour
     {
         rb.linearVelocity = Vector3.zero;
         gameObject.SetActive(false);
+
+        pooledObject.ReturnToPool();
     }
 
     public void SetVelocity(Vector3 velocity)

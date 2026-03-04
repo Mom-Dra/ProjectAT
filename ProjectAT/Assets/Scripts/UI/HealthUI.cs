@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
-    private Image healthImage;
+    private Slider healthImage;
     private Transform targetAnchor;
     private EntityStatus entityStatus;
 
@@ -12,7 +12,7 @@ public class HealthUI : MonoBehaviour
 
     private void Awake()
     {
-        healthImage = GetComponent<Image>();
+        healthImage = GetComponent<Slider>();
     }
 
     public void Bind(Transform targetAnchor, EntityStatus entityStatus)
@@ -22,6 +22,8 @@ public class HealthUI : MonoBehaviour
 
         entityStatus.onHealthChanged += HealthChanged;
         entityStatus.onDeath += TargetDied;
+
+        SetHpRatio(entityStatus.Ratio);
     }
 
     public void UnBind()
@@ -36,7 +38,7 @@ public class HealthUI : MonoBehaviour
     public void SetHpRatio(float ratio)
     {
         ratio = Mathf.Clamp01(ratio);
-        healthImage.fillAmount = ratio;
+        healthImage.value = ratio;
     }
 
     public void SetActive(bool isActive)
@@ -66,7 +68,9 @@ public class HealthUI : MonoBehaviour
 
     private void HealthChanged(float ratio)
     {
-        healthImage.fillAmount = ratio;
+        Debug.Log($"HealthChanged: {ratio}");
+
+        SetHpRatio(ratio);
     }
 
     private void TargetDied()

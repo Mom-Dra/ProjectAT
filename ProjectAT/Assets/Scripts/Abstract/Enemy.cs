@@ -14,6 +14,10 @@ using static UnityEngine.EventSystems.EventTrigger;
 using TMPro;
 using MomDra.Weapon;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(FieldOfViewVisuals))]
+[RequireComponent(typeof(TargetDetector))]
+[RequireComponent(typeof(EnemyAnimator))]
 public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 {
     public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
@@ -30,7 +34,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
     protected EnemyAnimator enemyAnimator;
     protected IEnemyState currentState;
 
-    // Inspector¿¡¼­ ¼³Á¤
+    // Inspectorï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     private EnemyData enemyData;
     [SerializeField]
@@ -44,7 +48,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
     [SerializeField]
     private int alertLevel;
 
-    // Debug¿ë º¯¼ö
+    // Debugï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     private Enemy_State enemyState;
 
@@ -161,7 +165,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
     internal void Chase()
     {
-        if(navMeshAgent.destination != targetDestination)
+        if (navMeshAgent.destination != targetDestination)
         {
             ColorDebug.RedLog($"Chase, targetDeestination: {targetDestination}");
             navMeshAgent.SetDestination(targetDestination);
@@ -202,7 +206,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
     internal void StopInformTargetPositionCoroutine()
     {
-        if(informPlayerPositionCoroutine is not null)
+        if (informPlayerPositionCoroutine is not null)
         {
             StopCoroutine(informPlayerPositionCoroutine);
             informPlayerPositionCoroutine = null;
@@ -348,12 +352,12 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
     private IEnumerator InformTargetPositionCoroutine()
     {
-        while(true)
+        while (true)
         {
             if (targetDetector.IsTargetDetected())
                 InformTargetPosition();
             yield return informPlayerPositionWait;
-        }    
+        }
     }
 
     private void ScanStarted()
@@ -372,7 +376,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
     private void ScanCompleted()
     {
-        if(!IsTargetExist())
+        if (!IsTargetExist())
         {
             Debug.LogWarning("ScanCompleted, target is null");
             //ColorDebug.Log("ScanCompleted, target is null", Color.red);
@@ -392,11 +396,11 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
     private IEnumerator TargetDistanceCheckCoroutine()
     {
-        while(true)
+        while (true)
         {
             foreach ((Transform transform, float distance) in targetDetector.VisibleTargets)
             {
-                // 1Â÷ ½Ã¾ß ¾È¿¡ ÀÖÀ» °æ¿ì
+                // 1ï¿½ï¿½ ï¿½Ã¾ï¿½ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 if (distance < enemyData.PrimaryViewRadius)
                 {
                     IncreaseAlert(AlertData.MAX);
@@ -415,7 +419,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
     private void StopTargetDistanceCheckCoroutine()
     {
-        if(targetCheckCoroutine != null)
+        if (targetCheckCoroutine != null)
         {
             StopCoroutine(targetCheckCoroutine);
             targetCheckCoroutine = null;
@@ -425,8 +429,8 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
     private void TargetDetected()
     {
         // Todo
-        // 1Â÷ ½Ã¾ß ÀÎÁö ÆÇº°
-        // TargetÀÌ Detected µÇ¾ú´Ù´Â°Ç 2Â÷ ½Ã¾ß ¾È¿¡ ÀÖ´Ù´Â °Í!
+        // 1ï¿½ï¿½ ï¿½Ã¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Çºï¿½
+        // Targetï¿½ï¿½ Detected ï¿½Ç¾ï¿½ï¿½Ù´Â°ï¿½ 2ï¿½ï¿½ ï¿½Ã¾ï¿½ ï¿½È¿ï¿½ ï¿½Ö´Ù´ï¿½ ï¿½ï¿½!
         StartTargetDistanceCheckCoroutine();
     }
 
@@ -438,7 +442,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
     private IEnumerator IncreaseAlertCoroutine()
     {
-        // TargetÀÌ Detect µÇ°í ´Ù½Ã 1Â÷½Ã¾ß·Î µé¾î¿À°ÔµÇ´Â °æ¿ì -> ÀÌ°Íµµ Å½ÁöÇØ¾ß ÇÔ!
+        // Targetï¿½ï¿½ Detect ï¿½Ç°ï¿½ ï¿½Ù½ï¿½ 1ï¿½ï¿½ï¿½Ã¾ß·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÔµÇ´ï¿½ ï¿½ï¿½ï¿½ -> ï¿½Ì°Íµï¿½ Å½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½!
         WaitForSeconds wait = new WaitForSeconds(AlertData.AlertCheckInterval);
         int increaseAmount = (int)(AlertData.AlertCheckInterval * AlertData.AlertPerSecond);
 
@@ -448,7 +452,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
             yield return wait;
         }
 
-        // alertLevel Coroutine º¯¼ö »ç¿ë..?
+        // alertLevel Coroutine ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½..?
     }
 
     private void IncreaseAlert(int alertLevel)
