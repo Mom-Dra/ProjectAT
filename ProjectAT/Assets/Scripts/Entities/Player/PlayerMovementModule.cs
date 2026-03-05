@@ -51,7 +51,7 @@ public class PlayerMovementModule : MonoBehaviour
         Vector3 direction = (targetPos - transform.position).normalized;
         direction.y = 0;
 
-        if ((direction - transform.forward).sqrMagnitude < 0.01f)
+        if ((direction - transform.forward).sqrMagnitude < 0.0001f)
         {  
             myAgent.updateRotation = true;
             return true;

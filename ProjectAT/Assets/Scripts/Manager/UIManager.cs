@@ -1,3 +1,4 @@
+using Biostart.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
@@ -42,28 +43,39 @@ public class UIManager
         }
 
         playerHUD.SetPlayerPortrait(playerStatus.InitStatusRef.PortatitSprite);
-        SetPlayerHealthUI(playerStatus.CurrentHp, playerStatus.MaxHp);
+        SetPlayerHealthUI((float)playerStatus.CurrentHp/playerStatus.MaxHp);
+        playerStatus.onHealthChanged += SetPlayerHealthUI;
     }
 
-    public void SetPlayerHealthUI(float currentHealth, float maxHealth)
+    public void SetPlayerHealthUI(float healthRatio)
     {
-        playerHUD.SetPlayerHealthUI(currentHealth, maxHealth);
+        playerHUD.SetPlayerHealthUI(healthRatio);
     }
 
-
-    public void InitPlayerGunInfo(Gun gunData)
+    public void InitPlayerGunInfo(WeaponHolder myGunHolder)
     {
-        if(gunData is null)
+        if(myGunHolder.NowWeapon is null)
         {
             Debug.LogError("Player GunData is null!");
             return;
         }
-        playerHUD.SetPlayerWeaponInfo(gunData);
+        playerHUD.SetPlayerWeaponInfo(myGunHolder.NowWeapon);
+        myGunHolder.OnWeaponFired += UpdatePlayerAmmoUI;
     }
 
-    public void SetPlayerAmmoUI(int ammo, int maxAmmo)
+    public void UpdatePlayerAmmoUI(Gun gun)
     {
-        playerHUD.SetPlayerAmmoText(ammo, maxAmmo);
+        if(gun is null)
+        {
+            Debug.LogError("GunData is null!");
+            return;
+        }
+        playerHUD.SetPlayerAmmoText(gun.MagAmmo, gun.RemainAmmo);
+    }
+
+    public void SetPlayerAmmoUI(int currentAmmo, int maxAmmo)
+    {
+        playerHUD.SetPlayerAmmoText(currentAmmo, maxAmmo);
     }
     #endregion
 
@@ -86,5 +98,7 @@ public class UIManager
     {
         playerHUD.SetSkillItemText(skillNumber, itemCount);
     }
+
+
     # endregion
 }

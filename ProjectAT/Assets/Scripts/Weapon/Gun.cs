@@ -23,6 +23,8 @@ public class Gun : Weapon
     public override bool IsReady => gunState == IGunState.ReadyState;
     public override bool IsReloading => gunState == IGunState.ReloadState;
 
+
+
     // Animator �� ���� ���� �ٿ����� �����غ���
 
     private void Awake()
@@ -41,6 +43,7 @@ public class Gun : Weapon
     private void RemainAmmoValueChanged(int previousRemainAmmo, int currentRemainAmmo)
     {
         // UI Update...
+
     }
 
     private void MagAmmoValueChanged(int previousMagAmmo, int currentMagAmmo)

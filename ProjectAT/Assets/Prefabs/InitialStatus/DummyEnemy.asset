@@ -17,3 +17,4 @@ MonoBehaviour:
   runSpeed: 10
   throwRange: 7
   maxViewingDistance: 20
+  portatitSprite: {fileID: 0}

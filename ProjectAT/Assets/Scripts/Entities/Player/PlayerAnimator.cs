@@ -36,17 +36,24 @@ public class PlayerAnimator : MonoBehaviour
 
     private void OnEnable()
     {
-        entityStatus.onDeath += EnemyDied;
+        entityStatus.onDeath += EntityDead;
+        entityStatus.onRevive += EntityRevived;
     }
 
     private void OnDisable()
     {
-        entityStatus.onDeath -= EnemyDied;
+        entityStatus.onDeath -= EntityDead;
+        entityStatus.onRevive -= EntityRevived;
     }
 
-    private void EnemyDied()
+    private void EntityDead()
     {
         SetIsDead(true);
+    }
+
+    private void EntityRevived()
+    {
+        SetIsDead(false);
     }
 
     public void SetIsDead(bool isDead)
@@ -71,7 +78,8 @@ public class PlayerAnimator : MonoBehaviour
 
     public void SetShoot(bool isShoot)
     {
-        animator.SetBool(ShootHash, isShoot);
+        if(animator.GetBool(ShootHash) != isShoot)
+            animator.SetBool(ShootHash, isShoot);
     }
 
     public void SetUpperBodyOffset(float headHorizontalOffset = 0.0f, float headVerticalOffset = 0.0f,  float bodyHorizontalOffset = 0.0f, float bodyVerticalOffset = 0.0f)

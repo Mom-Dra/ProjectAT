@@ -106,12 +106,12 @@ public class PlayerHUD : MonoBehaviour
         }
     }
 
-    public void SetPlayerHealthUI(float currentHealth, float maxHealth)
+    public void SetPlayerHealthUI(float healthRatio)
     {
         if (_healthBar != null)
         {
             // ProgressBar의 값 설정
-            _healthBar.Progress = (currentHealth / maxHealth) * 100f;
+            _healthBar.Progress = healthRatio * 100f;
         }
         else
         {
@@ -127,16 +127,12 @@ public class PlayerHUD : MonoBehaviour
             return;
         }
         _playerWeaponIcon.style.backgroundImage = new StyleBackground(gun.GunData.GunIcon);
-        SetPlayerAmmoText(gun.RemainAmmo, gun.MagAmmo);
+        SetPlayerAmmoText(gun.MagAmmo, gun.RemainAmmo);
     }
 
-    public void SetPlayerAmmoText(int ammo, int maxAmmo)
+    public void SetPlayerAmmoText(int currentAmmo, int maxAmmo)
     {
-        // 플레이어 탄약 텍스트 설정 로직 (예: Label 컴포넌트에 텍스트 할당)
-        if (_playerAmmoText != null)
-        {
-            _playerAmmoText.text = $"{ammo} / {maxAmmo}";
-        }
+        _playerAmmoText.text = $"{currentAmmo} / {maxAmmo}";
     }
 
     public void SetPlayerSkillInfo(SkillData[] skillDatas)
@@ -160,7 +156,6 @@ public class PlayerHUD : MonoBehaviour
                 skillItemLabels[i].style.display = DisplayStyle.None;
             }
             skillIcons[i].style.backgroundImage = new StyleBackground(skillDatas[i].SkillIcon);
-
         }
     }
 

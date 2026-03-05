@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerSkillModule mySkillModule;
     [SerializeField] private PlayerCoverModule myCoverModule;
     [SerializeField] private PlayerInteractionModule myInteractionModule;
+    [SerializeField] private EntityStatus myStatus;
     [SerializeField] private EffectModule myEffectModule;
     [SerializeField] private Camera myCamera;
 
@@ -31,8 +32,8 @@ public class PlayerController : MonoBehaviour
     public Enemy SelectedEnemy;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private LayerMask enemyLayer;
+    //[SerializeField] private LayerMask groundLayer;
+    //[SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask rightClickInteractableLayer;
 
     [Header("Params")]
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
         mySkillModule = GetComponent<PlayerSkillModule>();
         myCoverModule = GetComponent<PlayerCoverModule>();
         myInteractionModule = GetComponent<PlayerInteractionModule>();
+        myStatus = GetComponent<EntityStatus>();
     }
 
     private void LinkInputEventsAll()
@@ -91,12 +93,16 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         LinkInputEventsAll();
-        Managers.Instance.UIManager.InitPlayerStatusInfo(GetComponent<EntityStatus>());
+        Managers.Instance.UIManager.InitPlayerStatusInfo(myStatus);
+        myStatus.onDeath += CancelAllPlayerAction;
+        myStatus.onRevive += () => Debug.Log("Player Revived!"); // TODO : Revive 이벤트 활용
     }
 
     private void OnDisable()
     {
         UnLinkInputEventsAll();
+        myStatus.onDeath -= CancelAllPlayerAction;
+        myStatus.onRevive -= () => Debug.Log("Player Revived!");
     }
 
     private void Update()
@@ -130,6 +136,8 @@ public class PlayerController : MonoBehaviour
     public void HandlePlayerRightClickInput()
     {
         if(EventSystem.current.IsPointerOverGameObject()) return;
+        if(myStatus.IsDead) return;
+
         
         if(mySkillModule.IsTargetting)
         {
@@ -184,17 +192,17 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
     }
 
-    public bool RaycastAtMouseLocation()
-    {
-        RaycastHit ray;
-        if (Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, enemyLayer))
-        {
-            SetTargetEnemy(ray.collider.GetComponent<Enemy>());
-            return true;
-        }   
+    // public bool RaycastAtMouseLocation()
+    // {
+    //     RaycastHit ray;
+    //     if (Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, enemyLayer))
+    //     {
+    //         SetTargetEnemy(ray.collider.GetComponent<Enemy>());
+    //         return true;
+    //     }   
        
-        return false;
-    }
+    //     return false;
+    // }
 
     public void HandleLeftClickInput()
     {
@@ -206,6 +214,7 @@ public class PlayerController : MonoBehaviour
 
     public void HandlePlayerSkillInput(SkillNumber index)
     {
+        if(myStatus.IsDead) return;
         mySkillModule.ActivateTargettingMode(index);
     }
 
@@ -245,23 +254,30 @@ public class PlayerController : MonoBehaviour
     {
         if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy) && myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
         {
-            myPlayerAnimator.SetShoot(true);
+            myPlayerAnimator.PlayAiming();
 
             if (myCombatModule.CanFire())
             {
                 myCombatModule.NormalAttackEnemy(SelectedEnemy);
-                myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);                
+                //myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);                
             }
         }
         else
         {
-            CancelNormalAttack();
+            myPlayerAnimator.PlayIdle();
         }
     }
 
     private void CancelNormalAttack()
     {
         myPlayerAnimator.SetShoot(false);
+    }
+
+    private void CancelAllPlayerAction()
+    {
+        myMovementModule.PlayerMoveStop();
+        mySkillModule.CancelCurrentSkill();
+        CancelEnemySelect();
     }
 
     #endregion
