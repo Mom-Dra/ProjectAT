@@ -68,12 +68,12 @@ public class UIManager
             Debug.LogError("GunData is null!");
             return;
         }
-        playerHUD.SetPlayerAmmoText(gun.RemainAmmo, gun.MagAmmo);
+        playerHUD.SetPlayerAmmoText(gun.MagAmmo, gun.RemainAmmo);
     }
 
-    public void SetPlayerAmmoUI(int ammo, int maxAmmo)
+    public void SetPlayerAmmoUI(int currentAmmo, int maxAmmo)
     {
-        playerHUD.SetPlayerAmmoText(ammo, maxAmmo);
+        playerHUD.SetPlayerAmmoText(currentAmmo, maxAmmo);
     }
     #endregion
 

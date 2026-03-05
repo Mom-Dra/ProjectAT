@@ -5,6 +5,7 @@ using UnityEngine;
 public class EntityStatus: MonoBehaviour, IDamageable
 {
     public event Action onDeath;
+    public event Action onRevive;
     public event Action<float> onHealthChanged;
 
     //References
@@ -70,6 +71,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
         CurrentHp = Mathf.Min(reviveHp, MaxHp);
         onHealthChanged?.Invoke(Mathf.Clamp01((float)CurrentHp / MaxHp));
         Debug.Log($"{transform.name} Revived! CurrentHp: {CurrentHp}");
+        onRevive?.Invoke();
     }
 
     private void Die()
