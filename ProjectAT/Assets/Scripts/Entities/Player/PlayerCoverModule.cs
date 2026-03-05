@@ -7,6 +7,10 @@ public class PlayerCoverModule : MonoBehaviour
     private InputReader inputReader;
     private PlayerAnimator animator;
     private PlayerMovementModule movement;
+    private BuffModule buffModule;
+
+    [SerializeField]
+    private BuffData buffData;
 
     private CoverObject currCoverObject;
     private CoverPoint currCoverPoint;
@@ -20,6 +24,7 @@ public class PlayerCoverModule : MonoBehaviour
     {
         animator = GetComponent<PlayerAnimator>();
         movement = GetComponent<PlayerMovementModule>();
+        buffModule = GetComponent<BuffModule>();
     }
 
     public void HandleCoverRaycast(Vector2 mousePos)
@@ -100,6 +105,7 @@ public class PlayerCoverModule : MonoBehaviour
 
         animator.SetCrouch(true);
         isCover = true;
+        buffModule.AddBuff(buffData);
 
         coverPoint.SetMoveTarget(false);
         coverPoint.HideIndicator();

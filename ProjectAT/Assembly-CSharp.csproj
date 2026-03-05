@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCamera.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerCombatModule.cs" />
+    <Compile Include="Assets\Scripts\Buff\StatType.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewNetcode.cs" />
     <Compile Include="Assets\Scripts\Manager\Managers.cs" />
     <Compile Include="Assets\Scripts\Abstract\IFadeable.cs" />
@@ -107,6 +108,8 @@
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Test2.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
+    <Compile Include="Assets\Scripts\Buff\BuffModule.cs" />
+    <Compile Include="Assets\Scripts\Buff\StatModifier.cs" />
     <Compile Include="Assets\Scripts\Utils\Indicator\GroundSkillIndicator.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Flamethrower.cs" />
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponHolder.cs" />
@@ -115,10 +118,12 @@
     <Compile Include="Assets\Scripts\Entities\Player\StealthModule.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Enemy\WeaponBase.cs" />
+    <Compile Include="Assets\Scripts\Buff\BuffInstance.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerSkillModule.cs" />
     <Compile Include="Assets\Inputs\PlayerControls.cs" />
     <Compile Include="Assets\Scripts\Abstract\LivingEntity.cs" />
     <Compile Include="Assets\Scripts\Enemy\FirstClassEnemy.cs" />
+    <Compile Include="Assets\Scripts\Buff\StatBuffData.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerAnimator.cs" />
     <Compile Include="Assets\Scripts\Interactable\Door.cs" />
@@ -155,6 +160,7 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAction.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\ExplosionWave.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\UpdateDistanceAction.cs" />
+    <Compile Include="Assets\Scripts\Buff\BuffData.cs" />
     <Compile Include="Assets\Scripts\View\NetworkView.cs" />
     <Compile Include="Assets\Scripts\Abstract\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityController.cs" />

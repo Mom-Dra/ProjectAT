@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using Unity.Netcode;
 using UnityEngine;
 
-public class EntityStatus: MonoBehaviour, IDamageable
+public class EntityStatus : MonoBehaviour, IDamageable
 {
     public event Action onDeath;
     public event Action<float> onHealthChanged;
@@ -11,44 +11,63 @@ public class EntityStatus: MonoBehaviour, IDamageable
     //References
     [SerializeField] private EntityInitialStatus initStatus;
 
-    [field: SerializeField] public int CurrentHp { get; set; }
-    [field: SerializeField]public int MaxHp { get; private set; }
-    [field: SerializeField]public float WalkSpeed { get; private set; }
-    [field: SerializeField]public float RunSpeed { get; private set; }
-    [field: SerializeField]public bool IsDead { get; private set; }
-    [field: SerializeField]public float ThrowRange {get; private set;}
-    [field: SerializeField]public float MaxViewingDistance {get; private set;}
+    private Stat maxHpStat;
+    private Stat walkSpeedStat;
+    private Stat runSpeedStat;
+    private Stat armorStat;
+
+    public int CurrentHp { get; private set; }
+    public int MaxHp => (int)maxHpStat.Value;
+    public float WalkSpeed => walkSpeedStat.Value;
+    public float RunSpeed => runSpeedStat.Value;
+    public float Armor => armorStat.Value;
+    public bool IsDead { get; private set; }
+    public float ThrowRange { get; private set; }
+    public float MaxViewingDistance { get; private set; }
 
     public float Ratio => (float)CurrentHp / MaxHp;
-
 
     private void OnEnable()
     {
         InitStatus();
     }
 
-
     private void InitStatus()
     {
-        MaxHp = initStatus.MaxHp;
-        CurrentHp = MaxHp;
-        WalkSpeed = initStatus.WalkSpeed;
-        RunSpeed = initStatus.RunSpeed;
+        maxHpStat = new Stat(initStatus.MaxHp);
+        walkSpeedStat = new Stat(initStatus.WalkSpeed);
+        runSpeedStat = new Stat(initStatus.RunSpeed);
+        armorStat = new Stat(initStatus.Armor);
+
+        CurrentHp = initStatus.MaxHp;
         ThrowRange = initStatus.ThrowRange;
         MaxViewingDistance = initStatus.MaxViewingDistance;
         IsDead = false;
+    }
+
+    public Stat GetStat(StatType statType)
+    {
+        return statType switch
+        {
+            StatType.MaxHP => maxHpStat,
+            StatType.MoveSpeed => walkSpeedStat,
+            StatType.AttackPower => runSpeedStat,
+            _ => null
+        };
     }
 
     public void TakeDamage(int damage)
     {
         Debug.Log($"{transform.name} TakeDamage: {damage}");
 
+        // Armor 수치에 따른 데미지 감소 로직..!
+        // 100 데메지 100, 300   
+
         CurrentHp -= damage;
         onHealthChanged?.Invoke(Mathf.Clamp01(Ratio));
 
         if (CurrentHp <= 0)
         {
-            IsDead = true;
             Die();
 
             Debug.Log("Dead!");
@@ -76,7 +95,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
     {
         // Enemy�� ��� ������ ���߰� �״� Animation ���
         // ���⼭ �ٷ� Enemy�� Animator�� ���������� ������?
-
+        IsDead = true;
         onDeath?.Invoke();
     }
 }
