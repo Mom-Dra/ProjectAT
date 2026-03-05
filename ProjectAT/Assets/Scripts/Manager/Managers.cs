@@ -45,7 +45,7 @@ public class Managers : Singleton<Managers>
         poolManager = new PoolManager(pooledPrefabs);
 
 
-        // uIManager.ShowHealthUI(target.GetComponent<EntityStatus>());
+        //uIManager.ShowHealthUI(target.GetComponent<EntityStatus>());
         //uIManager.EnableEnemyHealthUI();
         //uIManager.SetHpBarFollowingTarget(target);
     }

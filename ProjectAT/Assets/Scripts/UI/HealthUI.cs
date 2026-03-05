@@ -5,7 +5,7 @@ public class HealthUI : MonoBehaviour
 {
     private Slider healthImage;
     private Transform targetAnchor;
-    private EntityStatus entityStatus;
+    [SerializeField] private EntityStatus entityStatus;
 
     [SerializeField]
     private Vector3 offset;
@@ -28,6 +28,7 @@ public class HealthUI : MonoBehaviour
 
     public void UnBind()
     {
+        if (entityStatus == null) return;
         entityStatus.onHealthChanged -= HealthChanged;
         entityStatus.onDeath -= TargetDied;
 
@@ -75,6 +76,6 @@ public class HealthUI : MonoBehaviour
 
     private void TargetDied()
     {
-        Managers.Instance.UIManager.HideHealthUI(this);
+        //Managers.Instance.UIManager.HideHealthUI(this);
     }
 }

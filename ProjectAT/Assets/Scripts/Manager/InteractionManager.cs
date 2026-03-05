@@ -70,7 +70,7 @@ public class InteractionManager
             UIAnchor uIAnchor = hit.transform.GetComponentInParent<UIAnchor>();
 
             if(entityStatus is not null)
-            {
+            {   
                 if(currEntityStatus != entityStatus)
                 {
                     ClearEntityStatus();
@@ -115,7 +115,7 @@ public class InteractionManager
     private void ClearEntityStatus()
     {
         if (currEntityStatus is null) return;
-
+        else Debug.Log($"current EntityStatus is {currEntityStatus.gameObject.name}");
         Managers.Instance.UIManager.HideHealthUI(currHealthUI);
 
         currEntityStatus = null;
