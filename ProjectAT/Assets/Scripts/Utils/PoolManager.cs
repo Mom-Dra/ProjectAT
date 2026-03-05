@@ -10,14 +10,10 @@ public class PoolManager
 
     private Dictionary<GameObject, ObjectPool<GameObject>> pooledObjects = new Dictionary<GameObject, ObjectPool<GameObject>>();
 
-    private Transform poolParentTransform;
-
-    public PoolManager(PoolConfigObject[] pooledPrefabs, Transform poolParentTransform)
+    public PoolManager(PoolConfigObject[] pooledPrefabs)
     {
-        this.poolParentTransform = poolParentTransform;
-
         foreach (PoolConfigObject pooledPrefab in pooledPrefabs)
-            RegisterPrefabInternal(pooledPrefab.Prefab, pooledPrefab.PrewarmCount);
+            RegisterPrefabInternal(pooledPrefab.Prefab, pooledPrefab.PrewarmCount, pooledPrefab.PoolParentTransform);
     }
 
     public GameObject GetObject(GameObject prefab)
@@ -33,6 +29,16 @@ public class PoolManager
         returnObject.transform.position = position;
         returnObject.transform.rotation = rotation;
 
+        if (returnObject.TryGetComponent(out PooledObject pooledObject))
+        {
+            pooledObject.Prefab = prefab;
+        }
+        else
+        {
+            pooledObject = returnObject.AddComponent<PooledObject>();
+            pooledObject.Prefab = prefab;
+        }
+
         return returnObject;
     }
 
@@ -41,7 +47,7 @@ public class PoolManager
         pooledObjects[prefab].Release(gameObject);
     }
 
-    private void RegisterPrefabInternal(GameObject prefab, int prewarmCount)
+    private void RegisterPrefabInternal(GameObject prefab, int prewarmCount, Transform poolParentTransform)
     {
         GameObject CreateFunc()
         {

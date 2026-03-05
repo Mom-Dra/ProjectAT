@@ -159,6 +159,7 @@ public struct PoolConfigObject
 {
     public GameObject Prefab;
     public int PrewarmCount;
+    public Transform PoolParentTransform;
 }
 
 class PooledPrefabInstanceHandler : INetworkPrefabInstanceHandler

@@ -20,11 +20,7 @@ public class Managers : Singleton<Managers>
     private GameObject healthUIPrefab;
 
     [SerializeField]
-    private Transform poolParentTransform;
-
-    [SerializeField]
     private Transform target;
-    
 
     private InputManager inputManager;
     private CursorManager cursorManager;
@@ -42,16 +38,14 @@ public class Managers : Singleton<Managers>
     {
         base.Awake();
 
-        Debug.LogError("InputManager");
-
         inputManager = new InputManager(inputReader);
         cursorManager = new CursorManager(cursorSettings);
         interactionManager = new InteractionManager(interactionLayerMask);
         uIManager = new UIManager(healthUIPrefab, FindFirstObjectByType<PlayerHUD>());
-        poolManager = new PoolManager(pooledPrefabs, poolParentTransform);
+        poolManager = new PoolManager(pooledPrefabs);
 
 
-        uIManager.ShowHealthUI(target.GetComponent<EntityStatus>());
+        // uIManager.ShowHealthUI(target.GetComponent<EntityStatus>());
         //uIManager.EnableEnemyHealthUI();
         //uIManager.SetHpBarFollowingTarget(target);
     }

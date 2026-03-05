@@ -4932,6 +4932,8 @@ GameObject:
   - component: {fileID: 1370874438154576131}
   - component: {fileID: 1370874438154576188}
   - component: {fileID: 1370874438154576189}
+  - component: {fileID: 3785646910157942183}
+  - component: {fileID: -2191465321476998930}
   m_Layer: 0
   m_Name: FX_Shoot_01_hit
   m_TagString: Untagged
@@ -9884,6 +9886,30 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &3785646910157942183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370874438154576190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba977dc0a730e7489cf9c1277393370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-2191465321476998930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370874438154576190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 416546d4f8851a54eac2a97b782155ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1782451455230326633
 GameObject:
   m_ObjectHideFlags: 0

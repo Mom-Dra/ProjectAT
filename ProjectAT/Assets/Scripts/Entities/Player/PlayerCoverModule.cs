@@ -1,23 +1,30 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class PlayerCoverModule : MonoBehaviour
 {
     private InputReader inputReader;
     private PlayerAnimator animator;
     private PlayerMovementModule movement;
+    private BuffModule buffModule;
+
+    [SerializeField]
+    private BuffData buffData;
 
     private CoverObject currCoverObject;
     private CoverPoint currCoverPoint;
     private CoverPoint reservedCoverPoint;
     private Coroutine moveCoroutine;
 
-    //private CoverPoint reservedCoverPoint;
+    private bool isCover = false;
+    public bool IsCover => isCover;
 
     private void Awake()
     {
         animator = GetComponent<PlayerAnimator>();
         movement = GetComponent<PlayerMovementModule>();
+        buffModule = GetComponent<BuffModule>();
     }
 
     public void HandleCoverRaycast(Vector2 mousePos)
@@ -80,7 +87,7 @@ public class PlayerCoverModule : MonoBehaviour
         reservedCoverPoint?.Release();
         reservedCoverPoint = null;
         animator.SetCrouch(false);
-
+        isCover = false;
     }
 
     private IEnumerator MoveToCoverCoroutine(CoverPoint coverPoint)
@@ -97,6 +104,8 @@ public class PlayerCoverModule : MonoBehaviour
         yield return new WaitUntil(() => movement.IsAgentArrived());
 
         animator.SetCrouch(true);
+        isCover = true;
+        buffModule.AddBuff(buffData);
 
         coverPoint.SetMoveTarget(false);
         coverPoint.HideIndicator();

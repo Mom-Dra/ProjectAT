@@ -34,10 +34,10 @@ public class EffectModule : MonoBehaviour
             firingEffectSpawnPoint = transform.GetChild(2).transform;
 
         InitializeIndicators();
-        if(lineRenderer is null)
+        if (lineRenderer is null)
         {
             GameObject obj = Instantiate(new GameObject("LineRenderer"));
-            
+
             obj.transform.parent = transform;
             lineRenderer = obj.AddComponent<LineRenderer>();
         }
@@ -47,19 +47,19 @@ public class EffectModule : MonoBehaviour
     {
         indicators = new IndicatorBase[Enum.GetNames(typeof(IndicatorType)).Length];
         indicators[(int)IndicatorType.MoveIndicator] = Instantiate(moveIndicatorPrefab).GetComponent<IndicatorBase>();
-        
+
         indicators[(int)IndicatorType.GroundSkillIndicator] = Instantiate(groundSkillIndicatorPrefab).GetComponent<IndicatorBase>();
         indicators[(int)IndicatorType.GroundSkillIndicator].Hide();
     }
 
     public void PlayFiringEffect(Vector3 dest)
     {
-        Bullet bulletComponent 
-            = Instantiate(bulletProjectile, 
-            firingEffectSpawnPoint.position, 
+        Bullet bulletComponent
+            = Instantiate(bulletProjectile,
+            firingEffectSpawnPoint.position,
             firingEffectSpawnPoint.rotation
             ).GetComponent<Bullet>();   //���߿� ������Ʈ Ǯ���� ���̹Ƿ� ������û ������ ���� �������.
-        
+
         //�̺κе� Bullet �Լ� �ȿ�..
         bulletComponent.Initialize(dest, 2f);
         bulletComponent.transform.forward = (dest - firingEffectSpawnPoint.position).normalized;
@@ -102,7 +102,7 @@ public class EffectModule : MonoBehaviour
         lineRenderer.enabled = false;
         lineRenderer.positionCount = 0;
     }
-    
+
     // public void PlayMoveIndicatorEffect(Vector3 dest)
     // {
     //     indicators[(int)IndicatorType.MoveIndicator].transform.position = dest;

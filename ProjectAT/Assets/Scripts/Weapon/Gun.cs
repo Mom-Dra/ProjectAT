@@ -14,8 +14,8 @@ public class Gun : Weapon
     private AudioSource audioSource;
     private ParticleSystem muzzleParticleSystem;
 
-    private int remainAmmo; // ³²Àº ÀüÃ¼ Åº¾à
-    private int magAmmo; // ÅºÃ¢¿¡ ³²Àº Åº¾à
+    private int remainAmmo; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ Åºï¿½ï¿½
+    private int magAmmo; // ÅºÃ¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Åºï¿½ï¿½
 
     internal int RemainAmmo { get => remainAmmo; set => remainAmmo = value; }
     internal int MagAmmo { get => magAmmo; set => magAmmo = value; }
@@ -23,7 +23,7 @@ public class Gun : Weapon
     public override bool IsReady => gunState == IGunState.ReadyState;
     public override bool IsReloading => gunState == IGunState.ReloadState;
 
-    // Animator ÂÊ ½ÇÁ¦ ¿¡¼Â ºÙ¿©º¸°í »ý°¢ÇØº¸ÀÚ
+    // Animator ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øºï¿½ï¿½ï¿½
 
     private void Awake()
     {
@@ -80,7 +80,7 @@ public class Gun : Weapon
         Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * gunData.MaxDistance, Color.blue, 2f);
         if (Physics.Raycast(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward, out hit, gunData.MaxDistance, LayerMask.GetMask("Player")))
         {
-            Debug.Log("¸Â¾Ò´Ù!!");
+            Debug.Log("ï¿½Â¾Ò´ï¿½!!");
 
             Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * Vector3.Distance(muzzleParticleSystem.transform.position, hit.point), Color.red, 2f);
 
@@ -89,15 +89,15 @@ public class Gun : Weapon
             if (hitObject.TryGetComponent(out ParticleSystem hitParticle))
                 hitParticle.Play();
 
-            // Bullet ³¯¸®±â
+            // Bullet ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             GameObject bulletObject = Managers.Instance.PoolManager.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
-            if(bulletObject.TryGetComponent(out Bullet bullet))
+            if (bulletObject.TryGetComponent(out Bullet bullet))
             {
                 bullet.Initialize(hit.point, 5f);
                 bullet.SetVelocity(transform.forward * 100f);
             }
 
-            // µ¥¹ÌÁö °¨¼Ò
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (hit.transform.TryGetComponent(out IDamageable damageable))
                 damageable.TakeDamage(gunData.Damage);
         }
@@ -126,15 +126,15 @@ public class Gun : Weapon
         remainAmmo -= ammoToMove;
     }
 
-    //Client ÂÊ¿¡¼­ Effect¸¸ Àç»ýÇÒ °ÅÀÓ
+    //Client ï¿½Ê¿ï¿½ï¿½ï¿½ Effectï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     //[Rpc(SendTo.ClientsAndHost)]
     internal void PlayFireRpc()
     {
         Debug.Log("PlayFireRpc");
         audioSource.PlayOneShot(gunData.ShotClip);
 
-        // È­¿°
-        // ¾Ï»ì °ÔÀÓ ÀÌ¹Ç·Î muzzle ÀÌÆåÆ®´Â ¾ø´Â °É·Î
+        // È­ï¿½ï¿½
+        // ï¿½Ï»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹Ç·ï¿½ muzzle ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½
         //muzzleParticleSystem.Play();
     }
 
