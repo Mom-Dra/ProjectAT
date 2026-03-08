@@ -130,12 +130,18 @@ public class PlayerSkillModule : MonoBehaviour
         }
         
         //회전체크, 잔류 속도 체크
-        if (mySkills[(int)currentActivateSkillNumber].SkillType != SkillType.Self 
-        && !MyMovementModule.PlayerRotateToward(mySkills[(int)currentActivateSkillNumber].TargetPosition)
-        && MyAnimModule.GetSpeedValue() > 0.005f)
+        if (mySkills[(int)currentActivateSkillNumber].SkillType != SkillType.Self)
         {
-            return;
+            bool isStillRotating = !MyMovementModule.PlayerRotateToward(mySkills[(int)currentActivateSkillNumber].TargetPosition);
+            bool isStillMoving = MyAnimModule.GetSpeedValue() > 0.005f;
+
+            if(isStillRotating || isStillMoving)
+            {
+                return;
+            }   
         }
+        
+        
         currentSkillTimer += Time.deltaTime;
 
         if (currentSkillTimer >= mySkills[(int)currentActivateSkillNumber].SkillCastingTime)
@@ -149,6 +155,7 @@ public class PlayerSkillModule : MonoBehaviour
             {
                 OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, MyInventory.GetItemCount(consumableSkill.NeededItemData));
             }
+            
             ModuleState = SkillModuleState.Ready;
             currentActivateSkillNumber = SkillNumber.None;
             currentSkillTimer = 0f;

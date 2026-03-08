@@ -22,33 +22,9 @@ public class PlayerHUD : MonoBehaviour
 
     public int SkillInfoCount => skillInfos.Length;
 
-    //private VisualElement _designatedFireSkill; // 플레이어 초상화 UI 요소
-    //private VisualElement _bandageSkill; // 플레이어 초상화 UI 요소
-
-
-    // [Header("Player Stats")]
-    // [SerializeField]private int maxAmmo = 30;
-    // [SerializeField]private float maxHealth = 100f;
-
-    // [Header("Player Instance Reference")]
-    // [SerializeField] private PlayerController controller;
-
-    // [Header("Test Variables")]
-    // // 테스트용 변수 (인스펙터에서 조절해보세요)
-    // public float currentHealth = 100f;
-    // public int currentAmmo = 30;
-    // public Sprite playerPortraitSprite;
-
     void OnEnable()
     {
         InitUIElements();
-    }
-
-    void Update()
-    {
-        // 실제 게임에선 맞았을 때만 호출하겠지만, 테스트를 위해 Update에 둡니다.
-        //UpdateCurrentHealthUI();
-        //SetPlayerAmmoText(currentAmmo);
     }
 
     private void InitUIElements()
@@ -71,30 +47,6 @@ public class PlayerHUD : MonoBehaviour
             skillItemLabels[i] = skillInfos[i].Q<Label>("ItemCount");
             skillCooldownOverlays[i] = skillInfos[i].Q<CooldownOverlay>("SkillCoolDown");
         }
-        // skillInfos[(int)SkillNumber.DesignatedFire] = root.Q<VisualElement>("DesignateFire");
-        // skillInfos[(int)SkillNumber.UseBandage] = root.Q<VisualElement>("UsingBanadge");
-        // skillInfos[(int)SkillNumber.Grenade] = root.Q<VisualElement>("GrenadeThrow");
-        // skillInfos[(int)SkillNumber.MainSkillOne] = root.Q<VisualElement>("MainSkillOne");
-        // skillInfos[(int)SkillNumber.MainSkillTwo] = root.Q<VisualElement>("MainSkillTwo");
-
-        // skillIcons[(int)SkillNumber.DesignatedFire] = skillInfos[(int)SkillNumber.DesignatedFire].Q<VisualElement>("Icon");
-        // skillIcons[(int)SkillNumber.UseBandage] = skillInfos[(int)SkillNumber.UseBandage].Q<VisualElement>("Icon");
-        // skillIcons[(int)SkillNumber.Grenade] = skillInfos[(int)SkillNumber.Grenade].Q<VisualElement>("Icon");
-        // skillIcons[(int)SkillNumber.MainSkillOne] = skillInfos[(int)SkillNumber.MainSkillOne].Q<VisualElement>("Icon");
-        // skillIcons[(int)SkillNumber.MainSkillTwo] = skillInfos[(int)SkillNumber.MainSkillTwo].Q<VisualElement>("Icon");
-
-        // skillItemLabels[(int)SkillNumber.DesignatedFire] = skillInfos[(int)SkillNumber.DesignatedFire].Q<Label>("ItemCount");
-        // skillItemLabels[(int)SkillNumber.UseBandage] = skillInfos[(int)SkillNumber.UseBandage].Q<Label>("ItemCount");
-        // skillItemLabels[(int)SkillNumber.Grenade] = skillInfos[(int)SkillNumber.Grenade].Q<Label>("ItemCount");
-        // skillItemLabels[(int)SkillNumber.MainSkillOne] = skillInfos[(int)SkillNumber.MainSkillOne].Q<Label>("ItemCount");
-        // skillItemLabels[(int)SkillNumber.MainSkillTwo] = skillInfos[(int)SkillNumber.MainSkillTwo].Q<Label>("ItemCount");
-
-
-        // skillCooldownOverlays[(int)SkillNumber.DesignatedFire] = skillInfos[(int)SkillNumber.DesignatedFire].Q<CooldownOverlay>("SkillCoolDown");
-        // skillCooldownOverlays[(int)SkillNumber.UseBandage] = skillInfos[(int)SkillNumber.UseBandage].Q<CooldownOverlay>("SkillCoolDown");
-        // skillCooldownOverlays[(int)SkillNumber.Grenade] = skillInfos[(int)SkillNumber.Grenade].Q<CooldownOverlay>("SkillCoolDown");
-        // skillCooldownOverlays[(int)SkillNumber.MainSkillOne] = skillInfos[(int)SkillNumber.MainSkillOne].Q<CooldownOverlay>("SkillCoolDown");
-        // skillCooldownOverlays[(int)SkillNumber.MainSkillTwo] = skillInfos[(int)SkillNumber.MainSkillTwo].Q<CooldownOverlay>("SkillCoolDown");
     }
 
     public void SetPlayerPortrait(Sprite portrait)
@@ -165,9 +117,6 @@ public class PlayerHUD : MonoBehaviour
         {
             BindSkillClickEvent(skillIcons[i], playerSkillModule, (SkillNumber)i);
         }
-        // BindSkillClickEvent(skillInfos[(int)SkillNumber.DesignatedFire], playerSkillModule, SkillNumber.DesignatedFire);
-        // BindSkillClickEvent(skillInfos[(int)SkillNumber.UseBandage], playerSkillModule, SkillNumber.UseBandage);
-        // BindSkillClickEvent(skillInfos[(int)SkillNumber.Grenade], playerSkillModule, SkillNumber.Grenade);
     }
 
     private void BindSkillClickEvent(VisualElement iconElement, PlayerSkillModule playerSkillModule, SkillNumber index)

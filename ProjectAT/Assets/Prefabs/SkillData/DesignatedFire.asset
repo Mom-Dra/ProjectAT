@@ -19,7 +19,7 @@ MonoBehaviour:
   CursorSkin: {fileID: 2800000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
   SkillIcon: {fileID: 21300000, guid: d660eca1603ca55428640737c627b15c, type: 3}
   SkillType: 0
-  CastingTime: 1
+  CastingTime: 0.5
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128

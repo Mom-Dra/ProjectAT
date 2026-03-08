@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1a5590bbc345643a2eaf5062294bd1, type: 3}
   m_Name: DummyEnemy
   m_EditorClassIdentifier: 
-  maxHp: 250
+  maxHp: 10000
   walkSpeed: 5
   runSpeed: 10
+  armor: 0
   throwRange: 7
   maxViewingDistance: 20
   portatitSprite: {fileID: 0}

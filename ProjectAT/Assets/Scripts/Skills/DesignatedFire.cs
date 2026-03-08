@@ -60,7 +60,7 @@ public class DesignatedFire : Skill
     {
         targetEnemy = null;
         CurrSkillTime = Time.time;
-        context.MyAnimModule.PlayIdle();
+        context.MyAnimModule.PlayAiming(false);
     }
 
 

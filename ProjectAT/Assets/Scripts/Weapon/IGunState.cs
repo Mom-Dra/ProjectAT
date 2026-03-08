@@ -13,8 +13,8 @@ public interface IGunState
     void Reload(Gun gun);
 }
 
-// Àá±ñ ´ë±â´Â ¼­¹ö¿¡¼­¸¸
-// ÀåÀüÀº Å¬¶ó¿¡¼­µµ!
+// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ó¿¡¼ï¿½ï¿½ï¿½!
 public class ReadyState : IGunState
 {
     public void Enter(Gun gun)
@@ -24,18 +24,20 @@ public class ReadyState : IGunState
 
     public void Fire(Gun gun)
     {
-        // ÇöÀç ÅºÃ¢ÀÌ 0ÀÌ¸é °¡¹æ ÅºÃ¢ 0 -> EmptyState
-        // ÇöÀç ÅºÃ¢ÀÌ 0 -> °¡¹æ ÅºÃ¢ 0 ÀÌ»ó -> Reload
+        // ï¿½ï¿½ï¿½ï¿½ ÅºÃ¢ï¿½ï¿½ 0ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ÅºÃ¢ 0 -> EmptyState
+        // ï¿½ï¿½ï¿½ï¿½ ÅºÃ¢ï¿½ï¿½ 0 -> ï¿½ï¿½ï¿½ï¿½ ÅºÃ¢ 0 ï¿½Ì»ï¿½ -> Reload
         if (gun.MagAmmo > 0)
         {
             gun.PerformFire();
-            gun.PlayFireRpc(); // ½ÇÁ¦ ¹ß»ç ·ÎÁ÷ (ÃÑ¾Ë °¨¼Ò, ÀÌÆåÆ® µî)
+            gun.PlayFireRpc(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½)
 
-            // ¸¶Áö¸· ÃÑ¾ËÀ» ½ú°í, ³²Àº ÃÑ¾ËÀÌ ÀÖ´Ù¸é ÀÚµ¿ ÀçÀåÀü
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (gun.MagAmmo == 0 && gun.RemainAmmo > 0)
                 gun.ChangeState(IGunState.ReloadState);
-            // ¾Æ´Ï¶ó¸é ¹ß»ç ÈÄ ´ë±â »óÅÂ·Î
-            else gun.ChangeState(IGunState.WaitState);
+            // ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½
+            else {
+            gun.ChangeState(IGunState.WaitState);
+            }
         }
     }
 
@@ -50,6 +52,7 @@ public class WaitState : IGunState
 {
     public void Enter(Gun gun)
     {
+        Debug.Log($"WaitState : Entered. in {gun.GunData.TimeBetFire} seconds");
         gun.StartCoroutine(WaitAndChangeState(gun));
     }
 
@@ -67,6 +70,7 @@ public class WaitState : IGunState
     {
         yield return new WaitForSeconds(gun.GunData.TimeBetFire);
 
+        Debug.Log("WaitState : Ended. Changing to ReadyState.");
         if (gun.MagAmmo > 0) gun.ChangeState(IGunState.ReadyState);
         else gun.ChangeState(IGunState.EmptyState);
     }
@@ -103,7 +107,7 @@ public class EmptyState : IGunState
 {
     public void Enter(Gun gun)
     {
-
+        Debug.Log("EmptyState : Entered.");
     }
 
     public void Fire(Gun gun)

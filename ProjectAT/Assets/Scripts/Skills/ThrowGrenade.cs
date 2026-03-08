@@ -23,7 +23,7 @@ public class ThrowGrenade : Skill
     {
         //Casting Start Logic
         Debug.Log("Throw Grenade Casting Started!");
-        context.MyAnimModule.PlayGrenadeThrow();
+        context.MyAnimModule.PlayGrenadeThrow(skillData.CastingTime);
     }
 
     public override void Execute()

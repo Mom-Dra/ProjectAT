@@ -12,24 +12,35 @@ public class Bullet : MonoBehaviour
     private Rigidbody rb;
 
     private PooledObject pooledObject;
+    private Coroutine currentCoroutine;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        pooledObject = GetComponent<PooledObject>();
     }
 
     public void Initialize(Vector3 destination, float lifetime)
     {
+        Debug.Log($"{gameObject.name} : Bullet Initialized.");
+        StopCurrentCoroutine();
         this.destination = destination;
 
-        StartCoroutine(BulletDestroyCoroutine(lifetime));
+        currentCoroutine = StartCoroutine(BulletDestroyCoroutine(lifetime));
     }
+
+    private void OnEnable()
+    {
+        pooledObject = GetComponent<PooledObject>();
+    }
+
 
     private void FixedUpdate()
     {
         if (Vector3.SqrMagnitude(rb.position - destination) < 0.7f)
+        {
+            Debug.Log($"{gameObject.name} : Bullet Reached Destination. : {rb.position} -> {destination}");
             DestroyBullet();
+        }
     }
 
     private IEnumerator BulletDestroyCoroutine(float lifetime)
@@ -40,7 +51,10 @@ public class Bullet : MonoBehaviour
 
     private void DestroyBullet()
     {
+        StopCurrentCoroutine();
+
         rb.linearVelocity = Vector3.zero;
+        Debug.Log($"{gameObject.name} : Bullet Destroyed.");
         gameObject.SetActive(false);
 
         pooledObject.ReturnToPool();
@@ -49,5 +63,14 @@ public class Bullet : MonoBehaviour
     public void SetVelocity(Vector3 velocity)
     {
         rb.linearVelocity = velocity;
+    }
+
+    private void StopCurrentCoroutine()
+    {
+        if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+            currentCoroutine = null;
+        }
     }
 }

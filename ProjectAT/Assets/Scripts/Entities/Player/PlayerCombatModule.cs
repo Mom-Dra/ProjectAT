@@ -16,9 +16,11 @@ public class PlayerCombatModule : MonoBehaviour
     private float LastFireTime;
     [SerializeField] private float arcHeight = 2.0f; //투사체의 최대 높이
     [SerializeField] private LayerMask ObstacleLayer;
+    [SerializeField] private float AimingCoolTime = 0.5f;
+    [SerializeField] private float currentAimingTime = 0f;
+    public bool IsAiming {get; private set;}
 
     public WeaponHolder MyWeapon => myWeapon;
-
     private void Awake()
     {
         InitiateComponents();
@@ -36,10 +38,18 @@ public class PlayerCombatModule : MonoBehaviour
         //enemyLayer = LayerMask.GetMask("Enemy");
         //throwPoint = transform.GetChild(2);
     }
-
+    
     private void Start()
     {
         Managers.Instance.UIManager.InitPlayerGunInfo(myWeapon);
+    }
+
+    private void Update()
+    {
+        if(IsAiming)
+        {
+            currentAimingTime += Time.deltaTime;
+        }
     }
 
     public bool IsEnemyInWeaponSight(Enemy enemy)
@@ -85,6 +95,7 @@ public class PlayerCombatModule : MonoBehaviour
     public bool CanFire()
     {
         return Time.time - LastFireTime > myWeapon.FireRate 
+        && currentAimingTime >= AimingCoolTime
         && myWeapon.IsAmmoLoaded();
     }
 
@@ -108,7 +119,7 @@ public class PlayerCombatModule : MonoBehaviour
     }
 
     
-   private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, myWeapon.Range);
@@ -121,17 +132,28 @@ public class PlayerCombatModule : MonoBehaviour
     public void NormalAttackEnemy(Enemy target)
     {
         Debug.Log($"Player Attack : {target.gameObject.name}");
-        LastFireTime = Time.time;
-        //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
-        myWeapon.FireWeapon();
-        if (target.TryGetComponent(out IDamageable damageable))
+        if (target.TryGetComponent(out IDamageable damageable)) 
+        {
+            LastFireTime = Time.time;
+            myWeapon.FireWeapon();
             damageable.TakeDamage(myWeapon.Damage);
+        }
     }
+
+    public void SetAiming(bool IsAiming)
+    {
+        if(this.IsAiming != IsAiming){
+            Debug.Log($"changed Aiming Mode : {IsAiming}");
+            this.IsAiming = IsAiming;
+            if(!IsAiming) currentAimingTime = 0f;
+        }
+    }
+
     public bool CanThrowSomethingToPosition(Vector3 position)
     {
-        return CheckPositionInRange(position, myStatus.ThrowRange) 
-        && CheckPositionVisibility(position);
+        return CheckPositionInRange(position, myStatus.ThrowRange);
+        //&& CheckPositionVisibility(position);
     }
 
     public void ThrowSomthingToTarget(GameObject thowingObject, Vector3 targetPos)
@@ -157,13 +179,6 @@ public class PlayerCombatModule : MonoBehaviour
         Vector3 displacementXZ = new Vector3(target.x - origin.x, 0, target.z - origin.z);
         float time = 0;
 
-        // 높이값 안전장치 (목표점이 내 위치보다 높을 경우, 최소한 그보다는 더 높게 던져야 함)
-        if (displacementY >= height)
-        {
-             height = displacementY; // 목표보다 1단위 더 높게 설정
-        }
-
-      
         float timeUp = Mathf.Sqrt(-2 * height / gravity);
 
         // 내려가는 시간 (최고점에서 목표점까지)

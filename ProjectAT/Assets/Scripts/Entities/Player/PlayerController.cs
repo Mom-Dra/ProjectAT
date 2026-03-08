@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float TickRate = 0.2f;
     private float LastTickTime = 0f;
 
-
     // 일단 로직 다 짜고
     // 이 로직이 이 클래스에 있는지 검증하자!
     private CoverObject currCoverObject;
@@ -107,19 +106,20 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
+        if (mySkillModule.ModuleState != SkillModuleState.Ready)
+        {
+            mySkillModule.SkillOnUpdate();
+        }
+        else if (SelectedEnemy != null)
+        {
+            EnemyAttackingSequence();
+            //ChaseEnemy();
+            //NormalAttackEnemy();
+        }    
+
         if(Time.time - LastTickTime > TickRate)
         {
-            //myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
-            if (mySkillModule.ModuleState != SkillModuleState.Ready)
-            {
-                mySkillModule.SkillOnUpdate();
-            }
-            else if (SelectedEnemy != null)
-            {
-                ChaseEnemy();
-                NormalAttackEnemy();
-            }
-
             myCoverModule.HandleCoverRaycast(Managers.Instance.InputManager.MousePosition);
             myInteractionModule.HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
 
@@ -127,7 +127,6 @@ public class PlayerController : MonoBehaviour
         }
         if(mySkillModule.IsTargetting) mySkillModule.SkillIndicatorUpdate();
         myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity());
-
     }
 
     #endregion
@@ -145,7 +144,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         mySkillModule.CancelCurrentSkill();
-        CancelNormalAttack();
+        AimingEnemy(false);
         CancelEnemySelect();
  
         NormalRightClickAction();
@@ -230,7 +229,7 @@ public class PlayerController : MonoBehaviour
     private void SetTargetEnemy(Enemy castedEnemy)
     {
         if (!castedEnemy) return;
-        SelectedEnemy = castedEnemy;
+        SelectedEnemy = castedEnemy;        
     }
 
     public void CancelEnemySelect()
@@ -238,39 +237,48 @@ public class PlayerController : MonoBehaviour
         SelectedEnemy = null;
     }
 
-    private void ChaseEnemy()
+    private void EnemyAttackingSequence()
     {
         if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
         {
             myMovementModule.PlayerMoveStop();
-        }
-        else
-        {
-            myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
-        }
-    }
+            AimingEnemy(true);
 
-    private void NormalAttackEnemy()
-    {
-        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy) && myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
-        {
-            myPlayerAnimator.PlayAiming();
-
-            if (myCombatModule.CanFire())
+            if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
             {
-                myCombatModule.NormalAttackEnemy(SelectedEnemy);
-                //myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);                
+                NormalAttackEnemy();
             }
         }
         else
         {
-            myPlayerAnimator.PlayIdle();
+            AimingEnemy(false);
+            ChaseEnemy();
         }
     }
 
-    private void CancelNormalAttack()
+    private void ChaseEnemy()
     {
-        myPlayerAnimator.SetShoot(false);
+        myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
+    }
+
+    private void AimingEnemy(bool isAiming)
+    {
+        myPlayerAnimator.PlayAiming(isAiming);
+        myCombatModule.SetAiming(isAiming);
+    }
+
+    private void NormalAttackEnemy()
+    {
+        if (myCombatModule.CanFire())
+        {
+            myCombatModule.NormalAttackEnemy(SelectedEnemy);
+            //myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);                
+        }
+        if(myCombatModule.MyWeapon.NowWeapon.RemainAmmo <= 0)
+        {
+            //재장전 로직
+            
+        }
     }
 
     private void CancelAllPlayerAction()

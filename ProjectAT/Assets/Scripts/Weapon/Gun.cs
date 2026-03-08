@@ -23,6 +23,8 @@ public class Gun : Weapon
     public override bool IsReady => gunState == IGunState.ReadyState;
     public override bool IsReloading => gunState == IGunState.ReloadState;
 
+    public string nowState;
+
 
 
     // Animator �� ���� ���� �ٿ����� �����غ���
@@ -71,6 +73,7 @@ public class Gun : Weapon
     internal void ChangeState(IGunState gunState)
     {
         this.gunState = gunState;
+        nowState = gunState.GetType().Name;
         gunState.Enter(this);
     }
 
@@ -78,6 +81,7 @@ public class Gun : Weapon
     internal void PerformFire()
     {
         --magAmmo;
+        Debug.Log($"{gameObject.name} : PerformFire");
 
         RaycastHit hit;
         Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * gunData.MaxDistance, Color.blue, 2f);
@@ -99,6 +103,10 @@ public class Gun : Weapon
                 bullet.Initialize(hit.point, 5f);
                 bullet.SetVelocity(transform.forward * 100f);
             }
+            else
+            {
+                Debug.LogWarning($"Bullet Prefab does not have a Bullet component attached.");
+            }
 
             // ������ ����
             if (hit.transform.TryGetComponent(out IDamageable damageable))
@@ -109,7 +117,8 @@ public class Gun : Weapon
             GameObject bulletObject = Managers.Instance.PoolManager.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
             if (bulletObject.TryGetComponent(out Bullet bullet))
             {
-                bullet.Initialize(muzzleParticleSystem.transform.position + muzzleParticleSystem.transform.forward * gunData.MaxDistance, 5f);
+                Vector3 dest = muzzleParticleSystem.transform.position + muzzleParticleSystem.transform.forward * gunData.MaxDistance;
+                bullet.Initialize(dest, 5f);
                 bullet.SetVelocity(transform.forward * 100f);
             }
         }

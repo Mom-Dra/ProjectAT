@@ -38,7 +38,8 @@ public class PoolManager
             pooledObject = returnObject.AddComponent<PooledObject>();
             pooledObject.Prefab = prefab;
         }
-
+        
+        returnObject.SetActive(true);  // 마지막에 활성화
         return returnObject;
     }
 
@@ -56,7 +57,7 @@ public class PoolManager
 
         void ActionOnGet(GameObject gameObject)
         {
-            gameObject.SetActive(true);
+            //gameObject.SetActive(true);
         }
 
         void ActionOnRelease(GameObject gameObject)
