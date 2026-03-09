@@ -125,7 +125,6 @@ public class WeaponHolder : MonoBehaviour
 
     public void FireWeapon()
     {
-        Debug.Log($"{gameObject.name} : WeaponHolder : FireWeapon -> currAmmo{nowWeapon.RemainAmmo} / maxAmmo{nowWeapon.MagAmmo}");
         nowWeapon.Attack();
         OnWeaponFired?.Invoke(nowWeapon);
     }

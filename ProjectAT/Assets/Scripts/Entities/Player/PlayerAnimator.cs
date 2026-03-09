@@ -1,4 +1,5 @@
 using MomDra.Weapon;
+using UnityEditor.Build;
 using UnityEngine;
 
 public enum SkillAnimationType : ushort
@@ -102,6 +103,7 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool(IsRunHash, isRunning);
     }
 
+
     public void PlayAttack()
     {
         animator.SetTrigger(AttackkHash);
@@ -120,12 +122,12 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetInteger(WeaponTypeHash, 2);
         animator.SetBool(ShootHash, false);
         animator.SetLayerWeight(MovementLayerHash,1f);
-        SetUpperBodyOffset(0f, 0f, 0f, 0f);
+        SetUpperBodyOffset(-0.8f, 0f, 0f, 0f);
     }
 
     public void PlayGrenadeThrow(float t = 1.0f)
     {
-        float targetSpeed = 45.0f/ (animationFPS * t);
+        float targetSpeed = 48.0f/ (animationFPS * t);
 
         animator.SetInteger(WeaponTypeHash, 10);
         weaponHolder.ChangeProjectileWeapon(WeaponHolder.WeaponSlot.Grenade);

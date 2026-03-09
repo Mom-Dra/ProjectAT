@@ -177,6 +177,7 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case 13: // Interactable Layer
+                    Debug.Log("Interactable Object Clicked");
                     myInteractionModule.HandleRightClick();
                     break;
 
