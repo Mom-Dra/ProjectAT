@@ -56,7 +56,6 @@
     <Compile Include="Assets\Scripts\Weapon\IGunState.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillData.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\EnableTrailAfterTime.cs" />
-    <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Scripts\Abstract\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAttackAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponStatus.cs" />
@@ -96,6 +95,7 @@
     <Compile Include="Assets\Scripts\Cover\CoverPulse.cs" />
     <Compile Include="Assets\Scripts\Manager\CursorManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\TreeTest.cs" />
+    <Compile Include="Assets\Scripts\Camera\RTSCameraController.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewVisuals.cs" />
     <Compile Include="Assets\Scripts\Pool\ReturnParticleOnStop.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
