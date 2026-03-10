@@ -26,8 +26,16 @@ public class PoolManager
     {
         GameObject returnObject = GetObject(prefab);
 
-        returnObject.transform.position = position;
-        returnObject.transform.rotation = rotation;
+        if (returnObject.TryGetComponent(out Rigidbody rigidbody))
+        {
+            rigidbody.position = position;
+            rigidbody.rotation = rotation;
+        }
+        else
+        {
+            returnObject.transform.position = position;
+            returnObject.transform.rotation = rotation;
+        }
 
         if (returnObject.TryGetComponent(out PooledObject pooledObject))
         {
