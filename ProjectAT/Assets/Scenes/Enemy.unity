@@ -3922,6 +3922,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1289574746 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4703819780765142057, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+  m_PrefabInstance: {fileID: 3734303634766787291}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1323554005
 GameObject:
   m_ObjectHideFlags: 0
@@ -7228,6 +7233,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2145079510353081862, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: eyePoint
+      value: 
+      objectReference: {fileID: 1289574746}
     - target: {fileID: 2145079510353081862, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: arcHeight
       value: 1

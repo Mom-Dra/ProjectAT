@@ -5,7 +5,7 @@ public class PlayerCombatModule : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private WeaponHolder myWeapon;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform eyePoint;
     [SerializeField] private EntityStatus myStatus;
     [SerializeField] private Transform throwPoint;
     //[SerializeField] private GameObject bulletPrefab;
@@ -21,6 +21,8 @@ public class PlayerCombatModule : MonoBehaviour
     public bool IsAiming {get; private set;}
 
     public WeaponHolder MyWeapon => myWeapon;
+    private Transform WeaponFirePoint => myWeapon.GunHolderTf;
+
     private void Awake()
     {
         InitiateComponents();
@@ -48,14 +50,14 @@ public class PlayerCombatModule : MonoBehaviour
     {
         if(IsAiming)
         {
-            currentAimingTime += Time.deltaTime;
+            currentAimingTime = Mathf.Min(Time.deltaTime + currentAimingTime + 0.1f, AimingCoolTime);
         }
     }
 
     public bool IsEnemyInWeaponSight(Enemy enemy)
     {
         return CheckPositionInRange(enemy.transform.position, myWeapon.Range)
-            && CheckEnemyVisibility(enemy);
+            && CheckEnemyVisibility(enemy, eyePoint);
     }
 
     private bool CheckPositionInRange(Vector3 pos, float range)
@@ -63,12 +65,12 @@ public class PlayerCombatModule : MonoBehaviour
         return (pos - transform.position).sqrMagnitude <= range * range;
     }
 
-    private bool CheckEnemyVisibility(Enemy targetEnemy)
+    private bool CheckEnemyVisibility(Enemy targetEnemy, Transform baseTf)
     {
-        Vector3 directionToEnemy = targetEnemy.transform.position - firePoint.position;
+        Vector3 directionToEnemy = targetEnemy.transform.position - baseTf.position;
         directionToEnemy.y = 0.0f;
 
-        Ray ray = new Ray(firePoint.position, directionToEnemy);
+        Ray ray = new Ray(baseTf.position, directionToEnemy);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
         {
             if (hitInfo.collider.gameObject == targetEnemy.gameObject)
@@ -110,7 +112,7 @@ public class PlayerCombatModule : MonoBehaviour
                 if (enemyColliderBuffer[i] != null)
                 {
                     scanned = enemyColliderBuffer[i].GetComponent<Enemy>();
-                    if(scanned && CheckEnemyVisibility(scanned)) break;
+                    if(scanned && CheckEnemyVisibility(scanned, eyePoint)) break;
                 }
             }
         }
@@ -125,7 +127,7 @@ public class PlayerCombatModule : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, myWeapon.Range);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(firePoint.position, firePoint.position + firePoint.forward * myWeapon.Range);
+        Gizmos.DrawLine(eyePoint.position, eyePoint.position + eyePoint.forward * myWeapon.Range);
     }
 
 

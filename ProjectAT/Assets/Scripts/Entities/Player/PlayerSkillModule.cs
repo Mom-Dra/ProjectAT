@@ -202,6 +202,7 @@ public class PlayerSkillModule : MonoBehaviour
         ModuleState = SkillModuleState.Chasing;
         
         currentActivateSkillNumber = lastSkillInput;
+        MyCombatModule.SetAiming(false);
         CancelTargettingMode();
     }
 
