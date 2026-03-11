@@ -146,7 +146,6 @@ public class PlayerCombatModule : MonoBehaviour
     public void SetAiming(bool IsAiming)
     {
         if(this.IsAiming != IsAiming){
-            Debug.Log($"changed Aiming Mode : {IsAiming}");
             this.IsAiming = IsAiming;
             if(!IsAiming) currentAimingTime = 0f;
         }

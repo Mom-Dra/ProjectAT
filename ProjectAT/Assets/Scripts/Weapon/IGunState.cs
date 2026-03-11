@@ -70,7 +70,6 @@ public class WaitState : IGunState
     {
         yield return new WaitForSeconds(gun.GunData.TimeBetFire);
 
-        Debug.Log("WaitState : Ended. Changing to ReadyState.");
         if (gun.MagAmmo > 0) gun.ChangeState(IGunState.ReadyState);
         else gun.ChangeState(IGunState.EmptyState);
     }

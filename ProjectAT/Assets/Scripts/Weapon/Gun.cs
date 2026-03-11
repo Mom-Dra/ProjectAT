@@ -23,8 +23,6 @@ public class Gun : Weapon
     public override bool IsReady => gunState == IGunState.ReadyState;
     public override bool IsReloading => gunState == IGunState.ReloadState;
 
-    public string nowState;
-
 
 
     // Animator �� ���� ���� �ٿ����� �����غ���
@@ -73,7 +71,6 @@ public class Gun : Weapon
     internal void ChangeState(IGunState gunState)
     {
         this.gunState = gunState;
-        nowState = gunState.GetType().Name;
         gunState.Enter(this);
     }
 
@@ -81,13 +78,12 @@ public class Gun : Weapon
     internal void PerformFire()
     {
         --magAmmo;
-        Debug.Log($"{gameObject.name} : PerformFire");
 
         RaycastHit hit;
         Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * gunData.MaxDistance, Color.blue, 2f);
         if (Physics.Raycast(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward, out hit, gunData.MaxDistance, LayerMask.GetMask("Player")))
         {
-            Debug.Log("�¾Ҵ�!!");
+            //Debug.Log("�¾Ҵ�!!");
 
             Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * Vector3.Distance(muzzleParticleSystem.transform.position, hit.point), Color.red, 2f);
 

@@ -21,7 +21,6 @@ public class Bullet : MonoBehaviour
 
     public void Initialize(Vector3 destination, float lifetime)
     {
-        Debug.Log($"{gameObject.name} : Bullet Initialized.");
         StopCurrentCoroutine();
         this.destination = destination;
 
@@ -38,7 +37,6 @@ public class Bullet : MonoBehaviour
     {
         if (Vector3.SqrMagnitude(rb.position - destination) < 0.7f)
         {
-            Debug.Log($"{gameObject.name} : Bullet Reached Destination. : {rb.position} -> {destination}");
             DestroyBullet();
         }
     }
@@ -54,7 +52,6 @@ public class Bullet : MonoBehaviour
         StopCurrentCoroutine();
 
         rb.linearVelocity = Vector3.zero;
-        Debug.Log($"{gameObject.name} : Bullet Destroyed.");
         gameObject.SetActive(false);
 
         pooledObject.ReturnToPool();
