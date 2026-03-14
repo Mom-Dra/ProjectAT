@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 8253291814250753620}
   - component: {fileID: 7776420584000269087}
   - component: {fileID: 5583014609316259494}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SM_Bld_Barracks_01 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +310,9 @@ GameObject:
   - component: {fileID: 5598700975958182234}
   - component: {fileID: 4414566799609464948}
   - component: {fileID: 2245605027911072502}
-  m_Layer: 0
+  - component: {fileID: 2083574276255254519}
+  - component: {fileID: 4190753569940874676}
+  m_Layer: 13
   m_Name: SM_Bld_Barracks_01 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,6 +403,39 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.84900004, y: 1.6890001, z: 0}
   m_TimeToStationary: 0.5
+--- !u!65 &2083574276255254519
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3522293609930430029}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.698255, y: 3.3788753, z: 0.0000019073486}
+  m_Center: {x: 0.84912807, y: 1.6894376, z: 0.0000009536743}
+--- !u!114 &4190753569940874676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3522293609930430029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3723252593974001576
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,7 +448,9 @@ GameObject:
   - component: {fileID: 9034455316721010501}
   - component: {fileID: 5180036564052175790}
   - component: {fileID: 8882883565745660549}
-  m_Layer: 0
+  - component: {fileID: 6565329652256240035}
+  - component: {fileID: 4802521510209019195}
+  m_Layer: 13
   m_Name: SM_Bld_Barracks_01 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -504,6 +541,39 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.84900004, y: 1.6890001, z: 0}
   m_TimeToStationary: 0.5
+--- !u!65 &6565329652256240035
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723252593974001576}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.698255, y: 3.3788753, z: 0.0000019073486}
+  m_Center: {x: -0.84912807, y: 1.6894376, z: -0.0000009536743}
+--- !u!114 &4802521510209019195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723252593974001576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4852156246439898522
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +722,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8886221194011021651}
-  m_Layer: 0
+  - component: {fileID: 9094935944470420509}
+  - component: {fileID: 6631025659445385189}
+  m_Layer: 13
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,6 +748,85 @@ Transform:
   - {fileID: 105357120057239139}
   m_Father: {fileID: 403294}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9094935944470420509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385410139998972733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93700d098336304cb57e6331193aa77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftDoor: {fileID: 2880114002253660946}
+  rightDoor: {fileID: 105357120057239139}
+  openAngle: 90
+  openTime: 0.5
+--- !u!114 &6631025659445385189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6385410139998972733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe91dc294731a9428c0941ea7579110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  complexMaskingMode: 0
+  drawingMode: 1
+  outlineLayer: 0
+  outlineTargets:
+  - CutoutMask: 8
+    renderer: {fileID: 4414566799609464948}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 5180036564052175790}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  renderStyle: 1
+  outlineParameters:
+    enabled: 0
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 0
+    blurShift: 0.5
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+  backParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+  frontParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
 --- !u!1 &6688906717871113460
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +945,7 @@ GameObject:
   - component: {fileID: 821782727356156128}
   - component: {fileID: 7918599956411356293}
   - component: {fileID: 5597793639891591250}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SM_Bld_Barracks_01 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
