@@ -153,6 +153,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseWheelButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""0604113e-7350-46e1-b650-c8ba6c762652"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""haha"",
+                    ""type"": ""Value"",
+                    ""id"": ""2223293a-4c9c-4b37-b0f8-93cbb943d2a1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""Value"",
+                    ""id"": ""735a4d28-3667-4f0f-b9a4-87624ad568f0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseWheelDelta"",
+                    ""type"": ""Value"",
+                    ""id"": ""a6fe02d2-2e9a-488c-9886-88557b090ced"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -232,6 +268,72 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""UseBandage"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""040453e5-76c6-47ae-87ac-e6802052177d"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseWheelButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""0d2cb2b9-c5e6-4f5b-9062-244a7930c910"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""haha"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""5c88fafa-6c7b-4c46-bd28-a329c863a9fc"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""haha"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""59b550a1-cedf-4fdf-9bbe-2b0601653327"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""haha"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8b3af7e-7c9f-46c5-b4d4-4c9ff5c6eef6"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9429a1fc-6ea0-4c17-a4bf-5cc59be097ef"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseWheelDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -253,6 +355,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_SkillOne = m_Player.FindAction("SkillOne", throwIfNotFound: true);
         m_Player_GrenadeThrow = m_Player.FindAction("GrenadeThrow", throwIfNotFound: true);
         m_Player_UseBandage = m_Player.FindAction("UseBandage", throwIfNotFound: true);
+        m_Player_MouseWheelButton = m_Player.FindAction("MouseWheelButton", throwIfNotFound: true);
+        m_Player_haha = m_Player.FindAction("haha", throwIfNotFound: true);
+        m_Player_MouseDelta = m_Player.FindAction("MouseDelta", throwIfNotFound: true);
+        m_Player_MouseWheelDelta = m_Player.FindAction("MouseWheelDelta", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -340,6 +446,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SkillOne;
     private readonly InputAction m_Player_GrenadeThrow;
     private readonly InputAction m_Player_UseBandage;
+    private readonly InputAction m_Player_MouseWheelButton;
+    private readonly InputAction m_Player_haha;
+    private readonly InputAction m_Player_MouseDelta;
+    private readonly InputAction m_Player_MouseWheelDelta;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -379,6 +489,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/UseBandage".
         /// </summary>
         public InputAction @UseBandage => m_Wrapper.m_Player_UseBandage;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MouseWheelButton".
+        /// </summary>
+        public InputAction @MouseWheelButton => m_Wrapper.m_Player_MouseWheelButton;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/haha".
+        /// </summary>
+        public InputAction @haha => m_Wrapper.m_Player_haha;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MouseDelta".
+        /// </summary>
+        public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MouseWheelDelta".
+        /// </summary>
+        public InputAction @MouseWheelDelta => m_Wrapper.m_Player_MouseWheelDelta;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -426,6 +552,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UseBandage.started += instance.OnUseBandage;
             @UseBandage.performed += instance.OnUseBandage;
             @UseBandage.canceled += instance.OnUseBandage;
+            @MouseWheelButton.started += instance.OnMouseWheelButton;
+            @MouseWheelButton.performed += instance.OnMouseWheelButton;
+            @MouseWheelButton.canceled += instance.OnMouseWheelButton;
+            @haha.started += instance.OnHaha;
+            @haha.performed += instance.OnHaha;
+            @haha.canceled += instance.OnHaha;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
+            @MouseWheelDelta.started += instance.OnMouseWheelDelta;
+            @MouseWheelDelta.performed += instance.OnMouseWheelDelta;
+            @MouseWheelDelta.canceled += instance.OnMouseWheelDelta;
         }
 
         /// <summary>
@@ -458,6 +596,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UseBandage.started -= instance.OnUseBandage;
             @UseBandage.performed -= instance.OnUseBandage;
             @UseBandage.canceled -= instance.OnUseBandage;
+            @MouseWheelButton.started -= instance.OnMouseWheelButton;
+            @MouseWheelButton.performed -= instance.OnMouseWheelButton;
+            @MouseWheelButton.canceled -= instance.OnMouseWheelButton;
+            @haha.started -= instance.OnHaha;
+            @haha.performed -= instance.OnHaha;
+            @haha.canceled -= instance.OnHaha;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
+            @MouseWheelDelta.started -= instance.OnMouseWheelDelta;
+            @MouseWheelDelta.performed -= instance.OnMouseWheelDelta;
+            @MouseWheelDelta.canceled -= instance.OnMouseWheelDelta;
         }
 
         /// <summary>
@@ -560,5 +710,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUseBandage(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseWheelButton" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseWheelButton(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "haha" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHaha(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseDelta(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseWheelDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseWheelDelta(InputAction.CallbackContext context);
     }
 }

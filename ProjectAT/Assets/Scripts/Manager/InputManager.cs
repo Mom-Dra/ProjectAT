@@ -10,6 +10,9 @@ public class InputManager
     private InputReader inputReader;
 
     public Vector2 MousePosition => inputReader.MousePosition;
+    public Vector2 MouseDelta => inputReader.MouseDelta;
+    public Vector2 MouseWheelDelta => inputReader.MouseWheelDelta;
+    public bool IsWheelClickHolding => inputReader.IsWheelClickHolding;
 
     public InputManager(InputReader inputReader)
     {
