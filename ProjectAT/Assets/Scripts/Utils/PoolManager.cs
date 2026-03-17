@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using EPOOutline;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
