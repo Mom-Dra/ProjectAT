@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1787783839931291843}
   - component: {fileID: 5621350402106249379}
   - component: {fileID: 3529064226399356971}
+  - component: {fileID: 5666529543979570680}
   m_Layer: 0
   m_Name: rock_brown_a
   m_TagString: Untagged
@@ -107,3 +108,25 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!64 &5666529543979570680
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800465787823658016}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 2aaaa3e559787f149b626c988e013880, type: 3}
