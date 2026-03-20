@@ -231,7 +231,8 @@ public class PlayerSkillModule : MonoBehaviour
 
     private bool CanSelectTarget(in RaycastHit hit)
     {
-        return mySkills[(int)lastSkillInput].CanSelectTarget(hit);
+        if(!hit.collider) return false;
+        else return mySkills[(int)lastSkillInput].CanSelectTarget(hit);
     }
 
     public void SelectTarget()
