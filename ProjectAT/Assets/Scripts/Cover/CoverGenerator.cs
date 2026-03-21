@@ -2,6 +2,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class CoverGenerator : MonoBehaviour
 {
     [SerializeField]
@@ -28,8 +29,8 @@ public class CoverGenerator : MonoBehaviour
 
     private void CreatePoint(Vector3 direction, Bounds bounds)
     {
-        // À§Ä¡ °è»ê: Áß½É + (¹æÇâ * (¹ÝÁö¸§ + ¿ÀÇÁ¼Â))
-        // bounds.extends´Â Áß½É¿¡¼­ ³¡±îÁöÀÇ °Å¸®(¹ÝÁö¸§ °³³ä)
+        // ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½: ï¿½ß½ï¿½ + (ï¿½ï¿½ï¿½ï¿½ * (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½))
+        // bounds.extendsï¿½ï¿½ ï¿½ß½É¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         float dist = (direction.x != 0) ? bounds.extents.x : bounds.extents.z;
         Vector3 spawnPos = transform.position + (direction * (dist + offset));
 
