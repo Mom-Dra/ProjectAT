@@ -12,7 +12,7 @@ public class Gun : Weapon
 
     private LineRenderer lineRenderer;
     private AudioSource audioSource;
-    private ParticleSystem muzzleParticleSystem;
+    [SerializeField] private ParticleSystem muzzleParticleSystem;
 
     private int remainAmmo; // ���� ��ü ź��
     private int magAmmo; // źâ�� ���� ź��
@@ -98,10 +98,6 @@ public class Gun : Weapon
             {
                 bullet.Initialize(hit.point, 5f);
                 bullet.SetVelocity(transform.forward * 100f);
-            }
-            else
-            {
-                Debug.LogWarning($"Bullet Prefab does not have a Bullet component attached.");
             }
 
             // ������ ����

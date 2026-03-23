@@ -157,11 +157,11 @@ public class PlayerCombatModule : MonoBehaviour
         //&& CheckPositionVisibility(position);
     }
 
-    public void ThrowSomthingToTarget(GameObject thowingObject, Vector3 targetPos)
+    public void ThrowSomthingToTarget(GameObject throwingObject, Vector3 targetPos)
     {
+        throwingObject.transform.position = throwPoint.position;
         Vector3 velocity = CalculateVelocity(throwPoint.position + Vector3.up, targetPos, arcHeight);        
-        GameObject thrownObj = Instantiate(thowingObject, throwPoint.position + Vector3.up, Quaternion.identity);
-        thrownObj.GetComponent<ProjectileGrenade>().Throw(velocity);
+        throwingObject.GetComponent<ProjectileGrenade>().Throw(velocity); //projectle이라는 인터페이스같은걸로 바꾸기
     }
 
     /// <summary>

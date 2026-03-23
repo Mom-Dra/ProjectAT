@@ -12,7 +12,7 @@ public class ProjectileGrenade : MonoBehaviour
         get { return explodeDamage; }
         set { explodeDamage = value < 0 ? 0 : value; }
     }
-    public float ExplosionRadius { get { return explosionRadius; } }
+    public float ExplosionRadius { get { return explosionRadius; } set { explosionRadius = value < 0 ? 0.1f : value; } }
     [SerializeField] private LayerMask damageableLayers;
     [SerializeField] private float fuseTime = 3f;
     [SerializeField] private float arcHeight = 2.0f;     // 수류탄이 날아갈 때의 최고 높이

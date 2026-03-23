@@ -28,7 +28,13 @@ public class ThrowGrenade : Skill
 
     public override void Execute()
     {
-        context.MyCombatModule.ThrowSomthingToTarget(skillData.SkillEffectPrefab, targetPosition);
+        //GameObject gameObject = Managers.Instance.PoolManager.GetObject(skillData.SkillEffectPrefab, context.transform.position, Quaternion.identity);
+        GameObject grenade = UnityEngine.Object.Instantiate(skillData.SkillEffectPrefab, context.transform.position, Quaternion.identity);
+        ProjectileGrenade proj = grenade.GetComponent<ProjectileGrenade>();
+        proj.ExplodeDamage = skillData.Damage;
+        proj.ExplosionRadius = skillData.AOERadius;
+
+        context.MyCombatModule.ThrowSomthingToTarget(grenade, targetPosition);
     }
 
     public override void OnCastingEnd()
@@ -50,7 +56,7 @@ public class ThrowGrenade : Skill
     public override void OnUiActivate()
     {
         //Cursor.SetCursor(skillData.CursorSkin, new Vector2(skillData.CursorSkin.width * 0.5f, skillData.CursorSkin.height * 0.5f), CursorMode.Auto);
-        float indicatorSize = skillData.SkillEffectPrefab.GetComponent<ProjectileGrenade>().ExplosionRadius;
+        float indicatorSize = skillData.AOERadius;
         context.MyEffectModule.ShowIndicator(targetPosition, IndicatorType.GroundSkillIndicator, indicatorSize);
     }
 

@@ -26,17 +26,18 @@ public class PoolManager
     public GameObject GetObject(GameObject prefab, Vector3 position, Quaternion rotation)
     {
         GameObject returnObject = GetObject(prefab);
-
-        if (returnObject.TryGetComponent(out Rigidbody rigidbody))
-        {
-            rigidbody.position = position;
-            rigidbody.rotation = rotation;
-        }
-        else
-        {
-            returnObject.transform.position = position;
-            returnObject.transform.rotation = rotation;
-        }
+        returnObject.transform.position = position;
+        returnObject.transform.rotation = rotation;
+        // if (returnObject.TryGetComponent(out Rigidbody rigidbody))
+        // {   
+        //     rigidbody.position = position;
+        //     rigidbody.rotation = rotation;
+        // }
+        // else
+        // {
+        //     returnObject.transform.position = position;
+        //     returnObject.transform.rotation = rotation;
+        // }
 
         if (returnObject.TryGetComponent(out PooledObject pooledObject))
         {

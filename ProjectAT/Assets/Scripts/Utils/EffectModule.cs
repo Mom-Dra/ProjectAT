@@ -66,10 +66,10 @@ public class EffectModule : MonoBehaviour
         bulletComponent.SetVelocity((dest - firingEffectSpawnPoint.position).normalized * 100f);
     }
 
-    public void ShowIndicator(Vector3 dest, IndicatorType type, float size)
+    public void ShowIndicator(Vector3 dest, IndicatorType type, float radius)
     {
         indicators[(int)type].transform.position = dest;
-        indicators[(int)type].Show(size);
+        indicators[(int)type].Show(radius * 2);
     }
 
     public void HideIndicator(IndicatorType type)
