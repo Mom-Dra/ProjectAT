@@ -5,58 +5,18 @@ public class DummySkill : Skill
     public DummySkill(PlayerSkillModule context, SkillData skillData) : base(context, skillData)
     {
     }
-    
-    public override Vector3 TargetPosition => Vector3.zero;
 
-
-    public override void CancelSkill()
+    public override bool CanExecute(SkillContext skillContext)
     {
-        
+        return false;
     }
 
-    public override void Execute()
-    {
-       Debug.Log("Dummy Skill Executed!");
-    }
-
-    public override bool CanExecute()
-    {
-        return true;
-    }
-
-    public override bool CanSelectTarget(in RaycastHit hit)
-    {
-        return true;
-    }
-
-    public override void OnCastingEnd()
-    {
-        
-    }
-
-    public override void OnCastingStart()
+    public override void Execute(SkillContext skillContext)
     {
     }
 
-    public override void OnChasing()
+    public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
     {
-    }
-
-    public override void OnChasingStart()
-    {
-    }
-
-    public override void OnUiActivate()
-    {
-        Cursor.SetCursor(skillData.SkillIcon.texture, Vector2.zero, CursorMode.Auto);
-    }
-
-    public override void OnUiDeactivate()
-    {
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-    }
-
-    public override void OnUiUpdate()
-    {
+        throw new System.NotImplementedException();
     }
 }

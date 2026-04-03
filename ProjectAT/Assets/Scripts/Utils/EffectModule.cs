@@ -18,6 +18,7 @@ public class EffectModule : MonoBehaviour
     [Header("Indicator Prefabs")]
     [SerializeField] private GameObject moveIndicatorPrefab;
     [SerializeField] private GameObject groundSkillIndicatorPrefab;
+    [SerializeField] private Texture2D targettingSkillCursor; //TargettingSkill의 커서 스킨. EffectModule이 해당 스킬의 IndicatorType을 보고 커서 스킨을 바꿔주는 방식으로 처리.
 
     [Header("Indicator Params")]
     [SerializeField] private IndicatorBase[] indicators;
@@ -52,28 +53,29 @@ public class EffectModule : MonoBehaviour
         indicators[(int)IndicatorType.GroundSkillIndicator].Hide();
     }
 
-    public void PlayFiringEffect(Vector3 dest)
-    {
-        Bullet bulletComponent
-            = Instantiate(bulletProjectile,
-            firingEffectSpawnPoint.position,
-            firingEffectSpawnPoint.rotation
-            ).GetComponent<Bullet>();   //���߿� ������Ʈ Ǯ���� ���̹Ƿ� ������û ������ ���� �������.
-
-        //�̺κе� Bullet �Լ� �ȿ�..
-        bulletComponent.Initialize(dest, 2f);
-        bulletComponent.transform.forward = (dest - firingEffectSpawnPoint.position).normalized;
-        bulletComponent.SetVelocity((dest - firingEffectSpawnPoint.position).normalized * 100f);
-    }
-
     public void ShowIndicator(Vector3 dest, IndicatorType type, float radius)
     {
+        if(type == IndicatorType.TargettingSkillIndicator)
+        {
+            ShowAimingCursor();
+            return;
+        }
         indicators[(int)type].transform.position = dest;
         indicators[(int)type].Show(radius * 2);
     }
 
+    private void ShowAimingCursor()
+    {
+        Cursor.SetCursor(targettingSkillCursor, Vector2.zero, CursorMode.Auto);
+    }
+
     public void HideIndicator(IndicatorType type)
     {
+        if(type == IndicatorType.TargettingSkillIndicator)
+        {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            return;
+        }
         indicators[(int)type].Hide();
     }
 

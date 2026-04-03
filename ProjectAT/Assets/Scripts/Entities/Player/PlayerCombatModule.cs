@@ -81,6 +81,28 @@ public class PlayerCombatModule : MonoBehaviour
         return false;
     }
 
+    public bool IsTargetInWeaponSight(GameObject target) //해당 코드가 잘 유효하면 위의 동명의 함수 제거
+    {
+        return CheckPositionInRange(target.transform.position, myWeapon.Range)
+            && CheckTargetVisibility(target, eyePoint);
+    }
+
+    private bool CheckTargetVisibility(GameObject target, Transform baseTf)
+    {
+        Vector3 directionToTarget = target.transform.position - baseTf.position;
+        directionToTarget.y = 0.0f;
+
+        Ray ray = new Ray(baseTf.position, directionToTarget);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
+        {
+            if (hitInfo.collider.gameObject == target)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private bool CheckPositionVisibility(Vector3 targetPos) //중복되는 부분이 있다. 리펙토링 고려
     {
         Ray ray = new Ray(throwPoint.position, targetPos - throwPoint.position);

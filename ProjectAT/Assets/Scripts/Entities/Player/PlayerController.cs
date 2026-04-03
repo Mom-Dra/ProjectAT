@@ -1,16 +1,9 @@
-using EPOOutline.Demo;
-using System.Collections;
-using System.Linq;
-using Unity.Burst;
-using Unity.Services.Lobbies.Models;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.UI;
+using PlayerStateMachine;
+using PlayerStatusCapabilities;
+using System;
+
 
 public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey }
 
@@ -30,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Enemy")]
     public Enemy SelectedEnemy;
+    public GameObject SelectedObject;
 
     [Header("Layers")]
     //[SerializeField] private LayerMask groundLayer;
@@ -40,13 +34,30 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float TickRate = 0.2f;
     private float LastTickTime = 0f;
 
-    // 일단 로직 다 짜고
-    // 이 로직이 이 클래스에 있는지 검증하자!
-    private CoverObject currCoverObject;
-    private CoverPoint currCoverPoint;
+    #region StateMachine
+    public PlayerState CurrentState { get; private set; }
+    public NormalState NormalState{ get; private set; }
+    public SkillChaseState SkillChaseState { get; private set; }
+    public SkillCastState SkillCastingState { get; private set; }
+    public DeadState DeadState { get; private set; }
 
-    private Coroutine moveCoroutine;
-    private CoverPoint targetCoverPoint;
+    #endregion
+
+    #region Getters
+    public PlayerMovementModule MyMovementModule => myMovementModule;
+    public PlayerCombatModule MyCombatModule => myCombatModule;
+    public PlayerSkillModule MySkillModule => mySkillModule;
+    public PlayerCoverModule MyCoverModule => myCoverModule;
+    public PlayerInteractionModule MyInteractionModule => myInteractionModule;
+
+    
+    #endregion
+
+    // //일단 로직 다 짜고, 이 로직이 이 클래스에 있는지 검증하자!
+    // private CoverObject currCoverObject;
+    // private CoverPoint currCoverPoint;
+    // private Coroutine moveCoroutine;
+    // private CoverPoint targetCoverPoint;
 
     #region 초기화
     private void InitiateComponents()
@@ -59,6 +70,15 @@ public class PlayerController : MonoBehaviour
         myCoverModule = GetComponent<PlayerCoverModule>();
         myInteractionModule = GetComponent<PlayerInteractionModule>();
         myStatus = GetComponent<EntityStatus>();
+    }
+    private void InitiateStateMachine()
+    {
+        NormalState = new NormalState(this);
+        SkillChaseState = new SkillChaseState(this);
+        SkillCastingState = new SkillCastState(this);
+        DeadState = new DeadState(this);
+        CurrentState = NormalState;
+        CurrentState.OnEnter();
     }
 
     private void LinkInputEventsAll()
@@ -85,8 +105,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         InitiateComponents();
+        InitiateStateMachine();
         myCamera = Camera.main;
         LastTickTime = Time.time;
+
     }
 
     private void Start()
@@ -106,27 +128,35 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
-        if (mySkillModule.ModuleState != SkillModuleState.Ready)
-        {
-            mySkillModule.SkillOnUpdate();
-        }
-        else if (SelectedEnemy != null)
-        {
-            EnemyAttackingSequence();
-            //ChaseEnemy();
-            //NormalAttackEnemy();
-        }    
+        // //myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
+        // if (mySkillModule.ModuleState != SkillModuleState.Ready)
+        // {
+        //     mySkillModule.SkillOnUpdate();
+        // }
+        // else if (SelectedEnemy != null)
+        // {
+        //     EnemyAttackingSequence();
+        //     //ChaseEnemy();
+        //     //NormalAttackEnemy();
+        // }    
 
-        if(Time.time - LastTickTime > TickRate)
-        {
-            myCoverModule.HandleCoverRaycast(Managers.Instance.InputManager.MousePosition);
-            myInteractionModule.HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
+        // if(Time.time - LastTickTime > TickRate)
+        // {
+        //     myCoverModule.HandleCoverRaycast(Managers.Instance.InputManager.MousePosition);
+        //     myInteractionModule.HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
 
-            LastTickTime = Time.time;
-        }
+        //     LastTickTime = Time.time;
+        // }
+
+        // myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity());
+        // if(mySkillModule.IsTargetting) mySkillModule.SkillIndicatorUpdate();
+        myCoverModule.HandleCoverRaycast(Managers.Instance.InputManager.MousePosition);
+        myInteractionModule.HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
+        
+        CurrentState.OnUpdate();
+
+        myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity()); //애니메이션을 위한 이동속도 조절.
         if(mySkillModule.IsTargetting) mySkillModule.SkillIndicatorUpdate();
-        myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity());
     }
 
     #endregion
@@ -135,19 +165,24 @@ public class PlayerController : MonoBehaviour
     public void HandlePlayerRightClickInput()
     {
         if(EventSystem.current.IsPointerOverGameObject()) return;
-        if(myStatus.IsDead) return;
-
+        // if(myStatus.IsDead) return;
         
-        if(mySkillModule.IsTargetting)
-        {
-            mySkillModule.CancelTargettingMode();
-            return;
-        }
-        mySkillModule.CancelCurrentSkill();
-        AimingEnemy(false);
-        CancelEnemySelect();
+        // if(mySkillModule.IsTargetting) //스킬 타겟팅 모드에서 우클릭하면 스킬 취소
+        // {
+        //     mySkillModule.CancelTargettingMode();
+        //     return;
+        // }
+
+        // mySkillModule.CancelCurrentSkill(); //스킬 casting 또는 스킬 chasing의 exit 부분
+        // AimingEnemy(false); 
+        // CancelEnemySelect();
  
-        NormalRightClickAction();
+        // NormalRightClickAction();
+        if(CurrentState is IRightClickHandler state)
+        {
+            state.OnRightClick(RaycastAtMouseLocation(out RaycastHit ray) ? ray : new RaycastHit());
+        }
+
     }
 
     private void NormalRightClickAction()
@@ -175,12 +210,10 @@ public class PlayerController : MonoBehaviour
                     if (ray.transform.TryGetComponent(out CoverPoint coverPoint))
                         myCoverModule.StartMoveToCover(coverPoint);
                     break;
-
                 case 13: // Interactable Layer
                     Debug.Log("Interactable Object Clicked");
                     myInteractionModule.HandleRightClick();
                     break;
-
                 default:
                     break;
             }
@@ -206,19 +239,27 @@ public class PlayerController : MonoBehaviour
 
     public void HandleLeftClickInput()
     {
-        if(mySkillModule.IsTargetting)
+        // if(mySkillModule.IsTargetting)
+        // {
+        //     mySkillModule.SelectTarget();
+        // }
+        if(CurrentState is ILeftClickHandler state)
         {
-            mySkillModule.SelectTarget();
+            state.OnLeftClick(RaycastAtMouseLocation(out RaycastHit ray) ? ray : new RaycastHit());
         }
     }
 
     public void HandlePlayerSkillInput(SkillNumber index)
     {
-        if(myStatus.IsDead) return;
-        mySkillModule.ActivateTargettingMode(index);
+        // if(myStatus.IsDead) return;
+        // mySkillModule.ActivateTargettingMode(index);
+        if(CurrentState is ISkillInputHandler state)
+        {
+            state.OnSkillInput(index);
+        }
     }
 
-    private void PlayerMove(Vector3 pos, bool isRun)
+    public void PlayerMove(Vector3 pos, bool isRun)
     {
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
@@ -227,7 +268,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region 전투관련 함수
-    private void SetTargetEnemy(Enemy castedEnemy)
+    public void SetTargetEnemy(Enemy castedEnemy)
     {
         if (!castedEnemy) return;
         SelectedEnemy = castedEnemy;        
@@ -238,7 +279,7 @@ public class PlayerController : MonoBehaviour
         SelectedEnemy = null;
     }
 
-    private void EnemyAttackingSequence()
+    public void EnemyAttackingSequence()
     {
         if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
         {
@@ -262,7 +303,7 @@ public class PlayerController : MonoBehaviour
         myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
     }
 
-    private void AimingEnemy(bool isAiming)
+    public void AimingEnemy(bool isAiming)
     {
         myPlayerAnimator.PlayAiming(isAiming);
         myCombatModule.SetAiming(isAiming);
@@ -288,6 +329,27 @@ public class PlayerController : MonoBehaviour
         mySkillModule.CancelCurrentSkill();
         CancelEnemySelect();
     }
+    #endregion
+    #region StateMachine관련 함수
+    public void ChangeState(PlayerStateType newState)
+    {
+        CurrentState?.OnExit();
+        CurrentState = GetState(newState);
+        CurrentState.OnEnter();
+    }
 
+    public PlayerState GetState(PlayerStateType type)
+    {
+        PlayerState nextState = type switch
+        {
+            PlayerStateType.Normal => NormalState,
+            PlayerStateType.SkillChase => SkillChaseState,
+            PlayerStateType.SkillCast => SkillCastingState,
+            PlayerStateType.Dead => DeadState,
+            _ => throw new ArgumentException($"Undefined State Type: {type}"),
+        };
+
+        return nextState;
+    }
     #endregion
 }

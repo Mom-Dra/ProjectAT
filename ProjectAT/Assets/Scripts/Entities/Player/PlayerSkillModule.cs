@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using PlayerStateMachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum  SkillModuleState : ushort
@@ -13,7 +16,6 @@ public enum  SkillModuleState : ushort
 public enum SkillNumber : short
 {
     None = -1,
-
     MainSkillOne,   //q
     MainSkillTwo,   //w
     Grenade,        //e
@@ -32,19 +34,21 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public EffectModule MyEffectModule {get; private set;}
     [SerializeField] public Inventory MyInventory {get; private set;}
 
+    private SkillChaseState skillChaseState;
+    private SkillCastState skillCastState;
+
     [Header("Skills")]
     private Skill[] mySkills = new Skill[5]; //갯수 조정 필요
     //private Skill CurrentActivateSkill;
     private SkillNumber currentActivateSkillNumber;
     private float currentSkillTimer = 0.0f;
-
+    private Dictionary<Skill, float> skillCooldownTimers = new Dictionary<Skill, float>();
     public WeaponHolder MyWeapon => MyCombatModule.MyWeapon;
 
     [Header("SkillDatas")]
-    [SerializeField] private SkillData[] datas;     //Addressables 패키지를 이용하여 에셋을 읽어오는 방법 고려
+    [SerializeField] private SkillData[] skillDatas;     //Addressables 패키지를 이용하여 에셋을 읽어오는 방법 고려
 
     [Header("Params")]
-    public SkillModuleState ModuleState { get; private set; }
     private SkillNumber lastSkillInput;
     public bool IsTargetting {get{ return lastSkillInput != SkillNumber.None; }}
 
@@ -64,13 +68,13 @@ public class PlayerSkillModule : MonoBehaviour
 
     private void InitiateSkills()
     {
-        mySkills[(int)SkillNumber.MainSkillOne] = new DummySkill(this, datas[(int)SkillNumber.MainSkillOne]); // 팩토리 패턴 필요?
-        mySkills[(int)SkillNumber.MainSkillTwo] = new DummySkill(this, datas[(int)SkillNumber.MainSkillTwo]);
-        mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, datas[(int)SkillNumber.Grenade]);
-        mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, datas[(int)SkillNumber.UseBandage]);
-        mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, datas[(int)SkillNumber.DesignatedFire]);
+        mySkills[(int)SkillNumber.MainSkillOne] = new DummySkill(this, skillDatas[(int)SkillNumber.MainSkillOne]); // 팩토리 패턴 필요?
+        mySkills[(int)SkillNumber.MainSkillTwo] = new DummySkill(this, skillDatas[(int)SkillNumber.MainSkillTwo]);
+        mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, skillDatas[(int)SkillNumber.Grenade]);
+        mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, skillDatas[(int)SkillNumber.UseBandage]);
+        mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, skillDatas[(int)SkillNumber.DesignatedFire]);
         
-        Managers.Instance.UIManager.InitPlayerSkillInfo(this, datas);
+        Managers.Instance.UIManager.InitPlayerSkillInfo(this, skillDatas);
 
         for(int i = 0 ; i < mySkills.Length ; i++)
         {
@@ -80,93 +84,16 @@ public class PlayerSkillModule : MonoBehaviour
                 OnSkillItemCountChange?.Invoke((SkillNumber)i, MyInventory.GetItemCount(consumableSkill.NeededItemData));
             }
         }
+
+        skillChaseState = MyPlayerController.GetState(PlayerStateType.SkillChase) as SkillChaseState;
+        skillCastState = MyPlayerController.GetState(PlayerStateType.SkillCast) as SkillCastState;
+
     }
 
     private void Start()
     {
         InitiateSkills();
-        ModuleState = SkillModuleState.Ready;
         lastSkillInput = SkillNumber.None;
-
-    }
-
-    public void SkillOnUpdate() //리펙토링 요소 : 상태패턴으로 정의 가능
-    {
-        if(currentActivateSkillNumber == SkillNumber.None) return;
-
-        switch (ModuleState)
-        {
-            case SkillModuleState.Ready:
-                break;
-            case SkillModuleState.Chasing:
-                SkillOnChasing();
-                break;
-            case SkillModuleState.Casting:
-                SkillOnCasting();
-                break;
-        }
-    }
-
-    private void SkillOnChasing()
-    {
-        if (mySkills[(int)currentActivateSkillNumber].CanExecute())
-        {
-            ModuleState = SkillModuleState.Casting;
-            MyMovementModule.PlayerMoveStop();
-            mySkills[(int)currentActivateSkillNumber].OnCastingStart();
-        }
-        else
-        {
-            mySkills[(int)currentActivateSkillNumber].OnChasing();
-        }        
-    }
-
-    private void SkillOnCasting()
-    {
-        if(!mySkills[(int)currentActivateSkillNumber].CanExecute())
-        {
-            ChangeToChasingState();
-            return;
-        }
-        
-        //회전체크, 잔류 속도 체크
-        if (mySkills[(int)currentActivateSkillNumber].SkillType != SkillType.Self)
-        {
-            bool isStillRotating = !MyMovementModule.PlayerRotateToward(mySkills[(int)currentActivateSkillNumber].TargetPosition);
-            bool isStillMoving = MyAnimModule.GetSpeedValue() > 0.005f;
-
-            if(isStillRotating || isStillMoving)
-            {
-                return;
-            }   
-        }
-        
-        
-        currentSkillTimer += Time.deltaTime;
-
-        if (currentSkillTimer >= mySkills[(int)currentActivateSkillNumber].SkillCastingTime)
-        {
-            mySkills[(int)currentActivateSkillNumber].Execute();
-            mySkills[(int)currentActivateSkillNumber].OnCastingEnd();
-
-            //후처리
-            OnSkillCooldownStart?.Invoke(currentActivateSkillNumber, mySkills[(int)currentActivateSkillNumber].SkillMaxCoolTime);
-            if(mySkills[(int)currentActivateSkillNumber] is ConsumableSkill consumableSkill)
-            {
-                OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, MyInventory.GetItemCount(consumableSkill.NeededItemData));
-            }
-            
-            ModuleState = SkillModuleState.Ready;
-            currentActivateSkillNumber = SkillNumber.None;
-            currentSkillTimer = 0f;
-        }
-    }
-
-    private void ChangeToChasingState()
-    {
-        ModuleState = SkillModuleState.Chasing;
-        mySkills[(int)currentActivateSkillNumber].OnChasingStart();
-        currentSkillTimer = 0f;
     }
 
     public void ActivateTargettingMode(SkillNumber skillIndex)
@@ -176,14 +103,13 @@ public class PlayerSkillModule : MonoBehaviour
             Debug.Log($"Cannot Activate Skill:{skillIndex}");
             return;
         }
-        //if (!CanActivateSkill(skillIndex) || 1 > (int)skillIndex || (int)skillIndex >= mySkills.Length) return;
         if(lastSkillInput != SkillNumber.None || lastSkillInput == skillIndex)
         {
             CancelTargettingMode();
         }
         else 
         {
-            mySkills[(int)skillIndex].OnUiActivate();
+            //MyEffectModule.ShowIndicator(mySkills[(int)currentActivateSkillNumber].IndicatorType);
             lastSkillInput = skillIndex;
             //IsTargetting = true;
         }
@@ -191,58 +117,101 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void CancelTargettingMode()
     {
-        mySkills[(int)lastSkillInput].OnUiDeactivate();
+        MyEffectModule.HideIndicator(mySkills[(int)lastSkillInput].IndicatorType);
         lastSkillInput = SkillNumber.None;
         //IsTargetting = false;
     }
 
     public void ActivateSelectedSkill()
     {
-        //ModuleState = SkillModuleState.Casting;
-        ModuleState = SkillModuleState.Chasing;
+        // //ModuleState = SkillModuleState.Casting;
+        // ModuleState = SkillModuleState.Chasing;
         
+        // currentActivateSkillNumber = lastSkillInput;
+        // MyCombatModule.SetAiming(false);
+        // CancelTargettingMode();
         currentActivateSkillNumber = lastSkillInput;
-        MyCombatModule.SetAiming(false);
         CancelTargettingMode();
     }
 
     public void SkillIndicatorUpdate()
     {
-        mySkills[(int)lastSkillInput].OnUiUpdate();
+        //MyEffectModule.UpdateIndicator(mySkills[(int)currentActivateSkillNumber].TargetPosition, MyMovementModule.MyRigidbody.velocity, mySkills[(int)currentActivateSkillNumber].IndicatorType);
     }
 
     public void CancelCurrentSkill()
     {
-        if(ModuleState == SkillModuleState.Ready) return;
-
-        mySkills[(int)currentActivateSkillNumber].CancelSkill();
+        CancelSkillContext();
         currentActivateSkillNumber = SkillNumber.None;
-
-        currentSkillTimer = 0f;
-        
         MyAnimModule.CancelAnimation();
-        ModuleState = SkillModuleState.Ready;
     }
 
     public bool CanActivateSkill (SkillNumber skillIndex)
     {
-        return mySkills[(int)skillIndex].CanActivateSkill();
+        return mySkills[(int)skillIndex].CanActivate();
     }
 
-    private bool CanSelectTarget(in RaycastHit hit)
+    public bool CanSelectTarget(in RaycastHit hit, out GameObject target, out Vector3 point)
     {
-        if(!hit.collider) return false;
-        else return mySkills[(int)lastSkillInput].CanSelectTarget(hit);
+        return mySkills[(int)currentActivateSkillNumber].IsValidTarget(hit, out target, out point);
     }
+    //아래부터 stateMachine을 위한 함수
 
-    public void SelectTarget()
+    /// <summary>
+    /// 스킬 시전이 가능한지 체크하는 함수. 스킬 시전 가능 범위 내에 있는지, 벽 등으로 가려져 있지는 않은지 등을 체크한다. ChaseState에서 지속적으로 체크하면서 범위 내에 들어왔을 때 CastState로 전환하는 로직에서 사용한다.
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    public bool CanCastingSkill(SkillContext context)
     {
-        MyPlayerController.RaycastAtMouseLocation(out RaycastHit hit);
-        
-        if(CanSelectTarget(hit))
+        if (context == null || context.SkillToExecute == null) return false;
+        if(context.TargetObject != null && !context.TargetObject.activeInHierarchy) return false; //타겟이 비활성화된 상태면 시전 불가능
+
+        Vector3 destination = (context.TargetObject != null) ? context.TargetObject.transform.position : context.CastedPosition;
+        float sqrtDistance = Vector3.SqrMagnitude(transform.position - destination);
+
+        if (sqrtDistance <= context.FinalRange * context.FinalRange)
         {
-            CancelCurrentSkill();
-            ActivateSelectedSkill();
+            // 중간에 벽이 있는지 체크
+            return MyCombatModule.IsTargetInWeaponSight(context.TargetObject);
         }
+
+        return false;    
+    }
+
+    public bool IsCooldownReady(Skill skill)
+    {
+        return Time.time - skillCooldownTimers[skill] >= skill.SkillMaxCoolTime;
+    }
+
+    public void SetSkillCooldownTimer(Skill skill)
+    {
+        skillCooldownTimers[skill] = Time.time;
+        OnSkillCooldownStart?.Invoke(currentActivateSkillNumber, skill.SkillMaxCoolTime);
+
+        // 갯수 제거형 스킬 사용 시 인벤토리 아이템 갯수 변경 이벤트 로직 구현하기
+        // if(mySkills[(int)currentActivateSkillNumber] is ConsumableSkill consumableSkill)
+        // {
+        //     OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, MyInventory.GetItemCount(consumableSkill.NeededItemData));
+        // }
+    }
+
+    public void SetUpSkillContext(in GameObject target, in Vector3 point)
+    {
+        SkillContext skillContext = new SkillContext
+        {
+            SkillToExecute = mySkills[(int)currentActivateSkillNumber],
+            TargetObject = target,
+            CastedPosition = point,
+        };
+
+        skillChaseState.SetSkillContext(skillContext);
+        skillCastState.SetSkillContext(skillContext);
+    }
+
+    private void CancelSkillContext()
+    {
+        skillChaseState.SetSkillContext(null);
+        skillCastState.SetSkillContext(null);
     }
 }
