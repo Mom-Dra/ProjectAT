@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: DesignatedFire
   m_EditorClassIdentifier: 
   Name: DesignatedFire
-  BaseDamage: 0
+  BaseDamage: 100
   CastingTime: 0.5
-  MaxCoolTime: 1
+  MaxCoolTime: 0.5
   TargetLayer:
     serializedVersion: 2
     m_Bits: 128

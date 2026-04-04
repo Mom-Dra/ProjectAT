@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Projectile Skill", menuName = "Skills/Projectile Skill")]
 public class ProjectileSkillData : SkillData
 {
     [Header("Projectile Stats")]

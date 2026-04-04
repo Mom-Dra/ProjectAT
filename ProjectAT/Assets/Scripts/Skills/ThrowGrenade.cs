@@ -27,7 +27,7 @@ public class ThrowGrenade : Skill
         }
         else
         {
-            Debug.LogError("SkillData for ThrowGrenade is not of type ProjectileSkillData. Please check the assigned SkillData.");
+            Debug.LogWarning("SkillData for ThrowGrenade is not of type ProjectileSkillData. Please check the assigned SkillData.");
         }
     }
 

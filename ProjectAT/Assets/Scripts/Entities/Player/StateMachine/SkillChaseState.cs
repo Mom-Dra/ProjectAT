@@ -32,8 +32,7 @@ namespace PlayerStateMachine
 
         public override void OnEnter()
         {
-            //UI 끄는 로직 있어야할듯.
-            mySkillModule.CancelTargettingMode();
+
         }
 
         public override void OnExit()

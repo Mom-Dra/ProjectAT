@@ -50,6 +50,8 @@ public class NormalState : PlayerState, ILeftClickHandler, IRightClickHandler, I
             return;
         }
 
+        context.CancelEnemySelect();
+
         switch (castedObject.collider.gameObject.layer)
         {
             case 6: //Ground Layer

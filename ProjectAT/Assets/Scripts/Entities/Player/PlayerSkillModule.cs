@@ -31,7 +31,6 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public PlayerCombatModule MyCombatModule { get; private set; }
     [SerializeField] public PlayerAnimator MyAnimModule { get; private set; }
     [SerializeField] public EntityStatus MyStatus { get; private set; }
-    [SerializeField] public EffectModule MyEffectModule {get; private set;}
     [SerializeField] public Inventory MyInventory {get; private set;}
 
     private SkillChaseState skillChaseState;
@@ -51,6 +50,9 @@ public class PlayerSkillModule : MonoBehaviour
     [Header("Params")]
     private SkillNumber lastSkillInput;
     public bool IsTargetting {get{ return lastSkillInput != SkillNumber.None; }}
+    [Header("Layers")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask enemyLayer;
 
     public event Action<SkillNumber,float> OnSkillCooldownStart;
     public event Action<SkillNumber, int> OnSkillItemCountChange;
@@ -61,9 +63,11 @@ public class PlayerSkillModule : MonoBehaviour
         MyMovementModule = GetComponent<PlayerMovementModule>();
         MyCombatModule = GetComponent<PlayerCombatModule>();
         MyAnimModule = GetComponent<PlayerAnimator>();
-        MyEffectModule = GetComponent<EffectModule>();
         MyStatus = GetComponent<EntityStatus>();
         MyInventory = GetComponent<Inventory>();
+
+        groundLayer = LayerMask.GetMask("Ground");
+        enemyLayer = LayerMask.GetMask("Enemy");
     }
 
     private void InitiateSkills()
@@ -73,6 +77,12 @@ public class PlayerSkillModule : MonoBehaviour
         mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, skillDatas[(int)SkillNumber.Grenade]);
         mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, skillDatas[(int)SkillNumber.UseBandage]);
         mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, skillDatas[(int)SkillNumber.DesignatedFire]);
+
+        skillCooldownTimers.Add(mySkills[(int)SkillNumber.MainSkillOne], Time.time);
+        skillCooldownTimers.Add(mySkills[(int)SkillNumber.MainSkillTwo], Time.time);
+        skillCooldownTimers.Add(mySkills[(int)SkillNumber.Grenade], Time.time);
+        skillCooldownTimers.Add(mySkills[(int)SkillNumber.UseBandage], Time.time);
+        skillCooldownTimers.Add(mySkills[(int)SkillNumber.DesignatedFire], Time.time);
         
         Managers.Instance.UIManager.InitPlayerSkillInfo(this, skillDatas);
 
@@ -106,20 +116,39 @@ public class PlayerSkillModule : MonoBehaviour
         if(lastSkillInput != SkillNumber.None || lastSkillInput == skillIndex)
         {
             CancelTargettingMode();
+            return;
         }
-        else 
+
+        lastSkillInput = skillIndex;
+        switch (mySkills[(int)skillIndex].IndicatorType)
         {
-            //MyEffectModule.ShowIndicator(mySkills[(int)currentActivateSkillNumber].IndicatorType);
-            lastSkillInput = skillIndex;
-            //IsTargetting = true;
+            case IndicatorType.GroundSkillIndicator:
+                IndicatorManager.Instance.ShowAreaIndicator(transform.position, (skillDatas[(int)lastSkillInput] as ProjectileSkillData).ExplosionRadius);
+                break;
+            case IndicatorType.TargettingSkillIndicator:
+                IndicatorManager.Instance.ShowAimingCursor();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void UpdateSkillIndicator(Ray mouseToScreenPosRay)
+    {
+        if(mySkills[(int)lastSkillInput].IndicatorType == IndicatorType.GroundSkillIndicator)
+        {
+            if(Physics.Raycast(mouseToScreenPosRay, out RaycastHit hit, 100f, groundLayer))
+            {
+                IndicatorManager.Instance.UpdateAoeIndicator(transform.position, hit.point, Vector3.zero);
+            }
         }
     }
 
     public void CancelTargettingMode()
     {
-        MyEffectModule.HideIndicator(mySkills[(int)lastSkillInput].IndicatorType);
+        IndicatorManager.Instance.HideIndicator(mySkills[(int)lastSkillInput].IndicatorType);
         lastSkillInput = SkillNumber.None;
-        //IsTargetting = false;
     }
 
     public void ActivateSelectedSkill()
@@ -132,11 +161,6 @@ public class PlayerSkillModule : MonoBehaviour
         // CancelTargettingMode();
         currentActivateSkillNumber = lastSkillInput;
         CancelTargettingMode();
-    }
-
-    public void SkillIndicatorUpdate()
-    {
-        //MyEffectModule.UpdateIndicator(mySkills[(int)currentActivateSkillNumber].TargetPosition, MyMovementModule.MyRigidbody.velocity, mySkills[(int)currentActivateSkillNumber].IndicatorType);
     }
 
     public void CancelCurrentSkill()

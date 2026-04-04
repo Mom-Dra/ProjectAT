@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerCoverModule myCoverModule;
     [SerializeField] private PlayerInteractionModule myInteractionModule;
     [SerializeField] private EntityStatus myStatus;
-    [SerializeField] private EffectModule myEffectModule;
     [SerializeField] private Camera myCamera;
 
     [Header("Enemy")]
@@ -29,28 +28,24 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] private LayerMask groundLayer;
     //[SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask rightClickInteractableLayer;
-
     [Header("Params")]
     [SerializeField] private float TickRate = 0.2f;
     private float LastTickTime = 0f;
 
-    #region StateMachine
+    #region StateMachine States
     public PlayerState CurrentState { get; private set; }
     public NormalState NormalState{ get; private set; }
     public SkillChaseState SkillChaseState { get; private set; }
     public SkillCastState SkillCastingState { get; private set; }
     public DeadState DeadState { get; private set; }
-
     #endregion
 
-    #region Getters
+    #region Module Getters
     public PlayerMovementModule MyMovementModule => myMovementModule;
     public PlayerCombatModule MyCombatModule => myCombatModule;
     public PlayerSkillModule MySkillModule => mySkillModule;
     public PlayerCoverModule MyCoverModule => myCoverModule;
-    public PlayerInteractionModule MyInteractionModule => myInteractionModule;
-
-    
+    public PlayerInteractionModule MyInteractionModule => myInteractionModule;    
     #endregion
 
     // //일단 로직 다 짜고, 이 로직이 이 클래스에 있는지 검증하자!
@@ -64,7 +59,6 @@ public class PlayerController : MonoBehaviour
     {
         myMovementModule = GetComponent<PlayerMovementModule>();
         myPlayerAnimator = GetComponent<PlayerAnimator>();
-        myEffectModule = GetComponent<EffectModule>();
         myCombatModule = GetComponent<PlayerCombatModule>();
         mySkillModule = GetComponent<PlayerSkillModule>();
         myCoverModule = GetComponent<PlayerCoverModule>();
@@ -154,9 +148,8 @@ public class PlayerController : MonoBehaviour
         myInteractionModule.HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
         
         CurrentState.OnUpdate();
-
+        if(mySkillModule.IsTargetting) UpdateSkillIndicator(); //나중에 Sniping 스킬을 
         myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity()); //애니메이션을 위한 이동속도 조절.
-        if(mySkillModule.IsTargetting) mySkillModule.SkillIndicatorUpdate();
     }
 
     #endregion
@@ -185,57 +178,45 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void NormalRightClickAction()
-    {
-        RaycastHit ray;
-        if (RaycastAtMouseLocation(out ray))
-        {
-            myCoverModule.CancelCurrentCoverAction();
+    // private void NormalRightClickAction()
+    // {
+    //     RaycastHit ray;
+    //     if (RaycastAtMouseLocation(out ray))
+    //     {
+    //         myCoverModule.CancelCurrentCoverAction();
 
-            Debug.Log($"NormalRightClickAction: {ray.collider.gameObject.layer}");
+    //         Debug.Log($"NormalRightClickAction: {ray.collider.gameObject.layer}");
 
-            switch (ray.collider.gameObject.layer)
-            {
-                case 6: //Ground Layer
-                    Debug.Log("플레이어 컨트롤러 : PlayerMove");
-                    PlayerMove(ray.point, false);
-                    break;
-                case 7: //Enemy Layer
-                    SetTargetEnemy(ray.collider.GetComponent<Enemy>());
-                    break;
-                case 10: //Indicator Layer
-                    PlayerMove(ray.point, true);
-                    break;
-                case 11: // CoverPoint Layer
-                    if (ray.transform.TryGetComponent(out CoverPoint coverPoint))
-                        myCoverModule.StartMoveToCover(coverPoint);
-                    break;
-                case 13: // Interactable Layer
-                    Debug.Log("Interactable Object Clicked");
-                    myInteractionModule.HandleRightClick();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+    //         switch (ray.collider.gameObject.layer)
+    //         {
+    //             case 6: //Ground Layer
+    //                 Debug.Log("플레이어 컨트롤러 : PlayerMove");
+    //                 PlayerMove(ray.point, false);
+    //                 break;
+    //             case 7: //Enemy Layer
+    //                 SetTargetEnemy(ray.collider.GetComponent<Enemy>());
+    //                 break;
+    //             case 10: //Indicator Layer
+    //                 PlayerMove(ray.point, true);
+    //                 break;
+    //             case 11: // CoverPoint Layer
+    //                 if (ray.transform.TryGetComponent(out CoverPoint coverPoint))
+    //                     myCoverModule.StartMoveToCover(coverPoint);
+    //                 break;
+    //             case 13: // Interactable Layer
+    //                 Debug.Log("Interactable Object Clicked");
+    //                 myInteractionModule.HandleRightClick();
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     }
+    // }
 
     public bool RaycastAtMouseLocation(out RaycastHit ray)
     {
         return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
     }
-
-    // public bool RaycastAtMouseLocation()
-    // {
-    //     RaycastHit ray;
-    //     if (Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, enemyLayer))
-    //     {
-    //         SetTargetEnemy(ray.collider.GetComponent<Enemy>());
-    //         return true;
-    //     }   
-       
-    //     return false;
-    // }
 
     public void HandleLeftClickInput()
     {
@@ -259,11 +240,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void UpdateSkillIndicator()
+    {
+        Ray ray = myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition);
+        mySkillModule.UpdateSkillIndicator(ray);
+    }
+
     public void PlayerMove(Vector3 pos, bool isRun)
     {
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
-        myEffectModule.ShowIndicator(pos, IndicatorType.MoveIndicator, 1.0f);
+        IndicatorManager.Instance.ShowMoveIndicator(pos, IndicatorType.MoveIndicator, 1.0f);
     }
     #endregion
 

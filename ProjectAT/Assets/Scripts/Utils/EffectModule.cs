@@ -1,26 +1,14 @@
 using UnityEngine;
 using System;
-using EPOOutline.Demo;
-
-public enum IndicatorType : ushort
-{
-    MoveIndicator,
-    GroundSkillIndicator,
-    TargettingSkillIndicator
-}
 
 public class EffectModule : MonoBehaviour
 {
-    [Header("Firing Effect")]
-    [SerializeField] private GameObject bulletProjectile;
-    [SerializeField] private Transform firingEffectSpawnPoint;
-
     [Header("Indicator Prefabs")]
     [SerializeField] private GameObject moveIndicatorPrefab;
     [SerializeField] private GameObject groundSkillIndicatorPrefab;
-    [SerializeField] private Texture2D targettingSkillCursor; //TargettingSkill의 커서 스킨. EffectModule이 해당 스킬의 IndicatorType을 보고 커서 스킨을 바꿔주는 방식으로 처리.
+    [SerializeField] private Sprite targettingSkillCursor; //TargettingSkill의 커서 스킨. EffectModule이 해당 스킬의 IndicatorType을 보고 커서 스킨을 바꿔주는 방식으로 처리.
 
-    [Header("Indicator Params")]
+    [Header("Indicator References")]
     [SerializeField] private IndicatorBase[] indicators;
     [SerializeField] private LineRenderer lineRenderer;
 
@@ -31,9 +19,6 @@ public class EffectModule : MonoBehaviour
 
     private void Initialize()
     {
-        if (firingEffectSpawnPoint is null)
-            firingEffectSpawnPoint = transform.GetChild(2).transform;
-
         InitializeIndicators();
         if (lineRenderer is null)
         {
@@ -53,6 +38,11 @@ public class EffectModule : MonoBehaviour
         indicators[(int)IndicatorType.GroundSkillIndicator].Hide();
     }
 
+    private void Update()
+    {
+        
+    }
+
     public void ShowIndicator(Vector3 dest, IndicatorType type, float radius)
     {
         if(type == IndicatorType.TargettingSkillIndicator)
@@ -66,7 +56,7 @@ public class EffectModule : MonoBehaviour
 
     private void ShowAimingCursor()
     {
-        Cursor.SetCursor(targettingSkillCursor, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(targettingSkillCursor.texture, new Vector2(targettingSkillCursor.texture.width / 2, targettingSkillCursor.texture.height / 2), CursorMode.Auto);
     }
 
     public void HideIndicator(IndicatorType type)

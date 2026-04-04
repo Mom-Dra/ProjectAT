@@ -1,6 +1,7 @@
 using Unity.Networking.Transport;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
 public class GroundSkillIndicator : IndicatorBase
@@ -10,7 +11,6 @@ public class GroundSkillIndicator : IndicatorBase
     {
         decalProjector = GetComponent<DecalProjector>();
     }
-
 
     public override void Show(float size = 1f)
     {
