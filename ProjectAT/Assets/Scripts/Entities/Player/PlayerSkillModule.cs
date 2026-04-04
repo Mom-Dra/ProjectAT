@@ -140,7 +140,7 @@ public class PlayerSkillModule : MonoBehaviour
         {
             if(Physics.Raycast(mouseToScreenPosRay, out RaycastHit hit, 100f, groundLayer))
             {
-                IndicatorManager.Instance.UpdateAoeIndicator(transform.position, hit.point, Vector3.zero);
+                IndicatorManager.Instance.UpdateAoeIndicator(transform.position, hit.point, Vector3.zero, MyStatus.ThrowRange);
             }
         }
     }
@@ -177,7 +177,7 @@ public class PlayerSkillModule : MonoBehaviour
 
     public bool CanSelectTarget(in RaycastHit hit, out GameObject target, out Vector3 point)
     {
-        return mySkills[(int)currentActivateSkillNumber].IsValidTarget(hit, out target, out point);
+        return mySkills[(int)lastSkillInput].IsValidTarget(hit, out target, out point);
     }
     //아래부터 stateMachine을 위한 함수
 
@@ -188,16 +188,20 @@ public class PlayerSkillModule : MonoBehaviour
     /// <returns></returns>
     public bool CanCastingSkill(SkillContext context)
     {
+        Debug.Log("ChaseState : CanCastingSkill Enter ");
         if (context == null || context.SkillToExecute == null) return false;
+        Debug.Log("ChaseState : 1 ");
         if(context.TargetObject != null && !context.TargetObject.activeInHierarchy) return false; //타겟이 비활성화된 상태면 시전 불가능
+        Debug.Log("ChaseState : 2 ");
+
 
         Vector3 destination = (context.TargetObject != null) ? context.TargetObject.transform.position : context.CastedPosition;
         float sqrtDistance = Vector3.SqrMagnitude(transform.position - destination);
 
         if (sqrtDistance <= context.FinalRange * context.FinalRange)
         {
-            // 중간에 벽이 있는지 체크
-            return MyCombatModule.IsTargetInWeaponSight(context.TargetObject);
+            Debug.Log("ChaseState : 3 ");
+            return context.SkillToExecute.ExtraCastingCondition(context);
         }
 
         return false;    
@@ -227,6 +231,8 @@ public class PlayerSkillModule : MonoBehaviour
             SkillToExecute = mySkills[(int)currentActivateSkillNumber],
             TargetObject = target,
             CastedPosition = point,
+            FinalDamage = skillDatas[(int)currentActivateSkillNumber].BaseDamage, //데미지 계산 로직 필요
+            FinalRange = (skillDatas[(int)currentActivateSkillNumber] is ProjectileSkillData) ? MyStatus.ThrowRange : MyWeapon.Range, //사거리 계산 로직 필요
         };
 
         skillChaseState.SetSkillContext(skillContext);

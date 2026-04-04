@@ -250,6 +250,11 @@ public class PlayerController : MonoBehaviour
     {
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
+    }
+
+    public void PlayerMoveWithIndicator(Vector3 pos, bool isRun)
+    {        
+        PlayerMove(pos, isRun);
         IndicatorManager.Instance.ShowMoveIndicator(pos, IndicatorType.MoveIndicator, 1.0f);
     }
     #endregion

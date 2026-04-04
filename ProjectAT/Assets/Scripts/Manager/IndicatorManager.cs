@@ -114,10 +114,10 @@ public class IndicatorManager : MonoBehaviour
         indicators[(int)IndicatorType.GroundSkillIndicator].Show(radius * 2);
     }
 
-    public void UpdateAoeIndicator(Vector3 fromPos, Vector3 toPos, Vector3 velocity)
+    public void UpdateAoeIndicator(Vector3 fromPos, Vector3 toPos, Vector3 velocity, float PlayerRange)
     {
         indicators[(int)IndicatorType.GroundSkillIndicator].UpdateIndicator(toPos, velocity);
-        DrawThrowingLine(fromPos + Vector3.up, toPos, 1f);
+        DrawThrowingLine(fromPos + Vector3.up, toPos, 1f, PlayerRange);
     }
     public void HideAoeIndicator()
     {
@@ -125,18 +125,50 @@ public class IndicatorManager : MonoBehaviour
         ClearLine();
     }
 
-    public void DrawThrowingLine(Vector3 fromPos, Vector3 toPos, float height)
+    // public void DrawThrowingLine(Vector3 fromPos, Vector3 toPos, float height)
+    // {
+    //     lineRenderer.enabled = true;
+    //     int segmentCount = 20;
+    //     lineRenderer.positionCount = segmentCount + 1;
+
+    //     for (int i = 0; i <= segmentCount; i++)
+    //     {
+    //         float t = (float)i / segmentCount;
+    //         // 매니저의 위치(transform.position)가 아니라, 던지는 사람의 위치(fromPos)를 기준으로 계산해야 합니다.
+    //         Vector3 point = Vector3.Lerp(fromPos, toPos, t); 
+    //         point.y += height * 4 * t * (1 - t); // 포물선 효과
+    //         lineRenderer.SetPosition(i, point);
+    //     }
+    // }
+    public void DrawThrowingLine(Vector3 fromPos, Vector3 toPos, float arcHeight, float PlayerRange)
     {
+        if(Vector3.SqrMagnitude(toPos - fromPos) > PlayerRange * PlayerRange)
+        {
+            lineRenderer.enabled = false;
+            return;
+        }
+        // ★ 단 한 줄로 속도와 비행 시간을 모두 알아옵니다!
+        if (!PhysicsMathUtility.CalculateTrajectory(fromPos, toPos, arcHeight, out Vector3 initialVelocity, out float totalTime))
+        {
+            // 타겟이 너무 높아 계산 실패 시 선을 숨김
+            lineRenderer.enabled = false;
+            return;
+        }
+
         lineRenderer.enabled = true;
         int segmentCount = 20;
         lineRenderer.positionCount = segmentCount + 1;
+        
+        // 선을 그리기 위한 시간 간격
+        float deltaTime = totalTime / segmentCount;
 
         for (int i = 0; i <= segmentCount; i++)
         {
-            float t = (float)i / segmentCount;
-            // 매니저의 위치(transform.position)가 아니라, 던지는 사람의 위치(fromPos)를 기준으로 계산해야 합니다.
-            Vector3 point = Vector3.Lerp(fromPos, toPos, t); 
-            point.y += height * 4 * t * (1 - t); // 포물선 효과
+            float t = i * deltaTime;
+            
+            // 물리 공식: 현재 위치 = 시작위치 + (초기속도 * 시간) + (0.5 * 중력 * 시간^2)
+            Vector3 point = fromPos + (initialVelocity * t) + (0.5f * Physics.gravity * t * t);
+            
             lineRenderer.SetPosition(i, point);
         }
     }
@@ -145,5 +177,6 @@ public class IndicatorManager : MonoBehaviour
     {
         lineRenderer.enabled = false;
         lineRenderer.positionCount = 0;
+        //Debug
     }
 }

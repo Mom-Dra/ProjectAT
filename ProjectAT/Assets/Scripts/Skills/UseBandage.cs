@@ -27,9 +27,37 @@ public class UseBandage : ConsumableSkill
         
     }
 
+    public override bool ExtraCastingCondition(SkillContext context)
+    {
+        return entityInventory.GetItemCount(neededItemData) > 0;
+    }
+
     public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
     {
-        throw new System.NotImplementedException();
+        if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0
+         && hit.collider.gameObject.TryGetComponent<EntityStatus>(out EntityStatus status)&&
+            status.CurrentHp < status.MaxHp)
+        {
+            targetStatus = status;
+            target = hit.collider.gameObject;
+            point = hit.point;
+            return true;
+        }
+        
+        target = null;
+        point = Vector3.zero;
+        Debug.Log("Bandage) Invalid Target.");
+        return false;
+    }
+
+    public override float CalCulateFinalDamage()
+    {
+        return skillData.BaseDamage; //힐량으로 사용됨. 뭣하면 붕대 아이템의 스탯에 따라서
+    }
+
+    public override float CalculateFinalRange()
+    {
+        return 0.5f; //하드코딩됨. 플레이어의 hand 반경을 나타내는 값으로 교체 필요
     }
 
     #region  old code

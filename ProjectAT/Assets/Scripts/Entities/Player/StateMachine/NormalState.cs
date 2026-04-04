@@ -55,13 +55,13 @@ public class NormalState : PlayerState, ILeftClickHandler, IRightClickHandler, I
         switch (castedObject.collider.gameObject.layer)
         {
             case 6: //Ground Layer
-                context.PlayerMove(castedObject.point, false);
+                context.PlayerMoveWithIndicator(castedObject.point, false);
                 break;
             case 7: //Enemy Layer
                 context.SetTargetEnemy(castedObject.collider.GetComponent<Enemy>());
                 break;
             case 10: //Indicator Layer
-                context.PlayerMove(castedObject.point, true);
+                context.PlayerMoveWithIndicator(castedObject.point, true);
                 break;
             case 11: // CoverPoint Layer
                 if (castedObject.transform.TryGetComponent(out CoverPoint coverPoint))

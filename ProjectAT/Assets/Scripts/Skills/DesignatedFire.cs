@@ -6,8 +6,28 @@ using UnityEngine;
 
 public class DesignatedFire : Skill
 {
-    public DesignatedFire(PlayerSkillModule context, SkillData data) : base(context, data){}
-    
+    private PlayerCombatModule combatModule;
+    public DesignatedFire(PlayerSkillModule context, SkillData data) : base(context, data)
+    {
+        combatModule = context.MyCombatModule;
+    }
+
+    public override float CalCulateFinalDamage()
+    {
+        //return context.MyCombatModule.CalculateDamageWithWeapon(context.MyWeapon, skillData.BaseDamage);
+        return skillData.BaseDamage;
+    }
+
+    public override float CalculateFinalRange()
+    {
+        return context.MyWeapon.Range;
+    }
+
+    public override bool ExtraCastingCondition(SkillContext context)
+    {
+        return combatModule.IsTargetInWeaponSight(context.TargetObject);
+    }
+
     public override bool CanExecute(SkillContext skillContext)
     {
         return context.MyCombatModule.IsTargetInWeaponSight(skillContext.TargetObject);

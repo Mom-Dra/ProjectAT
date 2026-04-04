@@ -25,9 +25,7 @@ namespace PlayerStateMachine
         }
 
         public override void OnEnter()
-        {
-            mySkillModule.CancelTargettingMode();
-            
+        {            
             castTimer = 0.0f;
             isRotationFinished = false;
             context.PlayerMove(context.transform.position, false);
@@ -55,11 +53,13 @@ namespace PlayerStateMachine
                     isRotationFinished = true;
                     //context.MyAnimModule.PlaySkillAnimation(skillContext.SkillToExecute.skillData.AnimTriggerName);
                 }
-                else return; 
+                // else
+                // {
+                //     return;
+                // }
             }
 
             // 3. 실시간 유효성 체크 (캐스팅 도중 적이 도망갔는지 확인)
-            // 캐스팅 중에도 매 프레임 CanExecute를 체크하여, 조건에 부합하지 않으면 즉시 다시 추적합니다.
             if (!skillContext.SkillToExecute.CanExecute(skillContext))
             {
                 ResumeChasing();

@@ -10,8 +10,7 @@ namespace PlayerStateMachine
     #region  Needed Modules
         private PlayerSkillModule mySkillModule;
         private PlayerCoverModule myCoverModule;
-        private PlayerMovementModule myMovementModule;
-        private PlayerCombatModule myCombatModule;
+
     #endregion
 
 
@@ -21,8 +20,6 @@ namespace PlayerStateMachine
         {
             mySkillModule = context.MySkillModule;
             myCoverModule = context.MyCoverModule;
-            myMovementModule = context.MyMovementModule;
-            myCombatModule = context.MyCombatModule;
         }
 
         public void SetSkillContext(SkillContext context)
@@ -32,7 +29,6 @@ namespace PlayerStateMachine
 
         public override void OnEnter()
         {
-
         }
 
         public override void OnExit()
@@ -56,11 +52,11 @@ namespace PlayerStateMachine
                         context.ChangeState(PlayerStateType.Normal);
                         return;
                     }
-
                     context.PlayerMove(nowActivatedSkillContext.TargetObject.transform.position, false);
                 }
                 else  // 타겟 오브젝트가 없는 스킬인 경우 (지점 지정형 스킬 등)에는 캐릭터가 지정된 지점으로 이동하도록
                 {   
+                    Debug.Log("ChaseState : 스킬 추적 중. 타겟 위치로 이동합니다.");
                     context.PlayerMove(nowActivatedSkillContext.CastedPosition, false);
                 }  
             }
@@ -80,20 +76,25 @@ namespace PlayerStateMachine
             switch (castedObject.collider.gameObject.layer)
             {
                 case 6: //Ground Layer
-                    context.PlayerMove(castedObject.point, false);
+                    context.PlayerMoveWithIndicator(castedObject.point, false);
+                    context.ChangeState(PlayerStateType.Normal);
                     break;
                 case 7: //Enemy Layer
                     context.SetTargetEnemy(castedObject.collider.GetComponent<Enemy>());
+                    context.ChangeState(PlayerStateType.Normal);
                     break;
                 case 10: //Indicator Layer
-                    context.PlayerMove(castedObject.point, true);
+                    context.PlayerMoveWithIndicator(castedObject.point, true);
+                    context.ChangeState(PlayerStateType.Normal);
                     break;
                 case 11: // CoverPoint Layer
                     if (castedObject.transform.TryGetComponent(out CoverPoint coverPoint))
                         myCoverModule.StartMoveToCover(coverPoint);
+                        context.ChangeState(PlayerStateType.Normal);
                     break;
                 case 13: // Interactable Layer
                     context.MyInteractionModule.HandleRightClick();
+                    //context.ChangeState(PlayerStateInteractable);
                     break;
                 default:
                     break;

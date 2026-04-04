@@ -173,17 +173,66 @@ public class PlayerCombatModule : MonoBehaviour
         }
     }
 
-    public bool CanThrowSomethingToPosition(Vector3 position)
+    public bool CanThrowSomethingToPosition(GameObject projectileObject, Vector3 position)
     {
-        return CheckPositionInRange(position, myStatus.ThrowRange);
-        //&& CheckPositionVisibility(position);
+        // 최대 투척 사거리 검사 (기존과 동일)
+        if (Vector3.SqrMagnitude(position - throwPoint.position) > myStatus.ThrowRange * myStatus.ThrowRange) 
+        {
+        
+            Debug.Log("Chase State : Position is out of throw range.");
+            return false;
+        }
+
+        Vector3 origin = throwPoint.position + Vector3.up;
+
+        // ★ 계산 도구함 호출!
+        if (!PhysicsMathUtility.CalculateTrajectory(origin, position, arcHeight, out Vector3 initialVelocity, out float totalTime))
+        {
+            Debug.Log("Chase State : Failed to calculate trajectory.");
+            return false; // 타겟이 너무 높음
+        }
+
+        // 콜라이더 반지름 가져오기 (기존과 동일)
+        float radius = 0.1f;
+        if (projectileObject != null)
+        {
+            Collider col = projectileObject.GetComponentInChildren<Collider>();
+            if (col != null) radius = Mathf.Max(col.bounds.extents.x, col.bounds.extents.z);
+        }
+
+        // 궤적 충돌 시뮬레이션
+        int segmentCount = 20; 
+        float deltaTime = totalTime / segmentCount;
+        Vector3 previousPoint = origin;
+
+        for (int i = 1; i <= segmentCount; i++)
+        {
+            float t = i * deltaTime;
+            Vector3 nextPoint = origin + (initialVelocity * t) + (0.5f * Physics.gravity * t * t);
+            Vector3 direction = nextPoint - previousPoint;
+
+            // 장애물 검사
+            if (Physics.SphereCast(previousPoint, radius, direction.normalized, out RaycastHit hit, direction.magnitude, ObstacleLayer))
+            {
+                Debug.Log($"Chase State : Trajectory blocked by {hit.collider.gameObject.name} at {hit.point}");
+                return false; // 궤적 막힘
+            }
+
+            previousPoint = nextPoint;
+        }
+
+        return true; // 투척 가능!
     }
 
     public void ThrowSomthingToTarget(GameObject throwingObject, Vector3 targetPos)
     {
         throwingObject.transform.position = throwPoint.position;
-        Vector3 velocity = CalculateVelocity(throwPoint.position + Vector3.up, targetPos, arcHeight);        
-        throwingObject.GetComponent<ProjectileGrenade>().Throw(velocity); //projectle이라는 인터페이스같은걸로 바꾸기
+        Vector3 origin = throwPoint.position + Vector3.up;
+
+        if (PhysicsMathUtility.CalculateTrajectory(origin, targetPos, arcHeight, out Vector3 velocity, out float time))
+        {
+            throwingObject.GetComponent<ProjectileGrenade>().Throw(velocity);
+        }
     }
 
     /// <summary>

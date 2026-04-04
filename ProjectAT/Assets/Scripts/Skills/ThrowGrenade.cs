@@ -1,14 +1,31 @@
-using System;
-using System.Data.Common;
+
 using UnityEngine;
 
 public class ThrowGrenade : Skill
 {
+    private PlayerCombatModule myCombatModule;
+    private ProjectileSkillData projSkillData => skillData as ProjectileSkillData;
+
     public ThrowGrenade(PlayerSkillModule context, SkillData data) : base(context, data)
     {
-        
+        myCombatModule = context.MyCombatModule;
     }
 
+    public override float CalCulateFinalDamage()
+    {
+        return skillData.BaseDamage;
+    }
+
+    public override float CalculateFinalRange()
+    {
+        return context.MyStatus.ThrowRange;
+    }
+
+    public override bool ExtraCastingCondition(SkillContext context)
+    {
+        Debug.Log($"Checking Extra : {context.CastedPosition}");
+        return myCombatModule.CanThrowSomethingToPosition(projSkillData.ThrowingObjectPrefab, context.CastedPosition);
+    }
 
     public override bool CanExecute(SkillContext skillContext)
     {
@@ -24,6 +41,7 @@ public class ThrowGrenade : Skill
             GameObject grenade = UnityEngine.Object.Instantiate(projectileData.ThrowingObjectPrefab, skillContext.CastedPosition, Quaternion.identity);
             ProjectileGrenade proj = grenade.GetComponent<ProjectileGrenade>();
             proj.SetUp(projectileData.BaseDamage, projectileData.ExplosionRadius, projectileData.FuseTime, TargetLayer);
+            context.MyCombatModule.ThrowSomthingToTarget(grenade, skillContext.CastedPosition);
         }
         else
         {
@@ -33,6 +51,7 @@ public class ThrowGrenade : Skill
 
     public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
     {
+        Debug.Log($"{hit.collider.name} was hit. Checking if it can be selected as target for Throw Grenade...");
         if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0)
         {
             target = null;
