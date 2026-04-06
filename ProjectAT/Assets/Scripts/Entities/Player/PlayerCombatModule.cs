@@ -180,15 +180,13 @@ public class PlayerCombatModule : MonoBehaviour
         if (Vector3.SqrMagnitude(position - throwPoint.position) > myStatus.ThrowRange * myStatus.ThrowRange) 
         {
         
-            Debug.Log("Chase State : Position is out of throw range.");
             return false;
         }
 
-        Vector3 origin = throwPoint.position + Vector3.up;
+        Vector3 origin = throwPoint.position;
 
         if (!PhysicsMathUtility.CalculateTrajectory(origin, position, arcHeight, out Vector3 initialVelocity, out float totalTime))
         {
-            Debug.Log("Chase State : Failed to calculate trajectory.");
             return false; // 타겟이 너무 높음
         }
 
