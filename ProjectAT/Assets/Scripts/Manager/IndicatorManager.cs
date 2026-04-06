@@ -1,7 +1,5 @@
 using UnityEngine;
 using System;
-using EPOOutline.Demo;
-using System.Diagnostics; // 기존에 사용하시던 네임스페이스
 
 public enum IndicatorType : ushort
 {

@@ -22632,7 +22632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2145079510353081862, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: ObstacleLayer.m_Bits
-      value: 9088
+      value: 8960
       objectReference: {fileID: 0}
     - target: {fileID: 2474928388271890292, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: m_AgentTypeID
@@ -22662,6 +22662,14 @@ PrefabInstance:
       propertyPath: 'skillDatas.Array.data[4]'
       value: 
       objectReference: {fileID: 11400000, guid: d56ecf9f073b8a848ab8a77ea2aa1fc4, type: 2}
+    - target: {fileID: 2753390874998659298, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2753390874998659298, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.988
+      objectReference: {fileID: 0}
     - target: {fileID: 4761380936761485301, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64

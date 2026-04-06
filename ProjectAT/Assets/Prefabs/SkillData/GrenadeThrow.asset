@@ -26,4 +26,4 @@ MonoBehaviour:
   AnimationTriggerName: 
   ThrowingObjectPrefab: {fileID: 5801574965826310662, guid: d6d05aa84ea333d4cb0f95c900695142, type: 3}
   ExplosionRadius: 5
-  FuseTime: 2
+  FuseTime: 3

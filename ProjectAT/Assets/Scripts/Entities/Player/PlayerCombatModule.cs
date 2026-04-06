@@ -22,6 +22,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     public WeaponHolder MyWeapon => myWeapon;
     private Transform WeaponFirePoint => myWeapon.GunHolderTf;
+    public Vector3 ThrowPoint => throwPoint.position;
 
     private void Awake()
     {
@@ -185,7 +186,6 @@ public class PlayerCombatModule : MonoBehaviour
 
         Vector3 origin = throwPoint.position + Vector3.up;
 
-        // ★ 계산 도구함 호출!
         if (!PhysicsMathUtility.CalculateTrajectory(origin, position, arcHeight, out Vector3 initialVelocity, out float totalTime))
         {
             Debug.Log("Chase State : Failed to calculate trajectory.");
@@ -227,7 +227,7 @@ public class PlayerCombatModule : MonoBehaviour
     public void ThrowSomthingToTarget(GameObject throwingObject, Vector3 targetPos)
     {
         throwingObject.transform.position = throwPoint.position;
-        Vector3 origin = throwPoint.position + Vector3.up;
+        Vector3 origin = throwPoint.position;
 
         if (PhysicsMathUtility.CalculateTrajectory(origin, targetPos, arcHeight, out Vector3 velocity, out float time))
         {

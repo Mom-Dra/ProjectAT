@@ -19,15 +19,6 @@ public class ProjectileGrenade : MonoBehaviour
         groundLayer = LayerMask.NameToLayer("Ground");
     }
 
-
-    // private void OnDisable()
-    // {
-    //     if(explosionCoroutine != null)
-    //     {
-    //         StopCoroutine(explosionCoroutine);
-    //     }
-    // }
-
     public void SetUp(int damage, float radius, float fuse, LayerMask damageableLayers)
     {
         ExplodeDamage = damage;
@@ -39,9 +30,7 @@ public class ProjectileGrenade : MonoBehaviour
     public void Throw(Vector3 velocity)
     {
         if (myRigid == null) myRigid = GetComponent<Rigidbody>();
-
-        myRigid.AddForce(velocity, ForceMode.VelocityChange);
-        explosionCoroutine = StartCoroutine(FuseCountdown());
+        myRigid.linearVelocity = velocity;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -49,13 +38,14 @@ public class ProjectileGrenade : MonoBehaviour
         if(collision.gameObject.layer == groundLayer)
         {
             myRigid.linearVelocity = Vector3.zero;
+            myRigid.angularVelocity = Vector3.zero;
+            explosionCoroutine = StartCoroutine(FuseCountdown());
         }
     }
 
     private IEnumerator FuseCountdown()
     {
         yield return new WaitForSeconds(fuseTime);
-        Debug.Log("Grenade Exploded");
         Explode();
     }
 
@@ -82,7 +72,6 @@ public class ProjectileGrenade : MonoBehaviour
                 damageable.TakeDamage(ExplodeDamage);
             }
         }
-        Debug.Log("Grenade Explosion Processed");
         Destroy(gameObject);
     }
 }

@@ -123,7 +123,7 @@ public class PlayerSkillModule : MonoBehaviour
         switch (mySkills[(int)skillIndex].IndicatorType)
         {
             case IndicatorType.GroundSkillIndicator:
-                IndicatorManager.Instance.ShowAreaIndicator(transform.position, (skillDatas[(int)lastSkillInput] as ProjectileSkillData).ExplosionRadius);
+                IndicatorManager.Instance.ShowAreaIndicator(MyCombatModule.ThrowPoint, (skillDatas[(int)lastSkillInput] as ProjectileSkillData).ExplosionRadius);
                 break;
             case IndicatorType.TargettingSkillIndicator:
                 IndicatorManager.Instance.ShowAimingCursor();
@@ -188,11 +188,8 @@ public class PlayerSkillModule : MonoBehaviour
     /// <returns></returns>
     public bool CanCastingSkill(SkillContext context)
     {
-        Debug.Log("ChaseState : CanCastingSkill Enter ");
         if (context == null || context.SkillToExecute == null) return false;
-        Debug.Log("ChaseState : 1 ");
         if(context.TargetObject != null && !context.TargetObject.activeInHierarchy) return false; //타겟이 비활성화된 상태면 시전 불가능
-        Debug.Log("ChaseState : 2 ");
 
 
         Vector3 destination = (context.TargetObject != null) ? context.TargetObject.transform.position : context.CastedPosition;
@@ -200,7 +197,6 @@ public class PlayerSkillModule : MonoBehaviour
 
         if (sqrtDistance <= context.FinalRange * context.FinalRange)
         {
-            Debug.Log("ChaseState : 3 ");
             return context.SkillToExecute.ExtraCastingCondition(context);
         }
 
