@@ -7,7 +7,8 @@ public class ProjectileGrenade : MonoBehaviour
     [SerializeField] private Rigidbody myRigid;
     [SerializeField] private float explosionRadius = 5f;
     [SerializeField] private int explodeDamage = 50;
-    [SerializeField] public int ExplodeDamage 
+    [SerializeField]
+    public int ExplodeDamage
     {
         get { return explodeDamage; }
         set { explodeDamage = value < 0 ? 0 : value; }
@@ -44,7 +45,7 @@ public class ProjectileGrenade : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             myRigid.isKinematic = true;
         }
@@ -69,15 +70,15 @@ public class ProjectileGrenade : MonoBehaviour
         foreach (Collider hitCollider in hitColliders)
         {
             Physics.Raycast(transform.position, (hitCollider.transform.position - transform.position).normalized, out RaycastHit hitInfo, explosionRadius);
-            if(hitInfo.collider != hitCollider)
+            if (hitInfo.collider != hitCollider)
             {
                 continue;
             }
-            
+
             IDamageable damageable = hitCollider.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.TakeDamage(explodeDamage);
+                damageable.TakeDamage(explodeDamage, null);
             }
         }
         Debug.Log("Grenade Explosion Processed");

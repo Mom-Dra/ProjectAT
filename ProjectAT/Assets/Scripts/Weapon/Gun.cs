@@ -13,6 +13,7 @@ public class Gun : Weapon
     private LineRenderer lineRenderer;
     private AudioSource audioSource;
     [SerializeField] private ParticleSystem muzzleParticleSystem;
+    private EntityStatus ownerStatus;
 
     private int remainAmmo; // ���� ��ü ź��
     private int magAmmo; // źâ�� ���� ź��
@@ -32,6 +33,7 @@ public class Gun : Weapon
         lineRenderer = GetComponent<LineRenderer>();
         audioSource = GetComponent<AudioSource>();
         muzzleParticleSystem = GetComponentInChildren<ParticleSystem>();
+        ownerStatus = GetComponentInParent<EntityStatus>();
 
         //lineRenderer.positionCount = 2;
         //lineRenderer.enabled = false;
@@ -102,7 +104,7 @@ public class Gun : Weapon
 
             // ������ ����
             if (hit.transform.TryGetComponent(out IDamageable damageable))
-                damageable.TakeDamage(gunData.Damage);
+                damageable.TakeDamage(gunData.Damage, ownerStatus);
         }
         else
         {

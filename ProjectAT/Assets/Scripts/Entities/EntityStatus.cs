@@ -2,7 +2,7 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 
-public class EntityStatus: MonoBehaviour, IDamageable
+public class EntityStatus : MonoBehaviour, IDamageable
 {
     public event Action onDeath;
     public event Action onRevive;
@@ -10,6 +10,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
 
     //References
     [SerializeField] private EntityInitialStatus initStatus;
+    private CoverHandler coverHandler;
 
     private Stat maxHpStat;
     private Stat walkSpeedStat;
@@ -29,12 +30,16 @@ public class EntityStatus: MonoBehaviour, IDamageable
     public EntityInitialStatus InitStatusRef => initStatus;
     public Action<float> OnHealthChanged => onHealthChanged;
 
+    private void Awake()
+    {
+        coverHandler = GetComponent<CoverHandler>();
+    }
+
 
     private void OnEnable()
     {
         InitStatus();
     }
-
 
     private void InitStatus()
     {
@@ -60,22 +65,30 @@ public class EntityStatus: MonoBehaviour, IDamageable
         };
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, EntityStatus attacker)
     {
+        if (IsDead) return;
+
         Debug.Log($"{transform.name} TakeDamage: {damage}");
 
-        // Armor 수치에 따른 데미지 감소 로직..!
-        // 100 데메지 100, 300   
+        float finalDamage = damage;
 
-        CurrentHp -= damage;
+        if (attacker is not null)
+        {
+            // A. 엄폐 보너스 계산 (공격자의 위치 활용)
+            if (coverHandler is not null)
+            {
+                float coverBonus = coverHandler.GetCoverBonus(attacker.transform);
+                finalDamage *= 1f - coverBonus;
+            }
+        }
+
+        CurrentHp -= Mathf.RoundToInt(finalDamage);
         onHealthChanged?.Invoke(Mathf.Clamp01(Ratio));
 
         if (CurrentHp <= 0)
         {
-            IsDead = true;
             Die();
-
-            Debug.Log("Dead!");
         }
     }
 
@@ -98,10 +111,13 @@ public class EntityStatus: MonoBehaviour, IDamageable
         onRevive?.Invoke();
     }
 
+    [ContextMenu("Die")]
     private void Die()
     {
         // Enemy�� ��� ������ ���߰� �״� Animation ���
         // ���⼭ �ٷ� Enemy�� Animator�� ���������� ������?
+        Debug.Log("Dead!");
+
         IsDead = true;
         onDeath?.Invoke();
     }

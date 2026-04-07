@@ -1,39 +1,35 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEditor.PackageManager;
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Test2 : MonoBehaviour
 {
-    [SerializeField]
-    private float t;
-
-    [SerializeField]
-    private float length;
-
-    [SerializeField]
-    private float rotateSpeed;
-
-    [SerializeField]
-    private float rotateAngle;
+    private string name;
 
     private void Start()
     {
-        //StartCoroutine(TestCoroutine());
-        //Vector3 abc = Quaternion.Euler(0f, 90f, 0f) * Vector3.forward;
-        //Vector3 cba = Quaternion.Euler(0f, 90f, 0f) * abc;
+        Managers.Instance.EventManager.Subscribe<int>(EventType.Last, Foo);
+    }
 
+    private void OnDisable()
+    {
+        Managers.Instance.EventManager.UnSubscribe<int>(EventType.Last, Foo);
+    }
 
-        //try
-        //{
-        //    Debug.LogError("Error!!");
-        //}
-        //catch (Exception e)
-        //{
-        //    Debug.Log($"KiaOra!: {e}");
-        //}
+    private void Foo(int kk)
+    {
+        Debug.Log(kk);
+    }
 
-        //Debug.Log($"{cba}");
+    [ContextMenu("Bar")]
+    private void Bar()
+    {
+        Managers.Instance.EventManager.Publish<int>(EventType.Last, 77);
     }
 
     //private IEnumerator TestCoroutine()

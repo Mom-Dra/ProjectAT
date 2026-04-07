@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Behavior;
 using UnityEngine;
 
@@ -18,10 +19,12 @@ public class PlayerCombatModule : MonoBehaviour
     [SerializeField] private LayerMask ObstacleLayer;
     [SerializeField] private float AimingCoolTime = 0.5f;
     [SerializeField] private float currentAimingTime = 0f;
-    public bool IsAiming {get; private set;}
+    public bool IsAiming { get; private set; }
 
     public WeaponHolder MyWeapon => myWeapon;
     private Transform WeaponFirePoint => myWeapon.GunHolderTf;
+
+    private HashSet<Enemy> attackers = new HashSet<Enemy>();
 
     private void Awake()
     {
@@ -40,7 +43,7 @@ public class PlayerCombatModule : MonoBehaviour
         //enemyLayer = LayerMask.GetMask("Enemy");
         //throwPoint = transform.GetChild(2);
     }
-    
+
     private void Start()
     {
         Managers.Instance.UIManager.InitPlayerGunInfo(myWeapon);
@@ -48,7 +51,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     private void Update()
     {
-        if(IsAiming)
+        if (IsAiming)
         {
             currentAimingTime = Mathf.Min(Time.deltaTime + currentAimingTime + 0.1f, AimingCoolTime);
         }
@@ -58,6 +61,21 @@ public class PlayerCombatModule : MonoBehaviour
     {
         return CheckPositionInRange(enemy.transform.position, myWeapon.Range)
             && CheckEnemyVisibility(enemy, eyePoint);
+    }
+
+    public void RegisterAttacker(Enemy enemy)
+    {
+        attackers.Add(enemy);
+    }
+
+    public void UnregisterAttacker(Enemy enemy)
+    {
+        attackers.Remove(enemy);
+    }
+
+    public IEnumerable<Enemy> GetCurrentAttackers()
+    {
+        return attackers;
     }
 
     private bool CheckPositionInRange(Vector3 pos, float range)
@@ -96,7 +114,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool CanFire()
     {
-        return Time.time - LastFireTime > myWeapon.FireRate 
+        return Time.time - LastFireTime > myWeapon.FireRate
         && currentAimingTime >= AimingCoolTime
         && myWeapon.IsAmmoLoaded();
     }
@@ -112,7 +130,7 @@ public class PlayerCombatModule : MonoBehaviour
                 if (enemyColliderBuffer[i] != null)
                 {
                     scanned = enemyColliderBuffer[i].GetComponent<Enemy>();
-                    if(scanned && CheckEnemyVisibility(scanned, eyePoint)) break;
+                    if (scanned && CheckEnemyVisibility(scanned, eyePoint)) break;
                 }
             }
         }
@@ -120,7 +138,7 @@ public class PlayerCombatModule : MonoBehaviour
         return scanned;
     }
 
-    
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -135,19 +153,21 @@ public class PlayerCombatModule : MonoBehaviour
     {
         Debug.Log($"Player Attack : {target.gameObject.name}");
 
-        if (target.TryGetComponent(out IDamageable damageable)) 
+        if (target.TryGetComponent(out IDamageable damageable))
         {
             LastFireTime = Time.time;
+
             myWeapon.FireWeapon();
-            damageable.TakeDamage(myWeapon.Damage);
+            // damageable.TakeDamage(myWeapon.Damage, myStatus);
         }
     }
 
     public void SetAiming(bool IsAiming)
     {
-        if(this.IsAiming != IsAiming){
+        if (this.IsAiming != IsAiming)
+        {
             this.IsAiming = IsAiming;
-            if(!IsAiming) currentAimingTime = 0f;
+            if (!IsAiming) currentAimingTime = 0f;
         }
     }
 
@@ -160,7 +180,7 @@ public class PlayerCombatModule : MonoBehaviour
     public void ThrowSomthingToTarget(GameObject throwingObject, Vector3 targetPos)
     {
         throwingObject.transform.position = throwPoint.position;
-        Vector3 velocity = CalculateVelocity(throwPoint.position + Vector3.up, targetPos, arcHeight);        
+        Vector3 velocity = CalculateVelocity(throwPoint.position + Vector3.up, targetPos, arcHeight);
         throwingObject.GetComponent<ProjectileGrenade>().Throw(velocity); //projectle이라는 인터페이스같은걸로 바꾸기
     }
 
@@ -175,7 +195,7 @@ public class PlayerCombatModule : MonoBehaviour
     {
         float gravity = Physics.gravity.y; // 중력 (보통 -9.81)
         float displacementY = target.y - origin.y; // 높이 차이
-        
+
         // 수평 평면(XZ)에서의 거리 벡터와 거리값
         Vector3 displacementXZ = new Vector3(target.x - origin.x, 0, target.z - origin.z);
         float time = 0;
@@ -189,7 +209,7 @@ public class PlayerCombatModule : MonoBehaviour
         time = timeUp + timeDown;
 
         Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * height);
-        
+
         // 수평 속도(Vxz): 거리 / 시간
         Vector3 velocityXZ = displacementXZ / time;
 

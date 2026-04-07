@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
+// 사용하지 않음
 public class EntityController : NetworkBehaviour
 {
     private EntityStatus myStatus;
@@ -15,7 +16,7 @@ public class EntityController : NetworkBehaviour
     {
         if (IsServer)
         {
-            myStatus.TakeDamage(damage);
+            // myStatus.TakeDamage(damage, myStatus);
             TakingHitClientRpc();
         }
     }

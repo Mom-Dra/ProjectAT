@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Data.Common;
 using Unity.Cinemachine;
+using Unity.Services.Lobbies.Models;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class DesignatedFire : Skill
 {
-    public DesignatedFire(PlayerSkillModule context, SkillData data) : base(context, data){}
+    public DesignatedFire(PlayerSkillModule context, SkillData data) : base(context, data) { }
     private Enemy targetEnemy;
-    public override Vector3 TargetPosition {get { return targetEnemy? targetEnemy.transform.position : Vector3.zero;}}
+    public override Vector3 TargetPosition { get { return targetEnemy ? targetEnemy.transform.position : Vector3.zero; } }
 
     public override void OnChasingStart()
     {
@@ -22,7 +23,7 @@ public class DesignatedFire : Skill
 
     public override bool CanSelectTarget(in RaycastHit hit)
     {
-        if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0 &&
+        if (((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0 &&
            hit.collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             targetEnemy = enemy;
@@ -51,7 +52,7 @@ public class DesignatedFire : Skill
 
         if (targetEnemy.TryGetComponent(out IDamageable damageable))
         {
-            damageable.TakeDamage(skillData.Damage);
+            damageable.TakeDamage(skillData.Damage, context.MyStatus);
             context.MyWeapon.FireWeapon();
         }
     }

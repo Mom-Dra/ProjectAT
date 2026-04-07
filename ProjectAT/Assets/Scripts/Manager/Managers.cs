@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEditor.EditorTools;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class Managers : Singleton<Managers>
@@ -27,12 +28,16 @@ public class Managers : Singleton<Managers>
     private InteractionManager interactionManager;
     private UIManager uIManager;
     private PoolManager poolManager;
+    private SceneManager sceneManager;
+    private EventManager eventManager;
 
     public InputManager InputManager => inputManager;
     public CursorManager CursorManager => cursorManager;
     public InteractionManager InteractionManager => interactionManager;
     public UIManager UIManager => uIManager;
     public PoolManager PoolManager => poolManager;
+    public SceneManager SceneManager => sceneManager;
+    public EventManager EventManager => eventManager;
 
     protected override void Awake()
     {
@@ -43,7 +48,8 @@ public class Managers : Singleton<Managers>
         interactionManager = new InteractionManager(interactionLayerMask);
         uIManager = new UIManager(healthUIPrefab, FindFirstObjectByType<PlayerHUD>());
         poolManager = new PoolManager(pooledPrefabs);
-
+        sceneManager = new SceneManager();
+        eventManager = new EventManager();
 
         //uIManager.ShowHealthUI(target.GetComponent<EntityStatus>());
         //uIManager.EnableEnemyHealthUI();
