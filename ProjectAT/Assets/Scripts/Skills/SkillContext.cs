@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SkillContext
+public class SkillContext //struct가 아닌 class를 쓰는 이유는? 찾아보기
 {
     //실행할 스킬
     public Skill SkillToExecute;

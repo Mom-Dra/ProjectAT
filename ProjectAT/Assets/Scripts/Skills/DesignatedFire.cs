@@ -45,7 +45,7 @@ public class DesignatedFire : Skill
     public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
     {
         if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0 &&
-           hit.collider.gameObject.TryGetComponent(out Enemy enemy))
+           hit.collider.gameObject.TryGetComponent(out Enemy enemy)) //enemy를 굳이?
         {
             target = enemy.gameObject;
             point = enemy.transform.position;

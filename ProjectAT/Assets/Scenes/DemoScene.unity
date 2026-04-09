@@ -22632,8 +22632,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2145079510353081862, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: ObstacleLayer.m_Bits
-      value: 8960
+      value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 2384098045390091880, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a48cbe0c1c895c048879351105f5723f, type: 2}
     - target: {fileID: 2474928388271890292, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: m_AgentTypeID
       value: -1372625422
@@ -25943,7 +25947,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!120 &752954865
 LineRenderer:
   serializedVersion: 2

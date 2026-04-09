@@ -72,7 +72,7 @@ public class PlayerCombatModule : MonoBehaviour
         directionToEnemy.y = 0.0f;
 
         Ray ray = new Ray(baseTf.position, directionToEnemy);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, enemyLayer))
         {
             if (hitInfo.collider.gameObject == targetEnemy.gameObject)
             {
@@ -84,24 +84,26 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool IsTargetInWeaponSight(GameObject target) //해당 코드가 잘 유효하면 위의 동명의 함수 제거
     {
-        return CheckPositionInRange(target.transform.position, myWeapon.Range)
-            && CheckTargetVisibility(target, eyePoint);
+        bool condition = CheckPositionInRange(target.transform.position, myWeapon.Range);
+        bool condition2 = CheckTargetVisibility(target, eyePoint);
+
+        if(!condition) Debug.Log("Player Combat Module : Target is not in Range");
+        if(!condition2) Debug.Log("Player Combat Module : Target is not Visible");
+
+        return condition && condition2;
     }
 
     private bool CheckTargetVisibility(GameObject target, Transform baseTf)
     {
         Vector3 directionToTarget = target.transform.position - baseTf.position;
-        directionToTarget.y = 0.0f;
+        directionToTarget.y = baseTf.position.y;
 
         Ray ray = new Ray(baseTf.position, directionToTarget);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
         {
-            if (hitInfo.collider.gameObject == target)
-            {
-                return true;
-            }
+            return false;
         }
-        return false;
+        return true;
     }
 
     private bool CheckPositionVisibility(Vector3 targetPos) //중복되는 부분이 있다. 리펙토링 고려
