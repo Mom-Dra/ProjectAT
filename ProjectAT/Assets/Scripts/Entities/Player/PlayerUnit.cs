@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerUnit : MonoBehaviour
 {
     [SerializeField]
-    private PlayerType playerType;
+    private PlayerNumber playerType;
 
     private EntityStatus entityStatus;
 

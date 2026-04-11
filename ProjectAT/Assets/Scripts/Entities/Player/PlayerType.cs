@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum PlayerType
+public enum PlayerNumber
 {
     Player1,
     Last

@@ -51,6 +51,9 @@ public class Managers : Singleton<Managers>
         sceneManager = new SceneManager();
         eventManager = new EventManager();
 
+
+        sceneManager.Initialize();
+
         //uIManager.ShowHealthUI(target.GetComponent<EntityStatus>());
         //uIManager.EnableEnemyHealthUI();
         //uIManager.SetHpBarFollowingTarget(target);

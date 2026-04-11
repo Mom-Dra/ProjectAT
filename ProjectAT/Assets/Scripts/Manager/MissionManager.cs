@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
+using System.Collections.Specialized;
 using UnityEngine;
 
 public class MissionManager : MonoBehaviour
@@ -9,7 +9,7 @@ public class MissionManager : MonoBehaviour
     private List<MissionData> activeMissions = new List<MissionData>();
     private HashSet<MissionData> completedMissions = new HashSet<MissionData>();
 
-    private bool[] isDeadPlayers = new bool[(int)PlayerType.Last];
+    private bool[] isDeadPlayers = new bool[(int)PlayerNumber.Last];
 
     private void Awake()
     {
@@ -19,13 +19,13 @@ public class MissionManager : MonoBehaviour
     private void OnEnable()
     {
         Managers.Instance.EventManager.Subscribe<EnemyIdentity>(EventType.TargetDied, TargetDied);
-        Managers.Instance.EventManager.Subscribe<PlayerType>(EventType.PlayerDied, PlayerDied);
+        Managers.Instance.EventManager.Subscribe<PlayerNumber>(EventType.PlayerDied, PlayerDied);
     }
 
     private void OnDisable()
     {
         Managers.Instance.EventManager.UnSubscribe<EnemyIdentity>(EventType.TargetDied, TargetDied);
-        Managers.Instance.EventManager.UnSubscribe<PlayerType>(EventType.PlayerDied, PlayerDied);
+        Managers.Instance.EventManager.UnSubscribe<PlayerNumber>(EventType.PlayerDied, PlayerDied);
     }
 
     private void TargetDied(EnemyIdentity enemyIdentity)
@@ -39,13 +39,13 @@ public class MissionManager : MonoBehaviour
 
             if (missionData is KillTargetData killTargetData && killTargetData.EnemyIdentity == enemyIdentity)
             {
-                completedMissions.Add(missionData);
+                CompleteMission(missionData);
                 break;
             }
         }
     }
 
-    private void PlayerDied(PlayerType playerType)
+    private void PlayerDied(PlayerNumber playerType)
     {
         isDeadPlayers[(int)playerType] = true;
 
@@ -57,14 +57,13 @@ public class MissionManager : MonoBehaviour
         FailMission();
     }
 
-    private void PlayerRevived(PlayerType playerType)
+    private void PlayerRevived(PlayerNumber playerType)
     {
         isDeadPlayers[(int)playerType] = false;
     }
 
     private void CompleteMission(MissionData mission)
     {
-        Debug.Log($"mission Completed: {mission}");
         completedMissions.Add(mission);
 
         if (completedMissions.Count >= activeMissions.Count)

@@ -7,45 +7,76 @@ using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DG.Tweening;
+
 public class Test2 : MonoBehaviour
 {
-    private string name;
+    private CanvasGroup canvasGroup;
+    private Sequence fadeSequence;
+
+    private void Awake()
+    {
+        // canvasGroup = GetComponent<CanvasGroup>();
+
+        // canvasGroup.alpha = 0f;
+        // canvasGroup.blocksRaycasts = false;
+    }
+
+    private void OnEnable()
+    {
+        Managers.Instance.InputManager.onMouseLeftClicked += Foo;
+    }
+
+    private void Foo()
+    {
+        Managers.Instance.SceneManager.LoadSceneAsync(SceneType.End);
+    }
 
     private void Start()
     {
-        Managers.Instance.EventManager.Subscribe<int>(EventType.Last, Foo);
+        // DOTween.Init();
+        // transform.DOMove(new Vector3(5f, 5f, 0f), 2f);
+
+        // transform.DOScale(new Vector3(2f, 2f, 2f), 1f).SetEase(Ease.InBounce);
+
+
+        // Managers.Instance.EventManager.Subscribe<int>(EventType.Last, Foo);
+
+
+        // PlayFadeInOut(5f, () => Debug.Log("KKKKKKey!"));
+
+
     }
 
-    private void OnDisable()
+    public void PlayFadeInOut(float duration, Action onScreenCovered)
     {
-        Managers.Instance.EventManager.UnSubscribe<int>(EventType.Last, Foo);
+        fadeSequence?.Kill();
+
+        fadeSequence = DOTween.Sequence();
+
+        fadeSequence.SetUpdate(true);
+
+        canvasGroup.blocksRaycasts = true;
+
+        fadeSequence.Append(canvasGroup.DOFade(1f, duration)).SetEase(Ease.InOutQuad);
+
+        fadeSequence.AppendCallback(() =>
+        {
+            onScreenCovered?.Invoke();
+        });
+
+        fadeSequence.Append(canvasGroup.DOFade(0f, duration)).SetEase(Ease.InOutQuad);
+
+        fadeSequence.OnComplete(() =>
+        {
+            canvasGroup.blocksRaycasts = false;
+            fadeSequence = null;
+        });
     }
 
-    private void Foo(int kk)
+    private void Oestroy()
     {
-        Debug.Log(kk);
-    }
-
-    [ContextMenu("Bar")]
-    private void Bar()
-    {
-        Managers.Instance.EventManager.Publish<int>(EventType.Last, 77);
-    }
-
-    //private IEnumerator TestCoroutine()
-    //{
-    //    WaitForSeconds wait = new WaitForSeconds(2f);
-
-    //    while (true)
-    //    {
-    //        Debug.Log("TestCoroutine");
-
-    //        yield return wait;
-    //    }
-    //}
-
-    private void Update()
-    {
-        //if (Physics.Raycast(Vector3.zero, Vector3.up, 10f, ))
+        fadeSequence?.Kill();
     }
 }
+
