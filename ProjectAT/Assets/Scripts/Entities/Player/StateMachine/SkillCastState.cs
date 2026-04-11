@@ -8,6 +8,7 @@ namespace PlayerStateMachine
     {
         private PlayerSkillModule mySkillModule;
         private PlayerMovementModule myMovementModule;
+        private PlayerAnimator myAnimModule;
         private SkillContext skillContext;
 
         private float castTimer = 0.0f;
@@ -17,6 +18,7 @@ namespace PlayerStateMachine
         {
             mySkillModule = context.MySkillModule;
             myMovementModule = context.MyMovementModule;
+            myAnimModule = context.MyAnimModule;
         }
 
         public void SetSkillContext(SkillContext context)
@@ -58,7 +60,8 @@ namespace PlayerStateMachine
                 //     return;
                 // }
             }
-
+            myAnimModule.SetAiming(true, skillContext.TargetObject?.transform); //회전이 끝나기도 전에 에임 애니메이션 먼저 시작. 회전이 끝나면 애니메이션 트리거를 따로 주는 방식으로 바꿔도 될듯.
+            
             // 3. 실시간 유효성 체크 (캐스팅 도중 적이 도망갔는지 확인)
             if (!skillContext.SkillToExecute.CanExecute(skillContext))
             {

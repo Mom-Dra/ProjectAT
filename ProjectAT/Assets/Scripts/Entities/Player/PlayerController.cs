@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
     #region Module Getters
     public PlayerMovementModule MyMovementModule => myMovementModule;
+    public PlayerAnimator MyAnimModule => myPlayerAnimator;
     public PlayerCombatModule MyCombatModule => myCombatModule;
     public PlayerSkillModule MySkillModule => mySkillModule;
     public PlayerCoverModule MyCoverModule => myCoverModule;
@@ -158,9 +159,9 @@ public class PlayerController : MonoBehaviour
     public void HandlePlayerRightClickInput()
     {
         if(EventSystem.current.IsPointerOverGameObject()) return;
-        // if(myStatus.IsDead) return;
         
-        // if(mySkillModule.IsTargetting) //스킬 타겟팅 모드에서 우클릭하면 스킬 취소
+        
+        //if(mySkillModule.IsTargetting) //스킬 타겟팅 모드에서 우클릭하면 스킬 취소
         // {
         //     mySkillModule.CancelTargettingMode();
         //     return;
@@ -276,7 +277,7 @@ public class PlayerController : MonoBehaviour
         if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
         {
             myMovementModule.PlayerMoveStop();
-            AimingEnemy(true);
+            AimingEnemy(true, SelectedEnemy.transform);
 
             if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
             {
@@ -295,9 +296,9 @@ public class PlayerController : MonoBehaviour
         myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
     }
 
-    public void AimingEnemy(bool isAiming)
+    public void AimingEnemy(bool isAiming, Transform targetTf = default)
     {
-        myPlayerAnimator.PlayAiming(isAiming);
+        myPlayerAnimator.SetAiming(isAiming, targetTf);
         myCombatModule.SetAiming(isAiming);
     }
 

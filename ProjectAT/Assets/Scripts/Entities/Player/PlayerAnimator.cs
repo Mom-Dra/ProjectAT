@@ -1,6 +1,8 @@
+using System.Collections;
 using MomDra.Weapon;
 using UnityEditor.Build;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public enum SkillAnimationType : ushort
 {
@@ -14,22 +16,27 @@ public class PlayerAnimator : MonoBehaviour
     private EntityStatus entityStatus;
     [SerializeField] private WeaponHolder weaponHolder;
     
-    private static readonly int IsRunHash = Animator.StringToHash("IsRun");
-    private static readonly int IsCrouchHash = Animator.StringToHash("Crouch_b");
-    private static readonly int AttackkHash = Animator.StringToHash("Attack");
-    private static readonly int HitHash = Animator.StringToHash("Hit");
+    #region  Animation Hashes
     private static readonly int SpeedHash = Animator.StringToHash("Speed_f");
+    private static readonly int IsCrouchHash = Animator.StringToHash("Crouch_b");
     private static readonly int WeaponTypeHash = Animator.StringToHash("WeaponType_int");
+    private static readonly int ShootHash = Animator.StringToHash("Shoot_b");
+    private static readonly int RealoadHash= Animator.StringToHash("Reload_b");
+    private static readonly int FullAutoHash = Animator.StringToHash("FullAuto_b");
+
     private static readonly int HeadHorizontalHash = Animator.StringToHash("Head_Horizontal_f");
     private static readonly int HeadVerticalHash = Animator.StringToHash("Head_Vertical_f");
-    private static readonly int BodyHorizontalHash = Animator.StringToHash("Body_Horizontal_f");
-    private static readonly int BodyVerticalHash = Animator.StringToHash("Body_Vertical_f");
-    private static readonly int ShootHash = Animator.StringToHash("Shoot_b");
     private static readonly int IsDeadHash = Animator.StringToHash("Death_b");
-    private static readonly int CancelTriggerHash = Animator.StringToHash("CancelTrigger");
+    
+    private static readonly int CancelTriggerHash = Animator.StringToHash("Cancel_t");
+    #endregion
 
-    private static int MovementLayerHash;
     [SerializeField] private float animationFPS = 30f;
+
+    private Coroutine headLookCoroutine;
+    [SerializeField] private Transform TargetTransform;
+    [SerializeField] private Transform AimedTargetLocation;
+    [SerializeField] private RigBuilder aimRigBuilder;
 
 
     private void Awake()
@@ -37,21 +44,31 @@ public class PlayerAnimator : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         entityStatus = GetComponent<EntityStatus>();
         weaponHolder = GetComponentInChildren<WeaponHolder>();
-        MovementLayerHash = animator.GetLayerIndex("Movement");
+        aimRigBuilder = GetComponentInChildren<RigBuilder>();
     }
 
     private void OnEnable()
     {
         entityStatus.onDeath += EntityDead;
         entityStatus.onRevive += EntityRevived;
-        weaponHolder.OnWeaponFired += PlayWeaponFireOnce;
+        //weaponHolder.OnWeaponFired += PlayWeaponFireOnce;
     }
 
     private void OnDisable()
     {
         entityStatus.onDeath -= EntityDead;
         entityStatus.onRevive -= EntityRevived;
-        weaponHolder.OnWeaponFired -= PlayWeaponFireOnce;
+        //weaponHolder.OnWeaponFired -= PlayWeaponFireOnce;
+    }
+
+    private void Start()
+    {
+        SetAiming(false);
+    }
+
+    private void LateUpdate()
+    {
+        TargetTransform.position = transform.position + Vector3.up + (AimedTargetLocation? AimedTargetLocation.position : transform.forward * 10f);
     }
 
     private void EntityDead()
@@ -64,7 +81,7 @@ public class PlayerAnimator : MonoBehaviour
         SetIsDead(false);
     }
 
-    public void SetIsDead(bool isDead)
+    private void SetIsDead(bool isDead)
     {
         animator.SetBool(IsDeadHash, isDead);
     }
@@ -90,30 +107,6 @@ public class PlayerAnimator : MonoBehaviour
             animator.SetBool(ShootHash, isShoot);
     }
 
-    public void SetUpperBodyOffset(float headHorizontalOffset = 0.0f, float headVerticalOffset = 0.0f,  float bodyHorizontalOffset = 0.0f, float bodyVerticalOffset = 0.0f)
-    {
-        animator.SetFloat(HeadHorizontalHash, headHorizontalOffset);
-        animator.SetFloat(HeadVerticalHash, headVerticalOffset);
-        animator.SetFloat(BodyHorizontalHash, bodyHorizontalOffset);
-        animator.SetFloat(BodyVerticalHash, bodyVerticalOffset);
-    }
-
-    public void SetRunState(bool isRunning)
-    {
-        animator.SetBool(IsRunHash, isRunning);
-    }
-
-
-    public void PlayAttack()
-    {
-        animator.SetTrigger(AttackkHash);
-    }
-
-    public void PlayHit()
-    {
-        animator.SetTrigger(HitHash);
-    }
-
     public void PlayIdle()
     {
         // weaponHolder.ChangeWeapon(WeaponHolder.WeaponSlot.Primary);
@@ -121,8 +114,7 @@ public class PlayerAnimator : MonoBehaviour
         weaponHolder.ChangeWeapon(weaponHolder.NowWeaponSlot);
         animator.SetInteger(WeaponTypeHash, 2);
         animator.SetBool(ShootHash, false);
-        animator.SetLayerWeight(MovementLayerHash,1f);
-        SetUpperBodyOffset(-0.8f, 0f, 0f, 0f);
+        SetHeadLookDirection(0f, 0f);
     }
 
     public void PlayGrenadeThrow(float t = 1.0f)
@@ -131,23 +123,25 @@ public class PlayerAnimator : MonoBehaviour
 
         animator.SetInteger(WeaponTypeHash, 10);
         weaponHolder.ChangeProjectileWeapon(WeaponHolder.WeaponSlot.Grenade);
-        animator.SetFloat("ThrowSpeed", targetSpeed);
-        PlayAiming(false);
+        //animator.SetFloat("ThrowSpeed", targetSpeed);
+        //PlayAiming(false);
     }
 
-    public void PlayAiming(bool isAiming = true)
+    public void SetAiming(bool isAiming = true, Transform targetTf = default)
     {
         if (isAiming)
         {
-            SetUpperBodyOffset(-0.8f, 0f, 0f, 0f);
+            //SetHeadLookDirection(-0.8f, 0f);
             animator.SetBool(ShootHash, true);
-            animator.SetLayerWeight(MovementLayerHash, 0f);
+            aimRigBuilder.layers[0].active = true;
+            AimedTargetLocation = targetTf;
         }
         else
         {
             animator.SetBool(ShootHash, false);
-            animator.SetLayerWeight(MovementLayerHash, 1f);
-            SetUpperBodyOffset(0.0f, 0f, 0f, 0f);
+            aimRigBuilder.layers[0].active = false;
+            AimedTargetLocation = null;
+           // SetHeadLookDirection(0f, 0f);
         }
     }
 
@@ -159,21 +153,44 @@ public class PlayerAnimator : MonoBehaviour
     public void CancelAnimation()
     {   
         animator.SetTrigger(CancelTriggerHash);
-        PlayIdle();
-    }
-    public float GetSpeedValue()
-    {
-        return animator.GetFloat(SpeedHash);
+        //PlayIdle();
     }
 
-    public void PlayUseItem()
+    public void SetHeadLookDirection(float horizontal, float vertical)
     {
-        //붕대 사용하는 애니메이션 재생
-        animator.SetInteger(WeaponTypeHash, 10);
+        if (headLookCoroutine != null)
+        {
+            StopCoroutine(headLookCoroutine);
+        }
+
+        headLookCoroutine = StartCoroutine(SmoothHeadLook(horizontal, vertical));
     }
 
-    public void PlayWeaponFireOnce(Gun gun)
+    private IEnumerator SmoothHeadLook(float horizontal, float vertical, float duration = 0.5f)
     {
-        animator.SetTrigger("ShootTrigger");
+        float elapsed = 0f;
+
+        float initialHeadHorizontal = animator.GetFloat(HeadHorizontalHash);
+        float initialHeadVertical = animator.GetFloat(HeadVerticalHash);
+
+        float targetHeadHorizontal = Mathf.Clamp(horizontal, -1f, 1f);
+        float targetHeadVertical = Mathf.Clamp(vertical, -1f, 1f);
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            float newHeadHorizontal = Mathf.Lerp(initialHeadHorizontal, targetHeadHorizontal, t);
+            float newHeadVertical = Mathf.Lerp(initialHeadVertical, targetHeadVertical, t);
+
+            animator.SetFloat(HeadHorizontalHash, newHeadHorizontal);
+            animator.SetFloat(HeadVerticalHash, newHeadVertical);
+
+            yield return null;
+        }
+
+        animator.SetFloat(HeadHorizontalHash, targetHeadHorizontal);
+        animator.SetFloat(HeadVerticalHash, targetHeadVertical);
     }
 }
