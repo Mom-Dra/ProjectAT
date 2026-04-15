@@ -22884,6 +22884,10 @@ PrefabInstance:
       propertyPath: AimedTargetLocation
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3378365268511287941, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: gunHolder
+      value: 
+      objectReference: {fileID: 1673576809}
     - target: {fileID: 4761380936761485301, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
@@ -58549,6 +58553,11 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
+--- !u!4 &1673576809 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5266880477995672271, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+  m_PrefabInstance: {fileID: 660909031}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1676217342
 GameObject:
   m_ObjectHideFlags: 0
