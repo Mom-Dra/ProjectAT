@@ -5,7 +5,6 @@ public class PlayerMovementModule : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent myAgent;
     [SerializeField] private EntityStatus myStatus;
-    [SerializeField] private Transform muzzleTf;
 
     public float deltaRotation = 20f;
 
@@ -17,7 +16,6 @@ public class PlayerMovementModule : MonoBehaviour
 
     private void Start()
     {
-        muzzleTf = GetComponent<PlayerCombatModule>().MyWeapon.GunHolderTf;
     }
 
     public bool IsAgentMoving()
@@ -52,31 +50,6 @@ public class PlayerMovementModule : MonoBehaviour
         myAgent.isStopped = false;
         myAgent.speed = speed;
         myAgent.SetDestination(newPos);
-    }
-
-    public bool PlayerRotateTowardWithMuzzle(Vector3 targetPos)
-    {
-        Vector3 direction = targetPos - muzzleTf.position;
-        Vector3 muzzleForward = muzzleTf.forward;
-        direction.y = 0;
-        muzzleForward.y = 0;
-
-        direction.Normalize();
-        muzzleForward.Normalize();
-
-        if ((direction - muzzleForward).sqrMagnitude < 0.0001f)
-        {  
-            //myAgent.updateRotation = true;
-            return true;
-        }
-        else
-        {
-            //myAgent.updateRotation = false;
-            Quaternion rotationDifference = Quaternion.FromToRotation(muzzleForward, direction);
-            Quaternion targetRotation = rotationDifference * transform.rotation;
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * deltaRotation);
-            return false;
-        }
     }
 
     public bool PlayerRotateToward(Vector3 targetPos)

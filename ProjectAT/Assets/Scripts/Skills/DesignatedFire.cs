@@ -31,6 +31,11 @@ public class DesignatedFire : Skill
     public override bool CanExecute(SkillContext skillContext)
     {
         return context.MyCombatModule.IsTargetInWeaponSight(skillContext.TargetObject);
+    }    
+    
+    public override void OnCastingStart(SkillContext skillContext)
+    {
+        context.MyAnimModule.SetAiming(true, skillContext.TargetObject?.transform);
     }
 
     public override void Execute(SkillContext skillContext)
@@ -40,6 +45,11 @@ public class DesignatedFire : Skill
             damageable.TakeDamage(skillContext.FinalDamage);
             context.MyWeapon.FireWeapon();
         }
+    }
+
+    public override void OnCastingEnd(SkillContext skillContext)
+    {
+        context.MyAnimModule.SetAiming(false, null);
     }
 
     public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)

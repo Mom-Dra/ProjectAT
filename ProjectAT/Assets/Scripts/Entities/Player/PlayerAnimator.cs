@@ -1,14 +1,6 @@
-using System.Collections;
 using MomDra.Weapon;
-using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-
-public enum SkillAnimationType : ushort
-{
-    ThrowGrenade,
-    TargetAndFire
-}
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -29,12 +21,13 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int IsDeadHash = Animator.StringToHash("Death_b");
     
     private static readonly int CancelTriggerHash = Animator.StringToHash("Cancel_t");
+    private static readonly int ThrowTriggerHash = Animator.StringToHash("Throw_t");
     #endregion
 
     [SerializeField] private float animationFPS = 30f;
 
     private Coroutine headLookCoroutine;
-    [SerializeField] private Transform TargetTransform;
+    [SerializeField] private Transform AimMarkerTransform;
     [SerializeField] private Transform AimedTargetLocation;
     [SerializeField] private RigBuilder aimRigBuilder;
 
@@ -43,7 +36,6 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         entityStatus = GetComponent<EntityStatus>();
-        weaponHolder = GetComponentInChildren<WeaponHolder>();
         aimRigBuilder = GetComponentInChildren<RigBuilder>();
     }
 
@@ -51,24 +43,22 @@ public class PlayerAnimator : MonoBehaviour
     {
         entityStatus.onDeath += EntityDead;
         entityStatus.onRevive += EntityRevived;
-        //weaponHolder.OnWeaponFired += PlayWeaponFireOnce;
     }
 
     private void OnDisable()
     {
         entityStatus.onDeath -= EntityDead;
         entityStatus.onRevive -= EntityRevived;
-        //weaponHolder.OnWeaponFired -= PlayWeaponFireOnce;
     }
 
     private void Start()
     {
-        SetAiming(false);
+        SetAiming(false, null);
     }
 
     private void LateUpdate()
     {
-        TargetTransform.position = transform.position + Vector3.up + (AimedTargetLocation? AimedTargetLocation.position : transform.forward * 10f);
+        AimMarkerTransform.position =  Vector3.up + (AimedTargetLocation? AimedTargetLocation.position : transform.position + transform.forward * 10f);
     }
 
     private void EntityDead()
@@ -79,6 +69,11 @@ public class PlayerAnimator : MonoBehaviour
     private void EntityRevived()
     {
         SetIsDead(false);
+    }
+
+    public void SetAimMarker(Transform tf)
+    {
+        AimedTargetLocation = tf;
     }
 
     private void SetIsDead(bool isDead)
@@ -109,29 +104,29 @@ public class PlayerAnimator : MonoBehaviour
 
     public void PlayIdle()
     {
-        // weaponHolder.ChangeWeapon(WeaponHolder.WeaponSlot.Primary);
-        // animator.SetInteger(WeaponTypeHash, 2);
-        weaponHolder.ChangeWeapon(weaponHolder.NowWeaponSlot);
-        animator.SetInteger(WeaponTypeHash, 2);
+        SetWeaponAnimation(2); //하드코딩됨. SetWeaponType로 대체 가능
         animator.SetBool(ShootHash, false);
-        SetHeadLookDirection(0f, 0f);
     }
 
-    public void PlayGrenadeThrow(float t = 1.0f)
+    public void SetWeaponAnimation(int WeaponType)
     {
-        float targetSpeed = 48.0f/ (animationFPS * t);
+        animator.SetInteger(WeaponTypeHash, WeaponType);
+    }
 
-        animator.SetInteger(WeaponTypeHash, 10);
-        weaponHolder.ChangeProjectileWeapon(WeaponHolder.WeaponSlot.Grenade);
-        //animator.SetFloat("ThrowSpeed", targetSpeed);
-        //PlayAiming(false);
+    public void PlayTriggerAnimation(string triggerName)
+    {
+        animator.SetTrigger(triggerName);
+    }
+
+    public void PlayThrowAnimation()
+    {
+        animator.SetTrigger(ThrowTriggerHash);
     }
 
     public void SetAiming(bool isAiming = true, Transform targetTf = default)
     {
-        if (isAiming)
+        if (targetTf != null)
         {
-            //SetHeadLookDirection(-0.8f, 0f);
             animator.SetBool(ShootHash, true);
             aimRigBuilder.layers[0].active = true;
             AimedTargetLocation = targetTf;
@@ -141,7 +136,6 @@ public class PlayerAnimator : MonoBehaviour
             animator.SetBool(ShootHash, false);
             aimRigBuilder.layers[0].active = false;
             AimedTargetLocation = null;
-           // SetHeadLookDirection(0f, 0f);
         }
     }
 
@@ -153,44 +147,5 @@ public class PlayerAnimator : MonoBehaviour
     public void CancelAnimation()
     {   
         animator.SetTrigger(CancelTriggerHash);
-        //PlayIdle();
-    }
-
-    public void SetHeadLookDirection(float horizontal, float vertical)
-    {
-        if (headLookCoroutine != null)
-        {
-            StopCoroutine(headLookCoroutine);
-        }
-
-        headLookCoroutine = StartCoroutine(SmoothHeadLook(horizontal, vertical));
-    }
-
-    private IEnumerator SmoothHeadLook(float horizontal, float vertical, float duration = 0.5f)
-    {
-        float elapsed = 0f;
-
-        float initialHeadHorizontal = animator.GetFloat(HeadHorizontalHash);
-        float initialHeadVertical = animator.GetFloat(HeadVerticalHash);
-
-        float targetHeadHorizontal = Mathf.Clamp(horizontal, -1f, 1f);
-        float targetHeadVertical = Mathf.Clamp(vertical, -1f, 1f);
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-
-            float newHeadHorizontal = Mathf.Lerp(initialHeadHorizontal, targetHeadHorizontal, t);
-            float newHeadVertical = Mathf.Lerp(initialHeadVertical, targetHeadVertical, t);
-
-            animator.SetFloat(HeadHorizontalHash, newHeadHorizontal);
-            animator.SetFloat(HeadVerticalHash, newHeadVertical);
-
-            yield return null;
-        }
-
-        animator.SetFloat(HeadHorizontalHash, targetHeadHorizontal);
-        animator.SetFloat(HeadVerticalHash, targetHeadVertical);
     }
 }

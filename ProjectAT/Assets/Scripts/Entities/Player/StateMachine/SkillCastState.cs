@@ -31,6 +31,7 @@ namespace PlayerStateMachine
             castTimer = 0.0f;
             isRotationFinished = false;
             context.PlayerMove(context.transform.position, false);
+            skillContext.SkillToExecute.OnCastingStart(skillContext);
         }
 
         public override void OnUpdate()
@@ -60,7 +61,6 @@ namespace PlayerStateMachine
                 //     return;
                 // }
             }
-            myAnimModule.SetAiming(true, skillContext.TargetObject?.transform); //회전이 끝나기도 전에 에임 애니메이션 먼저 시작. 회전이 끝나면 애니메이션 트리거를 따로 주는 방식으로 바꿔도 될듯.
             
             // 3. 실시간 유효성 체크 (캐스팅 도중 적이 도망갔는지 확인)
             if (!skillContext.SkillToExecute.CanExecute(skillContext))
@@ -77,9 +77,7 @@ namespace PlayerStateMachine
             }
         }
 
-        public override void OnExit()
-        {
-        }
+        public override void OnExit() { }
 
          // 캐스팅 시간이 성공적으로 모두 끝났을 때 호출되는 함수
         private void FinishCastingAndExecute()
@@ -89,9 +87,7 @@ namespace PlayerStateMachine
             {
                 skillContext.SkillToExecute.Execute(skillContext);
                 context.MySkillModule.SetSkillCooldownTimer(skillContext.SkillToExecute);
-                
-                context.MySkillModule.CancelCurrentSkill(); 
-                context.ChangeState(PlayerStateType.Normal);
+                CancelCasting(); //로직이 같아서 CancelCasting으로 함.
             }
             else
             {
@@ -100,9 +96,11 @@ namespace PlayerStateMachine
             }
         }
 
-        // ★ 핵심: 다시 추적 상태로 돌아가는 로직
+        // 다시 추적 상태로 돌아가는 로직
         private void ResumeChasing()
         {
+            skillContext.SkillToExecute.OnCastingEnd(skillContext);
+
             SkillChaseState skillChaseState = context.GetState(PlayerStateType.SkillChase) as SkillChaseState; //굳이 필요한 로직인가?
             skillChaseState.SetSkillContext(skillContext);
 
@@ -111,6 +109,7 @@ namespace PlayerStateMachine
 
         private void CancelCasting()
         {
+            skillContext.SkillToExecute.OnCastingEnd(skillContext);
             context.MySkillModule.CancelCurrentSkill();
             context.ChangeState(PlayerStateType.Normal);
         }

@@ -23,22 +23,20 @@ public class ThrowGrenade : Skill
 
     public override bool ExtraCastingCondition(SkillContext context)
     {
-        Debug.Log($"Checking Extra : {context.CastedPosition}");
         return myCombatModule.CanThrowSomethingToPosition(projSkillData.ThrowingObjectPrefab, context.CastedPosition);
     }
 
-    public override bool CanExecute(SkillContext skillContext)
+    public override bool CanExecute(SkillContext context)
     {
-        Debug.LogWarning("ThrowGrenade CanExecute is called. This should be replaced with actual logic to determine if the grenade can be thrown to the target position.");
-        return true;
-        //return context.MyCombatModule.CanThrowSomethingToPosition(targetPosition);
+        //return true;
+        return myCombatModule.CanThrowSomethingToPosition(projSkillData.ThrowingObjectPrefab, context.CastedPosition);
     }
 
     public override void Execute(SkillContext skillContext)
     {
         if(skillData is ProjectileSkillData projectileData)
         {
-            GameObject grenade = UnityEngine.Object.Instantiate(projectileData.ThrowingObjectPrefab, skillContext.CastedPosition, Quaternion.identity);
+            GameObject grenade = Object.Instantiate(projectileData.ThrowingObjectPrefab, skillContext.CastedPosition, Quaternion.identity);
             ProjectileGrenade proj = grenade.GetComponent<ProjectileGrenade>();
             proj.SetUp(projectileData.BaseDamage, projectileData.ExplosionRadius, projectileData.FuseTime, TargetLayer);
             context.MyCombatModule.ThrowSomthingToTarget(grenade, skillContext.CastedPosition);
@@ -64,4 +62,18 @@ public class ThrowGrenade : Skill
         Debug.Log("Invalid Target for Throw Grenade");
         return false;
     }
+
+    public override void OnCastingStart(SkillContext skillContext)
+    {
+        //애니메이션
+        myCombatModule.MyWeapon.NowWeaponVisible(false);
+        context.MyAnimModule.PlayThrowAnimation();
+    }
+
+    public override void OnCastingEnd(SkillContext skillContext)
+    {
+        //애니메이션
+        myCombatModule.MyWeapon.NowWeaponVisible(true);
+    }
+
 }

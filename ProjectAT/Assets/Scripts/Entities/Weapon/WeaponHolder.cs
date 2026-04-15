@@ -14,7 +14,7 @@ public class WeaponHolder : MonoBehaviour
     }
 
     [Header("References")]
-    [SerializeField] private Transform meshHolder;
+    [SerializeField] private Transform gunHolder;
     [SerializeField] private Gun nowWeapon;
 
     [field:SerializeField] public WeaponSlot NowWeaponSlot { get; private set; }
@@ -39,7 +39,7 @@ public class WeaponHolder : MonoBehaviour
     public float Range { get { return range; } }
     public float FireRate => nowWeapon.GunData.TimeBetFire;
     public Gun NowWeapon => nowWeapon;
-    public Transform GunHolderTf => meshHolder;
+    public Transform GunHolder => gunHolder;
     #endregion
 
     public Action<Gun> OnWeaponFired;
@@ -67,15 +67,10 @@ public class WeaponHolder : MonoBehaviour
         nowWeapon.transform.GetChild(0).gameObject.SetActive(true);
     }
 
-    public void ChangeProjectileWeapon(WeaponSlot newSlot)
+    public void NowWeaponVisible(bool visible)
     {
-        if (newSlot != WeaponSlot.Grenade) return;
-
-        nowWeapon.transform.GetChild(0).gameObject.SetActive(false); //GetChild(0) = Gun의 MeshObject
-        nowWeapon = playerWeapons[(int)newSlot];
-        nowWeapon.transform.GetChild(0).gameObject.SetActive(true);
+        nowWeapon.transform.GetChild(0).gameObject.SetActive(visible);
     }
-
     #region 초기화함수
     private int CalculateTotalDamage()
     {
@@ -100,7 +95,7 @@ public class WeaponHolder : MonoBehaviour
 
         for (int i = 0; i < playerWeapons.Length - 1; ++i)
         {
-            playerWeapons[i] = Instantiate(gunPrefabs[i], meshHolder).GetComponent<Gun>();
+            playerWeapons[i] = Instantiate(gunPrefabs[i], gunHolder).GetComponent<Gun>();
             playerWeapons[i].transform.GetChild(0).gameObject.SetActive(false);
         }
 

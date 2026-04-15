@@ -16,4 +16,5 @@ public class SkillData : ScriptableObject
     public Texture2D CursorSkin;    //TargetingSkill
     public Sprite SkillIcon;
     public string AnimationTriggerName;
+    public bool RequireAimingPose = false;
 }

@@ -21,7 +21,6 @@ public class PlayerCombatModule : MonoBehaviour
     public bool IsAiming {get; private set;}
 
     public WeaponHolder MyWeapon => myWeapon;
-    private Transform WeaponFirePoint => myWeapon.GunHolderTf;
     public Vector3 ThrowPoint => throwPoint.position;
 
     private void Awake()
@@ -181,7 +180,6 @@ public class PlayerCombatModule : MonoBehaviour
         // 최대 투척 사거리 검사 (기존과 동일)
         if (Vector3.SqrMagnitude(position - throwPoint.position) > myStatus.ThrowRange * myStatus.ThrowRange) 
         {
-        
             return false;
         }
 

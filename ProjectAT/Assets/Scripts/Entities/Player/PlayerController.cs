@@ -264,12 +264,14 @@ public class PlayerController : MonoBehaviour
     public void SetTargetEnemy(Enemy castedEnemy)
     {
         if (!castedEnemy) return;
-        SelectedEnemy = castedEnemy;        
+        SelectedEnemy = castedEnemy;   
+        myPlayerAnimator.SetAimMarker(SelectedEnemy.transform);     
     }
 
     public void CancelEnemySelect()
     {
         SelectedEnemy = null;
+        myPlayerAnimator.SetAimMarker(null);
     }
 
     public void EnemyAttackingSequence()

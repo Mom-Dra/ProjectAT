@@ -10,6 +10,12 @@ public class UseBandage : ConsumableSkill
         return (targetStatus.transform.position - context.transform.position).sqrMagnitude <= 3.0f; //하드코딩됨. 플레이어의 hand 반경을 나타내는 값으로 교체 필요
     }
 
+    public override void OnCastingStart(SkillContext skillContext)
+    {
+        //애니메이션 넣기
+        context.MyWeapon.NowWeaponVisible(false);
+    }
+
     public override void Execute(SkillContext skillContext)
     {
         if(entityInventory.TryUseItem(neededItemData, 1))
@@ -24,7 +30,12 @@ public class UseBandage : ConsumableSkill
             }
             Debug.Log("Use Bandage Executed!");            
         }
-        
+    }
+
+    public override void OnCastingEnd(SkillContext skillContext)
+    {
+        //애니메이션 넣기
+        context.MyWeapon.NowWeaponVisible(true);
     }
 
     public override bool ExtraCastingCondition(SkillContext context)
