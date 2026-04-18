@@ -64,7 +64,6 @@ namespace PlayerStateMachine
 
         public void OnRightClick(RaycastHit castedObject)
         {        
-            
             if(mySkillModule.IsTargetting) // 스킬 UI 중 우클릭 시 UI 해제. 만약 이 로직이 모든 State들의 RightClick에서 공통적으로 일어나면 아예 PlayerController에서 처리하기.
             {
                 mySkillModule.CancelTargettingMode();
@@ -87,15 +86,15 @@ namespace PlayerStateMachine
                     context.PlayerMoveWithIndicator(castedObject.point, true);
                     context.ChangeState(PlayerStateType.Normal);
                     break;
-                case 11: // CoverPoint Layer
-                    if (castedObject.transform.TryGetComponent(out CoverPoint coverPoint))
-                        myCoverModule.StartMoveToCover(coverPoint);
-                        context.ChangeState(PlayerStateType.Normal);
-                    break;
-                case 13: // Interactable Layer
-                    context.MyInteractionModule.HandleRightClick();
-                    //context.ChangeState(PlayerStateInteractable);
-                    break;
+                // case 11: // CoverPoint Layer
+                //     if (castedObject.transform.TryGetComponent(out CoverPoint coverPoint))
+                //         myCoverModule.StartMoveToCover(coverPoint);
+                //         context.ChangeState(PlayerStateType.Normal);
+                //     break;
+                // case 13: // Interactable Layer
+                //     context.MyInteractionModule.HandleRightClick();
+                //     //context.ChangeState(PlayerStateInteractable);
+                //     break;
                 default:
                     break;
             }

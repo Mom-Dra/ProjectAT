@@ -24,13 +24,13 @@ public class Managers : Singleton<Managers>
 
     private InputManager inputManager;
     private CursorManager cursorManager;
-    private InteractionManager interactionManager;
+    private InteractionUIManager interactionManager;
     private UIManager uIManager;
     private PoolManager poolManager;
 
     public InputManager InputManager => inputManager;
     public CursorManager CursorManager => cursorManager;
-    public InteractionManager InteractionManager => interactionManager;
+    public InteractionUIManager InteractionManager => interactionManager;
     public UIManager UIManager => uIManager;
     public PoolManager PoolManager => poolManager;
 
@@ -40,7 +40,7 @@ public class Managers : Singleton<Managers>
 
         inputManager = new InputManager(inputReader);
         cursorManager = new CursorManager(cursorSettings);
-        interactionManager = new InteractionManager(interactionLayerMask);
+        interactionManager = new InteractionUIManager(interactionLayerMask);
         uIManager = new UIManager(healthUIPrefab, FindFirstObjectByType<PlayerHUD>());
         poolManager = new PoolManager(pooledPrefabs);
 

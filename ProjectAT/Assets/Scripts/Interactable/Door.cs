@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using EPOOutline;
 
-public class Door : MonoBehaviour, IInteractable
+public class Door : MonoBehaviour, IUIHoverable, IInteractable
 {
     [Header("Door Wings")]
     [SerializeField]
@@ -22,6 +22,12 @@ public class Door : MonoBehaviour, IInteractable
 
     private bool isOpen = false;
     private Coroutine runningCoroutine;
+
+    public float InteractDuration => throw new System.NotImplementedException();
+
+    public string PlayerAnimationTrigger => throw new System.NotImplementedException();
+
+    public bool IsCarryable => throw new System.NotImplementedException();
 
     private void Awake()
     {
@@ -76,5 +82,20 @@ public class Door : MonoBehaviour, IInteractable
         rightDoor.localRotation = endRightRotation;
 
         runningCoroutine = null;
+    }
+
+    public Vector3 GetInteractPosition(Transform playerTransform)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Vector3 GetInteractLookDir(Transform playerTransform)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnInteract(PlayerController player)
+    {
+        throw new System.NotImplementedException();
     }
 }

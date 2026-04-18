@@ -1,28 +1,19 @@
 using EPOOutline;
 using UnityEngine;
 
-public class InteractionManager
+public class InteractionUIManager
 {
     private Outlinable currOutlinable;
     private EntityStatus currEntityStatus;
     private HealthUI currHealthUI;
 
-    private IInteractable currInteractable;
-    private HealthUI interactionUI;
-    private RectTransform interactionUIRectTransform;
-    private Coroutine interactionCoroutine;
-
+    private IUIHoverable currInteractable;
     private LayerMask interactionLayerMask;
 
     [SerializeField]
     private float interactTime = 3f;
-    public float InteractTime { get => interactTime; set => interactTime = value; }
 
-    public bool Hasinteractable => currInteractable != null;
-
-    public bool IsInteracting => interactionCoroutine != null;
-
-    public InteractionManager(LayerMask interactionLayerMask)
+    public InteractionUIManager(LayerMask interactionLayerMask)
     {
         this.interactionLayerMask = interactionLayerMask;
     }
@@ -34,7 +25,7 @@ public class InteractionManager
 
     private void HandleInteractionRaycast(Vector2 mousePos)
     {
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        Ray ray = Camera.main.ScreenPointToRay(mousePos); //캐싱 필요. Camera.main은 내부적으로 FindObjectWithTag()를 호출함.
 
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
 
@@ -53,7 +44,7 @@ public class InteractionManager
                 }
             }
 
-            IInteractable interactable = hit.transform.GetComponentInParent<IInteractable>();
+            IUIHoverable interactable = hit.transform.GetComponentInParent<IUIHoverable>();
 
             if (interactable is not null)
             {
@@ -62,7 +53,7 @@ public class InteractionManager
                     ClearTarget();
 
                     currInteractable = interactable;
-                    currInteractable.OnHoverEnter();
+                    interactable.OnHoverEnter();
                 }
             }
 
@@ -101,7 +92,7 @@ public class InteractionManager
     {
         if (currInteractable is null) return;
 
-        currInteractable.OnInteract();
+        //currInteractable.OnInteract();
     }
 
     private void ClearTarget()

@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class EnemyUIModule : MonoBehaviour, IInteractable
+public class EnemyUIModule : MonoBehaviour, IUIHoverable
 {
-    // ÀÌ UI°¡ µû¶ó´Ù´Ò ÀûÀÇ Transform
+    // ï¿½ï¿½ UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ Transform
     public Transform target;
 
-    // È­¸é¿¡ Ç¥½ÃµÉ UI (¿¹: Slider ÇÁ¸®ÆÕÀ» ÀÎ½ºÅÏ½ºÈ­ÇÑ °Í)
+    // È­ï¿½é¿¡ Ç¥ï¿½Ãµï¿½ UI (ï¿½ï¿½: Slider ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½È­ï¿½ï¿½ ï¿½ï¿½)
     public RectTransform uiRect;
 
-    // ¸Ó¸® À§·Î ¶ç¿ï ³ôÀÌ ¿ÀÇÁ¼Â
+    // ï¿½Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public Vector3 offset = new Vector3(0f, 2f, 0f);
 
     private Camera mainCamera;
@@ -32,11 +32,6 @@ public class EnemyUIModule : MonoBehaviour, IInteractable
     }
 
     public void OnHoverExit()
-    {
-
-    }
-
-    public void OnInteract()
     {
 
     }

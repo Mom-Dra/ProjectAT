@@ -6,18 +6,16 @@ using UnityEngine.Rendering;
 
 public class PlayerInteractionModule : MonoBehaviour
 {
-    private IInteractable currInteractable;
-    private HealthUI interactionUI;
-    private RectTransform interactionUIRectTransform;
+    private IInteractable currInteractObject;
     private Coroutine interactionCoroutine;
 
     [SerializeField]
     private float interactTime = 3f;
     public float InteractTime { get => interactTime; set => interactTime = value; }
-
-    public bool Hasinteractable => currInteractable != null;
+    public bool Hasinteractable => currInteractObject != null;
 
     public bool IsInteracting => interactionCoroutine != null;
+    public IInteractable CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; } 
 
     //private Player MyPlayer = default;
 
@@ -30,7 +28,7 @@ public class PlayerInteractionModule : MonoBehaviour
     public bool InteractionCheck()
     {
         Debug.LogError(Hasinteractable);
-        Debug.LogError(currInteractable);
+        Debug.LogError(currInteractObject);
 
         if (Hasinteractable)
             return true;
@@ -38,48 +36,49 @@ public class PlayerInteractionModule : MonoBehaviour
         return false;
     }
 
-    public void HandleInteractionRaycast(Vector2 mousePos)
-    {
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+    // public void HandleInteractionRaycast(Vector2 mousePos)
+    // {
+    //     Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+    //     Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, LayerMask.GetMask("Interactable")))
-        {
-            IInteractable interactable = hit.transform.GetComponentInParent<IInteractable>();
+    //     if (Physics.Raycast(ray, out RaycastHit hit, 100f, LayerMask.GetMask("Interactable")))
+    //     {
+    //         IUIHoverable interactable = hit.transform.GetComponentInParent<IUIHoverable>();
 
-            if(interactable is not null)
-            {
-                if (currInteractable != interactable)
-                {
-                    ClearTarget();
+    //         if(interactable is not null)
+    //         {
+    //             if (currInteractObject != interactable)
+    //             {
+    //                 ClearTarget();
 
-                    currInteractable = interactable;
-                    currInteractable.OnHoverEnter();
-                }
-            }
-        }
-        else
-        {
-            ClearTarget();
-        }
-    }
+    //                 //currInteractObject = interactable;
+    //                 interactable.OnHoverEnter();
+    //             }
+    //         }
+    //     }
+    //     else
+    //     {
+    //         ClearTarget();
+    //     }
+    // }
 
-    public void HandleRightClick()
-    {
-        if (currInteractable is null) return;
+    // public void HandleRightClick()
+    // {
+    //     if (currInteractObject is null) return;
+    //     //아마 여기서 상태전이 필요할듯
+    //     currInteractObject.OnInteract();
+    // }
 
-        currInteractable.OnInteract();
-    }
+    // private void ClearTarget()
+    // {
+    //     if (currInteractObject is null) return;
 
-    private void ClearTarget()
-    {
-        if (currInteractable is null) return;
+    //     //currInteractObject.OnHoverExit();
+    //     currInteractObject = null;
+    // }
 
-        currInteractable.OnHoverExit();
-        currInteractable = null;
-    }
-
+#region old code
     //public void InteractEnter(Player player)
     //{
     //    MyPlayer = player;
@@ -128,36 +127,36 @@ public class PlayerInteractionModule : MonoBehaviour
     //    }
     //}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent(out IInteractable component))
-        {
-            //interactionUI.transform.position = other.transform.position;
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.TryGetComponent(out IInteractable component))
+    //     {
+    //         //interactionUI.transform.position = other.transform.position;
 
-            //interactionUIRectTransform.position = Camera.main.WorldToScreenPoint(other.transform.position);
+    //         //interactionUIRectTransform.position = Camera.main.WorldToScreenPoint(other.transform.position);
 
-            //interactionUI?.ShowFkeyImage();
-            //interactable.OnTriggerEntered();
-        }
-    }
+    //         //interactionUI?.ShowFkeyImage();
+    //         //interactable.OnTriggerEntered();
+    //     }
+    // }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent(out IInteractable component) && currInteractable == component)
-        {
-            //if (IsInteracting)
-            //{
-            //    StopCoroutine(interactionCoroutine);
-            //    interactionCoroutine = null;
-            //    interactable?.OnInteractCanceled();
-            //    MyPlayer.LookRockClear();
-            //}
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (other.TryGetComponent(out IInteractable component) && currInteractable == component)
+    //     {
+    //         //if (IsInteracting)
+    //         //{
+    //         //    StopCoroutine(interactionCoroutine);
+    //         //    interactionCoroutine = null;
+    //         //    interactable?.OnInteractCanceled();
+    //         //    MyPlayer.LookRockClear();
+    //         //}
 
-            //interactable?.OnTriggerExited();
-            //interactable = null;
-            //interactionUI?.CloseImage();
-        }
-    }
+    //         //interactable?.OnTriggerExited();
+    //         //interactable = null;
+    //         //interactionUI?.CloseImage();
+    //     }
+    // }
 
     //private IEnumerator InterationCoroutine()
     //{
@@ -192,4 +191,5 @@ public class PlayerInteractionModule : MonoBehaviour
 
     //    MyPlayer.ChangeState(PlayerState.Idle);
     //}
+#endregion
 }

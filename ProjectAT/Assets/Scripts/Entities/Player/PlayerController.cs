@@ -25,12 +25,7 @@ public class PlayerController : MonoBehaviour
     public GameObject SelectedObject;
 
     [Header("Layers")]
-    //[SerializeField] private LayerMask groundLayer;
-    //[SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask rightClickInteractableLayer;
-    [Header("Params")]
-    [SerializeField] private float TickRate = 0.2f;
-    private float LastTickTime = 0f;
 
     #region StateMachine States
     public PlayerState CurrentState { get; private set; }
@@ -48,12 +43,6 @@ public class PlayerController : MonoBehaviour
     public PlayerCoverModule MyCoverModule => myCoverModule;
     public PlayerInteractionModule MyInteractionModule => myInteractionModule;    
     #endregion
-
-    // //일단 로직 다 짜고, 이 로직이 이 클래스에 있는지 검증하자!
-    // private CoverObject currCoverObject;
-    // private CoverPoint currCoverPoint;
-    // private Coroutine moveCoroutine;
-    // private CoverPoint targetCoverPoint;
 
     #region 초기화
     private void InitiateComponents()
@@ -78,7 +67,6 @@ public class PlayerController : MonoBehaviour
 
     private void LinkInputEventsAll()
     {
-        //inputReader.InputEvent += HandleInput;
         if (Managers.Instance.InputManager is null)
             Debug.LogError("Managers.Instance.InputManager is null");
 
@@ -89,7 +77,6 @@ public class PlayerController : MonoBehaviour
 
     private void UnLinkInputEventsAll()
     {
-        //inputReader.InputEvent -= HandleInput;
         Managers.Instance.InputManager.onSkillInputed -= HandlePlayerSkillInput;
         Managers.Instance.InputManager.onMouseRightClicked -= HandlePlayerRightClickInput;
         Managers.Instance.InputManager.onMouseLeftClicked -= HandleLeftClickInput;
@@ -102,8 +89,6 @@ public class PlayerController : MonoBehaviour
         InitiateComponents();
         InitiateStateMachine();
         myCamera = Camera.main;
-        LastTickTime = Time.time;
-
     }
 
     private void Start()
@@ -123,33 +108,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // //myAnimationModule.SetRunningAnimation(myMovementModule.IsAgentMoving());
-        // if (mySkillModule.ModuleState != SkillModuleState.Ready)
-        // {
-        //     mySkillModule.SkillOnUpdate();
-        // }
-        // else if (SelectedEnemy != null)
-        // {
-        //     EnemyAttackingSequence();
-        //     //ChaseEnemy();
-        //     //NormalAttackEnemy();
-        // }    
-
-        // if(Time.time - LastTickTime > TickRate)
-        // {
-        //     myCoverModule.HandleCoverRaycast(Managers.Instance.InputManager.MousePosition);
-        //     myInteractionModule.HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
-
-        //     LastTickTime = Time.time;
-        // }
-
-        // myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity());
-        // if(mySkillModule.IsTargetting) mySkillModule.SkillIndicatorUpdate();
         myCoverModule.HandleCoverRaycast(Managers.Instance.InputManager.MousePosition);
-        myInteractionModule.HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
         
         CurrentState.OnUpdate();
-        if(mySkillModule.IsTargetting) UpdateSkillIndicator(); //나중에 Sniping 스킬을 
+        if(mySkillModule.IsTargetting) UpdateSkillIndicator();
         myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity()); //애니메이션을 위한 이동속도 조절.
     }
 
@@ -160,59 +122,12 @@ public class PlayerController : MonoBehaviour
     {
         if(EventSystem.current.IsPointerOverGameObject()) return;
         
-        
-        //if(mySkillModule.IsTargetting) //스킬 타겟팅 모드에서 우클릭하면 스킬 취소
-        // {
-        //     mySkillModule.CancelTargettingMode();
-        //     return;
-        // }
-
-        // mySkillModule.CancelCurrentSkill(); //스킬 casting 또는 스킬 chasing의 exit 부분
-        // AimingEnemy(false); 
-        // CancelEnemySelect();
- 
-        // NormalRightClickAction();
         if(CurrentState is IRightClickHandler state)
         {
             state.OnRightClick(RaycastAtMouseLocation(out RaycastHit ray) ? ray : new RaycastHit());
         }
 
     }
-
-    // private void NormalRightClickAction()
-    // {
-    //     RaycastHit ray;
-    //     if (RaycastAtMouseLocation(out ray))
-    //     {
-    //         myCoverModule.CancelCurrentCoverAction();
-
-    //         Debug.Log($"NormalRightClickAction: {ray.collider.gameObject.layer}");
-
-    //         switch (ray.collider.gameObject.layer)
-    //         {
-    //             case 6: //Ground Layer
-    //                 Debug.Log("플레이어 컨트롤러 : PlayerMove");
-    //                 PlayerMove(ray.point, false);
-    //                 break;
-    //             case 7: //Enemy Layer
-    //                 SetTargetEnemy(ray.collider.GetComponent<Enemy>());
-    //                 break;
-    //             case 10: //Indicator Layer
-    //                 PlayerMove(ray.point, true);
-    //                 break;
-    //             case 11: // CoverPoint Layer
-    //                 if (ray.transform.TryGetComponent(out CoverPoint coverPoint))
-    //                     myCoverModule.StartMoveToCover(coverPoint);
-    //                 break;
-    //             case 13: // Interactable Layer
-    //                 Debug.Log("Interactable Object Clicked");
-    //                 myInteractionModule.HandleRightClick();
-    //                 break;
-    //             default:
-    //                 break;
-    //         }
-    //     }
-    // }
 
     public bool RaycastAtMouseLocation(out RaycastHit ray)
     {
@@ -221,20 +136,14 @@ public class PlayerController : MonoBehaviour
 
     public void HandleLeftClickInput()
     {
-        // if(mySkillModule.IsTargetting)
-        // {
-        //     mySkillModule.SelectTarget();
-        // }
-        if(CurrentState is ILeftClickHandler state)
+        if((CurrentState is ILeftClickHandler state) && RaycastAtMouseLocation(out RaycastHit ray))
         {
-            state.OnLeftClick(RaycastAtMouseLocation(out RaycastHit ray) ? ray : new RaycastHit());
+            state.OnLeftClick(ray);
         }
     }
 
     public void HandlePlayerSkillInput(SkillNumber index)
     {
-        // if(myStatus.IsDead) return;
-        // mySkillModule.ActivateTargettingMode(index);
         if(CurrentState is ISkillInputHandler state)
         {
             state.OnSkillInput(index);
