@@ -50,6 +50,11 @@ public class Managers : Singleton<Managers>
         //uIManager.SetHpBarFollowingTarget(target);
     }
 
+    private void Start()
+    {
+        interactionManager.Start();
+    }
+
     private void Update()
     {
         interactionManager.Update();

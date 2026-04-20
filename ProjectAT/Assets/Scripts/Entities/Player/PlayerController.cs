@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     public SkillChaseState SkillChaseState { get; private set; }
     public SkillCastState SkillCastingState { get; private set; }
     public DeadState DeadState { get; private set; }
+    public InteractChaseState InteractChaseState { get; private set; }
+    public InteractingState InteractingState { get; private set; }
     #endregion
 
     #region Module Getters
@@ -61,6 +63,9 @@ public class PlayerController : MonoBehaviour
         SkillChaseState = new SkillChaseState(this);
         SkillCastingState = new SkillCastState(this);
         DeadState = new DeadState(this);
+        InteractChaseState = new InteractChaseState(this);
+        InteractingState = new InteractingState(this);
+        
         CurrentState = NormalState;
         CurrentState.OnEnter();
     }
@@ -132,6 +137,11 @@ public class PlayerController : MonoBehaviour
     public bool RaycastAtMouseLocation(out RaycastHit ray)
     {
         return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
+    }
+
+    public bool RaycastAtMouseLocation(out RaycastHit ray, LayerMask layerMask)
+    {
+        return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, layerMask);
     }
 
     public void HandleLeftClickInput()
@@ -250,6 +260,8 @@ public class PlayerController : MonoBehaviour
             PlayerStateType.SkillChase => SkillChaseState,
             PlayerStateType.SkillCast => SkillCastingState,
             PlayerStateType.Dead => DeadState,
+            PlayerStateType.InteractChasing => InteractChaseState,
+            PlayerStateType.Interacting => InteractingState,
             _ => throw new ArgumentException($"Undefined State Type: {type}"),
         };
 

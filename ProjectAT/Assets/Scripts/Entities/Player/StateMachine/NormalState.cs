@@ -53,12 +53,16 @@ namespace PlayerStateMachine
             }
 
             context.CancelEnemySelect();
-            
-            if (castedObject.collider.TryGetComponent(out IInteractable interactable)) //인터렉터블 오브젝트 처리.
+            IInteractable interactable = castedObject.collider.GetComponentInParent<IInteractable>();
+            if (interactable != null) //인터렉터블 오브젝트 처리.
             {
                 myInteractionModule.CurrentInteractTarget = interactable;
                 context.ChangeState(PlayerStateType.InteractChasing);
                 return;
+            }
+            else
+            {
+                Debug.Log($"NormalState : No interactable object found in right click. Layer : {castedObject.collider.gameObject.name}");
             }
 
             switch (castedObject.collider.gameObject.layer) //검사 후순위

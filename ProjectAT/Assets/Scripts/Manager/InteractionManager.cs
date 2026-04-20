@@ -6,16 +6,18 @@ public class InteractionUIManager
     private Outlinable currOutlinable;
     private EntityStatus currEntityStatus;
     private HealthUI currHealthUI;
+    private Camera mainCamera;
 
     private IUIHoverable currInteractable;
     private LayerMask interactionLayerMask;
 
-    [SerializeField]
-    private float interactTime = 3f;
-
     public InteractionUIManager(LayerMask interactionLayerMask)
     {
         this.interactionLayerMask = interactionLayerMask;
+    }
+    public void Start()
+    {
+        mainCamera = Camera.main;
     }
 
     public void Update()
@@ -25,7 +27,7 @@ public class InteractionUIManager
 
     private void HandleInteractionRaycast(Vector2 mousePos)
     {
-        Ray ray = Camera.main.ScreenPointToRay(mousePos); //캐싱 필요. Camera.main은 내부적으로 FindObjectWithTag()를 호출함.
+        Ray ray = mainCamera.ScreenPointToRay(mousePos);
 
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
 

@@ -7,12 +7,14 @@ public interface IInteractable
 {
     /// <summary>
     /// 상호작용을 위해 플레이어가 도착해야 할 정확한 월드 좌표를 반환합니다.
-    /// (플레이어의 현재 위치에 따라 앞/뒤 좌표가 달라질 수 있도록 Transform을 받습니다)
+    /// 플레이어의 현재 위치에 따라 앞/뒤 좌표가 달라질 수 있도록 Transform을 받습니다.
+    /// 상호작용 위치가 특별히 정해져 있으면 그 오브젝트는 특정 Transform이나 위치를 반환해야할 것입니다.
     /// </summary>
     Vector3 GetInteractPosition(Transform playerTransform);
 
     /// <summary>
     /// 상호작용 지점에 도착한 후, 플레이어가 바라봐야 할 방향 벡터를 반환합니다.
+    /// 상호작용 위치가 특별히 정해져 있으면 그 오브젝트는 특정 위치의 Transform의 방향을 반환해야할 것임.
     /// </summary>
     Vector3 GetInteractLookDir(Transform playerTransform);
 
@@ -34,8 +36,8 @@ public interface IInteractable
 
 
     /// <summary>
-    /// 애니메이션의 OnInteract 이벤트가 호출되거나, InteractDuration 시간이 다 찼을 때 실행됩니다.
+    /// InteractDuration 시간이 다 찼을 때 실행됩니다.
     /// 이 안에서 실제로 문이 열리거나, 시체가 플레이어의 손에 붙는 처리를 합니다.
     /// </summary>
-    void OnInteract(PlayerController player);
+    void OnExecute(PlayerController player); //이 매개변수가 필요할지 고려하기.
 }

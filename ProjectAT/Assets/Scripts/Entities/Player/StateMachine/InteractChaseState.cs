@@ -1,5 +1,6 @@
 using UnityEngine;
 using PlayerStatusCapabilities;
+using Unity.Services.Lobbies.Models;
 
 
 
@@ -7,17 +8,19 @@ namespace PlayerStateMachine
 {
     public class InteractChaseState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler
     {
-        private const float StopDistanceThreshold = 1.0f; // 상호작용 위치에 도달했다고 판단하는 거리 임계값.
+        private const float StopDistanceThreshold = 0.1f; // 상호작용 위치에 도달했다고 판단하는 거리 임계값.
         private PlayerInteractionModule myInteractionModule;
+        private PlayerSkillModule mySkillModule;
 
         public InteractChaseState(PlayerController context) : base(context)
         {
             myInteractionModule = context.MyInteractionModule;
+            mySkillModule = context.MySkillModule;
         }
 
         public override void OnEnter()
         {
-            
+            Debug.Log($"Enter interacteChaseState. Target: {myInteractionModule.CurrentInteractTarget}");
         }
 
         public override void OnExit()
@@ -25,56 +28,111 @@ namespace PlayerStateMachine
             // 상태를 빠져나갈 때 뒷정리 (이동 멈춤 명령, 이동 애니메이션 끄기 등)
             // context.StopMove(); 
             // context.MyAnimationModule.SetBool("IsMoving", false);
+            Debug.Log("Exit interacteChaseState.");
         }
 
         public override void OnUpdate()
         {
             IInteractable target = myInteractionModule.CurrentInteractTarget;
 
-            // // 안전 장치 1: 추적 중에 대상이 파괴되었거나 null이 된 경우
-            // if (target == null)
-            // {
-            //     Debug.LogWarning("InteractChasingState : 타겟이 사라져 Normal 상태로 복귀합니다.");
-            //     context.ChangeState(PlayerStateType.Normal);
-            //     return;
-            // }
+            // 안전 장치 1: 추적 중에 대상이 파괴되었거나 null이 된 경우
+            if (target == null)
+            {
+                Debug.LogWarning("InteractChasingState : 타겟이 사라져 Normal 상태로 복귀합니다.");
+                context.ChangeState(PlayerStateType.Normal);
+                return;
+            }
+            Debug.Log($"InteractChaseState OnUpdate. Target: {target}");
 
-            // // 1. 타겟에게 "내가 어디로 가야 하고, 어디를 봐야 해?" 라고 묻습니다.
-            // //Vector3 requiredPos = target.GetInteractPosition(context.transform);
-            // //Vector3 requiredLook = target.GetInteractLookDir(context.transform);
+            // 1. 타겟에게 "내가 어디로 가야 하고, 어디를 봐야 해?" 라고 묻습니다.
+            Vector3 requiredPos = target.GetInteractPosition(context.transform);
 
-            // // 안전 장치 2: 높이(Y축) 차이 때문에 도착 판정이 안 나는 것을 방지하기 위해 XZ 평면 거리만 잽니다.
-            // Vector3 currentPosXZ = new Vector3(context.transform.position.x, 0, context.transform.position.z);
-            // Vector3 requiredPosXZ = new Vector3(requiredPos.x, 0, requiredPos.z);
+            // 안전 장치 2: 높이(Y축) 차이 때문에 도착 판정이 안 나는 것을 방지하기 위해 XZ 평면 거리만 잽니다.
+            Vector3 currentPosXZ = new Vector3(context.transform.position.x, 0, context.transform.position.z);
+            Vector3 requiredPosXZ = new Vector3(requiredPos.x, 0, requiredPos.z);
             
-            // float distance = Vector3.Distance(currentPosXZ, requiredPosXZ);
+            float sqrtDistance = Vector3.SqrMagnitude(currentPosXZ - requiredPosXZ);
 
-            // // 2. 요구 위치에 도달했는지 확인
-            // if (distance <= StopDistanceThreshold)
-            // {
-            //     // 3. 도착! 애니메이션이 틀어지지 않도록 위치와 회전을 완벽하게 강제 보정(Snapping)합니다.
-            //     // (Y축은 플레이어의 현재 바닥 높이를 유지하여 땅에 파묻히는 것을 방지)
-            //     context.transform.position = new Vector3(requiredPos.x, context.transform.position.y, requiredPos.z);
+            // 2. 요구 위치에 도달했는지 확인
+            if (sqrtDistance <= StopDistanceThreshold * StopDistanceThreshold)
+            {
+                Debug.Log("InteractChaseState : 타겟 위치에 도달했습니다. 회전시작.");
+                // 3. 도착! 애니메이션이 틀어지지 않도록 위치와 회전을 완벽하게 강제 보정(Snapping)합니다.
+                // (Y축은 플레이어의 현재 바닥 높이를 유지하여 땅에 파묻히는 것을 방지)
+                context.transform.position = new Vector3(requiredPos.x, context.transform.position.y, requiredPos.z);
                 
-            //     if (requiredLook != Vector3.zero)
-            //     {
-            //         context.transform.forward = requiredLook;
-            //     }
-
-            //     // 4. 추적을 끝내고 본격적인 상호작용 상태로 넘어갑니다!
-            //     context.ChangeState(PlayerStateType.Interacting);
-            // }
-            // else
-            // {
-            //     // 아직 멀었다면 요구 위치로 계속 이동 명령을 내립니다.
-            //     context.PlayerMove(requiredPos);
-            // }
+                Vector3 requiredLook = target.GetInteractLookDir(context.transform);
+                if (requiredLook != Vector3.zero)
+                {
+                    Debug.Log("InteractChaseState : 타겟을 바라보도록 회전했습니다. 상호작용 시작.");
+                    // 4. 추적을 끝내고 본격적인 상호작용 상태로 넘어갑니다!
+                    context.transform.forward = requiredLook;
+                    context.ChangeState(PlayerStateType.Interacting);
+                }
+            }
+            else
+            {
+                // 아직 멀었다면 요구 위치로 계속 이동 명령을 내립니다.
+                Debug.Log($"InteractChaseState : 타겟 위치까지 이동 중입니다.-> {requiredPos} / 현재 위치 : {context.transform.position}");
+                context.PlayerMove(requiredPos, false);
+            }
         }
 
-        public void OnLeftClick(RaycastHit castedObject){}
+        public void OnLeftClick(RaycastHit castedObject)
+        {
+            if (mySkillModule.IsTargetting && mySkillModule.CanSelectTarget(castedObject, out GameObject target, out Vector3 point))
+            {
+                mySkillModule.ActivateSelectedSkill();
+                mySkillModule.SetUpSkillContext(target, point);
+                context.ChangeState(PlayerStateType.SkillChase);
+            }
+        }
 
-        public void OnRightClick(RaycastHit castedObject){}
+        public void OnRightClick(RaycastHit castedObject)
+        {        
+            if(mySkillModule.IsTargetting) // 스킬 UI 중 우클릭 시 UI 해제. 만약 이 로직이 모든 State들의 RightClick에서 공통적으로 일어나면 아예 PlayerController에서 처리하기.
+            {
+                mySkillModule.CancelTargettingMode();
+                return;
+            }
+            
+            if (castedObject.collider.TryGetComponent(out IInteractable interactable)) //인터렉터블 오브젝트 처리.
+            {
+                myInteractionModule.CurrentInteractTarget = interactable;
+                context.ChangeState(PlayerStateType.InteractChasing);
+                return;
+            }
 
-        public void OnSkillInput(SkillNumber skillNumber){}
+            switch (castedObject.collider.gameObject.layer) //검사 후순위
+            {
+                case 6: //Ground Layer
+                    context.PlayerMove(castedObject.point, false);
+                    myInteractionModule.CurrentInteractTarget = null;
+                    context.ChangeState(PlayerStateType.Normal);
+                    break;
+                case 10: //Indicator Layer
+                    context.PlayerMoveWithIndicator(castedObject.point, true);
+                    context.ChangeState(PlayerStateType.Normal);
+                    break;
+                case 7: //Enemy Layer
+                    context.SetTargetEnemy(castedObject.collider.GetComponent<Enemy>());
+                    context.ChangeState(PlayerStateType.Normal);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void OnSkillInput(SkillNumber skillNumber)
+        {
+            if(!mySkillModule.IsTargetting)
+            {
+                context.MySkillModule.ActivateTargettingMode(skillNumber);
+            }
+            else
+            {
+                mySkillModule.CancelTargettingMode();
+            }
+        }
     }
 }
