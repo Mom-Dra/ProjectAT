@@ -24,7 +24,7 @@ public class Test2 : MonoBehaviour
 
     private void OnEnable()
     {
-        Managers.Instance.InputManager.onMouseLeftClicked += Foo;
+        // Managers.Instance.InputManager.onMouseLeftClicked += Foo;
     }
 
     private void Foo()
@@ -48,31 +48,60 @@ public class Test2 : MonoBehaviour
 
     }
 
-    public void PlayFadeInOut(float duration, Action onScreenCovered)
-    {
-        fadeSequence?.Kill();
+    // public void PlayFadeInOut(float duration, Action onScreenCovered)
+    // {
+    //     fadeSequence?.Kill();
+    //     fadeSequence = DOTween.Sequence();
 
-        fadeSequence = DOTween.Sequence();
+    //     fadeSequence.SetUpdate(true);
 
-        fadeSequence.SetUpdate(true);
+    //     canvasGroup.blocksRaycasts = true;
 
-        canvasGroup.blocksRaycasts = true;
+    //     fadeSequence.Append(canvasGroup.DOFade(1f, duration)).SetEase(Ease.InOutQuad);
 
-        fadeSequence.Append(canvasGroup.DOFade(1f, duration)).SetEase(Ease.InOutQuad);
 
-        fadeSequence.AppendCallback(() =>
-        {
-            onScreenCovered?.Invoke();
-        });
+    // }
 
-        fadeSequence.Append(canvasGroup.DOFade(0f, duration)).SetEase(Ease.InOutQuad);
+    // public void PlayFadeInOut(float duration, Action onScreenCovered)
+    // {
+    //     fadeSequence.?.Kill();
 
-        fadeSequence.OnComplete(() =>
-        {
-            canvasGroup.blocksRaycasts = false;
-            fadeSequence = null;
-        });
-    }
+    //     fadeSequence = DOTween.Sequence();
+    //     fadeSequence.SetUpdate(true);
+    // }
+
+    // public void PlayFadeInOut(float duration, Action onScreenCovered)
+    // {
+    //     fadeSequence?.Kill();
+    //     fadeSequence = DOTween.Sequence();
+    //     fadeSequence.SetUpdate(true);
+    // }
+
+    // public void PlayFadeInOut(float duration, Action onScreenCovered)
+    // {
+    //     fadeSequence?.Kill();
+
+    //     fadeSequence = DOTween.Sequence();
+
+    //     fadeSequence.SetUpdate(true);
+
+    //     canvasGroup.blocksRaycasts = true;
+
+    //     fadeSequence.Append(canvasGroup.DOFade(1f, duration)).SetEase(Ease.InOutQuad);
+
+    //     fadeSequence.AppendCallback(() =>
+    //     {
+    //         onScreenCovered?.Invoke();
+    //     });
+
+    //     fadeSequence.Append(canvasGroup.DOFade(0f, duration)).SetEase(Ease.InOutQuad);
+
+    //     fadeSequence.OnComplete(() =>
+    //     {
+    //         canvasGroup.blocksRaycasts = false;
+    //         fadeSequence = null;
+    //     });
+    // }
 
     private void Oestroy()
     {

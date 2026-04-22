@@ -74,7 +74,7 @@ public class MissionManager : MonoBehaviour
 
     private void FailMission()
     {
-        Managers.Instance.SceneManager.LoadScene(SceneType.End);
+        Managers.Instance.SceneManager.LoadSceneAsync(SceneType.End);
     }
 
     private void ClearMission()
@@ -82,6 +82,6 @@ public class MissionManager : MonoBehaviour
         // OnMissionCleared?.Invoke();
         // 파르티잔은 탈추구역이 오픈되는 방식이에요!!
         // 탈출구역Object.SetActive(true);
-        Managers.Instance.SceneManager.LoadScene(SceneType.End);
+        Managers.Instance.SceneManager.LoadSceneAsync(SceneType.End);
     }
 }

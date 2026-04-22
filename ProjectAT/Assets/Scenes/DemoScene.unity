@@ -41399,6 +41399,37 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
+--- !u!1 &1228918948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1228918949}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1228918949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228918948}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1229553699
 GameObject:
   m_ObjectHideFlags: 0
@@ -56203,6 +56234,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 755490944018596935, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7326636684249348986, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.82196
@@ -56246,6 +56281,10 @@ PrefabInstance:
     - target: {fileID: 7586599461081094033, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
       propertyPath: target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586599461081094033, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7586599461081094033, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
       propertyPath: pooledPrefabs.Array.size
@@ -79783,6 +79822,8 @@ SceneRoots:
   - {fileID: 145752349}
   - {fileID: 656090260}
   - {fileID: 1661905756}
+  - {fileID: 286163885}
+  - {fileID: 1228918949}
   - {fileID: 311210144}
   - {fileID: 614647348}
   - {fileID: 1665450876}
@@ -79793,5 +79834,4 @@ SceneRoots:
   - {fileID: 1793893360}
   - {fileID: 260080224}
   - {fileID: 1720156922}
-  - {fileID: 286163885}
   - {fileID: 1093913588}

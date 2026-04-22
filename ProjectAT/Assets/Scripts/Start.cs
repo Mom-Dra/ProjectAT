@@ -4,6 +4,6 @@ public class Start : MonoBehaviour
 {
     public void Foo()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene((int)SceneType.Stage);
+        Managers.Instance.SceneManager.LoadSceneAsync(SceneType.Stage);
     }
 }
