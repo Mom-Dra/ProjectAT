@@ -1,283 +1,283 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine;
+// using System;
+// using System.Collections;
+// using System.Collections.Generic;
+// using System.Runtime.CompilerServices;
+// using UnityEngine;
 
-public class SecurityCamera : MonoBehaviour, ISquadMember
-{
-    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
-    public event Action<ISquadMember, Vector3> onPlayerLosted;
-    public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
+// public class SecurityCamera : MonoBehaviour, ISquadMember
+// {
+//     public event Action<ISquadMember, IPerceivable, Vector3> onPlayerDetected;
+//     public event Action<ISquadMember, Vector3> onPlayerLosted;
+//     public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
 
-    [SerializeField]
-    private SecurityCameraData securityCameraData;
+//     [SerializeField]
+//     private SecurityCameraData securityCameraData;
 
-    private List<Transform> playersInRange = new List<Transform>();
-    private bool alarmTriggered = false;
-    private float currTime;
+//     private List<Transform> playersInRange = new List<Transform>();
+//     private bool alarmTriggered = false;
+//     private float currTime;
 
-    private Light cameraLight;
+//     private Light cameraLight;
 
-    private Coroutine rotateCoroutine;
-    private Coroutine playerVisibleCoroutine;
-    private Coroutine playerNonVisibleCoroutine;
+//     private Coroutine rotateCoroutine;
+//     private Coroutine playerVisibleCoroutine;
+//     private Coroutine playerNonVisibleCoroutine;
 
-    public bool IsPlayerStillVisible => throw new NotImplementedException();
+//     public bool IsPlayerStillVisible => throw new NotImplementedException();
 
-    private void Awake()
-    {
-        SphereCollider sphereCollider = GetComponent<SphereCollider>();
-        sphereCollider.radius = securityCameraData.DetectionRange;
+//     private void Awake()
+//     {
+//         SphereCollider sphereCollider = GetComponent<SphereCollider>();
+//         sphereCollider.radius = securityCameraData.DetectionRange;
 
-        cameraLight = GetComponentInChildren<Light>();
-    }
+//         cameraLight = GetComponentInChildren<Light>();
+//     }
 
-    private void Start()
-    {
-        transform.rotation = Quaternion.Euler(securityCameraData.ViewAngle, 0f, 0f);
-        StartRotate();
-    }
+//     private void Start()
+//     {
+//         transform.rotation = Quaternion.Euler(securityCameraData.ViewAngle, 0f, 0f);
+//         StartRotate();
+//     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        ColorDebug.GreenLog("OnTriggerEnter");
+//     private void OnTriggerEnter(Collider other)
+//     {
+//         ColorDebug.GreenLog("OnTriggerEnter");
 
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            ColorDebug.GreenLog("OnTriggerEnter Inner");
+//         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+//         {
+//             ColorDebug.GreenLog("OnTriggerEnter Inner");
 
-            playersInRange.Add(other.transform);
-        }
-    }
+//             playersInRange.Add(other.transform);
+//         }
+//     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        ColorDebug.GreenLog("OnTriggerStay");
+//     private void OnTriggerStay(Collider other)
+//     {
+//         ColorDebug.GreenLog("OnTriggerStay");
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            ColorDebug.GreenLog("OnTriggerStay Inner");
+//         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+//         {
+//             ColorDebug.GreenLog("OnTriggerStay Inner");
 
-            bool anyPlayerVisible = false;
-            Transform player = default;
+//             bool anyPlayerVisible = false;
+//             Transform player = default;
 
-            foreach(Transform currPlayer in playersInRange)
-            {
-                if(CanSeePlayer(currPlayer))
-                {
-                    anyPlayerVisible = true;
-                    player = currPlayer;
-                    break;
-                }
-            }
+//             foreach (Transform currPlayer in playersInRange)
+//             {
+//                 if (CanSeePlayer(currPlayer))
+//                 {
+//                     anyPlayerVisible = true;
+//                     player = currPlayer;
+//                     break;
+//                 }
+//             }
 
-            // ½Ã¾ß¿¡ º¸ÀÌ¸é
-            // ºñÀ² Áõ°¡
-            // ½Ã¾ß¿¡ º¸ÀÌÁö ¾ÊÀ¸¸é ºñÀ² °¨¼Ò
+//             // ï¿½Ã¾ß¿ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½
+//             // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+//             // ï¿½Ã¾ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            if (anyPlayerVisible)
-            {
-                StopPlayerNonVisibleCoroutine();
-                StartPlayerVisibleCoroutine(player);
-            }
-            else
-            {
-                StopPlayerVisibleCoroutine();
-                StartPlayerNonVisibleCoroutine();
-            }
-        }
-    }
+//             if (anyPlayerVisible)
+//             {
+//                 StopPlayerNonVisibleCoroutine();
+//                 StartPlayerVisibleCoroutine(player);
+//             }
+//             else
+//             {
+//                 StopPlayerVisibleCoroutine();
+//                 StartPlayerNonVisibleCoroutine();
+//             }
+//         }
+//     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        ColorDebug.GreenLog("OnTriggerExit");
+//     private void OnTriggerExit(Collider other)
+//     {
+//         ColorDebug.GreenLog("OnTriggerExit");
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            ColorDebug.GreenLog("OnTriggerExit Inner");
+//         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+//         {
+//             ColorDebug.GreenLog("OnTriggerExit Inner");
 
-            playersInRange.Remove(other.transform);
+//             playersInRange.Remove(other.transform);
 
-            if (playersInRange.Count == 0)
-            {
-                StopPlayerVisibleCoroutine();
-                StartPlayerNonVisibleCoroutine();
-            }
-        }
-    }
+//             if (playersInRange.Count == 0)
+//             {
+//                 StopPlayerVisibleCoroutine();
+//                 StartPlayerNonVisibleCoroutine();
+//             }
+//         }
+//     }
 
-    private void StartRotate()
-    {
-        if(rotateCoroutine is null)
-        {
-            rotateCoroutine = StartCoroutine(RotateCoroutine());
-        }
-    }
+//     private void StartRotate()
+//     {
+//         if (rotateCoroutine is null)
+//         {
+//             rotateCoroutine = StartCoroutine(RotateCoroutine());
+//         }
+//     }
 
-    private void StopRotate()
-    {
-        if (rotateCoroutine is not null)
-        {
-            StopCoroutine(rotateCoroutine);
-        }
-    }
+//     private void StopRotate()
+//     {
+//         if (rotateCoroutine is not null)
+//         {
+//             StopCoroutine(rotateCoroutine);
+//         }
+//     }
 
-    private IEnumerator RotateCoroutine()
-    {
-        while (true)
-        {
-            float pingPong = Mathf.PingPong(Time.time * securityCameraData.RotateSpeed, securityCameraData.RotateAngle * 2);
-            float targetAngle = pingPong - securityCameraData.ViewAngle;
+//     private IEnumerator RotateCoroutine()
+//     {
+//         while (true)
+//         {
+//             float pingPong = Mathf.PingPong(Time.time * securityCameraData.RotateSpeed, securityCameraData.RotateAngle * 2);
+//             float targetAngle = pingPong - securityCameraData.ViewAngle;
 
-            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
+//             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, targetAngle, transform.eulerAngles.z);
 
-            yield return null;
-        }
-    }
+//             yield return null;
+//         }
+//     }
 
-    private void StartPlayerVisibleCoroutine(Transform player)
-    {
-        if (playerVisibleCoroutine is null)
-        {
-            playerVisibleCoroutine = StartCoroutine(PlayerVisibleCoroutine(player));
-        }
-    }
+//     private void StartPlayerVisibleCoroutine(Transform player)
+//     {
+//         if (playerVisibleCoroutine is null)
+//         {
+//             playerVisibleCoroutine = StartCoroutine(PlayerVisibleCoroutine(player));
+//         }
+//     }
 
-    private void StopPlayerVisibleCoroutine()
-    {
-        if(playerVisibleCoroutine is not null)
-        {
-            StopCoroutine(playerVisibleCoroutine);
-            playerVisibleCoroutine = null;
-        }
-    }
+//     private void StopPlayerVisibleCoroutine()
+//     {
+//         if (playerVisibleCoroutine is not null)
+//         {
+//             StopCoroutine(playerVisibleCoroutine);
+//             playerVisibleCoroutine = null;
+//         }
+//     }
 
-    private void StartPlayerNonVisibleCoroutine()
-    {
-        if (playerNonVisibleCoroutine is null)
-        {
-            playerNonVisibleCoroutine = StartCoroutine(PlayerNonVisibleCoroutine());
-        }
-    }
+//     private void StartPlayerNonVisibleCoroutine()
+//     {
+//         if (playerNonVisibleCoroutine is null)
+//         {
+//             playerNonVisibleCoroutine = StartCoroutine(PlayerNonVisibleCoroutine());
+//         }
+//     }
 
-    private void StopPlayerNonVisibleCoroutine()
-    {
-        if (playerNonVisibleCoroutine is not null)
-        {
-            StopCoroutine(playerNonVisibleCoroutine);
-            playerNonVisibleCoroutine = null;
-        }
-    }
+//     private void StopPlayerNonVisibleCoroutine()
+//     {
+//         if (playerNonVisibleCoroutine is not null)
+//         {
+//             StopCoroutine(playerNonVisibleCoroutine);
+//             playerNonVisibleCoroutine = null;
+//         }
+//     }
 
-    private IEnumerator PlayerVisibleCoroutine(Transform player)
-    {
-        while (currTime < securityCameraData.DetectionTime)
-        {
-            currTime += Time.deltaTime;
-            UpdateDetectionVisual();
+//     private IEnumerator PlayerVisibleCoroutine(Transform player)
+//     {
+//         while (currTime < securityCameraData.DetectionTime)
+//         {
+//             currTime += Time.deltaTime;
+//             UpdateDetectionVisual();
 
-            yield return null;
-        }
+//             yield return null;
+//         }
 
-        currTime = securityCameraData.DetectionTime;
-        UpdateDetectionVisual();
+//         currTime = securityCameraData.DetectionTime;
+//         UpdateDetectionVisual();
 
-        ColorDebug.GreenLog("Camera: onPlayerDetected!!!");
-        onPlayerDetected?.Invoke(this, player, player.position);
-    }
+//         ColorDebug.GreenLog("Camera: onPlayerDetected!!!");
+//         onPlayerDetected?.Invoke(this, player, player.position);
+//     }
 
-    private IEnumerator PlayerNonVisibleCoroutine()
-    {
-        while(currTime > 0f)
-        {
-            currTime -= Time.deltaTime;
-            UpdateDetectionVisual();
+//     private IEnumerator PlayerNonVisibleCoroutine()
+//     {
+//         while (currTime > 0f)
+//         {
+//             currTime -= Time.deltaTime;
+//             UpdateDetectionVisual();
 
-            yield return null;
-        }
+//             yield return null;
+//         }
 
-        currTime = 0f;
-        UpdateDetectionVisual();
-    }
+//         currTime = 0f;
+//         UpdateDetectionVisual();
+//     }
 
-    private void UpdateDetectionVisual()
-    {
-        float ratio = Mathf.Clamp01(currTime / securityCameraData.DetectionTime);
+//     private void UpdateDetectionVisual()
+//     {
+//         float ratio = Mathf.Clamp01(currTime / securityCameraData.DetectionTime);
 
-        UpdateVisual(ratio);
-    }
+//         UpdateVisual(ratio);
+//     }
 
-    private void UpdateVisual(float ratio)
-    {
-        cameraLight.color = Color.Lerp(Color.white, Color.red, ratio);
-    }
+//     private void UpdateVisual(float ratio)
+//     {
+//         cameraLight.color = Color.Lerp(Color.white, Color.red, ratio);
+//     }
 
-    private bool CanSeePlayer(Transform player)
-    {
-        // °Å¸®
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+//     private bool CanSeePlayer(Transform player)
+//     {
+//         // ï¿½Å¸ï¿½
+//         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (distanceToPlayer > securityCameraData.DetectionRange)
-            return false;
+//         if (distanceToPlayer > securityCameraData.DetectionRange)
+//             return false;
 
-        // ½Ã¾ß°¢
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+//         // ï¿½Ã¾ß°ï¿½
+//         Vector3 directionToPlayer = (player.position - transform.position).normalized;
+//         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-        if (angleToPlayer > securityCameraData.DetectionAngle / 2f)
-            return false;
+//         if (angleToPlayer > securityCameraData.DetectionAngle / 2f)
+//             return false;
 
-        // Àå¾Ö¹°
-        RaycastHit hit;
+//         // ï¿½ï¿½Ö¹ï¿½
+//         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, directionToPlayer, out hit, distanceToPlayer, securityCameraData.ObstacleMask))
-            return false;
+//         if (Physics.Raycast(transform.position, directionToPlayer, out hit, distanceToPlayer, securityCameraData.ObstacleMask))
+//             return false;
 
-        return true;
-    }
+//         return true;
+//     }
 
-    private void OnDrawGizmosSelected()
-    {
-        // Å½Áö ¹üÀ§ ¿ø ±×¸®±â
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, securityCameraData.DetectionRange);
+//     private void OnDrawGizmosSelected()
+//     {
+//         // Å½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
+//         Gizmos.color = Color.white;
+//         Gizmos.DrawWireSphere(transform.position, securityCameraData.DetectionRange);
 
-        // ½Ã¾ß°¢ ±×¸®±â
-        float halfFOV = securityCameraData.DetectionAngle / 2f;
-        Quaternion leftRayRotation = Quaternion.AngleAxis(-halfFOV, Vector3.up);
-        Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);
+//         // ï¿½Ã¾ß°ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
+//         float halfFOV = securityCameraData.DetectionAngle / 2f;
+//         Quaternion leftRayRotation = Quaternion.AngleAxis(-halfFOV, Vector3.up);
+//         Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);
 
-        Vector3 leftRayDirection = leftRayRotation * transform.forward;
-        Vector3 rightRayDirection = rightRayRotation * transform.forward;
+//         Vector3 leftRayDirection = leftRayRotation * transform.forward;
+//         Vector3 rightRayDirection = rightRayRotation * transform.forward;
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(transform.position, leftRayDirection * securityCameraData.DetectionRange);
-        Gizmos.DrawRay(transform.position, rightRayDirection * securityCameraData.DetectionRange);
+//         Gizmos.color = Color.yellow;
+//         Gizmos.DrawRay(transform.position, leftRayDirection * securityCameraData.DetectionRange);
+//         Gizmos.DrawRay(transform.position, rightRayDirection * securityCameraData.DetectionRange);
 
-        // ÇÃ·¹ÀÌ¾î Å½Áö ½Ã¼± ±×¸®±â
-        foreach(Transform currPlayer in playersInRange)
-        {
-            if (CanSeePlayer(currPlayer))
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(transform.position, currPlayer.position);
-            }
-            else
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawLine(transform.position, currPlayer.position);
-            }
-        }
-    }
+//         // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Å½ï¿½ï¿½ ï¿½Ã¼ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
+//         foreach (Transform currPlayer in playersInRange)
+//         {
+//             if (CanSeePlayer(currPlayer))
+//             {
+//                 Gizmos.color = Color.red;
+//                 Gizmos.DrawLine(transform.position, currPlayer.position);
+//             }
+//             else
+//             {
+//                 Gizmos.color = Color.green;
+//                 Gizmos.DrawLine(transform.position, currPlayer.position);
+//             }
+//         }
+//     }
 
-    public void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition)
-    {
+//     public void ReceiveSquadAlert(IPerceivable target, Vector3 lastKnownPosition)
+//     {
 
-    }
+//     }
 
-    public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
-    {
+//     public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
+//     {
 
-    }
-}
+//     }
+// }

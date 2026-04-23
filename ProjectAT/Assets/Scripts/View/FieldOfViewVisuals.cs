@@ -41,7 +41,7 @@ public struct EdgeInfo
 [RequireComponent(typeof(TargetDetector))]
 public class FieldOfViewVisuals : MonoBehaviour
 {
-    // ½ºÄµ ¾Ö´Ï¸ÞÀÌ¼Ç °ü·Ã ÀÌº¥Æ®
+    // ï¿½ï¿½Äµ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®
     public event System.Action onScanComplete;
     public event System.Action onScanStart;
     public event System.Action onScanCancel;
@@ -63,13 +63,13 @@ public class FieldOfViewVisuals : MonoBehaviour
 
     [Header("Mesh Filters")]
     [SerializeField]
-    private MeshFilter fixedMeshFilter; // °íÁ¤µÈ ÃÖ´ë ½Ã¾ß°¢ (¹è°æ)
+    private MeshFilter fixedMeshFilter; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ã¾ß°ï¿½ (ï¿½ï¿½ï¿½)
     [SerializeField]
-    private MeshFilter viewmeshFilter;  // Â÷¿À¸£´Â ½Ã¾ß°¢
+    private MeshFilter viewmeshFilter;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¾ß°ï¿½
 
     private Mesh fixedMesh;
     private Mesh viewMesh;
-    private float viewRadius; // ÇöÀç Â÷¿À¸£´Â ¾Ö´Ï¸ÞÀÌ¼ÇÀÇ ¹ÝÁö¸§
+    private float viewRadius; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     private Coroutine growingCoroutine;
 
@@ -92,10 +92,6 @@ public class FieldOfViewVisuals : MonoBehaviour
 
     private void OnEnable()
     {
-        // TargetDetectorÀÇ ÀÌº¥Æ®¿¡ ±¸µ¶
-        // onTargetDetect´Â 0->1, 1->2 µî ¸ðµç "»õ Å½Áö"½Ã È£ÃâµÊ
-        // ½ºÄµ ½ÃÀÛ(StartScan)Àº 0->1 »óÈ²¿¡¼­¸¸ ½ÃÀÛµÇ¾î¾ß ÇÏ¹Ç·Î
-        // StartScan ³»ºÎ¿¡¼­ growingCoroutineÀÌ nullÀÏ ¶§¸¸ ½ÇÇàÇÏµµ·Ï ¹æ¾î
         targetDetector.onTargetDetect += StartScan;
         targetDetector.onTargetLosted += CancelScan;
 
@@ -104,13 +100,11 @@ public class FieldOfViewVisuals : MonoBehaviour
 
     private void OnDisable()
     {
-        // ÀÌº¥Æ® ±¸µ¶ ÇØÁ¦
         targetDetector.onTargetDetect -= StartScan;
         targetDetector.onTargetLosted -= CancelScan;
 
         entityStatus.onDeath -= EnemyDied;
 
-        // ºñÈ°¼ºÈ­ ½Ã ÄÚ·çÆ¾ Á¤Áö ¹× ¸Þ½Ã Å¬¸®¾î
         if (growingCoroutine != null)
         {
             StopCoroutine(growingCoroutine);
@@ -126,20 +120,18 @@ public class FieldOfViewVisuals : MonoBehaviour
         enemyData = enemy.EnemyData;
     }
 
-    private void StartScan()
+    private void StartScan(IPerceivable perceivable)
     {
-        // ÀÌ¹Ì ½ºÄµ(Â÷¿À¸£´Â) ÁßÀÌ ¾Æ´Ò ¶§¸¸ ½ÃÀÛ
-        if (growingCoroutine == null)
+        if (growingCoroutine is null)
         {
             onScanStart?.Invoke();
             growingCoroutine = StartCoroutine(GrowingCoroutine());
         }
     }
 
-    private void CancelScan()
+    private void CancelScan(IPerceivable perceivable)
     {
-        // ½ºÄµ(Â÷¿À¸£´Â) ÁßÀÏ ¶§¸¸ Ãë¼Ò(ÁÙ¾îµå´Â) ·ÎÁ÷ ½ÇÇà
-        if (growingCoroutine != null)
+        if (growingCoroutine is not null)
         {
             StopCoroutine(growingCoroutine);
             growingCoroutine = StartCoroutine(ShrinkingCoroutine());
@@ -180,7 +172,6 @@ public class FieldOfViewVisuals : MonoBehaviour
         {
             viewRadius = Mathf.Lerp(startRadius, targetRadius, time / duration);
 
-            // viewMesh´Â ÇöÀç radius·Î, fixedMesh´Â ÃÖ´ë radius·Î ±×¸²
             DrawFieldOfView(viewMesh, viewRadius);
             DrawFieldOfView(fixedMesh, enemyData.SecondaryViewRadius);
 
@@ -204,7 +195,7 @@ public class FieldOfViewVisuals : MonoBehaviour
     {
         int stepCount = Mathf.Max(1, Mathf.RoundToInt(enemyData.ViewAngle * meshReolution));
         float stepAngleSize = enemyData.ViewAngle / stepCount;
-        List<Vector3> viewPoints = new List<Vector3>(stepCount + 2); // Å©±â ³Ë³ËÇÏ°Ô
+        List<Vector3> viewPoints = new List<Vector3>(stepCount + 2);
         ViewCastInfo oldViewCast;
 
         float firstAngle = transform.eulerAngles.y - enemyData.ViewAngle / 2;
@@ -255,8 +246,8 @@ public class FieldOfViewVisuals : MonoBehaviour
     {
         float minAngle = minViewCast.Angle;
         float maxAngle = maxViewCast.Angle;
-        Vector3 minPt = default; // ±âº»°ª 0
-        Vector3 maxPt = default; // ±âº»°ª 0
+        Vector3 minPt = default;
+        Vector3 maxPt = default;
 
         for (int i = 0; i < edgeResolveIteration; ++i)
         {
@@ -282,7 +273,6 @@ public class FieldOfViewVisuals : MonoBehaviour
     {
         Vector3 dir = DirFromGlobalAngle(globalAngle);
 
-        // TargetDetector·ÎºÎÅÍ ObstacleMask¸¦ °¡Á®¿Í »ç¿ë
         if (Physics.Raycast(transform.position, dir, out RaycastHit hit, radius, targetDetector.ObstacleMask))
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
 

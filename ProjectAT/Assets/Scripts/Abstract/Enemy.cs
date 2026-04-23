@@ -1,16 +1,8 @@
-using Unity.Behavior;
-using Unity.Netcode;
 using UnityEngine;
-using MomDra;
-using Unity.Collections;
 using System.Collections;
-using Unity.VisualScripting;
 using System;
 using UnityEngine.AI;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEngine.InputSystem.XR.Haptics;
-using static UnityEngine.EventSystems.EventTrigger;
 using TMPro;
 using MomDra.Weapon;
 
@@ -20,7 +12,7 @@ using MomDra.Weapon;
 [RequireComponent(typeof(EnemyAnimator))]
 public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 {
-    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
+    public event Action<ISquadMember, IPerceivable, Vector3> onPlayerDetected;
     public event Action<ISquadMember, Vector3> onPlayerLosted;
     public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
 
@@ -62,7 +54,6 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
     private Vector3 targetLastKnownPosition;
     private Vector3 targetDestination;
     private Weapon weapon;
-    private Transform currentTarget;
     private Transform muzzle;
     private EntityStatus entityStatus;
 
@@ -116,6 +107,17 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
         if (isPatrolEnemy) ChangeState(IEnemyState.PatrolState);
         else ChangeState(IEnemyState.IdleState);
+    }
+
+    private void OnDestroy()
+    {
+        fieldOfViewVisual.onScanComplete -= ScanCompleted;
+        fieldOfViewVisual.onScanCancel -= ScanCanceled;
+        fieldOfViewVisual.onScanStart -= ScanStarted;
+
+
+        targetDetector.onTargetDetect -= TargetDetected;
+        targetDetector.onTargetLosted -= TargetLosted;
     }
 
     private void OnEnable()
@@ -184,18 +186,16 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
     {
         if (!IsTargetExist()) return false;
 
-        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
+        (IPerceivable perceivable, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
 
-        if (targetInfo.Value.distance <= enemyData.AttackRange) return true;
-
-        return false;
+        return targetInfo.Value.distance <= enemyData.AttackRange;
     }
 
     private void InformTargetPosition()
     {
-        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
+        (IPerceivable perceivable, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
 
-        onPlayerPositionUpdated?.Invoke(this, targetInfo.Value.transform.position);
+        onPlayerPositionUpdated?.Invoke(this, targetInfo.Value.perceivable.Transform.position);
     }
 
     internal void StartInformTargetPositionCoroutine()
@@ -378,29 +378,28 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
     {
         if (!IsTargetExist())
         {
-            Debug.LogWarning("ScanCompleted, target is null");
-            //ColorDebug.Log("ScanCompleted, target is null", Color.red);
-
 #if UNITY_EDITOR
-            throw new Exception("ScanCompleted, target is null");
+            Debug.LogError("ScanCompleted, target is null");
 #endif
+
+            return;
         }
 
-        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
+        (IPerceivable perceivable, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
+        IPerceivable target = targetInfo.Value.perceivable;
 
         Debug.Log("ScanCompleted");
         ChangeState(IEnemyState.AttackState);
 
-        onPlayerDetected?.Invoke(this, targetInfo.Value.transform, targetInfo.Value.transform.position);
+        onPlayerDetected?.Invoke(this, target, target.Transform.position);
     }
 
     private IEnumerator TargetDistanceCheckCoroutine()
     {
         while (true)
         {
-            foreach ((Transform transform, float distance) in targetDetector.VisibleTargets)
+            foreach ((IPerceivable perceivable, float distance) in targetDetector.VisibleTargets)
             {
-                // 1�� �þ� �ȿ� ���� ���
                 if (distance < enemyData.PrimaryViewRadius)
                 {
                     IncreaseAlert(AlertData.MAX);
@@ -426,16 +425,16 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
         }
     }
 
-    private void TargetDetected()
+    private void TargetDetected(IPerceivable target)
     {
-        // Todo
-        // 1�� �þ� ���� �Ǻ�
-        // Target�� Detected �Ǿ��ٴ°� 2�� �þ� �ȿ� �ִٴ� ��!
         StartTargetDistanceCheckCoroutine();
     }
 
-    private void TargetLosted()
+    private void TargetLosted(IPerceivable target)
     {
+        // 기존: 전원 놓침
+        // 현재: 타겟 1건 놓침!
+
         onPlayerLosted?.Invoke(this, targetLastKnownPosition);
         StopTargetDistanceCheckCoroutine();
     }
@@ -487,7 +486,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
         currentState.Enter(this);
     }
 
-    public void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition)
+    public void ReceiveSquadAlert(IPerceivable target, Vector3 lastKnownPosition)
     {
         ColorDebug.Log("ReceiveSquadAlert Change AttackState", Color.red);
 
@@ -514,9 +513,9 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
     internal bool RotateTowardTarget()
     {
-        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
+        (IPerceivable perceivable, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
 
-        Vector3 directionToTarget = targetInfo.Value.transform.position - muzzle.position;
+        Vector3 directionToTarget = targetInfo.Value.perceivable.Transform.position - muzzle.position;
         directionToTarget.y = 0f;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
@@ -531,9 +530,7 @@ public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
 
         float angleDifference = Vector3.Angle(currentMuzzleDir, directionToTarget);
 
-        if (angleDifference < 1f) return true;
-
-        return false;
+        return angleDifference < 1f;
     }
 
     private void EnemyDied()

@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &3282152
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -243,7 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c375b280bad6e458169ad61ac0dfe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  securityCameraData: {fileID: 11400000, guid: b6e03da592598a147ae5993995134182, type: 2}
 --- !u!1001 &46522315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -305,15 +304,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -353,15 +352,15 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[0]
+      propertyPath: 'patrolWaypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 150929825}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[1]
+      propertyPath: 'patrolWaypoints.Array.data[1]'
       value: 
       objectReference: {fileID: 313142480}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[2]
+      propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
@@ -726,15 +725,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -774,15 +773,15 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[0]
+      propertyPath: 'patrolWaypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 150929825}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[1]
+      propertyPath: 'patrolWaypoints.Array.data[1]'
       value: 
       objectReference: {fileID: 313142480}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[2]
+      propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273665}
     m_RemovedComponents:
@@ -870,15 +869,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -1653,15 +1652,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -1983,6 +1982,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirstClassEnemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100050, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400050, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.32
@@ -2028,15 +2031,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 165196208}
     - target: {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: patrolWaypoints.Array.data[0]
+      propertyPath: 'patrolWaypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 150929825}
     - target: {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: patrolWaypoints.Array.data[1]
+      propertyPath: 'patrolWaypoints.Array.data[1]'
       value: 
       objectReference: {fileID: 313142480}
     - target: {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: patrolWaypoints.Array.data[2]
+      propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
@@ -2667,15 +2670,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -3303,15 +3306,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -3351,15 +3354,15 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[0]
+      propertyPath: 'patrolWaypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 150929825}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[1]
+      propertyPath: 'patrolWaypoints.Array.data[1]'
       value: 
       objectReference: {fileID: 313142480}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[2]
+      propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
@@ -3543,7 +3546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1099331726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3787,15 +3790,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 165196208}
     - target: {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: patrolWaypoints.Array.data[0]
+      propertyPath: 'patrolWaypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 150929825}
     - target: {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: patrolWaypoints.Array.data[1]
+      propertyPath: 'patrolWaypoints.Array.data[1]'
       value: 
       objectReference: {fileID: 313142480}
     - target: {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: patrolWaypoints.Array.data[2]
+      propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
@@ -3844,10 +3847,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e3eabd6eef6ed49b5e13190477e61d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  t: 1
-  length: 10
-  rotateSpeed: 5
-  rotateAngle: 70
 --- !u!4 &1323554007
 Transform:
   m_ObjectHideFlags: 0
@@ -3981,6 +3980,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1401784750 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1570168789558711731, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+  m_PrefabInstance: {fileID: 3734303634766787291}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1401784768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401784750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 710b233a40edd874a94edb4235b89c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1406339955
@@ -4201,15 +4217,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -4253,15 +4269,15 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[0]
+      propertyPath: 'patrolWaypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 150929825}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[1]
+      propertyPath: 'patrolWaypoints.Array.data[1]'
       value: 
       objectReference: {fileID: 313142480}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[2]
+      propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
@@ -5099,15 +5115,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -6123,15 +6139,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 5854530041950173396, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -6220,15 +6236,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[0]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[0]'
       value: 
       objectReference: {fileID: 150929821}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[1]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[1]'
       value: 
       objectReference: {fileID: 313142479}
     - target: {fileID: 3899280787256876842, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: managedReferences[455556623432155465].m_Value.Array.data[2]
+      propertyPath: 'managedReferences[455556623432155465].m_Value.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273664}
     - target: {fileID: 3950938725777245611, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
@@ -6268,15 +6284,15 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[0]
+      propertyPath: 'patrolWaypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 150929825}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[1]
+      propertyPath: 'patrolWaypoints.Array.data[1]'
       value: 
       objectReference: {fileID: 313142480}
     - target: {fileID: 7552303213208381935, guid: 0d4f83ac980885c4498c55adb80cb2a4, type: 3}
-      propertyPath: patrolWaypoints.Array.data[2]
+      propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
@@ -6417,6 +6433,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirstClassEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100050, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400050, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.37
@@ -6462,15 +6482,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 165196208}
     - target: {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: patrolWaypoints.Array.data[0]
+      propertyPath: 'patrolWaypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 150929825}
     - target: {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: patrolWaypoints.Array.data[1]
+      propertyPath: 'patrolWaypoints.Array.data[1]'
       value: 
       objectReference: {fileID: 313142480}
     - target: {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: patrolWaypoints.Array.data[2]
+      propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1783273665}
     m_RemovedComponents: []
@@ -6840,7 +6860,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1570168789558711731, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1401784768}
   m_SourcePrefab: {fileID: 100100000, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
 --- !u!1001 &5055908548726858833
 PrefabInstance:

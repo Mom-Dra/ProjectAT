@@ -1,59 +1,61 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.AppUI.UI;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 public class TargetDetector : MonoBehaviour
 {
-    // 처음에 적이 시야에 들어 왔들 때
-    // 추가로 적이 시야에 들어 왔을 때 
-    public event System.Action onTargetDetect;
+    public event Action<IPerceivable> onTargetDetect;
+    public event Action<IPerceivable> onTargetLosted;
 
-    // 모든 적이 시야에 없을 때
-    public event System.Action onTargetLosted;
+    [SerializeField] private float detectInterval = 0.2f;
+    [SerializeField] private LayerMask targetMask;
+    [SerializeField] private LayerMask obstacleMask;
 
-    [SerializeField]
-    private float detectInterval = 0.2f;
-    [SerializeField]
-    private LayerMask targetMask;
-    [SerializeField]
-    private LayerMask obstacleMask;
-    public LayerMask ObstacleMask => obstacleMask;
+    private readonly List<(IPerceivable perceivable, float distance)> visibleTargets = new List<(IPerceivable perceivable, float distance)>();
+    private readonly List<IPerceivable> previousTargets = new List<IPerceivable>();
+    private readonly Collider[] colliders = new Collider[16];
 
     private bool isAttackMode;
     private Enemy enemy;
     private EnemyData enemyData;
-    private List<(Transform transform, float distance)> visibleTargets = new List<(Transform transform, float distance)>();
-    private Collider[] colliders = new Collider[4];
-    private WaitForSeconds detectWait;
-    private Coroutine detectLoopCoroutine;
     private EntityStatus entityStatus;
 
+    private float scanTimer;
+
+    public LayerMask ObstacleMask => obstacleMask;
     public float ViewAngle => enemyData?.ViewAngle ?? 0f;
-    public IReadOnlyList<(Transform transform, float distance)> VisibleTargets => visibleTargets;
-    public (Transform transform, float distance)? GetFirstTargetInfo => visibleTargets.Count == 0 ? null : visibleTargets[0];
+    public bool IsAttackMode => isAttackMode;
+
+    public IReadOnlyList<(IPerceivable perceivable, float distance)> VisibleTargets => visibleTargets;
+    public (IPerceivable perceivable, float distance)? GetFirstTargetInfo => visibleTargets.Count == 0 ? null : visibleTargets[0];
 
     private void Awake()
     {
         entityStatus = GetComponent<EntityStatus>();
-        detectWait = new WaitForSeconds(detectInterval);
+        scanTimer = UnityEngine.Random.Range(0f, detectInterval);
+    }
+
+    private void Update()
+    {
+        scanTimer += Time.deltaTime;
+
+        if (scanTimer < detectInterval) return;
+        scanTimer = 0f;
+
+        Scan();
     }
 
     private void OnEnable()
     {
         entityStatus.onDeath += EnemyDied;
-
-        StartDetectLoop();
     }
 
     private void OnDisable()
     {
         entityStatus.onDeath -= EnemyDied;
 
-        StopDetectLoop();
+        Clear();
     }
 
     public void SetEnemyData(Enemy enemy)
@@ -72,6 +74,51 @@ public class TargetDetector : MonoBehaviour
         return visibleTargets.Count > 0;
     }
 
+    private void Scan()
+    {
+        previousTargets.Clear();
+
+        foreach (var target in visibleTargets)
+            previousTargets.Add(target.perceivable);
+
+        visibleTargets.Clear();
+
+        float radius = isAttackMode ? enemyData.SearchRadius : enemyData.SecondaryViewRadius;
+        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, colliders, targetMask, QueryTriggerInteraction.Ignore);
+
+        for (int i = 0; i < count; ++i)
+        {
+            if (!colliders[i].TryGetComponent(out IPerceivable perceivable) || !perceivable.IsValidTarget) continue;
+            if (!IsInFieldOfView(perceivable.Transform)) continue;
+            if (!perceivable.IsValidTarget) continue;
+            if (!IsInFieldOfView(perceivable.Transform)) continue;
+            if (!HasLineOfSight(perceivable.Transform, out float distance)) continue;
+
+            visibleTargets.Add((perceivable, distance));
+        }
+
+        visibleTargets.Sort(CompareByDistance);
+
+        EmitDiffEvents();
+    }
+
+    private void EmitDiffEvents()
+    {
+        foreach (var target in visibleTargets)
+        {
+            if (!ContainsReference(previousTargets, target.perceivable))
+            {
+                onTargetDetect?.Invoke(target.perceivable);
+            }
+        }
+
+        foreach (var target in previousTargets)
+        {
+            if (!ContainsPerceivable(visibleTargets, target))
+                onTargetLosted?.Invoke(target);
+        }
+    }
+
     public CoverPoint FindBestCover()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, enemyData.SearchRadius, LayerMask.GetMask("CoverPoint"));
@@ -83,20 +130,23 @@ public class TargetDetector : MonoBehaviour
             return dis1.CompareTo(dis2);
         });
 
+        var first = GetFirstTargetInfo;
+
+        Vector3 targetPos = first.Value.perceivable.Transform.position;
+        float attackRangeSquare = Mathf.Pow(enemyData.AttackRange, 2f);
+
         foreach (Collider collider in hits)
         {
-            if(collider.TryGetComponent(out CoverPoint point) && !point.IsOccupied)
+            if (collider.TryGetComponent(out CoverPoint point) && !point.IsOccupied)
             {
-                if ((collider.transform.position - GetFirstTargetInfo.Value.transform.position).sqrMagnitude < enemyData.AttackRange * enemyData.AttackRange)
+                if ((collider.transform.position - targetPos).sqrMagnitude < attackRangeSquare)
                 {
-                    Vector3 rayStart = GetFirstTargetInfo.Value.transform.position;
+                    Vector3 rayStart = targetPos;
                     Vector3 rayEnd = collider.transform.position;
                     Vector3 dir = rayEnd - rayStart;
 
                     if (Physics.Raycast(rayStart, dir, Vector3.Distance(rayStart, rayEnd), LayerMask.GetMask("CoverPoint"), QueryTriggerInteraction.Ignore))
-                    {
                         return point;
-                    }
                 }
             }
         }
@@ -104,167 +154,83 @@ public class TargetDetector : MonoBehaviour
         return null;
     }
 
+
+    private bool IsInFieldOfView(Transform target)
+    {
+        if (isAttackMode) return true;
+
+        Vector3 dir = target.position - transform.position;
+        dir.y = 0f;
+
+        if (dir.sqrMagnitude < float.Epsilon) return true;
+
+        return Vector3.Angle(transform.forward, dir.normalized) < enemyData.ViewAngle * 0.5f;
+    }
+
+    private bool HasLineOfSight(Transform target, out float distance)
+    {
+        Vector3 from = transform.position;
+        Vector3 to = target.position;
+        Vector3 delta = to - from;
+
+        distance = delta.magnitude;
+
+        if (distance < float.Epsilon) return true;
+
+        Vector3 dir = delta / distance;
+
+        return !Physics.Raycast(from, dir, distance, obstacleMask, QueryTriggerInteraction.Ignore);
+    }
+
+    private static int CompareByDistance((IPerceivable perceivable, float distance) a, (IPerceivable perceivable, float distance) b) => a.distance.CompareTo(b.distance);
+
+    private static bool ContainsReference(List<IPerceivable> list, IPerceivable target)
+    {
+        foreach (IPerceivable currTarget in list)
+            if (ReferenceEquals(currTarget, target)) return true;
+
+        return false;
+    }
+
+    private static bool ContainsPerceivable(List<(IPerceivable perceivable, float distance)> list, IPerceivable target)
+    {
+        foreach (var currTarget in list)
+            if (ReferenceEquals(currTarget.perceivable, target)) return true;
+
+        return false;
+    }
+
     private void EnemyDied()
     {
         enabled = false;
     }
 
-    private bool IsSafeFromPlayer(Vector3 targetPos)
+    private void Clear()
     {
-        //Vector3 direction = targetPos - transform.position;
-        //float distance = direction.magnitude;
+        for (int i = 0; i < visibleTargets.Count; ++i)
+            onTargetLosted?.Invoke(visibleTargets[i].perceivable);
 
-        //if (Physics.Raycast())
-        //{
-
-        //}
-
-        return true;
-
-        return false;
-    }
-
-    private void StartDetectLoop()
-    {
-        if (detectLoopCoroutine == null)
-        {
-            detectLoopCoroutine = StartCoroutine(ServerDetectLoop());
-        }
-    }
-
-    private void StopDetectLoop()
-    {
-        if (detectLoopCoroutine != null)
-        {
-            StopCoroutine(detectLoopCoroutine);
-            detectLoopCoroutine = null;
-        }
-    }
-
-    private IEnumerator ServerDetectLoop()
-    {
-        int beforeDetectedCount = 0;
-
-        while (true)
-        {
-            CheckDetectedServer(); // visibleTargets 리스트를 업데이트
-            int currentDetectedCount = visibleTargets.Count;
-
-            if (currentDetectedCount > beforeDetectedCount)
-            {
-                // 새로운 타겟이 감지되었을 때 (0->1 포함, 1->2 등)
-                onTargetDetect?.Invoke();
-            }
-            else if (currentDetectedCount == 0 && beforeDetectedCount > 0)
-            {
-                // 타겟을 모두 잃었을 때 ( >0 -> 0 )
-                onTargetLosted?.Invoke();
-            }
-
-            beforeDetectedCount = currentDetectedCount;
-
-            yield return detectWait;
-        }
-    }
-
-    private bool CheckDetectedServer()
-    {
         visibleTargets.Clear();
-
-        int count = Physics.OverlapSphereNonAlloc(transform.position, isAttackMode ? enemyData.SearchRadius : enemyData.SecondaryViewRadius, colliders, targetMask);
-
-        for (int i = 0; i < count; ++i)
-        {
-            Transform target = colliders[i].transform;
-
-            if (IsTargetStealthed(target)) continue;
-
-            if (!IsInFieldOfView(target)) continue;
-
-            Vector3 dir = (target.position - transform.position).normalized;
-            float dst = Vector3.Distance(transform.position, target.position);
-
-            if (!Physics.Raycast(transform.position, dir, dst, obstacleMask))
-                visibleTargets.Add((target, dst));
-        }
-
-        return visibleTargets.Count > 0;
+        previousTargets.Clear();
     }
 
-    private bool IsTargetStealthed(Transform target)
-    {
-        return target.TryGetComponent(out IStealthable stealthable) && stealthable.IsHidden;
-    }
-
-    private bool IsInFieldOfView(Transform target)
-    {
-        if (isAttackMode) return true; // 공격 모드 시 360도 인식
-
-        Vector3 dir = (target.position - transform.position).normalized;
-        return Vector3.Angle(transform.forward, dir) < enemyData.ViewAngle * 0.5f;
-    }
-
-    // 제미나이가 작성한 코드
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        // enemyData가 할당되지 않았으면 그리지 않습니다.
         if (enemyData is null) return;
+        float r = isAttackMode ? enemyData.SearchRadius : enemyData.SecondaryViewRadius;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, r);
 
-        // 1. 현재 활성화된 탐지 반경 그리기
-        // Application.isPlaying은 게임이 실행 중일 때만 true입니다.
-        float currentRadius = Application.isPlaying ?
-                                (isAttackMode ? enemyData.SearchRadius : enemyData.SecondaryViewRadius) :
-                                enemyData.SecondaryViewRadius; // 실행 중이 아닐 땐 기본값(Secondary) 표시
-
-        Color currentColor = Application.isPlaying && isAttackMode ? Color.red : Color.green;
-
-        Gizmos.color = currentColor;
-        Gizmos.DrawWireSphere(transform.position, currentRadius);
-
-        // 2. (선택 사항) 두 개의 반경을 항상 모두 표시하기
-        // Gizmos.color = new Color(1, 0, 0, 0.3f); // 빨간색 (Attack)
-        // Gizmos.DrawWireSphere(transform.position, enemyData.SearchRadius);
-        // Gizmos.color = new Color(1, 1, 0, 0.3f); // 노란색 (Secondary)
-        // Gizmos.DrawWireSphere(transform.position, enemyData.SecondaryViewRadius);
-
-        // 3. 시야각(View Angle) 그리기 (Attack 모드가 아닐 때)
-        if (!isAttackMode || !Application.isPlaying) // 실행 중이 아닐 때도 표시
+        if (!isAttackMode && enemyData.ViewAngle > 0f)
         {
+            Vector3 fwd = transform.forward;
+            Quaternion lq = Quaternion.AngleAxis(-enemyData.ViewAngle * 0.5f, Vector3.up);
+            Quaternion rq = Quaternion.AngleAxis(+enemyData.ViewAngle * 0.5f, Vector3.up);
             Gizmos.color = Color.cyan;
-            Vector3 forward = transform.forward;
-            float viewAngle = enemyData.ViewAngle;
-            float viewRadius = enemyData.SecondaryViewRadius; // 시야각은 Secondary 반경과 연동
-
-            // 시야각의 양쪽 끝 방향 계산
-            Vector3 viewAngleA = DirFromAngle(-viewAngle * 0.5f, false);
-            Vector3 viewAngleB = DirFromAngle(viewAngle * 0.5f, false);
-
-            // 시야각 라인 그리기
-            Gizmos.DrawLine(transform.position, transform.position + viewAngleA * viewRadius);
-            Gizmos.DrawLine(transform.position, transform.position + viewAngleB * viewRadius);
-        }
-
-        Gizmos.color = Color.darkKhaki;
-        if (visibleTargets is not null)
-        {
-            foreach (var (target, dst) in visibleTargets)
-            {
-                if (target is not null)
-                {
-                    Gizmos.DrawLine(transform.position, target.position);
-                }
-            }
+            Gizmos.DrawRay(transform.position, lq * fwd * r);
+            Gizmos.DrawRay(transform.position, rq * fwd * r);
         }
     }
-
-    // 시야각 계산을 위한 헬퍼(Helper) 함수
-    private Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
-    {
-        if (!angleIsGlobal)
-        {
-            angleInDegrees += transform.eulerAngles.y;
-        }
-
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
-    }
+#endif
 }

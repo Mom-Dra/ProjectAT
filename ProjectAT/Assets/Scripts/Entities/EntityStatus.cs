@@ -114,8 +114,6 @@ public class EntityStatus : MonoBehaviour, IDamageable
     [ContextMenu("Die")]
     private void Die()
     {
-        // Enemy�� ��� ������ ���߰� �״� Animation ���
-        // ���⼭ �ٷ� Enemy�� Animator�� ���������� ������?
         Debug.Log("Dead!");
 
         IsDead = true;

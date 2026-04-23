@@ -8,19 +8,17 @@ using UnityEditorInternal;
 
 public interface ISquadMember
 {
-    event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
+    event Action<ISquadMember, IPerceivable, Vector3> onPlayerDetected;
     event Action<ISquadMember, Vector3> onPlayerLosted;
     event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
 
-    bool IsPlayerStillVisible { get; }
-
-    void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition);
+    void ReceiveSquadAlert(IPerceivable target, Vector3 lastKnownPosition);
     void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition);
 }
 
 public class Squad : MonoBehaviour, ISquadMember
 {
-    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
+    public event Action<ISquadMember, IPerceivable, Vector3> onPlayerDetected;
     public event Action<ISquadMember, Vector3> onPlayerLosted;
     public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
 
@@ -39,21 +37,8 @@ public class Squad : MonoBehaviour, ISquadMember
 
     private bool isSquadAlerted = false;
     private Vector3 squadLastKnownPosition;
-    private Transform target;
+    private IPerceivable target;
     private List<ISquadMember> squadMembers = new List<ISquadMember>();
-
-    public bool IsPlayerStillVisible
-    {
-        get
-        {
-            foreach(ISquadMember squadMember in squadMembers)
-            {
-                if (!squadMember.IsPlayerStillVisible) return false;
-            }
-
-            return true;
-        }
-    }
 
     private void Awake()
     {
@@ -68,10 +53,14 @@ public class Squad : MonoBehaviour, ISquadMember
 
     public void Add(ISquadMember squadMember)
     {
-#if UNITY_EDITOR
         if (squadMembers.Contains(squadMember))
-            throw new ArgumentException($"{squadMember} already exists");
+        {
+#if UNITY_EDITOR
+
+            Debug.LogError($"{squadMember} already exists");
 #endif
+            return;
+        }
 
         squadMembers.Add(squadMember);
         squadMember.onPlayerDetected += PlayerDetected;
@@ -80,23 +69,26 @@ public class Squad : MonoBehaviour, ISquadMember
 
     public void Remove(ISquadMember squadMember)
     {
-#if UNITY_EDITOR
         if (!squadMembers.Contains(squadMember))
-            throw new ArgumentException($"{squadMember} already deleted");
+        {
+#if UNITY_EDITOR
+            Debug.LogError($"{squadMember} already deleted");
 #endif
+            return;
+        }
 
         squadMembers.Remove(squadMember);
         squadMember.onPlayerDetected -= PlayerDetected;
         squadMember.onPlayerPositionUpdated -= PlayerPositionUpdated;
     }
 
-    public void PlayerDetected(ISquadMember enemy, Transform target, Vector3 lastKnownPosition)
+    public void PlayerDetected(ISquadMember enemy, IPerceivable target, Vector3 lastKnownPosition)
     {
         isSquadAlerted = true;
         squadLastKnownPosition = lastKnownPosition;
         this.target = target;
 
-        CalculateFormation(target, lastKnownPosition);
+        CalculateFormation(target.Transform, lastKnownPosition);
 
         foreach (ISquadMember member in squadMembers)
         {
@@ -111,38 +103,28 @@ public class Squad : MonoBehaviour, ISquadMember
 
     public void PlayerLosted(ISquadMember enemy, Vector3 lastKnownPosition)
     {
-        if (!isSquadAlerted) return; // ÀÌ¹Ì °æ°è°¡ Ç®·ÈÀ¸¸é ¹«½Ã
+        if (!isSquadAlerted) return;
 
-        // Àá½Ã ÈÄ (¿¹: 1ÃÊ ÈÄ) ºÐ´ë ÀüÃ¼°¡ ÇÃ·¹ÀÌ¾î¸¦ º¸°í ÀÖ´ÂÁö È®ÀÎ
-        // ÄÚ·çÆ¾À» ¾²°Å³ª °£´ÜÈ÷ µô·¹ÀÌ¸¦ ÁÙ ¼ö ÀÖÀ½. 
-        // ¿©±â¼­´Â Áï½Ã È®ÀÎÇÏ´Â ´ë½Å, "¸ðµç ºÐ´ë¿øÀÌ ÇÃ·¹ÀÌ¾î¸¦ ³õÃÆÀ» ¶§"¸¦ È®ÀÎÇÏ´Â ·ÎÁ÷À» ±¸Çö.
-
-        // ´Ù¸¥ ºÐ´ë¿ø Áß ÇÑ ¸íÀÌ¶óµµ ¿©ÀüÈ÷ ÇÃ·¹ÀÌ¾î¸¦ º¸°í ÀÖ´Â°¡?
         foreach (ISquadMember member in squadMembers)
         {
-            if (member != enemy && member.IsPlayerStillVisible)
+            if (member != enemy)
             {
-                return; // ÇÑ ¸íÀÌ¶óµµ º¸°í ÀÖÀ¸¸é ´õ È®ÀÎÇÒ ÇÊ¿ä ¾øÀ½
+                return;
             }
         }
-
-        // ¸¸¾à "¾Æ¹«µµ" ÇÃ·¹ÀÌ¾î¸¦ ¸ø º¸°í ÀÖ´Ù¸é = ºÐ´ë ÀüÃ¼°¡ ½Ã¾ß¸¦ ÀÒÀ½
-
-        // "ºÐ»ê ¼ö»ö" ½ÃÀÛ!
-        //StartSquadSearch(lastKnownPosition);
     }
 
     private void PlayerPositionUpdated(ISquadMember enemy, Vector3 position)
     {
-        // targetÀÌ ¹Ù²ð °¡´É¼ºµµ ÀÖÀ½!
+        // targetï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!
 
         //ColorDebug.GreenLog($"PlayerPositionUpdated: {position}");
 
         squadLastKnownPosition = position;
-        CalculateFormation(target, position);
+        CalculateFormation(target.Transform, position);
     }
 
-    public void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition)
+    public void ReceiveSquadAlert(IPerceivable target, Vector3 lastKnownPosition)
     {
         foreach (var member in squadMembers)
         {
@@ -152,7 +134,7 @@ public class Squad : MonoBehaviour, ISquadMember
 
     public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
     {
-        // »óÀ§ ½ºÄõµå°¡ ÀÌ ½ºÄõµåÀÇ À§Ä¡¸¦ ÁöÁ¤? (º¹ÀâÇØÁü)
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½? (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
     }
 
     private void CalculateFormation(Transform target, Vector3 lastKnownPosition)
@@ -160,7 +142,7 @@ public class Squad : MonoBehaviour, ISquadMember
         Vector3 targetPosition = target.position;
         float angleStep = 360f / squadMembers.Count;
 
-        for(int i = 0; i < squadMembers.Count; ++i)
+        for (int i = 0; i < squadMembers.Count; ++i)
         {
             ISquadMember member = squadMembers[i];
 
