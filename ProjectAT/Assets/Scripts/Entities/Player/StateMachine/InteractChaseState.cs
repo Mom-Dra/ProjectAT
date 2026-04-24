@@ -20,7 +20,6 @@ namespace PlayerStateMachine
 
         public override void OnEnter()
         {
-            Debug.Log($"Enter interacteChaseState. Target: {myInteractionModule.CurrentInteractTarget}");
         }
 
         public override void OnExit()
@@ -28,7 +27,6 @@ namespace PlayerStateMachine
             // 상태를 빠져나갈 때 뒷정리 (이동 멈춤 명령, 이동 애니메이션 끄기 등)
             // context.StopMove(); 
             // context.MyAnimationModule.SetBool("IsMoving", false);
-            Debug.Log("Exit interacteChaseState.");
         }
 
         public override void OnUpdate()
@@ -36,13 +34,13 @@ namespace PlayerStateMachine
             IInteractable target = myInteractionModule.CurrentInteractTarget;
 
             // 안전 장치 1: 추적 중에 대상이 파괴되었거나 null이 된 경우
-            if (target == null)
+            if (target == null || (target.IsInUse && target.CurrentInteractor != context.gameObject))
             {
-                Debug.LogWarning("InteractChasingState : 타겟이 사라져 Normal 상태로 복귀합니다.");
+                Debug.Log("다른 플레이어가 먼저 상호작용을 시작했습니다. 추적을 취소합니다.");
+                context.PlayerMove(context.transform.position, false); // 이동 멈춤
                 context.ChangeState(PlayerStateType.Normal);
                 return;
             }
-            Debug.Log($"InteractChaseState OnUpdate. Target: {target}");
 
             // 1. 타겟에게 "내가 어디로 가야 하고, 어디를 봐야 해?" 라고 묻습니다.
             Vector3 requiredPos = target.GetInteractPosition(context.transform);
@@ -56,15 +54,12 @@ namespace PlayerStateMachine
             // 2. 요구 위치에 도달했는지 확인
             if (sqrtDistance <= StopDistanceThreshold * StopDistanceThreshold)
             {
-                Debug.Log("InteractChaseState : 타겟 위치에 도달했습니다. 회전시작.");
-                // 3. 도착! 애니메이션이 틀어지지 않도록 위치와 회전을 완벽하게 강제 보정(Snapping)합니다.
-                // (Y축은 플레이어의 현재 바닥 높이를 유지하여 땅에 파묻히는 것을 방지)
+                // 3. 도착! 애니메이션이 틀어지지 않도록 위치와 회전을 완벽하게 강제 보정(Snapping)합니다.(Y축은 플레이어의 현재 바닥 높이를 유지하여 땅에 파묻히는 것을 방지)
                 context.transform.position = new Vector3(requiredPos.x, context.transform.position.y, requiredPos.z);
                 
                 Vector3 requiredLook = target.GetInteractLookDir(context.transform);
                 if (requiredLook != Vector3.zero)
                 {
-                    Debug.Log("InteractChaseState : 타겟을 바라보도록 회전했습니다. 상호작용 시작.");
                     // 4. 추적을 끝내고 본격적인 상호작용 상태로 넘어갑니다!
                     context.transform.forward = requiredLook;
                     context.ChangeState(PlayerStateType.Interacting);
@@ -73,7 +68,6 @@ namespace PlayerStateMachine
             else
             {
                 // 아직 멀었다면 요구 위치로 계속 이동 명령을 내립니다.
-                Debug.Log($"InteractChaseState : 타겟 위치까지 이동 중입니다.-> {requiredPos} / 현재 위치 : {context.transform.position}");
                 context.PlayerMove(requiredPos, false);
             }
         }

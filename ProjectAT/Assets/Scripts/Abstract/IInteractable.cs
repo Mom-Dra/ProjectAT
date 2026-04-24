@@ -1,3 +1,4 @@
+using PlayerStateMachine;
 using UnityEngine;
 
 /// <summary>
@@ -29,10 +30,19 @@ public interface IInteractable
     string PlayerAnimationTrigger { get; }
 
     /// <summary>
+    /// 현재 이 오브젝트와 상호작용 중인 오브젝트 참조. null이면 상호작용 가능 상태. 일단 Enemy와 Player 모두 해당 되니 나중에 Entity같은 클래스가 생기면 그걸로 대체하기.
+    /// </summary>
+    GameObject CurrentInteractor { get; }
+    /// <summary>
+    /// 해당 오브젝트와 상호작용중인 플레이어가 있는지 여부를 빠르게 판단하는 프로퍼티.
+    /// </summary>
+    bool IsInUse {get; }
+
+    /// <summary>
     /// 상호작용이 끝난 후 물건을 드는 상태(CarryingState)로 전환할지 여부를 결정합니다.
     /// true: 시체, 상자 / false: 문, 컴퓨터
     /// </summary>
-    bool IsCarryable { get; }
+    PlayerStateType NextState { get; }
 
 
     /// <summary>

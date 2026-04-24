@@ -46,8 +46,8 @@ public class UseBandage : ConsumableSkill
     public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
     {
         if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0
-         && hit.collider.gameObject.TryGetComponent<EntityStatus>(out EntityStatus status)&&
-            status.CurrentHp < status.MaxHp)
+         && hit.collider.gameObject.TryGetComponent<EntityStatus>(out EntityStatus status)
+         && status.CurrentHp < status.MaxHp)
         {
             targetStatus = status;
             target = hit.collider.gameObject;

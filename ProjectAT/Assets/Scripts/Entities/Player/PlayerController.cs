@@ -212,7 +212,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ChaseEnemy()
+    /// <summary>
+    /// 공격 시도 함수. 사거리 내에 적이 있으면 공격 로직 수행 후 true 반환, 사거리 밖이면 false 반환 (즉, 공격 실패)
+    /// </summary>
+    /// <returns></returns>
+    public bool TryExecuteAttack()
+    {
+        if (SelectedEnemy == null) return false;
+
+        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
+        {
+            myMovementModule.PlayerMoveStop(); // (Cover 상태에서도 멈춤 명령은 무해함)
+            AimingEnemy(true, SelectedEnemy.transform);
+
+            if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
+            {
+                NormalAttackEnemy();
+            }
+            return true; // 공격 로직 정상 수행됨!
+        }
+
+        return false; // 사거리를 벗어남! (공격 불가)
+    }
+
+    public void ChaseEnemy()
     {
         myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
     }

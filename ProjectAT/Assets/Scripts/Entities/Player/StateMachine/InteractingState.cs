@@ -34,16 +34,8 @@ namespace PlayerStateMachine
             if (currentInteractTime >= myInteractionModule.CurrentInteractTarget.InteractDuration)
             {
                 myInteractionModule.CurrentInteractTarget.OnExecute(context);
+                context.ChangeState(myInteractionModule.CurrentInteractTarget.NextState);
 
-                if(myInteractionModule.CurrentInteractTarget.IsCarryable)
-                {
-                    //context.PickUpCarryableObject(myInteractionModule.CurrentInteractTarget);
-                    //context.ChangeState(PlayerStateType.Carrying);
-                }
-                else
-                {
-                    context.ChangeState(PlayerStateType.Normal);
-                }
             }
         }
 
