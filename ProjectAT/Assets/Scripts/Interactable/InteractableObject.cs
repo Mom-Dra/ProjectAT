@@ -11,19 +11,22 @@ namespace Interactable
         [SerializeField] private string playerAnimationTrigger = "Interact";
         [SerializeField] private PlayerStateType nextState = PlayerStateType.Normal;
 
-        public GameObject CurrentInteractor {get; private set;}
+        public GameObject CurrentInteractor {get; protected set;}
         public float InteractDuration => interactDuration;
         public string PlayerAnimationTrigger => playerAnimationTrigger;
         public bool IsInUse => CurrentInteractor != null;
         public PlayerStateType NextState => nextState;
 
         public abstract Vector3 GetInteractLookDir(Transform playerTransform);
-
         public abstract Vector3 GetInteractPosition(Transform playerTransform);
         
+        public abstract void OnTargetSelected();
+        public abstract void OnTargetDeselected();
+        public abstract void OnInteractStart(PlayerController player);
         public abstract void OnExecute(PlayerController player);
 
-        public bool TryLock(PlayerController interactor)
+
+        public virtual bool TryLock(PlayerController interactor)
         {
             if(IsInUse && CurrentInteractor != interactor) return false;
             
@@ -31,7 +34,7 @@ namespace Interactable
             return true;
         }
 
-        public void UnLock()
+        public virtual void UnLock()
         {
             CurrentInteractor = null;
         }

@@ -17,6 +17,7 @@ namespace PlayerStateMachine
         public override void OnEnter()
         {
             Debug.Log($"Enter InteractingState. : {myInteractionModule.CurrentInteractTarget}");
+            myInteractionModule.CurrentInteractTarget.OnTargetSelected();
             currentInteractTime = 0f;
         }
 
@@ -24,7 +25,13 @@ namespace PlayerStateMachine
         {
             Debug.Log("Exit InteractingState.");
             currentInteractTime = 0f;
-            //myInteractionModule.CurrentInteractTarget = null; //상호작용이 끝나면 타겟 초기화.
+            myInteractionModule.CurrentInteractTarget.OnTargetDeselected();
+
+            if(myInteractionModule.CurrentInteractTarget.NextState == PlayerStateType.Normal)
+            {
+                myInteractionModule.CurrentInteractTarget.UnLock();
+                myInteractionModule.CurrentInteractTarget = null; //상호작용이 끝나면 타겟 초기화.
+            }
         }
 
         public override void OnUpdate()
@@ -35,7 +42,6 @@ namespace PlayerStateMachine
             {
                 myInteractionModule.CurrentInteractTarget.OnExecute(context);
                 context.ChangeState(myInteractionModule.CurrentInteractTarget.NextState);
-
             }
         }
 

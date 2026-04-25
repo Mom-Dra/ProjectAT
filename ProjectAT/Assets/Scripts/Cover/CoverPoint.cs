@@ -1,16 +1,15 @@
+using PlayerStateMachine;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using Interactable;
 
-public class CoverPoint : MonoBehaviour
+public class CoverPoint : InteractableObject, IUIHoverable
 {
     private DecalProjector decalProjector;
     private CoverPulse coverPulse;
-
-    private bool isOccupied;
-    private GameObject owner;
     private bool isPlayerMovingTarget;
-
-    public bool IsOccupied => isOccupied;
+    
+    //버프 제공용 변수도 필요할듯.(IBuffProvider 인터페이스 구현?)
 
     private void Awake()
     {
@@ -22,23 +21,21 @@ public class CoverPoint : MonoBehaviour
 
     public bool Reserve(GameObject npc)
     {
-        if (isOccupied) return false;
+        if (CurrentInteractor != null) return false;
 
-        isOccupied = true;
-        owner = npc;
+        CurrentInteractor = npc;
 
         return true;
     }
 
     public void Release()
     {
-        isOccupied = false;
-        owner = null;
+        CurrentInteractor = null;
     }
 
     public void ShowIndicator()
     {
-        if (!isOccupied)
+        if (CurrentInteractor == null)
             decalProjector.enabled = true;
     }
 
@@ -49,12 +46,12 @@ public class CoverPoint : MonoBehaviour
         decalProjector.enabled = false;
     }
 
-    public void ShowPulse()
+    private void ShowPulse()
     {
         coverPulse.enabled = true;
     }
 
-    public void HidePulse()
+    private void HidePulse()
     {
         if (isPlayerMovingTarget) return;
 
@@ -68,7 +65,42 @@ public class CoverPoint : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = isOccupied ? Color.red : Color.green;
+        Gizmos.color = CurrentInteractor != null ? Color.red : Color.green;
         Gizmos.DrawSphere(transform.position, 0.2f);
+    }
+
+    public void OnHoverEnter()
+    {
+        ShowIndicator();
+    }
+
+    public void OnHoverExit()
+    {
+        HideIndicator();
+    }
+    public override Vector3 GetInteractPosition(Transform playerTransform)
+    {
+        return transform.position;
+    }
+
+    public override Vector3 GetInteractLookDir(Transform playerTransform)
+    {
+        return Vector3.zero; 
+    }
+
+    public override void OnInteractStart(PlayerController player) { }
+    public override void OnExecute(PlayerController player)
+    {
+        HidePulse();
+    }
+
+    public override void OnTargetSelected()
+    {
+        ShowPulse();
+    }
+
+    public override void OnTargetDeselected()
+    {
+        HidePulse();
     }
 }

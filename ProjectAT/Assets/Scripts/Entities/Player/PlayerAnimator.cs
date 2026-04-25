@@ -96,12 +96,6 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetInteger(WeaponTypeHash, (int)weaponType);
     }
 
-    public void SetShoot(bool isShoot)
-    {
-        if(animator.GetBool(ShootHash) != isShoot)
-            animator.SetBool(ShootHash, isShoot);
-    }
-
     public void PlayIdle()
     {
         SetWeaponAnimation(2); //하드코딩됨. SetWeaponType로 대체 가능
@@ -137,11 +131,6 @@ public class PlayerAnimator : MonoBehaviour
             aimRigBuilder.layers[0].active = false;
             AimedTargetLocation = null;
         }
-    }
-
-    public void OnAttackHitFrame()
-    {
-        SendMessageUpwards("ApplyDamageToTarget", SendMessageOptions.DontRequireReceiver);
     }
 
     public void CancelAnimation()

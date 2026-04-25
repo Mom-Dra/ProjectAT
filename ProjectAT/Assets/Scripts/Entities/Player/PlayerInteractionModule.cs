@@ -4,14 +4,12 @@ using UnityEngine;
 public class PlayerInteractionModule : MonoBehaviour
 {
     private IInteractable currInteractObject;
-    private Coroutine interactionCoroutine;
 
     [SerializeField]
     private float interactTime = 3f;
     public float InteractTime { get => interactTime; set => interactTime = value; }
     public bool Hasinteractable => currInteractObject != null;
 
-    public bool IsInteracting => interactionCoroutine != null;
     public IInteractable CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; } 
 
     //private Player MyPlayer = default;

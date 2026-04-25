@@ -8,11 +8,11 @@ using UnityEngine;
 
 public class TargetDetector : MonoBehaviour
 {
-    // Ã³À½¿¡ ÀûÀÌ ½Ã¾ß¿¡ µé¾î ¿Ôµé ¶§
-    // Ãß°¡·Î ÀûÀÌ ½Ã¾ß¿¡ µé¾î ¿ÔÀ» ¶§ 
+    // Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¾ß¿ï¿½ ï¿½ï¿½ï¿½ ï¿½Ôµï¿½ ï¿½ï¿½
+    // ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¾ß¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
     public event System.Action onTargetDetect;
 
-    // ¸ðµç ÀûÀÌ ½Ã¾ß¿¡ ¾øÀ» ¶§
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¾ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     public event System.Action onTargetLosted;
 
     [SerializeField]
@@ -85,7 +85,7 @@ public class TargetDetector : MonoBehaviour
 
         foreach (Collider collider in hits)
         {
-            if(collider.TryGetComponent(out CoverPoint point) && !point.IsOccupied)
+            if(collider.TryGetComponent(out CoverPoint point) && !point.IsInUse)
             {
                 if ((collider.transform.position - GetFirstTargetInfo.Value.transform.position).sqrMagnitude < enemyData.AttackRange * enemyData.AttackRange)
                 {
@@ -147,17 +147,17 @@ public class TargetDetector : MonoBehaviour
 
         while (true)
         {
-            CheckDetectedServer(); // visibleTargets ¸®½ºÆ®¸¦ ¾÷µ¥ÀÌÆ®
+            CheckDetectedServer(); // visibleTargets ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
             int currentDetectedCount = visibleTargets.Count;
 
             if (currentDetectedCount > beforeDetectedCount)
             {
-                // »õ·Î¿î Å¸°ÙÀÌ °¨ÁöµÇ¾úÀ» ¶§ (0->1 Æ÷ÇÔ, 1->2 µî)
+                // ï¿½ï¿½ï¿½Î¿ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ (0->1 ï¿½ï¿½ï¿½ï¿½, 1->2 ï¿½ï¿½)
                 onTargetDetect?.Invoke();
             }
             else if (currentDetectedCount == 0 && beforeDetectedCount > 0)
             {
-                // Å¸°ÙÀ» ¸ðµÎ ÀÒ¾úÀ» ¶§ ( >0 -> 0 )
+                // Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ò¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ( >0 -> 0 )
                 onTargetLosted?.Invoke();
             }
 
@@ -198,48 +198,48 @@ public class TargetDetector : MonoBehaviour
 
     private bool IsInFieldOfView(Transform target)
     {
-        if (isAttackMode) return true; // °ø°Ý ¸ðµå ½Ã 360µµ ÀÎ½Ä
+        if (isAttackMode) return true; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ 360ï¿½ï¿½ ï¿½Î½ï¿½
 
         Vector3 dir = (target.position - transform.position).normalized;
         return Vector3.Angle(transform.forward, dir) < enemyData.ViewAngle * 0.5f;
     }
 
-    // Á¦¹Ì³ªÀÌ°¡ ÀÛ¼ºÇÑ ÄÚµå
+    // ï¿½ï¿½ï¿½Ì³ï¿½ï¿½Ì°ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Úµï¿½
     private void OnDrawGizmosSelected()
     {
-        // enemyData°¡ ÇÒ´çµÇÁö ¾Ê¾ÒÀ¸¸é ±×¸®Áö ¾Ê½À´Ï´Ù.
+        // enemyDataï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.
         if (enemyData is null) return;
 
-        // 1. ÇöÀç È°¼ºÈ­µÈ Å½Áö ¹Ý°æ ±×¸®±â
-        // Application.isPlayingÀº °ÔÀÓÀÌ ½ÇÇà ÁßÀÏ ¶§¸¸ trueÀÔ´Ï´Ù.
+        // 1. ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½ Å½ï¿½ï¿½ ï¿½Ý°ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
+        // Application.isPlayingï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ trueï¿½Ô´Ï´ï¿½.
         float currentRadius = Application.isPlaying ?
                                 (isAttackMode ? enemyData.SearchRadius : enemyData.SecondaryViewRadius) :
-                                enemyData.SecondaryViewRadius; // ½ÇÇà ÁßÀÌ ¾Æ´Ò ¶© ±âº»°ª(Secondary) Ç¥½Ã
+                                enemyData.SecondaryViewRadius; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ ï¿½âº»ï¿½ï¿½(Secondary) Ç¥ï¿½ï¿½
 
         Color currentColor = Application.isPlaying && isAttackMode ? Color.red : Color.green;
 
         Gizmos.color = currentColor;
         Gizmos.DrawWireSphere(transform.position, currentRadius);
 
-        // 2. (¼±ÅÃ »çÇ×) µÎ °³ÀÇ ¹Ý°æÀ» Ç×»ó ¸ðµÎ Ç¥½ÃÇÏ±â
-        // Gizmos.color = new Color(1, 0, 0, 0.3f); // »¡°£»ö (Attack)
+        // 2. (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý°ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï±ï¿½
+        // Gizmos.color = new Color(1, 0, 0, 0.3f); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Attack)
         // Gizmos.DrawWireSphere(transform.position, enemyData.SearchRadius);
-        // Gizmos.color = new Color(1, 1, 0, 0.3f); // ³ë¶õ»ö (Secondary)
+        // Gizmos.color = new Color(1, 1, 0, 0.3f); // ï¿½ï¿½ï¿½ï¿½ï¿½ (Secondary)
         // Gizmos.DrawWireSphere(transform.position, enemyData.SecondaryViewRadius);
 
-        // 3. ½Ã¾ß°¢(View Angle) ±×¸®±â (Attack ¸ðµå°¡ ¾Æ´Ò ¶§)
-        if (!isAttackMode || !Application.isPlaying) // ½ÇÇà ÁßÀÌ ¾Æ´Ò ¶§µµ Ç¥½Ã
+        // 3. ï¿½Ã¾ß°ï¿½(View Angle) ï¿½×¸ï¿½ï¿½ï¿½ (Attack ï¿½ï¿½å°¡ ï¿½Æ´ï¿½ ï¿½ï¿½)
+        if (!isAttackMode || !Application.isPlaying) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
         {
             Gizmos.color = Color.cyan;
             Vector3 forward = transform.forward;
             float viewAngle = enemyData.ViewAngle;
-            float viewRadius = enemyData.SecondaryViewRadius; // ½Ã¾ß°¢Àº Secondary ¹Ý°æ°ú ¿¬µ¿
+            float viewRadius = enemyData.SecondaryViewRadius; // ï¿½Ã¾ß°ï¿½ï¿½ï¿½ Secondary ï¿½Ý°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-            // ½Ã¾ß°¢ÀÇ ¾çÂÊ ³¡ ¹æÇâ °è»ê
+            // ï¿½Ã¾ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             Vector3 viewAngleA = DirFromAngle(-viewAngle * 0.5f, false);
             Vector3 viewAngleB = DirFromAngle(viewAngle * 0.5f, false);
 
-            // ½Ã¾ß°¢ ¶óÀÎ ±×¸®±â
+            // ï¿½Ã¾ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
             Gizmos.DrawLine(transform.position, transform.position + viewAngleA * viewRadius);
             Gizmos.DrawLine(transform.position, transform.position + viewAngleB * viewRadius);
         }
@@ -257,7 +257,7 @@ public class TargetDetector : MonoBehaviour
         }
     }
 
-    // ½Ã¾ß°¢ °è»êÀ» À§ÇÑ ÇïÆÛ(Helper) ÇÔ¼ö
+    // ï¿½Ã¾ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(Helper) ï¿½Ô¼ï¿½
     private Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)

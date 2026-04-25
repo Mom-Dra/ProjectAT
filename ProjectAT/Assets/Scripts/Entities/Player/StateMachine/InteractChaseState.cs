@@ -1,6 +1,7 @@
 using UnityEngine;
 using PlayerStatusCapabilities;
 using Unity.Services.Lobbies.Models;
+using UnityEngine.AI;
 
 
 
@@ -20,6 +21,7 @@ namespace PlayerStateMachine
 
         public override void OnEnter()
         {
+            myInteractionModule.CurrentInteractTarget.OnTargetSelected();
         }
 
         public override void OnExit()
@@ -27,6 +29,7 @@ namespace PlayerStateMachine
             // 상태를 빠져나갈 때 뒷정리 (이동 멈춤 명령, 이동 애니메이션 끄기 등)
             // context.StopMove(); 
             // context.MyAnimationModule.SetBool("IsMoving", false);
+            
         }
 
         public override void OnUpdate()
@@ -38,7 +41,7 @@ namespace PlayerStateMachine
             {
                 Debug.Log("다른 플레이어가 먼저 상호작용을 시작했습니다. 추적을 취소합니다.");
                 context.PlayerMove(context.transform.position, false); // 이동 멈춤
-                context.ChangeState(PlayerStateType.Normal);
+                CancelInteractChasing(PlayerStateType.Normal);
                 return;
             }
 
@@ -56,14 +59,20 @@ namespace PlayerStateMachine
             {
                 // 3. 도착! 애니메이션이 틀어지지 않도록 위치와 회전을 완벽하게 강제 보정(Snapping)합니다.(Y축은 플레이어의 현재 바닥 높이를 유지하여 땅에 파묻히는 것을 방지)
                 context.transform.position = new Vector3(requiredPos.x, context.transform.position.y, requiredPos.z);
-                
-                Vector3 requiredLook = target.GetInteractLookDir(context.transform);
-                if (requiredLook != Vector3.zero)
+
+                if (target.TryLock(context))
                 {
-                    // 4. 추적을 끝내고 본격적인 상호작용 상태로 넘어갑니다!
-                    context.transform.forward = requiredLook;
+                    Vector3 requiredLook = target.GetInteractLookDir(context.transform);
+                    context.transform.forward = requiredLook == Vector3.zero ? context.transform.forward : requiredLook; // 요구하는 시선이 없으면 현재 방향 유지
                     context.ChangeState(PlayerStateType.Interacting);
                 }
+                else
+                {
+                    Debug.Log("도착했지만 다른 플레이어가 먼저 상호작용을 시작했습니다. 추적을 취소합니다.");
+                    context.PlayerMove(context.transform.position, false); // 이동 멈춤
+                    CancelInteractChasing(PlayerStateType.Normal);
+                }
+                
             }
             else
             {
@@ -78,7 +87,7 @@ namespace PlayerStateMachine
             {
                 mySkillModule.ActivateSelectedSkill();
                 mySkillModule.SetUpSkillContext(target, point);
-                context.ChangeState(PlayerStateType.SkillChase);
+                CancelInteractChasing(PlayerStateType.SkillChase);
             }
         }
 
@@ -101,16 +110,15 @@ namespace PlayerStateMachine
             {
                 case 6: //Ground Layer
                     context.PlayerMove(castedObject.point, false);
-                    myInteractionModule.CurrentInteractTarget = null;
-                    context.ChangeState(PlayerStateType.Normal);
+                    CancelInteractChasing(PlayerStateType.Normal);
                     break;
                 case 10: //Indicator Layer
                     context.PlayerMoveWithIndicator(castedObject.point, true);
-                    context.ChangeState(PlayerStateType.Normal);
+                    CancelInteractChasing(PlayerStateType.Normal);
                     break;
                 case 7: //Enemy Layer
                     context.SetTargetEnemy(castedObject.collider.GetComponent<Enemy>());
-                    context.ChangeState(PlayerStateType.Normal);
+                    CancelInteractChasing(PlayerStateType.Normal);
                     break;
                 default:
                     break;
@@ -127,6 +135,14 @@ namespace PlayerStateMachine
             {
                 mySkillModule.CancelTargettingMode();
             }
+        }
+
+        private void CancelInteractChasing(PlayerStateType nextState)
+        {
+            //context.PlayerMove(context.transform.position, false); // 이동 멈춤
+            myInteractionModule.CurrentInteractTarget.OnTargetDeselected();
+            myInteractionModule.CurrentInteractTarget = null;
+            context.ChangeState(nextState);
         }
     }
 }

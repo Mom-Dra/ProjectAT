@@ -42,6 +42,7 @@ public class Door : InteractableObject, IUIHoverable
     {
         //outlinable.OutlineParameters.Enabled = false;
     }
+    public override void OnInteractStart(PlayerController player) { }
 
     public override void OnExecute(PlayerController player)
     {
@@ -145,5 +146,15 @@ public class Door : InteractableObject, IUIHoverable
 
         Gizmos.DrawWireSphere(frontPos, 0.2f);
         Gizmos.DrawWireSphere(backPos, 0.2f);
+    }
+
+    public override void OnTargetSelected()
+    {
+        outlinable.OutlineParameters.Enabled = true;
+    }
+
+    public override void OnTargetDeselected()
+    {
+        outlinable.OutlineParameters.Enabled = false;
     }
 }

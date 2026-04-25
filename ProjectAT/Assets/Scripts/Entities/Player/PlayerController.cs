@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public DeadState DeadState { get; private set; }
     public InteractChaseState InteractChaseState { get; private set; }
     public InteractingState InteractingState { get; private set; }
+    public CoverState CoverState { get; private set; }
     #endregion
 
     #region Module Getters
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
         DeadState = new DeadState(this);
         InteractChaseState = new InteractChaseState(this);
         InteractingState = new InteractingState(this);
+        CoverState = new CoverState(this);
         
         CurrentState = NormalState;
         CurrentState.OnEnter();
@@ -285,6 +287,7 @@ public class PlayerController : MonoBehaviour
             PlayerStateType.Dead => DeadState,
             PlayerStateType.InteractChasing => InteractChaseState,
             PlayerStateType.Interacting => InteractingState,
+            PlayerStateType.Cover => CoverState,
             _ => throw new ArgumentException($"Undefined State Type: {type}"),
         };
 

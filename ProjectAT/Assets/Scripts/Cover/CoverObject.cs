@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CoverObject : MonoBehaviour
+public class CoverObject : MonoBehaviour, IUIHoverable
 {
     private CoverPoint[] coverPoints;
 
@@ -11,29 +11,42 @@ public class CoverObject : MonoBehaviour
 
     public void ShowCoverPoint()
     {
-        foreach(CoverPoint p in coverPoints)
+        for(int i = 0 ; i < coverPoints.Length; i++)
         {
-            p.ShowIndicator();
+            if (!coverPoints[i].IsInUse)
+            {
+                coverPoints[i].ShowIndicator();
+            }
         }
     }
 
     public void HideCoverPoint()
     {
-        foreach(CoverPoint p in coverPoints)
+        for(int i = 0 ; i < coverPoints.Length; i++)
         {
-            p.HideIndicator();
+            coverPoints[i].HideIndicator();
         }
     }
 
     public void ShowSelectedCoverPoint(CoverPoint coverPoint)
     {
-        foreach(CoverPoint p in coverPoints)
+        for(int i = 0 ; i < coverPoints.Length; i++)
         {
-            if (p == coverPoint)
+            if (coverPoints[i] == coverPoint)
             {
-                p.ShowIndicator();
+                coverPoints[i].ShowIndicator();
                 return;
             }
         }
+    }
+
+    public void OnHoverEnter()
+    {
+        ShowCoverPoint();
+    }
+
+    public void OnHoverExit()
+    {
+        HideCoverPoint();
     }
 }
