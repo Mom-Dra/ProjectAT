@@ -42,7 +42,7 @@
     <UnityVersion>6000.1.13f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\HuiYong\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.2.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\HuiYong\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.2.2\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.1.13f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.1.13f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.1.13f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\EnemyState.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\IFormation.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyIdentity.cs" />
     <Compile Include="Assets\Scripts\Entities\CoverHandler.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverPoint.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCameraData.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerUnit.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\SquadConfig.cs" />
     <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Test2.cs" />
@@ -140,7 +142,9 @@
     <Compile Include="Assets\Scripts\Entities\Player\PlayerAnimator.cs" />
     <Compile Include="Assets\Scripts\Interactable\Door.cs" />
     <Compile Include="Assets\Scripts\Utils\Util.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\SquadOrder.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\MySwitchComposite.cs" />
+    <Compile Include="Assets\Scripts\Buff\AwarenessModule.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAnimator.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerNetworkMovement.cs" />
@@ -152,7 +156,6 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChangeStateAction.cs" />
     <Compile Include="Assets\Scripts\Enemy\IEnemyState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerInteractionModule.cs" />
-    <Compile Include="Assets\Scripts\Enemy\PlayerDetector.cs" />
     <Compile Include="Assets\Scripts\Manager\InputManager.cs" />
     <Compile Include="Assets\Scripts\Abstract\IThrowable.cs" />
     <Compile Include="Assets\Scripts\UI\InGameUI.cs" />
@@ -160,6 +163,7 @@
     <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\ProjectileMove.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\RotateToMouse.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\CircleFormation.cs" />
     <Compile Include="Assets\Scripts\Enemy\AlertData.cs" />
     <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
     <Compile Include="Assets\Scripts\Utils\Indicator\IndicatorBase.cs" />
@@ -170,6 +174,7 @@
     <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Inputs\InputReader.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Grenade.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\ISquadMember.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponStraight.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\CustomControls\CooldownOverlay.cs" />
     <Compile Include="Assets\Scripts\View\SightOfView.cs" />
@@ -191,11 +196,13 @@
     <Compile Include="Assets\Scripts\Entities\Player\PlayerAnimationModule.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Health.cs" />
     <Compile Include="Assets\Scripts\UI\UIAnchor.cs" />
+    <Compile Include="Assets\Scripts\Enemy\DetectedTarget.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerPerceptionModule.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\NextPrefab.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\AutoDestroy.cs" />
     <Compile Include="Assets\Scripts\Pool\PooledObject.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />
+    <Compile Include="Assets\Scripts\Enemy\PerceptionSystem.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerType.cs" />
     <Compile Include="Assets\Scripts\View\Controller.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverGenerator.cs" />

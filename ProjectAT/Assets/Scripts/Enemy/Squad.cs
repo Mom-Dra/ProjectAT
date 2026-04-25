@@ -6,169 +6,171 @@ using Unity.VisualScripting;
 using UnityEngine.AI;
 using UnityEditorInternal;
 
-public interface ISquadMember
-{
-    event Action<ISquadMember, IPerceivable, Vector3> onPlayerDetected;
-    event Action<ISquadMember, Vector3> onPlayerLosted;
-    event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
+// public interface ISquadMember
+// {
+//     event Action<ISquadMember, IPerceivable, Vector3> onPlayerDetected;
+//     event Action<ISquadMember, Vector3> onPlayerLosted;
+//     event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
 
-    void ReceiveSquadAlert(IPerceivable target, Vector3 lastKnownPosition);
-    void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition);
-}
+//     void ReceiveSquadAlert(IPerceivable target, Vector3 lastKnownPosition);
+//     void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition);
+// }
 
-public class Squad : MonoBehaviour, ISquadMember
-{
-    public event Action<ISquadMember, IPerceivable, Vector3> onPlayerDetected;
-    public event Action<ISquadMember, Vector3> onPlayerLosted;
-    public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
 
-    [SerializeField]
-    private List<GameObject> memberGameObjects;
 
-    [Header("Formation Settings")]
-    [SerializeField]
-    private float formationOffsetDistance = 3f;
+// public class Squad : MonoBehaviour, ISquadMember
+// {
+//     public event Action<ISquadMember, IPerceivable, Vector3> onPlayerDetected;
+//     public event Action<ISquadMember, Vector3> onPlayerLosted;
+//     public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
 
-    [SerializeField]
-    private float formationSampleRadius = 2f;
+//     [SerializeField]
+//     private List<GameObject> memberGameObjects;
 
-    [SerializeField]
-    private float maxDistanceOffset = 1f;
+//     [Header("Formation Settings")]
+//     [SerializeField]
+//     private float formationOffsetDistance = 3f;
 
-    private bool isSquadAlerted = false;
-    private Vector3 squadLastKnownPosition;
-    private IPerceivable target;
-    private List<ISquadMember> squadMembers = new List<ISquadMember>();
+//     [SerializeField]
+//     private float formationSampleRadius = 2f;
 
-    private void Awake()
-    {
-        foreach (GameObject memberObject in memberGameObjects)
-        {
-            if (memberObject.TryGetComponent(out ISquadMember enemy))
-            {
-                Add(enemy);
-            }
-        }
-    }
+//     [SerializeField]
+//     private float maxDistanceOffset = 1f;
 
-    public void Add(ISquadMember squadMember)
-    {
-        if (squadMembers.Contains(squadMember))
-        {
-#if UNITY_EDITOR
+//     private bool isSquadAlerted = false;
+//     private Vector3 squadLastKnownPosition;
+//     private IPerceivable target;
+//     private List<ISquadMember> squadMembers = new List<ISquadMember>();
 
-            Debug.LogError($"{squadMember} already exists");
-#endif
-            return;
-        }
+//     private void Awake()
+//     {
+//         foreach (GameObject memberObject in memberGameObjects)
+//         {
+//             if (memberObject.TryGetComponent(out ISquadMember enemy))
+//             {
+//                 Add(enemy);
+//             }
+//         }
+//     }
 
-        squadMembers.Add(squadMember);
-        squadMember.onPlayerDetected += PlayerDetected;
-        squadMember.onPlayerPositionUpdated += PlayerPositionUpdated;
-    }
+//     public void Add(ISquadMember squadMember)
+//     {
+//         if (squadMembers.Contains(squadMember))
+//         {
+// #if UNITY_EDITOR
 
-    public void Remove(ISquadMember squadMember)
-    {
-        if (!squadMembers.Contains(squadMember))
-        {
-#if UNITY_EDITOR
-            Debug.LogError($"{squadMember} already deleted");
-#endif
-            return;
-        }
+//             Debug.LogError($"{squadMember} already exists");
+// #endif
+//             return;
+//         }
 
-        squadMembers.Remove(squadMember);
-        squadMember.onPlayerDetected -= PlayerDetected;
-        squadMember.onPlayerPositionUpdated -= PlayerPositionUpdated;
-    }
+//         squadMembers.Add(squadMember);
+//         squadMember.onPlayerDetected += PlayerDetected;
+//         squadMember.onPlayerPositionUpdated += PlayerPositionUpdated;
+//     }
 
-    public void PlayerDetected(ISquadMember enemy, IPerceivable target, Vector3 lastKnownPosition)
-    {
-        isSquadAlerted = true;
-        squadLastKnownPosition = lastKnownPosition;
-        this.target = target;
+//     public void Remove(ISquadMember squadMember)
+//     {
+//         if (!squadMembers.Contains(squadMember))
+//         {
+// #if UNITY_EDITOR
+//             Debug.LogError($"{squadMember} already deleted");
+// #endif
+//             return;
+//         }
 
-        CalculateFormation(target.Transform, lastKnownPosition);
+//         squadMembers.Remove(squadMember);
+//         squadMember.onPlayerDetected -= PlayerDetected;
+//         squadMember.onPlayerPositionUpdated -= PlayerPositionUpdated;
+//     }
 
-        foreach (ISquadMember member in squadMembers)
-        {
-            if (member != enemy)
-            {
-                member.ReceiveSquadAlert(target, lastKnownPosition);
-            }
-        }
+//     public void PlayerDetected(ISquadMember enemy, IPerceivable target, Vector3 lastKnownPosition)
+//     {
+//         isSquadAlerted = true;
+//         squadLastKnownPosition = lastKnownPosition;
+//         this.target = target;
 
-        onPlayerDetected?.Invoke(enemy, target, lastKnownPosition);
-    }
+//         CalculateFormation(target.Transform, lastKnownPosition);
 
-    public void PlayerLosted(ISquadMember enemy, Vector3 lastKnownPosition)
-    {
-        if (!isSquadAlerted) return;
+//         foreach (ISquadMember member in squadMembers)
+//         {
+//             if (member != enemy)
+//             {
+//                 member.ReceiveSquadAlert(target, lastKnownPosition);
+//             }
+//         }
 
-        foreach (ISquadMember member in squadMembers)
-        {
-            if (member != enemy)
-            {
-                return;
-            }
-        }
-    }
+//         onPlayerDetected?.Invoke(enemy, target, lastKnownPosition);
+//     }
 
-    private void PlayerPositionUpdated(ISquadMember enemy, Vector3 position)
-    {
-        // target�� �ٲ� ���ɼ��� ����!
+//     public void PlayerLosted(ISquadMember enemy, Vector3 lastKnownPosition)
+//     {
+//         if (!isSquadAlerted) return;
 
-        //ColorDebug.GreenLog($"PlayerPositionUpdated: {position}");
+//         foreach (ISquadMember member in squadMembers)
+//         {
+//             if (member != enemy)
+//             {
+//                 return;
+//             }
+//         }
+//     }
 
-        squadLastKnownPosition = position;
-        CalculateFormation(target.Transform, position);
-    }
+//     private void PlayerPositionUpdated(ISquadMember enemy, Vector3 position)
+//     {
+//         // target�� �ٲ� ���ɼ��� ����!
 
-    public void ReceiveSquadAlert(IPerceivable target, Vector3 lastKnownPosition)
-    {
-        foreach (var member in squadMembers)
-        {
-            member.ReceiveSquadAlert(target, lastKnownPosition);
-        }
-    }
+//         //ColorDebug.GreenLog($"PlayerPositionUpdated: {position}");
 
-    public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
-    {
-        // ���� �����尡 �� �������� ��ġ�� ����? (��������)
-    }
+//         squadLastKnownPosition = position;
+//         CalculateFormation(target.Transform, position);
+//     }
 
-    private void CalculateFormation(Transform target, Vector3 lastKnownPosition)
-    {
-        Vector3 targetPosition = target.position;
-        float angleStep = 360f / squadMembers.Count;
+//     public void ReceiveSquadAlert(IPerceivable target, Vector3 lastKnownPosition)
+//     {
+//         foreach (var member in squadMembers)
+//         {
+//             member.ReceiveSquadAlert(target, lastKnownPosition);
+//         }
+//     }
 
-        for (int i = 0; i < squadMembers.Count; ++i)
-        {
-            ISquadMember member = squadMembers[i];
+//     public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
+//     {
+//         // ���� �����尡 �� �������� ��ġ�� ����? (��������)
+//     }
 
-            float angle = angleStep * i;
+//     private void CalculateFormation(Transform target, Vector3 lastKnownPosition)
+//     {
+//         Vector3 targetPosition = target.position;
+//         float angleStep = 360f / squadMembers.Count;
 
-            Vector3 offset = Quaternion.Euler(0f, UnityEngine.Random.Range(angle, angle + angleStep), 0f) * Vector3.forward * (formationOffsetDistance + UnityEngine.Random.Range(-maxDistanceOffset, maxDistanceOffset));
-            Vector3 idealPosition = targetPosition + offset;
+//         for (int i = 0; i < squadMembers.Count; ++i)
+//         {
+//             ISquadMember member = squadMembers[i];
 
-            NavMeshHit hit;
-            Vector3 finalPosition = targetPosition;
+//             float angle = angleStep * i;
 
-            if (NavMesh.SamplePosition(idealPosition, out hit, formationSampleRadius, NavMesh.AllAreas))
-            {
-                finalPosition = hit.position;
-            }
-            else
-            {
-                if (NavMesh.SamplePosition(targetPosition, out hit, formationOffsetDistance, NavMesh.AllAreas))
-                {
-                    finalPosition = hit.position;
-                }
-            }
+//             Vector3 offset = Quaternion.Euler(0f, UnityEngine.Random.Range(angle, angle + angleStep), 0f) * Vector3.forward * (formationOffsetDistance + UnityEngine.Random.Range(-maxDistanceOffset, maxDistanceOffset));
+//             Vector3 idealPosition = targetPosition + offset;
 
-            //ColorDebug.Log($"offset: {offset}", Color.red);
-            //ColorDebug.Log($"finalPosition: {finalPosition}", Color.red);
-            member.SetFormationDestination(finalPosition, lastKnownPosition);
-        }
-    }
-}
+//             NavMeshHit hit;
+//             Vector3 finalPosition = targetPosition;
+
+//             if (NavMesh.SamplePosition(idealPosition, out hit, formationSampleRadius, NavMesh.AllAreas))
+//             {
+//                 finalPosition = hit.position;
+//             }
+//             else
+//             {
+//                 if (NavMesh.SamplePosition(targetPosition, out hit, formationOffsetDistance, NavMesh.AllAreas))
+//                 {
+//                     finalPosition = hit.position;
+//                 }
+//             }
+
+//             //ColorDebug.Log($"offset: {offset}", Color.red);
+//             //ColorDebug.Log($"finalPosition: {finalPosition}", Color.red);
+//             member.SetFormationDestination(finalPosition, lastKnownPosition);
+//         }
+//     }
+// }

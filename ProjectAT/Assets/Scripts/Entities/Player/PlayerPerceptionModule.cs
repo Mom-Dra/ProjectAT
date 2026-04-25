@@ -14,7 +14,7 @@ public class PlayerPerceptionModule : MonoBehaviour, IPerceivable
         get
         {
             if (!isActiveAndEnabled) return false;
-            if (stealthable.IsHidden) return false;
+            // if (stealthable.IsHidden) return false;
             if (entityStatus.IsDead) return false;
 
             return true;
@@ -24,6 +24,6 @@ public class PlayerPerceptionModule : MonoBehaviour, IPerceivable
     private void Awake()
     {
         entityStatus = GetComponent<EntityStatus>();
-        stealthable = GetComponent<IStealthable>();
+        // stealthable = GetComponent<IStealthable>();  e
     }
 }
