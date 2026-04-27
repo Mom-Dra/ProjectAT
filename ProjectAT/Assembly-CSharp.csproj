@@ -136,7 +136,6 @@
     <Compile Include="Assets\Scripts\Entities\Player\PlayerSkillModule.cs" />
     <Compile Include="Assets\Inputs\PlayerControls.cs" />
     <Compile Include="Assets\Scripts\Abstract\LivingEntity.cs" />
-    <Compile Include="Assets\Scripts\Enemy\FirstClassEnemy.cs" />
     <Compile Include="Assets\Scripts\Buff\StatBuffData.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerAnimator.cs" />

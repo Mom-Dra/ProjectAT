@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,12 +16,19 @@ public interface IEnemyState
     void Enter(Enemy enemy);
     void Update(Enemy enemy);
     void Exit(Enemy enemy);
+
+    void TargetConfirmed(Enemy enemy, IPerceivable target) { }
+    void TargetLost(Enemy enemy, IPerceivable target) { }
+    void OrderReceived(Enemy enemy, SquadOrder order) { }
 }
 
 public class EnemyIdleState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
+        enemy.stateText.text = "Idle";
+        enemy.EnableFieldOfView(true);
+        enemy.SetAttackMode(false);
         enemy.StopMoving();
     }
 
@@ -32,12 +41,38 @@ public class EnemyIdleState : IEnemyState
     {
 
     }
+
+    public void TargetConfirmed(Enemy enemy, IPerceivable target)
+    {
+        enemy.ChangeState(IEnemyState.AttackState);
+    }
+
+    public void OrderReceived(Enemy enemy, SquadOrder squadOrder)
+    {
+        switch (squadOrder.OrderKind)
+        {
+            case OrderKind.Attack:
+                if (squadOrder.Target is not null && squadOrder.Target.IsValidTarget)
+                    enemy.ChangeState(IEnemyState.AttackState);
+                break;
+
+            case OrderKind.Search:
+                enemy.ChangeState(IEnemyState.SearchState);
+                break;
+
+            case OrderKind.Patrol:
+                enemy.ChangeState(IEnemyState.PatrolState);
+                break;
+        }
+    }
 }
 
 public class EnemyDeadState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
+        enemy.EnableFieldOfView(false);
+        enemy.SetAttackMode(false);
         enemy.StopMoving();
     }
 
@@ -56,19 +91,81 @@ public class EnemyPatrolState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
-        if (NavMesh.SamplePosition(enemy.CurrentOrderDestination, out NavMeshHit hit, 3f, NavMesh.AllAreas))
-            enemy.MoveTo(hit.position);
-        else enemy.MoveTo(enemy.CurrentOrderDestination);
+        enemy.stateText.text = "Patrol";
+        enemy.EnableFieldOfView(true);
+        enemy.SetAttackMode(false);
+
+        enemy.UseOrderedDestination = false;
+
+        if (enemy.Waypoints is null || enemy.Waypoints.Length == 0)
+        {
+            enemy.ChangeState(IEnemyState.IdleState);
+            return;
+        }
+
+        MoveToCurrentWaypoint(enemy);
     }
 
     public void Update(Enemy enemy)
     {
+        if (!enemy.HasArrived()) return;
 
+        if (!enemy.UseOrderedDestination)
+        {
+            enemy.WaypointIndex = (enemy.WaypointIndex + 1) % enemy.Waypoints.Length;
+            MoveToCurrentWaypoint(enemy);
+        }
+        else
+        {
+            enemy.UseOrderedDestination = false;
+            MoveToCurrentWaypoint(enemy);
+        }
     }
 
     public void Exit(Enemy enemy)
     {
 
+    }
+
+    public void TargetConfirmed(Enemy enemy, IPerceivable target)
+    {
+        enemy.ChangeState(IEnemyState.AttackState);
+    }
+
+    public void OrderReceived(Enemy enemy, SquadOrder squadOrder)
+    {
+        switch (squadOrder.OrderKind)
+        {
+            case OrderKind.Attack:
+                enemy.ChangeState(IEnemyState.AttackState);
+                break;
+
+            case OrderKind.Search:
+                enemy.ChangeState(IEnemyState.SearchState);
+                break;
+
+            case OrderKind.Patrol:
+                enemy.UseOrderedDestination = true;
+                MoveToOrderedDestination(enemy);
+                break;
+        }
+    }
+
+    private void MoveToCurrentWaypoint(Enemy enemy)
+    {
+        Transform wayPoint = enemy.Waypoints[enemy.WaypointIndex];
+
+        if (NavMesh.SamplePosition(wayPoint.position, out NavMeshHit hit, 3f, NavMesh.AllAreas))
+            enemy.MoveTo(hit.position);
+    }
+
+    private void MoveToOrderedDestination(Enemy enemy)
+    {
+        Vector3 destination = enemy.CurrentOrderDestination;
+
+        if (NavMesh.SamplePosition(destination, out NavMeshHit hit, 3f, NavMesh.AllAreas))
+            enemy.MoveTo(destination);
+        else enemy.MoveTo(destination);
     }
 }
 
@@ -104,25 +201,59 @@ public class EnemyAttackState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
-        MoveToSlot(enemy);
+        enemy.stateText.text = "Attack";
+        enemy.EnableFieldOfView(false);
+        enemy.SetAttackMode(true);
+        MoveToDestination(enemy);
     }
 
     public void Update(Enemy enemy)
     {
+        if (enemy.CurrentTarget is null || !enemy.CurrentTarget.IsValidTarget)
+        {
+            enemy.ChangeState(IEnemyState.SearchState);
+            return;
+        }
+
         if (enemy.IsTargetInAttackRange())
         {
             enemy.StopMoving();
             enemy.Fire();
-        }
-        else
-        {
-            MoveToSlot(enemy);
         }
     }
 
     public void Exit(Enemy enemy)
     {
 
+    }
+
+    public void TargetLost(Enemy enemy, IPerceivable target)
+    {
+        enemy.ChangeState(IEnemyState.SearchState);
+    }
+
+    public void OrderReceived(Enemy enemy, SquadOrder squadOrder)
+    {
+        switch (squadOrder.OrderKind)
+        {
+            case OrderKind.Attack:
+                // if (enemy.CurrentTarget is not null && enemy.CurrentTarget.IsValidTarget && !ReferenceEquals(enemy.CurrentTarget, squadOrder.Target))
+                // {
+                //     // 공격 중인데 타겟이 달라
+                //     // 거부
+                // }
+
+                // 공격중에 또 공격 명령.. 거부
+                break;
+
+            case OrderKind.Search:
+            case OrderKind.Patrol:
+                break;
+
+            case OrderKind.Disengage:
+                enemy.ChangeState(IEnemyState.IdleState);
+                break;
+        }
     }
 
     private void MoveToSlot(Enemy enemy)
@@ -136,28 +267,142 @@ public class EnemyAttackState : IEnemyState
             enemy.MoveTo(hit.position);
         else enemy.MoveTo(slot);
     }
+
+    private void MoveToDestination(Enemy enemy)
+    {
+        Vector3 dest = enemy.CurrentOrderDestination;
+        if (dest == Vector3.zero)
+        {
+            // Order 없음 → 타겟 위치로 직접 접근
+            var target = enemy.CurrentTarget;
+            if (target != null && target.IsValidTarget)
+                dest = target.Transform.position;
+            else return;
+        }
+
+        if (NavMesh.SamplePosition(dest, out var hit, 3f, NavMesh.AllAreas))
+            enemy.MoveTo(hit.position);
+        else
+            enemy.MoveTo(dest);
+    }
 }
 
 public class EnemySearchState : IEnemyState
 {
+    internal enum Phase { Moving, Waiting }
+
     public void Enter(Enemy enemy)
     {
-        Vector3 point = enemy.CurrentOrderDestination;
-        if (point == Vector3.zero) point = enemy.LastKnownPosition;
+        enemy.stateText.text = "Search";
 
-        if (NavMesh.SamplePosition(point, out NavMeshHit hit, 3f, NavMesh.AllAreas))
-            enemy.MoveTo(hit.position);
-        else enemy.MoveTo(point);
+        enemy.EnableFieldOfView(false);
+        enemy.SetAttackMode(true);
+
+        enemy.Center = ResolveCenter(enemy);
+        GoLastKnownPosition(enemy);
     }
 
     public void Update(Enemy enemy)
     {
+        switch (enemy.Phase)
+        {
+            case Phase.Moving:
+                if (enemy.HasArrived())
+                {
+                    enemy.StopMoving();
+                    enemy.Phase = Phase.Waiting;
+                    enemy.WaitTimer = 0f;
+                }
+                break;
 
+            case Phase.Waiting:
+                enemy.WaitTimer += Time.deltaTime;
+
+                if (enemy.WaitTimer >= enemy.EnemyData.SearchPointWaitTime)
+                    PickNextPointAndMove(enemy);
+                break;
+        }
     }
 
     public void Exit(Enemy enemy)
     {
 
+    }
+
+    public void TargetConfirmed(Enemy enemy, IPerceivable target)
+    {
+        enemy.ChangeState(IEnemyState.AttackState);
+    }
+
+    public void OrderReceived(Enemy enemy, SquadOrder squadOrder)
+    {
+        switch (squadOrder.OrderKind)
+        {
+            case OrderKind.Attack:
+                enemy.ChangeState(IEnemyState.AttackState);
+                break;
+
+            case OrderKind.Search:
+                enemy.Center = ResolveCenter(enemy);
+                PickNextPointAndMove(enemy);
+                break;
+
+            case OrderKind.Patrol:
+                enemy.ChangeState(IEnemyState.PatrolState);
+                break;
+
+            case OrderKind.Disengage:
+                enemy.ChangeState(IEnemyState.IdleState);
+                break;
+        }
+    }
+
+    private static Vector3 ResolveCenter(Enemy enemy)
+    {
+        Vector3 dest = enemy.CurrentOrderDestination;
+        if (dest != Vector3.zero) return dest;
+        return enemy.LastKnownPosition;
+    }
+
+    private static Vector3 GetRandomOffset(float radius)
+    {
+        Vector2 c = Random.insideUnitCircle * radius;
+        return new Vector3(c.x, 0f, c.y);
+    }
+
+    private void GoLastKnownPosition(Enemy enemy)
+    {
+        enemy.CurrentPoint = enemy.LastKnownPosition;
+        enemy.MoveTo(enemy.LastKnownPosition);
+        enemy.Phase = Phase.Moving;
+    }
+
+    private void PickNextPointAndMove(Enemy enemy)
+    {
+        for (int i = 0; i < enemy.EnemyData.SearchMaxAttempts; ++i)
+        {
+            Vector3 candidate = enemy.Center + GetRandomOffset(enemy.EnemyData.SearchRadius);
+
+            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, enemy.EnemyData.SearchNavSampleRadius, NavMesh.AllAreas))
+            {
+                enemy.CurrentPoint = hit.position;
+                enemy.MoveTo(hit.position);
+                enemy.Phase = Phase.Moving;
+                return;
+            }
+        }
+
+        if (NavMesh.SamplePosition(enemy.Center, out NavMeshHit navMeshHit, enemy.EnemyData.SearchNavSampleRadius, NavMesh.AllAreas))
+        {
+            enemy.CurrentPoint = navMeshHit.position;
+            enemy.MoveTo(navMeshHit.position);
+            enemy.Phase = Phase.Moving;
+        }
+        else
+        {
+            enemy.Phase = Phase.Waiting;
+            enemy.WaitTimer = 0f;
+        }
     }
 }
 

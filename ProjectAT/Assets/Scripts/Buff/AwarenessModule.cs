@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Mono.Cecil;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -53,11 +52,7 @@ public class AwarenessModule : MonoBehaviour
     {
         if (enemy.IsEngaging)
         {
-            alertLevel = 1f;
-            confirmedTarget = target;
-            scanningTarget = null;
-            Debug.Log("onTargetConfirmed");
-            onTargetConfirmed?.Invoke(target);
+            Confirm(target);
             return;
         }
 

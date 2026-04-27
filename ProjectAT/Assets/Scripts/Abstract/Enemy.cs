@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using UnityEngine.AI;
+using TMPro;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(AwarenessModule))]
@@ -13,17 +14,24 @@ public class Enemy : MonoBehaviour, ISquadMember
     public event Action<ISquadMember, IPerceivable, Vector3> onTargetPositionUpdated;
 
     [SerializeField] private EnemyData enemyData;
+    [SerializeField] private Transform[] patrolWaypoints;
     [SerializeField] private float positionReportInterval = 0.5f;
+
+    [SerializeField] internal TextMeshProUGUI stateText;
 
     private NavMeshAgent navMeshAgent;
     private PerceptionSystem perceptionSystem;
     private AwarenessModule awarenessModule;
+    private FieldOfViewVisuals fieldOfViewVisuals;
 
     private IEnemyState currState;
     private IPerceivable currentTarget;
     private Vector3 lastKnownPosition;
     private Vector3 currentOrderDestination;
     private Coroutine positionReportCoroutine;
+    private WaitForSeconds wait;
+
+    private int wayPointIndex;
 
     public EnemyData EnemyData => enemyData;
     public NavMeshAgent NavMeshAgent => navMeshAgent;
@@ -34,17 +42,45 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     // ISquadMember
     public IPerceivable CurrentTarget => currentTarget;
-    public bool IsEngaging => currState == IEnemyState.AttackState;
+    public bool IsEngaging => ReferenceEquals(currState, IEnemyState.AttackState) || ReferenceEquals(currState, IEnemyState.SearchState);
     public bool IsAlive { get; private set; } = true;
     public Transform Transform => transform;
+
+    // State 공유 변수
+    internal Transform[] Waypoints => patrolWaypoints;
+
+    internal int WaypointIndex
+    {
+        get => wayPointIndex;
+        set
+        {
+            if (value < 0 && value >= patrolWaypoints.Length)
+                Debug.LogError("value < 0 && value >= patrolWaypoints.Length");
+
+            wayPointIndex = value;
+        }
+    }
+
+    internal bool UseOrderedDestination { get; set; }
+
+    internal float Elapsed { get; set; }
+    internal bool ArrivedOnce { get; set; }
+
+    internal EnemySearchState.Phase Phase { get; set; }
+    internal Vector3 Center;
+    internal Vector3 CurrentPoint;
+    internal float WaitTimer;
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         perceptionSystem = GetComponent<PerceptionSystem>();
         awarenessModule = GetComponent<AwarenessModule>();
+        fieldOfViewVisuals = GetComponent<FieldOfViewVisuals>();
 
-        perceptionSystem.Initialize(enemyData.ViewAngle, enemyData.PrimaryViewRadius, enemyData.SecondaryViewRadius);
+        perceptionSystem.Initialize(enemyData.ViewAngle, enemyData.SearchRadius, enemyData.SecondaryViewRadius);
+
+        wait = new WaitForSeconds(positionReportInterval);
     }
 
     private void OnEnable()
@@ -73,17 +109,14 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     private void TargetConfirmed(IPerceivable target)
     {
-        bool isFirstAcquisition = currentTarget is null;
-
         currentTarget = target;
         lastKnownPosition = target.Transform.position;
 
         onTargetDetected?.Invoke(this, target);
 
-        if (isFirstAcquisition)
-            ChangeState(IEnemyState.AttackState);
-
         StartPositionReport();
+
+        currState?.TargetConfirmed(this, target);
     }
 
     private void TargetLost(IPerceivable target)
@@ -98,74 +131,12 @@ public class Enemy : MonoBehaviour, ISquadMember
 
         StopPositionReport();
 
-        if (currState == IEnemyState.AttackState)
-            ChangeState(IEnemyState.SearchState);
+        currState?.TargetLost(this, target);
     }
 
     public void ReceiveOrder(SquadOrder squadOrder)
     {
-        switch (squadOrder.OrderKind)
-        {
-            case OrderKind.Attack:
-                HandleAttackOrder(squadOrder);
-                break;
-
-            case OrderKind.Search:
-                HandleSearchOrder(squadOrder);
-                break;
-
-            case OrderKind.Patrol:
-                HandlePatrolOrder(squadOrder);
-                break;
-
-            case OrderKind.Disengage:
-                if (currState == IEnemyState.AttackState) ChangeState(IEnemyState.IdleState);
-                break;
-        }
-    }
-
-    private void HandleAttackOrder(SquadOrder order)
-    {
-        currentOrderDestination = order.Position;
-
-        // ★ 자율성 규칙 ★
-        // 이미 교전 중이고, 그 타겟이 유효하면 다른 타겟으로 바꾸지 않는다.
-        if (currState == IEnemyState.AttackState && currentTarget is not null && currentTarget.IsValidTarget)
-        {
-            if (!ReferenceEquals(currentTarget, order.Target))
-            {
-                // 명령된 타겟은 무시, 현재 타겟 계속 공격
-                return;
-            }
-
-            // 같은 타겟에 대한 갱신이면 슬롯만 갱신 (Tick에서 사용)
-            lastKnownPosition = order.Target.Transform.position;
-            return;
-        }
-
-        // 교전 중이 아니거나, 타겟이 유효하지 않으면 명령 수용
-        currentTarget = order.Target;
-        lastKnownPosition = order.Target.Transform.position;
-        ChangeState(IEnemyState.AttackState);
-    }
-
-    private void HandleSearchOrder(SquadOrder order)
-    {
-        // 교전 중이면 Search 명령 무시 (자기 타겟 유지)
-        if (currState == IEnemyState.AttackState) return;
-
-        currentOrderDestination = order.Position;
-        lastKnownPosition = order.Position;
-        ChangeState(IEnemyState.SearchState);
-    }
-
-    private void HandlePatrolOrder(SquadOrder order)
-    {
-        // 교전 중이면 Patrol 명령 무시
-        if (currState == IEnemyState.AttackState) return;
-
-        currentOrderDestination = order.Position;
-        ChangeState(IEnemyState.PatrolState);
+        currState?.OrderReceived(this, squadOrder);
     }
 
     internal void ChangeState(IEnemyState nextState)
@@ -174,7 +145,6 @@ public class Enemy : MonoBehaviour, ISquadMember
 
         currState?.Exit(this);
         currState = nextState;
-        perceptionSystem.SetAttackMode(currState == IEnemyState.AttackState);
         currState.Enter(this);
     }
 
@@ -186,10 +156,10 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     internal void StopMoving()
     {
-        Debug.Log($"[StopMoving] enabled={navMeshAgent.enabled}, " +
-                      $"activeAndEnabled={navMeshAgent.isActiveAndEnabled}, " +
-                      $"isOnNavMesh={navMeshAgent.isOnNavMesh}, " +
-                      $"pos={transform.position}");
+        // Debug.Log($"[StopMoving] enabled={navMeshAgent.enabled}, " +
+        //               $"activeAndEnabled={navMeshAgent.isActiveAndEnabled}, " +
+        //               $"isOnNavMesh={navMeshAgent.isOnNavMesh}, " +
+        //               $"pos={transform.position}");
 
         navMeshAgent.isStopped = true;
         navMeshAgent.ResetPath();
@@ -212,7 +182,17 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     internal void Fire()
     {
+        Debug.Log("Fire");
+    }
 
+    internal void EnableFieldOfView(bool isEnable)
+    {
+        fieldOfViewVisuals.enabled = isEnable;
+    }
+
+    internal void SetAttackMode(bool isAttackMode)
+    {
+        perceptionSystem.SetAttackMode(isAttackMode);
     }
 
     private void StartPositionReport()
@@ -232,17 +212,24 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     private IEnumerator PositionReportCoroutine()
     {
-        WaitForSeconds wait = new WaitForSeconds(positionReportInterval);
-
         while (currentTarget is not null && currentTarget.IsValidTarget)
         {
             lastKnownPosition = currentTarget.Transform.position;
-            onTargetPositionUpdated?.Invoke(this, currentTarget, lastKnownPosition);
+
             Debug.Log("onTargetPositionUpdated");
+            onTargetPositionUpdated?.Invoke(this, currentTarget, lastKnownPosition);
 
             yield return wait;
         }
 
         positionReportCoroutine = null;
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(lastKnownPosition, 1f);
+    }
+#endif
 }

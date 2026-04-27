@@ -16,7 +16,7 @@ public class PerceptionSystem : MonoBehaviour
     private readonly Collider[] colliders = new Collider[16];
 
     private float viewAngle;
-    private float firstViewRadius;
+    private float searchRadius;
     private float secondaryViewRadius;
 
     private bool isAttackMode;
@@ -35,10 +35,10 @@ public class PerceptionSystem : MonoBehaviour
         scanTimer = UnityEngine.Random.Range(0f, detectInterval);
     }
 
-    public void Initialize(float viewAngle, float firstViewRadius, float secondaryViewRadius)
+    public void Initialize(float viewAngle, float searchRadius, float secondaryViewRadius)
     {
         this.viewAngle = viewAngle;
-        this.firstViewRadius = firstViewRadius;
+        this.searchRadius = searchRadius;
         this.secondaryViewRadius = secondaryViewRadius;
     }
 
@@ -50,6 +50,7 @@ public class PerceptionSystem : MonoBehaviour
     private void Update()
     {
         Scan();
+        DebugRay();
     }
 
     public void SetAttackMode(bool isAttackMode)
@@ -76,7 +77,7 @@ public class PerceptionSystem : MonoBehaviour
 
         visibleTargets.Clear();
 
-        float radius = isAttackMode ? firstViewRadius : secondaryViewRadius;
+        float radius = isAttackMode ? searchRadius : secondaryViewRadius;
         int count = Physics.OverlapSphereNonAlloc(transform.position, radius, colliders, targetMask, QueryTriggerInteraction.Ignore);
 
         for (int i = 0; i < count; ++i)
@@ -84,7 +85,6 @@ public class PerceptionSystem : MonoBehaviour
             if (!colliders[i].TryGetComponent(out IPerceivable perceivable) || !perceivable.IsValidTarget) continue;
             if (!IsInFieldOfView(perceivable.Transform)) continue;
             if (!perceivable.IsValidTarget) continue;
-            if (!IsInFieldOfView(perceivable.Transform)) continue;
             if (!HasLineOfSight(perceivable.Transform, out float distance)) continue;
 
             visibleTargets.Add(new DetectedTarget(perceivable, distance));
@@ -179,6 +179,15 @@ public class PerceptionSystem : MonoBehaviour
         Vector3 dir = delta / distance;
 
         return !Physics.Raycast(from, dir, distance, obstacleMask, QueryTriggerInteraction.Ignore);
+    }
+
+    private void DebugRay()
+    {
+        foreach (DetectedTarget detectedTarget in visibleTargets)
+        {
+            // Vector3 targetPosition = (detectedTarget.Perceivable.Transform.position - transform.position)
+            Debug.DrawLine(transform.position, detectedTarget.Perceivable.Transform.position, Color.red);
+        }
     }
 
     private static int CompareByDistance(DetectedTarget a, DetectedTarget b) => a.Distance.CompareTo(b.Distance);
