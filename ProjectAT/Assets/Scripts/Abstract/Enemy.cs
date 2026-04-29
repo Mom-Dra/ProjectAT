@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     private FieldOfViewVisuals fieldOfViewVisuals;
 
     private IEnemyState currState;
+
     private IPerceivable currentTarget;
     private Vector3 lastKnownPosition;
     private Vector3 currentOrderDestination;
@@ -42,7 +43,11 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     // ISquadMember
     public IPerceivable CurrentTarget => currentTarget;
-    public bool IsEngaging => ReferenceEquals(currState, IEnemyState.AttackState) || ReferenceEquals(currState, IEnemyState.SearchState);
+    public bool IsInCombat => ReferenceEquals(currState, IEnemyState.AttackState);
+    public bool IsSearching => ReferenceEquals(currState, IEnemyState.SearchState);
+    public bool IsChasing => ReferenceEquals(currState, IEnemyState.ChaseState);
+    public bool IsEngaging => IsInCombat || IsSearching || IsChasing;
+
     public bool IsAlive { get; private set; } = true;
     public Transform Transform => transform;
 
@@ -67,7 +72,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     internal bool ArrivedOnce { get; set; }
 
     internal EnemySearchState.Phase Phase { get; set; }
-    internal Vector3 Center;
+    internal Vector3 SearchCenter;
     internal Vector3 CurrentPoint;
     internal float WaitTimer;
 
@@ -112,11 +117,11 @@ public class Enemy : MonoBehaviour, ISquadMember
         currentTarget = target;
         lastKnownPosition = target.Transform.position;
 
-        onTargetDetected?.Invoke(this, target);
+        currState?.TargetConfirmed(this, target);
 
         StartPositionReport();
 
-        currState?.TargetConfirmed(this, target);
+        onTargetDetected?.Invoke(this, target);
     }
 
     private void TargetLost(IPerceivable target)
@@ -127,15 +132,17 @@ public class Enemy : MonoBehaviour, ISquadMember
         lastKnownPosition = lastPosition;
         currentTarget = null;
 
-        onTargetLost?.Invoke(this, target, lastPosition);
+        currState?.TargetLost(this, target);
 
         StopPositionReport();
 
-        currState?.TargetLost(this, target);
+        onTargetLost?.Invoke(this, target, lastPosition);
     }
 
     public void ReceiveOrder(SquadOrder squadOrder)
     {
+        currentOrderDestination = squadOrder.Position;
+
         currState?.OrderReceived(this, squadOrder);
     }
 
@@ -230,6 +237,8 @@ public class Enemy : MonoBehaviour, ISquadMember
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(lastKnownPosition, 1f);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(currentOrderDestination, 1f);
     }
 #endif
 }

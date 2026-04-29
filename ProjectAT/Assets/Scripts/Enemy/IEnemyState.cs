@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -52,8 +50,7 @@ public class EnemyIdleState : IEnemyState
         switch (squadOrder.OrderKind)
         {
             case OrderKind.Attack:
-                if (squadOrder.Target is not null && squadOrder.Target.IsValidTarget)
-                    enemy.ChangeState(IEnemyState.AttackState);
+                enemy.ChangeState(IEnemyState.ChaseState);
                 break;
 
             case OrderKind.Search:
@@ -173,12 +170,19 @@ public class EnemyChaseState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
+        enemy.stateText.text = "Chase";
+        enemy.EnableFieldOfView(false);
+        enemy.SetAttackMode(true);
 
+        enemy.MoveTo(enemy.CurrentOrderDestination);
     }
 
     public void Update(Enemy enemy)
     {
-
+        if (enemy.HasArrived())
+        {
+            enemy.ChangeState(IEnemyState.SearchState);
+        }
     }
 
     public void Exit(Enemy enemy)
@@ -186,14 +190,24 @@ public class EnemyChaseState : IEnemyState
 
     }
 
-    private void HandleTargetTracking(Enemy enemy)
+    public void TargetConfirmed(Enemy enemy, IPerceivable target)
     {
-
+        enemy.ChangeState(IEnemyState.AttackState);
     }
 
-    private void HandleTargetLost(Enemy enemy)
+    public void OrderReceived(Enemy enemy, SquadOrder squadOrder)
     {
+        switch (squadOrder.OrderKind)
+        {
+            case OrderKind.Attack:
+            case OrderKind.Search:
+            case OrderKind.Patrol:
+                break;
 
+            case OrderKind.Disengage:
+                enemy.ChangeState(IEnemyState.IdleState);
+                break;
+        }
     }
 }
 
@@ -204,6 +218,7 @@ public class EnemyAttackState : IEnemyState
         enemy.stateText.text = "Attack";
         enemy.EnableFieldOfView(false);
         enemy.SetAttackMode(true);
+
         MoveToDestination(enemy);
     }
 
@@ -242,6 +257,8 @@ public class EnemyAttackState : IEnemyState
                 //     // 공격 중인데 타겟이 달라
                 //     // 거부
                 // }
+
+
 
                 // 공격중에 또 공격 명령.. 거부
                 break;
@@ -298,8 +315,7 @@ public class EnemySearchState : IEnemyState
         enemy.EnableFieldOfView(false);
         enemy.SetAttackMode(true);
 
-        enemy.Center = ResolveCenter(enemy);
-        GoLastKnownPosition(enemy);
+        enemy.SearchCenter = ResolveCenter(enemy);
     }
 
     public void Update(Enemy enemy)
@@ -339,11 +355,11 @@ public class EnemySearchState : IEnemyState
         switch (squadOrder.OrderKind)
         {
             case OrderKind.Attack:
-                enemy.ChangeState(IEnemyState.AttackState);
+                enemy.ChangeState(IEnemyState.ChaseState);
                 break;
 
             case OrderKind.Search:
-                enemy.Center = ResolveCenter(enemy);
+                enemy.SearchCenter = ResolveCenter(enemy);
                 PickNextPointAndMove(enemy);
                 break;
 
@@ -381,7 +397,7 @@ public class EnemySearchState : IEnemyState
     {
         for (int i = 0; i < enemy.EnemyData.SearchMaxAttempts; ++i)
         {
-            Vector3 candidate = enemy.Center + GetRandomOffset(enemy.EnemyData.SearchRadius);
+            Vector3 candidate = enemy.SearchCenter + GetRandomOffset(enemy.EnemyData.SearchRadius);
 
             if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, enemy.EnemyData.SearchNavSampleRadius, NavMesh.AllAreas))
             {
@@ -392,7 +408,7 @@ public class EnemySearchState : IEnemyState
             }
         }
 
-        if (NavMesh.SamplePosition(enemy.Center, out NavMeshHit navMeshHit, enemy.EnemyData.SearchNavSampleRadius, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(enemy.SearchCenter, out NavMeshHit navMeshHit, enemy.EnemyData.SearchNavSampleRadius, NavMesh.AllAreas))
         {
             enemy.CurrentPoint = navMeshHit.position;
             enemy.MoveTo(navMeshHit.position);

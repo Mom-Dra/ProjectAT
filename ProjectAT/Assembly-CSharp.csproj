@@ -67,6 +67,7 @@
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\IFormation.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\TargetMemory.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyIdentity.cs" />
     <Compile Include="Assets\Scripts\Entities\CoverHandler.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverPoint.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Scripts\Entities\Player\PlayerCombatModule.cs" />
     <Compile Include="Assets\Scripts\Buff\StatType.cs" />
     <Compile Include="Assets\Scripts\Manager\SceneManager.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\SearchPointGenerator.cs" />
     <Compile Include="Assets\Scripts\View\FieldOfViewNetcode.cs" />
     <Compile Include="Assets\Scripts\Manager\Managers.cs" />
     <Compile Include="Assets\Scripts\Abstract\IFadeable.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
     <Compile Include="Assets\Scripts\Mission\MissionData.cs" />
     <Compile Include="Assets\Scripts\Cursor\CursorSettings.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\SquadTargetPool.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\CheckTargetCondition.cs" />
     <Compile Include="Assets\Scripts\Abstract\IAttackable.cs" />
     <Compile Include="Assets\Scripts\Skills\ThrowGrenade.cs" />
@@ -160,7 +163,6 @@
     <Compile Include="Assets\Scripts\UI\InGameUI.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WanderAction.cs" />
     <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\ProjectileMove.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Squad.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\CircleFormation.cs" />
     <Compile Include="Assets\Scripts\Enemy\AlertData.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\Grenade.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\ISquadMember.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponStraight.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\ISquadState.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\CustomControls\CooldownOverlay.cs" />
     <Compile Include="Assets\Scripts\View\SightOfView.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAction.cs" />
@@ -203,6 +206,7 @@
     <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />
     <Compile Include="Assets\Scripts\Enemy\PerceptionSystem.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerType.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Squad\Squad.cs" />
     <Compile Include="Assets\Scripts\View\Controller.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverGenerator.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\PlayerHUD.cs" />

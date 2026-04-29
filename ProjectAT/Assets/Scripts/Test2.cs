@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using DG.Tweening;
+using UnityEngine.Assertions;
 
 public class Test2 : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class Test2 : MonoBehaviour
 
         // canvasGroup.alpha = 0f;
         // canvasGroup.blocksRaycasts = false;
+
+        // Transform abc = null;
+
+        // Assert.IsNotNull(abc);
     }
 
     private void OnEnable()

@@ -8,7 +8,7 @@ public interface ISquadMember
     event Action<ISquadMember, IPerceivable, Vector3> onTargetPositionUpdated;
 
     IPerceivable CurrentTarget { get; }
-    bool IsEngaging { get; }
+    bool IsInCombat { get; }
     bool IsAlive { get; }
     Transform Transform { get; }
 
