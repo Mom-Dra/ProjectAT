@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerMovementModule myMovementModule;
-    //[SerializeField] private PlayerAnimationModule myAnimationModule;
     [SerializeField] private PlayerAnimator myPlayerAnimator;
     [SerializeField] private PlayerCombatModule myCombatModule;
     [SerializeField] private PlayerSkillModule mySkillModule;
@@ -36,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public InteractChaseState InteractChaseState { get; private set; }
     public InteractingState InteractingState { get; private set; }
     public CoverState CoverState { get; private set; }
+    public CarryState CarryState { get; private set; }
     #endregion
 
     #region Module Getters
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     public PlayerCombatModule MyCombatModule => myCombatModule;
     public PlayerSkillModule MySkillModule => mySkillModule;
     public PlayerCoverModule MyCoverModule => myCoverModule;
-    public PlayerInteractionModule MyInteractionModule => myInteractionModule;    
+    public PlayerInteractionModule MyInteractionModule => myInteractionModule;
     #endregion
 
     #region 초기화
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         InteractChaseState = new InteractChaseState(this);
         InteractingState = new InteractingState(this);
         CoverState = new CoverState(this);
-        
+        CarryState = new CarryState(this);
         CurrentState = NormalState;
         CurrentState.OnEnter();
     }
@@ -75,7 +75,9 @@ public class PlayerController : MonoBehaviour
     private void LinkInputEventsAll()
     {
         if (Managers.Instance.InputManager is null)
+        {
             Debug.LogError("Managers.Instance.InputManager is null");
+        }
 
         Managers.Instance.InputManager.onSkillInputed += HandlePlayerSkillInput;
         Managers.Instance.InputManager.onMouseRightClicked += HandlePlayerRightClickInput;
@@ -98,19 +100,28 @@ public class PlayerController : MonoBehaviour
         myCamera = Camera.main;
     }
 
-    private void Start()
+    // private void Start()
+    // {
+    //     LinkInputEventsAll();
+    //     myStatus.onDeath += OnPlayerDeath;
+    //     Managers.Instance.UIManager.InitPlayerStatusInfo(myStatus);
+    //     //myStatus.onRevive += () => Debug.Log("Player Revived!"); // TODO : Revive 이벤트 활용
+    // }
+
+    private void OnEnable()
     {
+        myStatus.onDeath += HandleDeath;
         LinkInputEventsAll();
         Managers.Instance.UIManager.InitPlayerStatusInfo(myStatus);
-        myStatus.onDeath += CancelAllPlayerAction;
-        myStatus.onRevive += () => Debug.Log("Player Revived!"); // TODO : Revive 이벤트 활용
+        //myStatus.onRevive += () => Debug.Log("Player Revived!"); // TODO : Revive 이벤트 활용
     }
 
     private void OnDisable()
     {
+        myStatus.onDeath -= HandleDeath;
+        //Managers.Instance.UIManager.ClearPlayerStatusInfo(); //TODO : UI 제거 함수 구현해야함.
         UnLinkInputEventsAll();
-        myStatus.onDeath -= CancelAllPlayerAction;
-        myStatus.onRevive -= () => Debug.Log("Player Revived!");
+        //myStatus.onRevive -= () => Debug.Log("Player Revived!");
     }
 
     private void Update()
@@ -133,17 +144,11 @@ public class PlayerController : MonoBehaviour
         {
             state.OnRightClick(RaycastAtMouseLocation(out RaycastHit ray) ? ray : new RaycastHit());
         }
-
     }
 
     public bool RaycastAtMouseLocation(out RaycastHit ray)
     {
         return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
-    }
-
-    public bool RaycastAtMouseLocation(out RaycastHit ray, LayerMask layerMask)
-    {
-        return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, layerMask);
     }
 
     public void HandleLeftClickInput()
@@ -195,24 +200,24 @@ public class PlayerController : MonoBehaviour
         myPlayerAnimator.SetAimMarker(null);
     }
 
-    public void EnemyAttackingSequence()
-    {
-        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
-        {
-            myMovementModule.PlayerMoveStop();
-            AimingEnemy(true, SelectedEnemy.transform);
+    // public void EnemyAttackingSequence()
+    // {
+    //     if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
+    //     {
+    //         myMovementModule.PlayerMoveStop();
+    //         AimingEnemy(true, SelectedEnemy.transform);
 
-            if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
-            {
-                NormalAttackEnemy();
-            }
-        }
-        else
-        {
-            AimingEnemy(false);
-            ChaseEnemy();
-        }
-    }
+    //         if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
+    //         {
+    //             NormalAttackEnemy();
+    //         }
+    //     }
+    //     else
+    //     {
+    //         AimingEnemy(false);
+    //         ChaseEnemy();
+    //     }
+    // }
 
     /// <summary>
     /// 공격 시도 함수. 사거리 내에 적이 있으면 공격 로직 수행 후 true 반환, 사거리 밖이면 false 반환 (즉, 공격 실패)
@@ -268,7 +273,14 @@ public class PlayerController : MonoBehaviour
         mySkillModule.CancelCurrentSkill();
         CancelEnemySelect();
     }
+
+    private void HandleDeath()
+    {
+        CancelAllPlayerAction();
+        ChangeState(PlayerStateType.Dead);
+    }
     #endregion
+
     #region StateMachine관련 함수
     public void ChangeState(PlayerStateType newState)
     {
@@ -288,6 +300,8 @@ public class PlayerController : MonoBehaviour
             PlayerStateType.InteractChasing => InteractChaseState,
             PlayerStateType.Interacting => InteractingState,
             PlayerStateType.Cover => CoverState,
+            PlayerStateType.Carry => CarryState,
+
             _ => throw new ArgumentException($"Undefined State Type: {type}"),
         };
 

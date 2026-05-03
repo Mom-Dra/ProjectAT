@@ -63,6 +63,7 @@ namespace PlayerStateMachine
             IInteractable interactable = castedObject.collider.GetComponentInParent<IInteractable>();            
             if (interactable != null && !interactable.IsInUse) 
             {
+                Debug.Log("Interactable object detected on right-click");
                 myInteractionModule.CurrentInteractTarget = interactable;
                 context.ChangeState(PlayerStateType.InteractChasing);
                 return;

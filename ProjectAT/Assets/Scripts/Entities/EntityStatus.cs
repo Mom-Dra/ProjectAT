@@ -62,6 +62,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        if(IsDead) return;
         Debug.Log($"{transform.name} TakeDamage: {damage}");
 
         // Armor 수치에 따른 데미지 감소 로직..!
@@ -72,9 +73,7 @@ public class EntityStatus: MonoBehaviour, IDamageable
 
         if (CurrentHp <= 0)
         {
-            IsDead = true;
             Die();
-
             Debug.Log("Dead!");
         }
     }

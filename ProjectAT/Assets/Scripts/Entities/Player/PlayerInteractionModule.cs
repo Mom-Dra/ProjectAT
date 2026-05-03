@@ -4,32 +4,10 @@ using UnityEngine;
 public class PlayerInteractionModule : MonoBehaviour
 {
     private IInteractable currInteractObject;
+    [SerializeField] private Transform holdPoint;
+    public Transform HoldPoint { get => holdPoint; set => holdPoint = value; }
 
-    [SerializeField]
-    private float interactTime = 3f;
-    public float InteractTime { get => interactTime; set => interactTime = value; }
-    public bool Hasinteractable => currInteractObject != null;
-
-    public IInteractable CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; } 
-
-    //private Player MyPlayer = default;
-
-    private void Awake()
-    {
-        //interactionUI = FindAnyObjectByType<InteractionUI>();
-        //interactionUIRectTransform = interactionUI.GetComponent<RectTransform>();
-    }
-
-    public bool InteractionCheck()
-    {
-        Debug.LogError(Hasinteractable);
-        Debug.LogError(currInteractObject);
-
-        if (Hasinteractable)
-            return true;
-
-        return false;
-    }
+    public IInteractable CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; } //참조횟수가 20임.
 
     // public void HandleInteractionRaycast(Vector2 mousePos)
     // {

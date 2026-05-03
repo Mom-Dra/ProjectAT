@@ -8,6 +8,7 @@ namespace PlayerStateMachine
     {
         private PlayerInteractionModule myInteractionModule;
         private float currentInteractTime;
+        private bool isInteractingComplete;
 
         public InteractingState(PlayerController context) : base(context) 
         { 
@@ -19,6 +20,7 @@ namespace PlayerStateMachine
             Debug.Log($"Enter InteractingState. : {myInteractionModule.CurrentInteractTarget}");
             myInteractionModule.CurrentInteractTarget.OnTargetSelected();
             currentInteractTime = 0f;
+            isInteractingComplete = false;
         }
 
         public override void OnExit()
@@ -27,7 +29,7 @@ namespace PlayerStateMachine
             currentInteractTime = 0f;
             myInteractionModule.CurrentInteractTarget.OnTargetDeselected();
 
-            if(myInteractionModule.CurrentInteractTarget.NextState == PlayerStateType.Normal)
+            if(!isInteractingComplete || myInteractionModule.CurrentInteractTarget.NextState == PlayerStateType.Normal)
             {
                 myInteractionModule.CurrentInteractTarget.UnLock();
                 myInteractionModule.CurrentInteractTarget = null; //상호작용이 끝나면 타겟 초기화.
@@ -40,6 +42,7 @@ namespace PlayerStateMachine
 
             if (currentInteractTime >= myInteractionModule.CurrentInteractTarget.InteractDuration)
             {
+                isInteractingComplete = true;
                 myInteractionModule.CurrentInteractTarget.OnExecute(context);
                 context.ChangeState(myInteractionModule.CurrentInteractTarget.NextState);
             }
