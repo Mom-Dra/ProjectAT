@@ -6,6 +6,7 @@ public class InputManager
     public event Action<SkillNumber> onSkillInputed;
     public event Action onMouseRightClicked;
     public event Action onMouseLeftClicked;
+    public event Action onInteractableObjectDropInput;
 
     private InputReader inputReader;
 
@@ -21,6 +22,7 @@ public class InputManager
         inputReader.SkillInputEvent += SkillInputed;
         inputReader.MouseRightClickEvent += RightClicked;
         inputReader.MouseLeftClickEvent += LeftClicked;
+        inputReader.OnInteractableObjectDropEvent += OnInteractableObjectDrop;
     }
 
     private void RightClicked()
@@ -36,5 +38,10 @@ public class InputManager
     private void SkillInputed(SkillNumber skillNumber)
     {
         onSkillInputed?.Invoke(skillNumber);
+    }
+
+    private void OnInteractableObjectDrop()
+    {
+        onInteractableObjectDropInput?.Invoke();
     }
 }

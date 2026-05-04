@@ -2,6 +2,7 @@ using UnityEngine;
 using PlayerStatusCapabilities;
 using Unity.Services.Lobbies.Models;
 using UnityEngine.AI;
+using Interactable;
 
 
 

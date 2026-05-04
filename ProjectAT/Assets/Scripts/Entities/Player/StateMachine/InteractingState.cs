@@ -1,5 +1,8 @@
 using UnityEngine;
 using PlayerStatusCapabilities;
+using Interactable;
+using UnityEngine.AI;
+using Unity.Services.Lobbies.Models;
 
 
 namespace PlayerStateMachine
@@ -21,6 +24,8 @@ namespace PlayerStateMachine
             myInteractionModule.CurrentInteractTarget.OnTargetSelected();
             currentInteractTime = 0f;
             isInteractingComplete = false;
+
+            myInteractionModule.CurrentInteractTarget.OnInteractStart(context);
         }
 
         public override void OnExit()
@@ -29,11 +34,15 @@ namespace PlayerStateMachine
             currentInteractTime = 0f;
             myInteractionModule.CurrentInteractTarget.OnTargetDeselected();
 
+            //본인 후처리
             if(!isInteractingComplete || myInteractionModule.CurrentInteractTarget.NextState == PlayerStateType.Normal)
             {
+                Debug.Log("상호작용이 완료되지 않았거나, 다음 상태가 Normal입니다. 타겟과의 락을 해제합니다.");
                 myInteractionModule.CurrentInteractTarget.UnLock();
                 myInteractionModule.CurrentInteractTarget = null; //상호작용이 끝나면 타겟 초기화.
             }
+            
+            myInteractionModule.CurrentInteractTarget?.OnInteractEnd(context);
         }
 
         public override void OnUpdate()
@@ -62,12 +71,11 @@ namespace PlayerStateMachine
             {
                 case 6: //Ground Layer
                     context.PlayerMoveWithIndicator(castedObject.point, false);
-                    break;
-                case 10: //Indicator Layer
-                    context.PlayerMoveWithIndicator(castedObject.point, true);
+                    context.ChangeState(PlayerStateType.Normal);
                     break;
                 case 7: //Enemy Layer
                     context.SetTargetEnemy(castedObject.collider.GetComponent<Enemy>());
+                    context.ChangeState(PlayerStateType.Normal);
                     break;
                 default:
                     break;

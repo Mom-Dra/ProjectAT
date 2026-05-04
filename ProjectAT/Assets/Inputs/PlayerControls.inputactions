@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "InteractableObjectDrop",
+                    "type": "Button",
+                    "id": "bc502c86-0c65-4570-b6dd-bc2bc60be7cd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -246,6 +255,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "MouseWheelDelta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0188f572-ddc4-4c6d-85d9-4cd8e70c8eb6",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "InteractableObjectDrop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

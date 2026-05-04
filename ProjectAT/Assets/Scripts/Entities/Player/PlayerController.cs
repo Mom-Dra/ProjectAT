@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
         Managers.Instance.InputManager.onSkillInputed += HandlePlayerSkillInput;
         Managers.Instance.InputManager.onMouseRightClicked += HandlePlayerRightClickInput;
         Managers.Instance.InputManager.onMouseLeftClicked += HandleLeftClickInput;
+        Managers.Instance.InputManager.onInteractableObjectDropInput += HandleDropObjectInput;
     }
 
     private void UnLinkInputEventsAll()
@@ -89,6 +90,7 @@ public class PlayerController : MonoBehaviour
         Managers.Instance.InputManager.onSkillInputed -= HandlePlayerSkillInput;
         Managers.Instance.InputManager.onMouseRightClicked -= HandlePlayerRightClickInput;
         Managers.Instance.InputManager.onMouseLeftClicked -= HandleLeftClickInput;
+        Managers.Instance.InputManager.onInteractableObjectDropInput -= HandleDropObjectInput;
     }
     #endregion
 
@@ -164,6 +166,14 @@ public class PlayerController : MonoBehaviour
         if(CurrentState is ISkillInputHandler state)
         {
             state.OnSkillInput(index);
+        }
+    }
+
+    public void HandleDropObjectInput()
+    {
+        if(CurrentState is IDropObjectHandler state)
+        {
+            state.OnDropObjectInput();
         }
     }
 

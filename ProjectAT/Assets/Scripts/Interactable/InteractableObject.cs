@@ -9,7 +9,7 @@ namespace Interactable
     {
         [SerializeField] private float interactDuration = 1.0f;
         [SerializeField] private string playerAnimationTrigger = "Interact";
-        [SerializeField] private PlayerStateType nextState = PlayerStateType.Normal;
+        [SerializeField] protected PlayerStateType nextState = PlayerStateType.Normal;
 
         public GameObject CurrentInteractor {get; protected set;}
         public float InteractDuration => interactDuration;
@@ -24,6 +24,7 @@ namespace Interactable
         public abstract void OnTargetDeselected();
         public abstract void OnInteractStart(PlayerController player);
         public abstract void OnExecute(PlayerController player);
+        public virtual void OnInteractEnd(PlayerController player) {}
 
 
         public virtual bool TryLock(PlayerController interactor)

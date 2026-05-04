@@ -62,7 +62,7 @@ public class InteractionUIManager
             EntityStatus entityStatus = hit.transform.GetComponentInParent<EntityStatus>();
             UIAnchor uIAnchor = hit.transform.GetComponentInParent<UIAnchor>();
 
-            if(entityStatus is not null)
+            if(entityStatus is not null && uIAnchor is not null)
             {   
                 if(currEntityStatus != entityStatus)
                 {

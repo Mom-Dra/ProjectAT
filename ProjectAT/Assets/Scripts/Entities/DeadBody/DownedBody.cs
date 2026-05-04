@@ -1,6 +1,7 @@
 using UnityEngine;
 using PlayerStateMachine;
 using EPOOutline;
+using NUnit.Framework;
 
 namespace Interactable
 {
@@ -61,46 +62,42 @@ namespace Interactable
             outlinable.OutlineParameters.Enabled = false;
         }
 
-        public override void OnInteractStart(PlayerController player)
-        {
-            // TODO: "시체 드는 중..." 상호작용 프로그레스 바 UI 호출 (필요 시)
-        }
+        public override void OnInteractStart(PlayerController player){ }
 
         public override void OnExecute(PlayerController player)
         {
-            // 1. 아무도 사용 중이지 않다면 -> 듭니다.
-            if (!IsInUse)
+            if(transform.parent == null)
             {
                 StartCarrying(player);
             }
-            // 2. 이미 사용 중인데, 그게 나 자신이라면 -> 내려놓습니다.
-            else if (CurrentInteractor == player.gameObject)
+            else
             {
                 StopCarrying();
             }
         }
 
+        public override void OnInteractEnd(PlayerController player)
+        {
+            nextState = (transform.parent == null) ? PlayerStateType.Carry : PlayerStateType.Normal;
+        }
+
         public virtual void StartCarrying(PlayerController carrier)
         {
-            // 락을 걸어서 IsInUse를 true로 만듭니다. (실패 시 중단)
-            if (!TryLock(carrier)) return; 
-            
             rb.isKinematic = true;
 
             if (carrier.MyInteractionModule.HoldPoint != null)
             {
                 transform.SetParent(carrier.MyInteractionModule.HoldPoint);
                 transform.localPosition = Vector3.zero;
-                transform.localRotation = Quaternion.Euler(-90, 0, 0); 
+                transform.localRotation = Quaternion.Euler(300, 0, 0); 
             }
         }
 
         public virtual void StopCarrying()
         {
+            Debug.Log("StopCarrying 호출! 시체를 바닥에 내려놓습니다.");
             transform.SetParent(null);
             rb.isKinematic = false;
-            
-            UnLock();             // 락을 해제하여 IsInUse를 false로 만듭니다.
         }
     }
 }

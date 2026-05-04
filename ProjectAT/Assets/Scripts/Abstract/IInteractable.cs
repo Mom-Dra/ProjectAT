@@ -43,6 +43,7 @@ public interface IInteractable
 
     /// <summary>
     /// 상호작용이 시작될때 해당 오브젝트가 해야할 로직들을 정의합니다. (예: 다른 플레이어가 이미 상호작용 중인 경우 "사용 중" UI 띄우기, 상호작용 시작 사운드 재생 등)
+    /// InteractingState의 OnEnter()에서 호출됩니다.
     /// </summary>
     /// <param name="player"></param>
     void OnInteractStart(PlayerController player);
@@ -52,7 +53,14 @@ public interface IInteractable
     /// 이 안에서 실제로 문이 열리거나, 시체가 플레이어의 손에 붙는 처리를 합니다.
     /// </summary>
     void OnExecute(PlayerController player); //이 매개변수가 필요할지 고려하기.
-    
+
+    /// <summary>
+    /// 상호작용이 완료되었든, 도중에 취소되었든 상관없이 상호작용이 끝날 때 실행되는 메서드입니다. (예: 상호작용 애니메이션 끝나고 원래대로 돌아오기, UI 초기화 등)
+    /// InteractingState의 OnExit()에서 호출됩니다.
+    /// </summary>
+    /// <param name="player"></param>
+    void OnInteractEnd(PlayerController player); 
+
     /// <summary>
     /// 상호작용을 위해 플레이어가 도착해야 할 정확한 월드 좌표를 반환합니다.
     /// 플레이어의 현재 위치에 따라 앞/뒤 좌표가 달라질 수 있도록 Transform을 받습니다.
@@ -66,6 +74,15 @@ public interface IInteractable
     /// </summary>
     Vector3 GetInteractLookDir(Transform playerTransform);
 
-    bool TryLock(PlayerController interactor); // 상호작용 시작 시 다른 플레이어와의 동시 접근을 방지하기 위한 락 메커니즘. 성공 시 true, 실패 시 false 반환.
+    /// <summary>
+    /// 상호작용을 시도하려 할 때 이미 다른 오브젝트와 상호작용 중인지 판단하고, 상호작용 중이지 않으면 해당 오브젝트를 등록한 후 다른 오브젝트와 상호작용 못하도록 잠그는 메서드
+    /// </summary>
+    /// <param name="interactor"></param>
+    /// <returns></returns>
+    bool TryLock(PlayerController interactor);
+
+    /// <summary>
+    /// 상호작용이 끝났거나 취소될 때 다른 오브젝트가 이 오브젝트와 상호작용할 수 있도록 잠금을 해제하는 메서드
+    /// </summary>
     void UnLock(); // 상호작용이 끝났거나 취소될 때
 }
