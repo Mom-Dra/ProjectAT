@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     public PlayerSkillModule MySkillModule => mySkillModule;
     public PlayerCoverModule MyCoverModule => myCoverModule;
     public PlayerInteractionModule MyInteractionModule => myInteractionModule;
+    public EntityStatus MyStatus => myStatus;
     #endregion
 
     #region 초기화

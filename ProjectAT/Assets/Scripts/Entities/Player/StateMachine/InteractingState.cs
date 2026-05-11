@@ -1,17 +1,14 @@
 using UnityEngine;
 using PlayerStatusCapabilities;
-using Interactable;
-using UnityEngine.AI;
-using Unity.Services.Lobbies.Models;
-
 
 namespace PlayerStateMachine
 {
     public class InteractingState : PlayerState, IRightClickHandler
     {
         private PlayerInteractionModule myInteractionModule;
-        private float currentInteractTime;
-        private bool isInteractingComplete;
+        private PlayerStateType nextStateCash = PlayerStateType.Normal;
+        private float currentInteractTime = 0.1f;
+        private bool isInteractingComplete = false;
 
         public InteractingState(PlayerController context) : base(context) 
         { 
@@ -31,18 +28,19 @@ namespace PlayerStateMachine
         public override void OnExit()
         {
             Debug.Log("Exit InteractingState.");
-            currentInteractTime = 0f;
-            myInteractionModule.CurrentInteractTarget.OnTargetDeselected();
+
+            IInteractable target = myInteractionModule.CurrentInteractTarget;
 
             //본인 후처리
-            if(!isInteractingComplete || myInteractionModule.CurrentInteractTarget.NextState == PlayerStateType.Normal)
+            if(!isInteractingComplete || nextStateCash == PlayerStateType.Normal)
             {
-                Debug.Log("상호작용이 완료되지 않았거나, 다음 상태가 Normal입니다. 타겟과의 락을 해제합니다.");
-                myInteractionModule.CurrentInteractTarget.UnLock();
-                myInteractionModule.CurrentInteractTarget = null; //상호작용이 끝나면 타겟 초기화.
+                target.UnLock();
+                myInteractionModule.CurrentInteractTarget = null;
             }
             
-            myInteractionModule.CurrentInteractTarget?.OnInteractEnd(context);
+            //타겟 후처리
+            target.OnTargetDeselected();
+            target.OnInteractEnd(context);
         }
 
         public override void OnUpdate()
@@ -52,13 +50,17 @@ namespace PlayerStateMachine
             if (currentInteractTime >= myInteractionModule.CurrentInteractTarget.InteractDuration)
             {
                 isInteractingComplete = true;
+                
+                nextStateCash = myInteractionModule.CurrentInteractTarget.NextState;
                 myInteractionModule.CurrentInteractTarget.OnExecute(context);
-                context.ChangeState(myInteractionModule.CurrentInteractTarget.NextState);
+
+                context.ChangeState(nextStateCash);
             }
         }
 
         public void OnRightClick(RaycastHit castedObject)
         {        
+            if(!myInteractionModule.CurrentInteractTarget.CanStopInteract) return;
             
             if (castedObject.collider.TryGetComponent(out IInteractable interactable) && interactable != myInteractionModule.CurrentInteractTarget) //인터렉터블 오브젝트 처리.
             {

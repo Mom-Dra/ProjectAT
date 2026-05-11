@@ -5,8 +5,7 @@ using NUnit.Framework;
 
 namespace Interactable
 {
-    [RequireComponent(typeof(Rigidbody))]
-    public class DownedBody : InteractableObject, IUIHoverable
+    public class DownedBody : InteractableObject, IUIHoverable, ICarriable
     {
         protected Animator animator;
         private readonly int downedAnimationHash = Animator.StringToHash("DeadType");
@@ -62,13 +61,17 @@ namespace Interactable
             outlinable.OutlineParameters.Enabled = false;
         }
 
-        public override void OnInteractStart(PlayerController player){ }
+        public override void OnInteractStart(PlayerController player)
+        {
+            //Do Nothing
+            outlinable.OutlineParameters.Enabled = true;
+        }
 
         public override void OnExecute(PlayerController player)
         {
             if(transform.parent == null)
             {
-                StartCarrying(player);
+                StartCarrying(player.MyInteractionModule.HoldPoint);
             }
             else
             {
@@ -78,26 +81,29 @@ namespace Interactable
 
         public override void OnInteractEnd(PlayerController player)
         {
-            nextState = (transform.parent == null) ? PlayerStateType.Carry : PlayerStateType.Normal;
+            //nextState = (nextState == PlayerStateType.Carry) ? PlayerStateType.Normal : PlayerStateType.Carry;
+            outlinable.OutlineParameters.Enabled = false;
         }
 
-        public virtual void StartCarrying(PlayerController carrier)
+        public void StartCarrying(Transform holdPoint)
         {
             rb.isKinematic = true;
 
-            if (carrier.MyInteractionModule.HoldPoint != null)
+            if (holdPoint != null)
             {
-                transform.SetParent(carrier.MyInteractionModule.HoldPoint);
+                transform.SetParent(holdPoint);
                 transform.localPosition = Vector3.zero;
-                transform.localRotation = Quaternion.Euler(300, 0, 0); 
+                transform.localRotation = Quaternion.Euler(0, -60, 0); 
+                nextState = PlayerStateType.Normal;
             }
         }
 
-        public virtual void StopCarrying()
+        public void StopCarrying()
         {
             Debug.Log("StopCarrying 호출! 시체를 바닥에 내려놓습니다.");
             transform.SetParent(null);
             rb.isKinematic = false;
+            nextState = PlayerStateType.Carry;
         }
     }
 }

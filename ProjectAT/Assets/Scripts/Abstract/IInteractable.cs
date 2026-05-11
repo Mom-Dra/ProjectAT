@@ -26,8 +26,12 @@ public interface IInteractable
     bool IsInUse {get; }
 
     /// <summary>
-    /// 상호작용이 끝난 후 물건을 드는 상태(CarryingState)로 전환할지 여부를 결정합니다.
-    /// true: 시체, 상자 / false: 문, 컴퓨터
+    /// 상호작용 도중 플레이어가 상호작용을 취소할 수 있는지 여부. (예: 문 열기 중에는 취소 불가능, 해킹 중에는 취소 가능)
+    /// </summary>
+    bool CanStopInteract{get; } 
+
+    /// <summary>
+    /// 상호작용이 끝난 후 전환할 다음 상태를 지목합니다.
     /// </summary>
     PlayerStateType NextState { get; }
 

@@ -10,12 +10,15 @@ namespace Interactable
         [SerializeField] private float interactDuration = 1.0f;
         [SerializeField] private string playerAnimationTrigger = "Interact";
         [SerializeField] protected PlayerStateType nextState = PlayerStateType.Normal;
+        [SerializeField] private bool canStopInteract = true;
 
         public GameObject CurrentInteractor {get; protected set;}
         public float InteractDuration => interactDuration;
         public string PlayerAnimationTrigger => playerAnimationTrigger;
         public bool IsInUse => CurrentInteractor != null;
         public PlayerStateType NextState => nextState;
+
+        public bool CanStopInteract => canStopInteract;
 
         public abstract Vector3 GetInteractLookDir(Transform playerTransform);
         public abstract Vector3 GetInteractPosition(Transform playerTransform);

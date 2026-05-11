@@ -4,11 +4,38 @@ using UnityEngine;
 public class PlayerInteractionModule : MonoBehaviour
 {
     private IInteractable currInteractObject;
+    [SerializeField] private EntityStatus myStatus;
     [SerializeField] private Transform holdPoint;
     public Transform HoldPoint { get => holdPoint; set => holdPoint = value; }
-
     public IInteractable CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; } //참조횟수가 20임.
 
+    private void Awake()
+    {
+        myStatus = GetComponent<EntityStatus>();
+    }
+
+    private void OnEnable()
+    {
+        myStatus.onDeath += DropHoldedObject;   
+    }
+
+    private void OnDisable()
+    {
+        myStatus.onDeath -= DropHoldedObject;
+    }
+
+    public void DropHoldedObject()
+    {
+        if(currInteractObject != null)
+        {
+            if(CurrentInteractTarget is ICarriable carriable)
+            {
+                carriable.StopCarrying();
+            }
+            currInteractObject.UnLock();
+            currInteractObject = null;
+        }
+    }
     // public void HandleInteractionRaycast(Vector2 mousePos)
     // {
     //     Ray ray = Camera.main.ScreenPointToRay(mousePos);
@@ -51,7 +78,7 @@ public class PlayerInteractionModule : MonoBehaviour
     //     currInteractObject = null;
     // }
 
-#region old code
+    #region old code
     //public void InteractEnter(Player player)
     //{
     //    MyPlayer = player;
@@ -164,5 +191,5 @@ public class PlayerInteractionModule : MonoBehaviour
 
     //    MyPlayer.ChangeState(PlayerState.Idle);
     //}
-#endregion
+    #endregion
 }
