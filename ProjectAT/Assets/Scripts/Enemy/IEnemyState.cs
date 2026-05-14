@@ -233,7 +233,10 @@ public class EnemyAttackState : IEnemyState
         if (enemy.IsTargetInAttackRange())
         {
             enemy.StopMoving();
-            enemy.Fire();
+
+            bool aimed = enemy.RotateTowardTarget();
+
+            if (aimed) enemy.Fire();
         }
     }
 

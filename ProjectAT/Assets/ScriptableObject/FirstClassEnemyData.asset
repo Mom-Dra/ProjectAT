@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FirstClassEnemyData
   m_EditorClassIdentifier: 
   attackRange: 10
-  rotateSpeed: 5
+  rotateSpeed: 10
+  aimAngleThreshold: 5
   searchRadius: 10
   searchPointWaitTime: 1
   searchNavSampleRadius: 2

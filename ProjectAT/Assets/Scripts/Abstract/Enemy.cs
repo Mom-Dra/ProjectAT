@@ -18,11 +18,14 @@ public class Enemy : MonoBehaviour, ISquadMember
     [SerializeField] private float positionReportInterval = 0.5f;
 
     [SerializeField] internal TextMeshProUGUI stateText;
+    [SerializeField] private Transform muzzleTransform;
 
     private NavMeshAgent navMeshAgent;
     private PerceptionSystem perceptionSystem;
     private AwarenessModule awarenessModule;
     private FieldOfViewVisuals fieldOfViewVisuals;
+    private EnemyAnimator enemyAnimator;
+    private Weapon weapon;
 
     private IEnemyState currState;
 
@@ -76,12 +79,16 @@ public class Enemy : MonoBehaviour, ISquadMember
     internal Vector3 CurrentPoint;
     internal float WaitTimer;
 
+    internal EnemyAnimator EnemyAnimator => enemyAnimator;
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         perceptionSystem = GetComponent<PerceptionSystem>();
         awarenessModule = GetComponent<AwarenessModule>();
         fieldOfViewVisuals = GetComponent<FieldOfViewVisuals>();
+        enemyAnimator = GetComponent<EnemyAnimator>();
+        weapon = GetComponentInChildren<Gun>();
 
         perceptionSystem.Initialize(enemyData.ViewAngle, enemyData.SearchRadius, enemyData.SecondaryViewRadius);
 
@@ -110,6 +117,8 @@ public class Enemy : MonoBehaviour, ISquadMember
     private void Update()
     {
         currState.Update(this);
+
+        enemyAnimator.SetSpeed(navMeshAgent.velocity.magnitude);
     }
 
     private void TargetConfirmed(IPerceivable target)
@@ -187,9 +196,32 @@ public class Enemy : MonoBehaviour, ISquadMember
         return distance <= enemyData.AttackRange * enemyData.AttackRange;
     }
 
+    internal bool RotateTowardTarget()
+    {
+        if (currentTarget is null || !currentTarget.IsValidTarget) return false;
+
+        Vector3 targetPos = CurrentTarget.Transform.position;
+        Vector3 direction = targetPos - muzzleTransform.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < float.Epsilon) return true;
+
+        Vector3 currentMuzzleDir = muzzleTransform.forward;
+        currentMuzzleDir.y = 0f;
+
+        Quaternion delta = Quaternion.FromToRotation(currentMuzzleDir, direction);
+        Quaternion targetBodyRotation = delta * transform.rotation;
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetBodyRotation, enemyData.RotateSpeed * Time.deltaTime);
+
+        float angle = Vector3.Angle(muzzleTransform.forward, direction);
+        return angle <= enemyData.AimAngleThreshold;
+    }
+
     internal void Fire()
     {
-        Debug.Log("Fire");
+        // Debug.Log("Fire");
+        weapon.Attack();
     }
 
     internal void EnableFieldOfView(bool isEnable)
