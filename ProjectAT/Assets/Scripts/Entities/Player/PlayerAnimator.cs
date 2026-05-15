@@ -58,7 +58,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void LateUpdate()
     {
-        AimMarkerTransform.position =  Vector3.up + (AimedTargetLocation? AimedTargetLocation.position : transform.position + transform.forward * 10f);
+        AimMarkerTransform.position =  Vector3.up + (AimedTargetLocation != null ? AimedTargetLocation.position : transform.position + transform.forward * 10f);
     }
 
     private void EntityDead()
@@ -69,11 +69,6 @@ public class PlayerAnimator : MonoBehaviour
     private void EntityRevived()
     {
         SetIsDead(false);
-    }
-
-    public void SetAimMarker(Transform tf)
-    {
-        AimedTargetLocation = tf;
     }
 
     private void SetIsDead(bool isDead)
@@ -96,12 +91,6 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetInteger(WeaponTypeHash, (int)weaponType);
     }
 
-    public void PlayIdle()
-    {
-        SetWeaponAnimation(2); //하드코딩됨. SetWeaponType로 대체 가능
-        animator.SetBool(ShootHash, false);
-    }
-
     public void SetWeaponAnimation(int WeaponType)
     {
         animator.SetInteger(WeaponTypeHash, WeaponType);
@@ -119,22 +108,18 @@ public class PlayerAnimator : MonoBehaviour
 
     public void SetAiming(bool isAiming = true, Transform targetTf = default)
     {
-        if (targetTf != null)
-        {
-            animator.SetBool(ShootHash, true);
-            aimRigBuilder.layers[0].active = true;
-            AimedTargetLocation = targetTf;
-        }
-        else
-        {
-            animator.SetBool(ShootHash, false);
-            aimRigBuilder.layers[0].active = false;
-            AimedTargetLocation = null;
-        }
+        animator.SetBool(ShootHash, isAiming);
+        aimRigBuilder.layers[0].active = isAiming;
+        AimedTargetLocation = targetTf;
     }
 
     public void CancelAnimation()
     {   
         animator.SetTrigger(CancelTriggerHash);
+    }
+
+    public void WeaponMeshVisible(bool isVisible)
+    {
+        weaponHolder.NowWeaponVisible(isVisible);
     }
 }

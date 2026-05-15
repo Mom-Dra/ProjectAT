@@ -24,12 +24,14 @@ namespace PlayerStateMachine
         {
             if (context.SelectedEnemy != null)
             {
-                // 사거리 내에 있어서 공격에 성공했다면 여기서 끝.
-                // 사거리에 없어서(false) 공격을 못했다면? -> 추적!
                 if (!context.TryExecuteAttack())
                 {
                     context.AimingEnemy(false);
                     context.ChaseEnemy();
+                }
+                else
+                {
+                    context.AimingEnemy(true, context.SelectedEnemy.transform);
                 }
             }
         }

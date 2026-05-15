@@ -46,38 +46,32 @@ namespace PlayerStateMachine
                 return;
             }
 
-            // 1. 타겟에게 "내가 어디로 가야 하고, 어디를 봐야 해?" 라고 묻습니다.
             Vector3 requiredPos = target.GetInteractPosition(context.transform);
-
-            // 안전 장치 2: 높이(Y축) 차이 때문에 도착 판정이 안 나는 것을 방지하기 위해 XZ 평면 거리만 잽니다.
             Vector3 currentPosXZ = new Vector3(context.transform.position.x, 0, context.transform.position.z);
             Vector3 requiredPosXZ = new Vector3(requiredPos.x, 0, requiredPos.z);
             
             float sqrtDistance = Vector3.SqrMagnitude(currentPosXZ - requiredPosXZ);
 
-            // 2. 요구 위치에 도달했는지 확인
             if (sqrtDistance <= StopDistanceThreshold * StopDistanceThreshold)
             {
-                // 3. 도착! 애니메이션이 틀어지지 않도록 위치와 회전을 완벽하게 강제 보정(Snapping)합니다.(Y축은 플레이어의 현재 바닥 높이를 유지하여 땅에 파묻히는 것을 방지)
                 context.transform.position = new Vector3(requiredPos.x, context.transform.position.y, requiredPos.z);
 
                 if (target.TryLock(context))
                 {
                     Vector3 requiredLook = target.GetInteractLookDir(context.transform);
-                    context.transform.forward = requiredLook == Vector3.zero ? context.transform.forward : requiredLook; // 요구하는 시선이 없으면 현재 방향 유지
+                    context.transform.forward = requiredLook == Vector3.zero ? context.transform.forward : requiredLook;
                     context.ChangeState(PlayerStateType.Interacting);
                 }
                 else
                 {
                     Debug.Log("도착했지만 다른 플레이어가 먼저 상호작용을 시작했습니다. 추적을 취소합니다.");
-                    context.PlayerMove(context.transform.position, false); // 이동 멈춤
+                    context.PlayerMove(context.transform.position, false);
                     CancelInteractChasing(PlayerStateType.Normal);
                 }
                 
             }
             else
             {
-                // 아직 멀었다면 요구 위치로 계속 이동 명령을 내립니다.
                 context.PlayerMove(requiredPos, false);
             }
         }

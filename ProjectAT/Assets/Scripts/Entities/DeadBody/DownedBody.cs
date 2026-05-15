@@ -7,17 +7,18 @@ namespace Interactable
 {
     public class DownedBody : InteractableObject, IUIHoverable, ICarriable
     {
+        private LayerMask groundLayerMask;        
         protected Animator animator;
         private readonly int downedAnimationHash = Animator.StringToHash("DeadType");
-        protected Rigidbody rb;
         protected Outlinable outlinable;
 
         protected virtual void Awake()
         {
-            rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
             outlinable = GetComponent<Outlinable>();
             PlayDownedAnimation(2);
+
+            groundLayerMask = LayerMask.GetMask("Ground");
         }
 
         public void PlayDownedAnimation(int type = 1)
@@ -87,7 +88,6 @@ namespace Interactable
 
         public void StartCarrying(Transform holdPoint)
         {
-            rb.isKinematic = true;
 
             if (holdPoint != null)
             {
@@ -100,10 +100,17 @@ namespace Interactable
 
         public void StopCarrying()
         {
-            Debug.Log("StopCarrying 호출! 시체를 바닥에 내려놓습니다.");
             transform.SetParent(null);
-            rb.isKinematic = false;
             nextState = PlayerStateType.Carry;
+
+            if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2f, groundLayerMask))
+            {
+                transform.position = hit.point;
+            }
+            else
+            {
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            }
         }
     }
 }

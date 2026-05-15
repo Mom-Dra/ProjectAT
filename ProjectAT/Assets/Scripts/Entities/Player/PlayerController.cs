@@ -201,34 +201,15 @@ public class PlayerController : MonoBehaviour
     public void SetTargetEnemy(Enemy castedEnemy)
     {
         if (!castedEnemy) return;
-        SelectedEnemy = castedEnemy;   
-        myPlayerAnimator.SetAimMarker(SelectedEnemy.transform);     
+        SelectedEnemy = castedEnemy;
+        myPlayerAnimator.SetAiming(true, SelectedEnemy.transform);     
     }
 
     public void CancelEnemySelect()
     {
         SelectedEnemy = null;
-        myPlayerAnimator.SetAimMarker(null);
+        myPlayerAnimator.SetAiming(false, null);
     }
-
-    // public void EnemyAttackingSequence()
-    // {
-    //     if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
-    //     {
-    //         myMovementModule.PlayerMoveStop();
-    //         AimingEnemy(true, SelectedEnemy.transform);
-
-    //         if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
-    //         {
-    //             NormalAttackEnemy();
-    //         }
-    //     }
-    //     else
-    //     {
-    //         AimingEnemy(false);
-    //         ChaseEnemy();
-    //     }
-    // }
 
     /// <summary>
     /// 공격 시도 함수. 사거리 내에 적이 있으면 공격 로직 수행 후 true 반환, 사거리 밖이면 false 반환 (즉, 공격 실패)
@@ -236,12 +217,15 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     public bool TryExecuteAttack()
     {
-        if (SelectedEnemy == null) return false;
+        if (SelectedEnemy == null) 
+        {
+            return false;
+        }
 
         if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
         {
             myMovementModule.PlayerMoveStop(); // (Cover 상태에서도 멈춤 명령은 무해함)
-            AimingEnemy(true, SelectedEnemy.transform);
+            //AimingEnemy(true, SelectedEnemy.transform);
 
             if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
             {
@@ -269,7 +253,6 @@ public class PlayerController : MonoBehaviour
         if (myCombatModule.CanFire())
         {
             myCombatModule.NormalAttackEnemy(SelectedEnemy);
-            //myEffectModule.PlayFiringEffect(SelectedEnemy.transform.position);                
         }
         if(myCombatModule.MyWeapon.NowWeapon.RemainAmmo <= 0)
         {

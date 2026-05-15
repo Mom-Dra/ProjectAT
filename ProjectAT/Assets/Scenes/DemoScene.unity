@@ -775,7 +775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -887,7 +887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -999,7 +999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -1493,7 +1493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -1842,7 +1842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -2102,7 +2102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -2356,7 +2356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -2568,7 +2568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -2680,7 +2680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -2843,7 +2843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -3135,7 +3135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -3247,7 +3247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -3359,7 +3359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -3525,7 +3525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -3704,7 +3704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -4153,7 +4153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -4349,7 +4349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -4391,7 +4391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -4399,7 +4399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1729283815181887076, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: outlineParameters.enabled
@@ -4411,7 +4411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -4419,7 +4419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -4427,7 +4427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -4435,7 +4435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5962558525087350345, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4483,7 +4483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -4491,7 +4491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -4499,7 +4499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -4507,7 +4507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -4515,7 +4515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8843322062162533282, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: m_Name
@@ -4527,7 +4527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5298,7 +5298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -5921,7 +5921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -6384,7 +6384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -6626,7 +6626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -6770,7 +6770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -6932,7 +6932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -7479,7 +7479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -7596,7 +7596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -7895,7 +7895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -8208,7 +8208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -8498,7 +8498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -8715,6 +8715,10 @@ PrefabInstance:
       propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9110633010215283509, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+      propertyPath: deadbodyPref
+      value: 
+      objectReference: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8868,7 +8872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -9142,7 +9146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -9254,7 +9258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -9495,7 +9499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -9792,7 +9796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -9955,7 +9959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -10067,7 +10071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -10241,7 +10245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -10521,7 +10525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -10969,7 +10973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -11169,7 +11173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -11281,7 +11285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -11973,7 +11977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -12284,7 +12288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -12468,7 +12472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -12630,7 +12634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -12747,7 +12751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -12992,7 +12996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -13104,7 +13108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -13296,7 +13300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -13474,7 +13478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -13586,7 +13590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -13928,7 +13932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -14040,7 +14044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -14236,7 +14240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -14365,7 +14369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -14655,7 +14659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -14901,7 +14905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -15064,7 +15068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -15176,7 +15180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -15288,7 +15292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -15400,7 +15404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -15562,7 +15566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -15674,7 +15678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -16066,7 +16070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -16178,7 +16182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -16370,7 +16374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -16482,7 +16486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -16830,7 +16834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -16996,7 +17000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -17168,7 +17172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -17633,7 +17637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -17783,7 +17787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -17999,7 +18003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -18111,7 +18115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -18223,7 +18227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -18859,7 +18863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -19086,7 +19090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -19350,7 +19354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -19711,7 +19715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -20022,7 +20026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -20386,7 +20390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -20696,7 +20700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -20808,7 +20812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -20974,7 +20978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -21201,7 +21205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -21372,7 +21376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -21550,7 +21554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -21662,7 +21666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -22220,7 +22224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -22337,7 +22341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -22529,7 +22533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -22651,7 +22655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -22763,7 +22767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -23715,7 +23719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -23827,7 +23831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -24084,7 +24088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -24196,7 +24200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -24313,7 +24317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -24425,7 +24429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -24800,7 +24804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -24912,7 +24916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -25029,7 +25033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -25334,7 +25338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -25580,7 +25584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -25692,7 +25696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -25804,7 +25808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -26257,7 +26261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -26369,7 +26373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -26796,7 +26800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -26908,7 +26912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -27070,7 +27074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -27182,7 +27186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -27294,7 +27298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -27406,7 +27410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -27721,7 +27725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -28009,7 +28013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -28260,7 +28264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -28527,7 +28531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -28719,7 +28723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -28995,7 +28999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -29437,7 +29441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -29705,7 +29709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -29867,7 +29871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -29979,7 +29983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -30141,7 +30145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -30253,7 +30257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -30419,7 +30423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -30685,7 +30689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -30905,7 +30909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -31176,7 +31180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -31288,7 +31292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -31677,7 +31681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -31789,7 +31793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -32005,7 +32009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -32460,7 +32464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -32572,7 +32576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -32734,7 +32738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -32846,7 +32850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -33290,7 +33294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -33402,7 +33406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -33869,7 +33873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -34184,7 +34188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -34366,7 +34370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -34478,7 +34482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -34590,7 +34594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -34702,7 +34706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -34869,7 +34873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -35121,7 +35125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -35233,7 +35237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -35345,7 +35349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -35457,7 +35461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -35689,7 +35693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -35801,7 +35805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -36350,7 +36354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -36518,7 +36522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -36927,7 +36931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -37089,7 +37093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -37353,7 +37357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -37773,7 +37777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -37940,7 +37944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -38223,7 +38227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -38419,7 +38423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -38879,7 +38883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -39079,7 +39083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -39191,7 +39195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -39357,7 +39361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -39555,7 +39559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -39784,7 +39788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -39896,7 +39900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -40008,7 +40012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -40558,7 +40562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -41162,7 +41166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -41415,7 +41419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -41527,7 +41531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -41644,7 +41648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -41756,7 +41760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -42063,7 +42067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -42175,7 +42179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -42287,7 +42291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -42503,7 +42507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -42824,7 +42828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -42936,7 +42940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -43132,7 +43136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -43324,7 +43328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -43706,7 +43710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -43868,7 +43872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -43980,7 +43984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -44369,7 +44373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -44498,7 +44502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -44637,7 +44641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -44910,7 +44914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -45072,7 +45076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -45304,7 +45308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -45416,7 +45420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -45528,7 +45532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -45784,7 +45788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -45976,7 +45980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -46088,7 +46092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -46267,7 +46271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -46379,7 +46383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -46730,7 +46734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -47206,7 +47210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -47631,7 +47635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -47793,7 +47797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -47905,7 +47909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -48017,7 +48021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -48236,7 +48240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -48464,7 +48468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -48773,7 +48777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -48902,7 +48906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -49488,7 +49492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -49800,7 +49804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -49912,7 +49916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -50078,7 +50082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -50492,7 +50496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -50696,7 +50700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -50862,7 +50866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -51012,7 +51016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -51124,7 +51128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -51236,7 +51240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -51348,7 +51352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -51460,7 +51464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -51684,7 +51688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -52146,7 +52150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -52464,7 +52468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -52630,7 +52634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -52877,7 +52881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -53040,7 +53044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -53256,7 +53260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -53549,7 +53553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -53666,7 +53670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -53778,7 +53782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -53890,7 +53894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -54160,7 +54164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -54326,7 +54330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -54785,7 +54789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -55352,7 +55356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -55464,7 +55468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -55876,7 +55880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -56068,7 +56072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -56294,7 +56298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -56598,7 +56602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -56764,7 +56768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -57002,7 +57006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -57354,7 +57358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -57589,7 +57593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -58097,7 +58101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -58209,7 +58213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -58389,7 +58393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -58501,7 +58505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -58613,7 +58617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -58725,7 +58729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -59269,7 +59273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -59381,7 +59385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -59570,7 +59574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -59844,7 +59848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -60057,7 +60061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -60223,7 +60227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -60415,7 +60419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -60515,6 +60519,10 @@ PrefabInstance:
       propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9110633010215283509, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+      propertyPath: deadbodyPref
+      value: 
+      objectReference: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -60654,7 +60662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -60821,7 +60829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -61007,7 +61015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -61207,7 +61215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -61336,7 +61344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -61448,7 +61456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -61889,7 +61897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -62063,7 +62071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -62274,7 +62282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -62386,7 +62394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -62498,7 +62506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -62777,7 +62785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -62906,7 +62914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -63056,6 +63064,10 @@ PrefabInstance:
       propertyPath: 'patrolWaypoints.Array.data[2]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9110633010215283509, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+      propertyPath: deadbodyPref
+      value: 
+      objectReference: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -63168,7 +63180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -63280,7 +63292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -63467,7 +63479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -63579,7 +63591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -63812,7 +63824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -63924,7 +63936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -64036,7 +64048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -64148,7 +64160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -64310,7 +64322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -64538,7 +64550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -64650,7 +64662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -64762,7 +64774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -65001,7 +65013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -65514,7 +65526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -65928,7 +65940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -66045,7 +66057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -66352,7 +66364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -66464,7 +66476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -66647,7 +66659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -67121,7 +67133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -67291,7 +67303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -67403,7 +67415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -67815,7 +67827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -67995,7 +68007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -68420,7 +68432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -68917,7 +68929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -69029,7 +69041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -69534,7 +69546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -69751,7 +69763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -69863,7 +69875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -69975,7 +69987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -70617,7 +70629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -70791,7 +70803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -70903,7 +70915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -71015,7 +71027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -71215,7 +71227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -71223,7 +71235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -71231,7 +71243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -71239,7 +71251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4978874706524440312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71251,7 +71263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -71259,7 +71271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5962558525087350345, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -71307,7 +71319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -71315,7 +71327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -71323,7 +71335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -71331,7 +71343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
@@ -71339,7 +71351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8843322062162533282, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: m_Name
@@ -71351,7 +71363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -71525,7 +71537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -71897,7 +71909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -72164,7 +72176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -72607,7 +72619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -72906,7 +72918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -73018,7 +73030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -73494,7 +73506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -73606,7 +73618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -73718,7 +73730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -73830,7 +73842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -74054,7 +74066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -74292,7 +74304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -74534,7 +74546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -74752,7 +74764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -74968,7 +74980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -75080,7 +75092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -75272,7 +75284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -75434,7 +75446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -75697,7 +75709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -75862,7 +75874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -76051,7 +76063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -76163,7 +76175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDuration: 0.2
+  interactDuration: 0
   playerAnimationTrigger: Interact
   nextState: 7
   canStopInteract: 1
@@ -76434,7 +76446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.556
+      value: 0.31
       objectReference: {fileID: 0}
     - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
       propertyPath: m_LocalPosition.z
@@ -77248,7 +77260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8179056313333258966, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8318811229573893292, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: nextState
@@ -77256,7 +77268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8318811229573893292, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8521784956137091816, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -77296,7 +77308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8950685684681052841, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9095314786225264308, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: nextState
@@ -77304,7 +77316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9095314786225264308, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: interactDuration
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

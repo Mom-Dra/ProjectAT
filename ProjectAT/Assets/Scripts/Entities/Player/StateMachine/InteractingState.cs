@@ -6,6 +6,7 @@ namespace PlayerStateMachine
     public class InteractingState : PlayerState, IRightClickHandler
     {
         private PlayerInteractionModule myInteractionModule;
+        private PlayerAnimator myAnimationModule;
         private PlayerStateType nextStateCash = PlayerStateType.Normal;
         private float currentInteractTime = 0.1f;
         private bool isInteractingComplete = false;
@@ -13,6 +14,7 @@ namespace PlayerStateMachine
         public InteractingState(PlayerController context) : base(context) 
         { 
             myInteractionModule = context.MyInteractionModule;
+            myAnimationModule = context.MyAnimModule;
         }
 
         public override void OnEnter()
@@ -22,6 +24,7 @@ namespace PlayerStateMachine
             currentInteractTime = 0f;
             isInteractingComplete = false;
 
+            myAnimationModule.WeaponMeshVisible(false);
             myInteractionModule.CurrentInteractTarget.OnInteractStart(context);
         }
 
@@ -36,6 +39,7 @@ namespace PlayerStateMachine
             {
                 target.UnLock();
                 myInteractionModule.CurrentInteractTarget = null;
+                myAnimationModule.WeaponMeshVisible(true);
             }
             
             //타겟 후처리

@@ -31,6 +31,7 @@ namespace PlayerStateMachine
             // context.MyStatModule.AddAccuracy(CoverAccuracyBonus);
             
             myAnimationModule.SetCrouch(true);
+            myAnimationModule.WeaponMeshVisible(true);
         }
 
         public override void OnExit()
@@ -48,8 +49,8 @@ namespace PlayerStateMachine
             if(occupiedCoverPoint != null && occupiedCoverPoint.CurrentInteractor == context.gameObject)
             {
                 occupiedCoverPoint.UnLock();
+                myInteractionModule.CurrentInteractTarget = null; // 엄폐 상태에서 나갈 때는 현재 상호작용 타겟 초기화. (엄폐 상태에서만 상호작용 타겟이 엄폐 지점이므로)
             }
-            myInteractionModule.CurrentInteractTarget = null; // 엄폐 상태에서 나갈 때는 현재 상호작용 타겟 초기화. (엄폐 상태에서만 상호작용 타겟이 엄폐 지점이므로)
             myAnimationModule.SetCrouch(false);
         }
 
@@ -62,6 +63,14 @@ namespace PlayerStateMachine
                     context.AimingEnemy(false); // 2. 적이 멀어졌다면? 엄폐 풀기 로직 실행!
                     //context.ChangeState(PlayerStateType.Normal); // 상태를 Normal로 바꾸면, 다음 프레임부터 NormalState가 알아서 ChaseEnemy()를 실행함
                 }
+                else
+                {
+                    context.AimingEnemy(true, context.SelectedEnemy.transform); // 3. 공격이 성공적으로 수행됐다면? -> 엄폐 유지한 채로 에임만 적으로 고정!
+                }
+            }
+            else
+            {
+                context.AimingEnemy(false);
             }
         }
 

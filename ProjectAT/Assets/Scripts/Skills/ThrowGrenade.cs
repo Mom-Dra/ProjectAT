@@ -4,11 +4,13 @@ using UnityEngine;
 public class ThrowGrenade : Skill
 {
     private PlayerCombatModule myCombatModule;
+    private PlayerAnimator myAnimator;
     private ProjectileSkillData projSkillData => skillData as ProjectileSkillData;
 
     public ThrowGrenade(PlayerSkillModule context, SkillData data) : base(context, data)
     {
         myCombatModule = context.MyCombatModule;
+        myAnimator = context.MyAnimModule;
     }
 
     public override float CalCulateFinalDamage()
@@ -66,14 +68,15 @@ public class ThrowGrenade : Skill
     public override void OnCastingStart(SkillContext skillContext)
     {
         //애니메이션
-        myCombatModule.MyWeapon.NowWeaponVisible(false);
+        //myCombatModule.MyWeapon.NowWeaponVisible(false);
+        myAnimator.WeaponMeshVisible(false);
         context.MyAnimModule.PlayThrowAnimation();
     }
 
     public override void OnCastingEnd(SkillContext skillContext)
     {
         //애니메이션
-        myCombatModule.MyWeapon.NowWeaponVisible(true);
+        myAnimator.WeaponMeshVisible(true);
     }
 
 }
