@@ -1227,6 +1227,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Animation.Rigging">
+      <HintPath>Library\ScriptAssemblies\Unity.Animation.Rigging.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Services.Core.Analytics">
       <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
       <Private>False</Private>
@@ -1349,6 +1353,10 @@
     </Reference>
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Animation.Rigging.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Animation.Rigging.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Netcode.Editor">

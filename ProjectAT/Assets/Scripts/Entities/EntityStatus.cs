@@ -65,7 +65,7 @@ public class EntityStatus : MonoBehaviour, IDamageable
         };
     }
 
-    public void TakeDamage(int damage, EntityStatus attacker)
+    public void TakeDamage(int damage)
     {
         if (IsDead) return;
 
@@ -73,15 +73,15 @@ public class EntityStatus : MonoBehaviour, IDamageable
 
         float finalDamage = damage;
 
-        if (attacker is not null)
-        {
-            // A. 엄폐 보너스 계산 (공격자의 위치 활용)
-            if (coverHandler is not null)
-            {
-                float coverBonus = coverHandler.GetCoverBonus(attacker.transform);
-                finalDamage *= 1f - coverBonus;
-            }
-        }
+        // if (attacker is not null)
+        // {
+        //     // A. 엄폐 보너스 계산 (공격자의 위치 활용)
+        //     if (coverHandler is not null)
+        //     {
+        //         float coverBonus = coverHandler.GetCoverBonus(attacker.transform);
+        //         finalDamage *= 1f - coverBonus;
+        //     }
+        // }
 
         CurrentHp -= Mathf.RoundToInt(finalDamage);
         onHealthChanged?.Invoke(Mathf.Clamp01(Ratio));

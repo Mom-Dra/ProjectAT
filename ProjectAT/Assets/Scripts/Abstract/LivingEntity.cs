@@ -10,7 +10,7 @@ public abstract class LivingEntity : MonoBehaviour, IDamageable
     public event Action onDeath;
 
     // OnlyServer
-    public void TakeDamage(int damage, EntityStatus attacker)
+    public void TakeDamage(int damage)
     {
         health -= damage;
 

@@ -56,6 +56,7 @@
     <Compile Include="Assets\Scripts\Weapon\IGunState.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillData.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\EnableTrailAfterTime.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\SkillCastState.cs" />
     <Compile Include="Assets\Scripts\Abstract\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAttackAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponStatus.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Assets\Scripts\Pool\ReturnParticleOnStop.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseTargetPositionAction.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\PlayerInputInterfaces\PlayerStatusCapabilities.cs" />
     <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Skills\ConsumableSkillData.cs" />
@@ -146,6 +148,7 @@
     <Compile Include="Assets\Scripts\Utils\Util.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\SquadOrder.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\MySwitchComposite.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\PlayerState.cs" />
     <Compile Include="Assets\Scripts\Buff\AwarenessModule.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAnimator.cs" />
@@ -162,6 +165,7 @@
     <Compile Include="Assets\Scripts\Abstract\IThrowable.cs" />
     <Compile Include="Assets\Scripts\UI\InGameUI.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WanderAction.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\SkillChaseState.cs" />
     <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\ProjectileMove.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\CircleFormation.cs" />
@@ -170,6 +174,7 @@
     <Compile Include="Assets\Scripts\Utils\Indicator\IndicatorBase.cs" />
     <Compile Include="Assets\Scripts\Abstract\Enemy.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverObject.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\DeadState.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\CustomControls\RadialProgressBar.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
@@ -178,6 +183,7 @@
     <Compile Include="Assets\Scripts\Enemy\Squad\ISquadMember.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponStraight.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\ISquadState.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\InteractionContext.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\CustomControls\CooldownOverlay.cs" />
     <Compile Include="Assets\Scripts\View\SightOfView.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAction.cs" />
@@ -191,27 +197,33 @@
     <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
     <Compile Include="Assets\Scripts\Skills\ConsumableSkill.cs" />
     <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\SpawnProjectiles.cs" />
+    <Compile Include="Assets\Scripts\Utils\PhysicsMathUtility.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\RotateToTargetAction.cs" />
     <Compile Include="Assets\Scripts\Utils\Indicator\MovePositionIndicator.cs" />
     <Compile Include="Assets\Scripts\Utils\EffectModule.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\IPlayerState.cs" />
     <Compile Include="Assets\Scripts\Abstract\IHealable.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerAnimationModule.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Health.cs" />
     <Compile Include="Assets\Scripts\UI\UIAnchor.cs" />
     <Compile Include="Assets\Scripts\Enemy\DetectedTarget.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerPerceptionModule.cs" />
+    <Compile Include="Assets\Scripts\Manager\IndicatorManager.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\NextPrefab.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\AutoDestroy.cs" />
     <Compile Include="Assets\Scripts\Pool\PooledObject.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />
     <Compile Include="Assets\Scripts\Enemy\PerceptionSystem.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerType.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\NormalState.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillContext.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\Squad.cs" />
     <Compile Include="Assets\Scripts\View\Controller.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverGenerator.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\PlayerHUD.cs" />
     <Compile Include="Assets\Datas\VFXs\Click VFX\Assets\Scripts\PreviewEvent.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkObjectPool.cs" />
+    <Compile Include="Assets\Scripts\Skills\ProjectileSkillData.cs" />
     <Compile Include="Assets\Scripts\Utils\ColorDebug.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1396,6 +1408,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Animation.Rigging">
+      <HintPath>Library\ScriptAssemblies\Unity.Animation.Rigging.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Services.Core.Analytics">
       <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
       <Private>False</Private>
@@ -1518,6 +1534,10 @@
     </Reference>
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Animation.Rigging.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Animation.Rigging.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Netcode.Editor">
