@@ -6,10 +6,10 @@ using UnityEngine.UIElements;
 public class PlayerHUD : MonoBehaviour
 {
     [Header("UI Elements")]
-    [SerializeField]private UIDocument _uiDocument;
+    [SerializeField] private UIDocument _uiDocument;
     private RadialProgressBar _healthBar; // ProgressBar 타입 사용
     private VisualElement _playerPortrait; // 플레이어 초상화 UI 요소
-    
+
     [Header("Weapon Info UI Elements")]
     private VisualElement _playerWeaponIcon; // 플레이어 무기 정보 UI 요소
     private Label _playerAmmoText; // 플레이어 탄약 정보 UI 요소
@@ -21,6 +21,11 @@ public class PlayerHUD : MonoBehaviour
     private Label[] skillItemLabels = new Label[5]; // 스킬 아이템 개수 UI 요소 배열
 
     public int SkillInfoCount => skillInfos.Length;
+
+    private void Awake()
+    {
+        Managers.Instance.UIManager.SetPlayerHUD(this);
+    }
 
     void OnEnable()
     {
@@ -40,7 +45,7 @@ public class PlayerHUD : MonoBehaviour
         _playerAmmoText = root.Q<Label>("AmmoText");
 
 
-        for(int i = 0 ; i < skillInfos.Length; i++)
+        for (int i = 0; i < skillInfos.Length; i++)
         {
             skillInfos[i] = root.Q<VisualElement>($"SkillInfo_{i}");
             skillIcons[i] = skillInfos[i].Q<VisualElement>("Icon");
@@ -96,14 +101,14 @@ public class PlayerHUD : MonoBehaviour
             return;
         }
 
-        for(int i = 0 ; i< skillDatas.Length; i++)
+        for (int i = 0; i < skillDatas.Length; i++)
         {
-            if(skillDatas[i] == null)
+            if (skillDatas[i] == null)
             {
                 Debug.LogError($"Skill data for skill index {i} is null!");
                 continue;
             }
-            if(skillDatas[i] is not ConsumableSkillData)
+            if (skillDatas[i] is not ConsumableSkillData)
             {
                 skillItemLabels[i].style.display = DisplayStyle.None;
             }
@@ -113,7 +118,7 @@ public class PlayerHUD : MonoBehaviour
 
     public void BindPlayerSkillEvent(PlayerSkillModule playerSkillModule)
     {
-        for(int i = 0; i < skillIcons.Length; i++)
+        for (int i = 0; i < skillIcons.Length; i++)
         {
             BindSkillClickEvent(skillIcons[i], playerSkillModule, (SkillNumber)i);
         }
@@ -121,9 +126,9 @@ public class PlayerHUD : MonoBehaviour
 
     private void BindSkillClickEvent(VisualElement iconElement, PlayerSkillModule playerSkillModule, SkillNumber index)
     {
-        if(iconElement is not null && playerSkillModule is not null)
+        if (iconElement is not null && playerSkillModule is not null)
         {
-            iconElement.RegisterCallback<ClickEvent>(evt=>
+            iconElement.RegisterCallback<ClickEvent>(evt =>
             {
                 playerSkillModule.ActivateTargettingMode(index);
             }
@@ -158,9 +163,9 @@ public class PlayerHUD : MonoBehaviour
 
     public void SetSkillItemText(SkillNumber index, int itemCount)
     {
-        if(skillItemLabels[(int)index] != null)
+        if (skillItemLabels[(int)index] != null)
         {
-            if(itemCount < 0)
+            if (itemCount < 0)
             {
                 skillInfos[(int)index].SetEnabled(false);
             }

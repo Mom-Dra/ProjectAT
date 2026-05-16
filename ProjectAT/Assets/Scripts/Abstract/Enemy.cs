@@ -1,560 +1,276 @@
-using Unity.Behavior;
-using Unity.Netcode;
 using UnityEngine;
-using MomDra;
-using Unity.Collections;
 using System.Collections;
-using Unity.VisualScripting;
 using System;
 using UnityEngine.AI;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEngine.InputSystem.XR.Haptics;
-using static UnityEngine.EventSystems.EventTrigger;
 using TMPro;
-using MomDra.Weapon;
 
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(FieldOfViewVisuals))]
-[RequireComponent(typeof(TargetDetector))]
-[RequireComponent(typeof(EnemyAnimator))]
-public abstract class Enemy : MonoBehaviour, IAttackable, ISquadMember
+[RequireComponent(typeof(AwarenessModule))]
+[RequireComponent(typeof(PerceptionSystem))]
+public class Enemy : MonoBehaviour, ISquadMember
 {
-    public event Action<ISquadMember, Transform, Vector3> onPlayerDetected;
-    public event Action<ISquadMember, Vector3> onPlayerLosted;
-    public event Action<ISquadMember, Vector3> onPlayerPositionUpdated;
+    public event Action<ISquadMember, IPerceivable> onTargetDetected;
+    public event Action<ISquadMember, IPerceivable, Vector3> onTargetLost;
+    public event Action<ISquadMember, IPerceivable, Vector3> onTargetPositionUpdated;
 
-    internal int CurrentWaypointIndex;
+    [SerializeField] private EnemyData enemyData;
+    [SerializeField] private Transform[] patrolWaypoints;
+    [SerializeField] private float positionReportInterval = 0.5f;
 
-    internal ICoverSubState CurrCoverSubState;
+    [SerializeField] internal TextMeshProUGUI stateText;
+    [SerializeField] private Transform muzzleTransform;
 
-    protected NavMeshAgent navMeshAgent;
-    protected FieldOfViewVisuals fieldOfViewVisual;
-    protected TargetDetector targetDetector;
-    protected EnemyAnimator enemyAnimator;
-    protected IEnemyState currentState;
-
-    // Inspector���� ����
-    [SerializeField]
-    private EnemyData enemyData;
-    [SerializeField]
-    private AlertData alertData;
-    [SerializeField]
-    private bool isPatrolEnemy;
-    [SerializeField]
-    private Transform[] patrolWaypoints;
-    [SerializeField]
-    private float targetCheckInterval = 0.2f;
-    [SerializeField]
-    private int alertLevel;
-
-    // Debug�� ����
-    [SerializeField]
-    private Enemy_State enemyState;
-
-    [SerializeField]
-    private WeaponType weaponType;
-
-    private float timeSinceTargetLost;
-    private float hideTimer;
-    private float hideDuration;
-    private float peekTimer;
-    private Vector3 targetLastKnownPosition;
-    private Vector3 targetDestination;
+    private NavMeshAgent navMeshAgent;
+    private PerceptionSystem perceptionSystem;
+    private AwarenessModule awarenessModule;
+    private FieldOfViewVisuals fieldOfViewVisuals;
+    private EnemyAnimator enemyAnimator;
     private Weapon weapon;
-    private Transform currentTarget;
-    private Transform muzzle;
-    private EntityStatus entityStatus;
 
-    private CoverPoint reservedCoverPoint;
+    private IEnemyState currState;
 
-    private WaitForSeconds targetCheckWait;
-    private WaitForSeconds informPlayerPositionWait;
-    private Coroutine targetCheckCoroutine;
-    private Coroutine informPlayerPositionCoroutine;
+    private IPerceivable currentTarget;
+    private Vector3 lastKnownPosition;
+    private Vector3 currentOrderDestination;
+    private Coroutine positionReportCoroutine;
+    private WaitForSeconds wait;
 
-    private TextMeshProUGUI stateText;
-
-    public bool IsPlayerStillVisible => enemyState == Enemy_State.Chase || enemyState == Enemy_State.Attack;
+    private int wayPointIndex;
 
     public EnemyData EnemyData => enemyData;
-    public AlertData AlertData => alertData;
-    public int AlertLevel => alertLevel;
-    internal NavMeshAgent NavMeshAgent => navMeshAgent;
-    internal TargetDetector TargetDetector => targetDetector;
+    public NavMeshAgent NavMeshAgent => navMeshAgent;
+    public PerceptionSystem PerceptionSystem => perceptionSystem;
+    public AwarenessModule AwarenessModule => awarenessModule;
+    public Vector3 LastKnownPosition => lastKnownPosition;
+    public Vector3 CurrentOrderDestination => currentOrderDestination;
 
-    internal IReadOnlyList<Transform> PatrolWaypoints => patrolWaypoints;
-    internal Vector3 TargetLastKnownPosition => targetLastKnownPosition;
+    // ISquadMember
+    public IPerceivable CurrentTarget => currentTarget;
+    public bool IsInCombat => ReferenceEquals(currState, IEnemyState.AttackState);
+    public bool IsSearching => ReferenceEquals(currState, IEnemyState.SearchState);
+    public bool IsChasing => ReferenceEquals(currState, IEnemyState.ChaseState);
+    public bool IsEngaging => IsInCombat || IsSearching || IsChasing;
 
-    internal CoverPoint ReservedCoverPoint => reservedCoverPoint;
+    public bool IsAlive { get; private set; } = true;
+    public Transform Transform => transform;
 
+    // State 공유 변수
+    internal Transform[] Waypoints => patrolWaypoints;
+
+    internal int WaypointIndex
+    {
+        get => wayPointIndex;
+        set
+        {
+            if (value < 0 && value >= patrolWaypoints.Length)
+                Debug.LogError("value < 0 && value >= patrolWaypoints.Length");
+
+            wayPointIndex = value;
+        }
+    }
+
+    internal bool UseOrderedDestination { get; set; }
+
+    internal float Elapsed { get; set; }
+    internal bool ArrivedOnce { get; set; }
+
+    internal EnemySearchState.Phase Phase { get; set; }
+    internal Vector3 SearchCenter;
+    internal Vector3 CurrentPoint;
+    internal float WaitTimer;
+
+    internal EnemyAnimator EnemyAnimator => enemyAnimator;
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        fieldOfViewVisual = GetComponent<FieldOfViewVisuals>();
-        targetDetector = GetComponent<TargetDetector>();
-        stateText = GetComponentInChildren<TextMeshProUGUI>();
+        perceptionSystem = GetComponent<PerceptionSystem>();
+        awarenessModule = GetComponent<AwarenessModule>();
+        fieldOfViewVisuals = GetComponent<FieldOfViewVisuals>();
         enemyAnimator = GetComponent<EnemyAnimator>();
-        entityStatus = GetComponent<EntityStatus>();
+        weapon = GetComponentInChildren<Gun>();
 
-        fieldOfViewVisual.SetEnemyData(this);
-        targetDetector.SetEnemyData(this);
+        perceptionSystem.Initialize(enemyData.ViewAngle, enemyData.SearchRadius, enemyData.SecondaryViewRadius);
 
-        fieldOfViewVisual.onScanComplete += ScanCompleted;
-        fieldOfViewVisual.onScanCancel += ScanCanceled;
-        fieldOfViewVisual.onScanStart += ScanStarted;
-
-        targetDetector.onTargetDetect += TargetDetected;
-        targetDetector.onTargetLosted += TargetLosted;
-
-        muzzle = transform.FindChildRecursive("FX_Shoot_01_muzzle");
-        weapon = GetComponentInChildren<Weapon>();
-
-        targetCheckWait = new WaitForSeconds(targetCheckInterval);
-        informPlayerPositionWait = new WaitForSeconds(enemyData.TargetInformInterval);
-
-        if (isPatrolEnemy) ChangeState(IEnemyState.PatrolState);
-        else ChangeState(IEnemyState.IdleState);
+        wait = new WaitForSeconds(positionReportInterval);
     }
 
     private void OnEnable()
     {
-        entityStatus.onDeath += EnemyDied;
+        awarenessModule.onTargetConfirmed += TargetConfirmed;
+        awarenessModule.onTargetLost += TargetLost;
     }
 
     private void OnDisable()
     {
-        entityStatus.onDeath -= EnemyDied;
+        awarenessModule.onTargetConfirmed -= TargetConfirmed;
+        awarenessModule.onTargetLost -= TargetLost;
+
+        StopPositionReport();
     }
 
     private void Start()
     {
-        enemyAnimator.SetWeaponType(weaponType);
+        ChangeState(IEnemyState.IdleState);
     }
 
     private void Update()
     {
-        currentState.Update(this);
+        currState.Update(this);
 
-        enemyAnimator?.SetSpeed(navMeshAgent.velocity.magnitude);
+        enemyAnimator.SetSpeed(navMeshAgent.velocity.magnitude);
     }
 
-    internal void EnableFieldOfView(bool enabled)
+    private void TargetConfirmed(IPerceivable target)
     {
-        if (enabled)
-            ColorDebug.OrangeLog($"EnableFieldOfView: {enabled}");
-        fieldOfViewVisual.enabled = enabled;
+        currentTarget = target;
+        lastKnownPosition = target.Transform.position;
+
+        currState?.TargetConfirmed(this, target);
+
+        StartPositionReport();
+
+        onTargetDetected?.Invoke(this, target);
     }
 
-    internal void SetAttackMode(bool isAttackMode)
+    private void TargetLost(IPerceivable target)
     {
-        EnableFieldOfView(!isAttackMode);
-        targetDetector.SetAttackMode(isAttackMode);
+        if (!ReferenceEquals(currentTarget, target)) return;
+
+        Vector3 lastPosition = target.IsValidTarget ? target.Transform.position : lastKnownPosition;
+        lastKnownPosition = lastPosition;
+        currentTarget = null;
+
+        currState?.TargetLost(this, target);
+
+        StopPositionReport();
+
+        onTargetLost?.Invoke(this, target, lastPosition);
     }
 
-    public void Attack()
+    public void ReceiveOrder(SquadOrder squadOrder)
     {
-        weapon.Attack();
+        currentOrderDestination = squadOrder.Position;
+
+        currState?.OrderReceived(this, squadOrder);
     }
 
-    internal bool IsReloading()
+    internal void ChangeState(IEnemyState nextState)
     {
-        return weapon.IsReloading;
+        if (ReferenceEquals(currState, nextState)) return;
+
+        currState?.Exit(this);
+        currState = nextState;
+        currState.Enter(this);
     }
 
-    internal void Chase()
+    internal void MoveTo(Vector3 position)
     {
-        if (navMeshAgent.destination != targetDestination)
-        {
-            ColorDebug.RedLog($"Chase, targetDeestination: {targetDestination}");
-            navMeshAgent.SetDestination(targetDestination);
-        }
+        navMeshAgent.isStopped = false;
+        navMeshAgent.SetDestination(position);
     }
 
-    internal bool IsTargetExist()
+    internal void StopMoving()
     {
-        //if (targetDetector == null)
-        //    ColorDebug.GreenLog("HaHaHaHaHaHaHa");
+        // Debug.Log($"[StopMoving] enabled={navMeshAgent.enabled}, " +
+        //               $"activeAndEnabled={navMeshAgent.isActiveAndEnabled}, " +
+        //               $"isOnNavMesh={navMeshAgent.isOnNavMesh}, " +
+        //               $"pos={transform.position}");
 
-        return targetDetector.IsTargetDetected();
+        navMeshAgent.isStopped = true;
+        navMeshAgent.ResetPath();
+    }
+
+    internal bool HasArrived()
+    {
+        if (navMeshAgent.pathPending) return false;
+
+        return navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance + 0.1f;
     }
 
     internal bool IsTargetInAttackRange()
     {
-        if (!IsTargetExist()) return false;
+        if (currentTarget is null || !currentTarget.IsValidTarget) return false;
 
-        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
-
-        if (targetInfo.Value.distance <= enemyData.AttackRange) return true;
-
-        return false;
-    }
-
-    private void InformTargetPosition()
-    {
-        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
-
-        onPlayerPositionUpdated?.Invoke(this, targetInfo.Value.transform.position);
-    }
-
-    internal void StartInformTargetPositionCoroutine()
-    {
-        if (informPlayerPositionCoroutine is null)
-            informPlayerPositionCoroutine = StartCoroutine(InformTargetPositionCoroutine());
-    }
-
-    internal void StopInformTargetPositionCoroutine()
-    {
-        if (informPlayerPositionCoroutine is not null)
-        {
-            StopCoroutine(informPlayerPositionCoroutine);
-            informPlayerPositionCoroutine = null;
-        }
-    }
-
-    internal bool HasWaypoint()
-    {
-        return patrolWaypoints is not null && patrolWaypoints.Length != 0;
-    }
-
-    internal void UpdateTargetLostTimer(float deltaTime)
-    {
-        timeSinceTargetLost += deltaTime;
-    }
-
-    internal void ResetTargetLostTimer()
-    {
-        timeSinceTargetLost = 0f;
-    }
-
-    internal bool IsOverTargetLost()
-    {
-        return timeSinceTargetLost > enemyData.TimeToLostTarget;
-    }
-
-    internal void UpdateHideTimer(float deltaTime)
-    {
-        hideTimer += deltaTime;
-    }
-
-    internal void ResetHideTimer()
-    {
-        hideTimer = 0f;
-        hideDuration = UnityEngine.Random.Range(enemyData.MinHideTime, enemyData.MaxHideTime);
-    }
-
-    internal void SetHideDuration(float duration)
-    {
-        hideDuration = duration;
-    }
-
-    internal bool IsHideCompleted()
-    {
-        return hideTimer >= hideDuration;
-    }
-
-    internal void ResetPeekTimer()
-    {
-        peekTimer = 0f;
-    }
-
-    internal void UpdatePeekTimer(float deltaTime)
-    {
-        peekTimer += deltaTime;
-    }
-
-    internal bool IsPeekCompleted()
-    {
-        return peekTimer >= enemyData.ReactionTime;
-    }
-
-    internal void SetDestinationOnAgent(Vector3 destination)
-    {
-        ColorDebug.RedLog($"SetDestinationOnAgent: {destination}");
-
-        targetDestination = destination;
-        navMeshAgent.SetDestination(destination);
-    }
-
-    internal bool TryFindCover(out CoverPoint bestCover)
-    {
-        bestCover = targetDetector.FindBestCover();
-
-        if (bestCover is null)
-        {
-            reservedCoverPoint = null;
-            return false;
-        }
-        else
-        {
-            if (bestCover.Reserve(gameObject))
-            {
-                reservedCoverPoint = bestCover;
-                return true;
-            }
-            else
-            {
-                reservedCoverPoint = null;
-                bestCover = null;
-                return false;
-            }
-        }
-    }
-
-    internal void ReleaseCover()
-    {
-        reservedCoverPoint.Release();
-        reservedCoverPoint = null;
-    }
-
-    internal bool IsAgentArrived()
-    {
-        return !navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance;
-    }
-
-    internal void SetStateText(string text)
-    {
-        stateText.text = text;
-    }
-
-    internal void SetIsCrouch(bool isCrouch)
-    {
-        enemyAnimator.SetCrouch(isCrouch);
-    }
-
-    internal void SetAttackAnimation()
-    {
-        enemyAnimator.SetUpperBodyOffset(-0.5f, 0.1f);
-        enemyAnimator.SetShoot(true);
-    }
-
-    internal void SetIdleAnimation()
-    {
-        enemyAnimator.SetUpperBodyOffset(0f, 0f);
-        enemyAnimator.SetShoot(false);
-    }
-
-    internal void SetAttackAnimation(float headOffset, float bodyOffset)
-    {
-        enemyAnimator.SetUpperBodyOffset(headOffset, bodyOffset);
-    }
-
-    internal void SetShoot(bool isShoot)
-    {
-        enemyAnimator.SetShoot(isShoot);
-    }
-
-    internal void ResetUpperBody()
-    {
-        enemyAnimator.ResetUpperBody();
-    }
-
-    private IEnumerator InformTargetPositionCoroutine()
-    {
-        while (true)
-        {
-            if (targetDetector.IsTargetDetected())
-                InformTargetPosition();
-            yield return informPlayerPositionWait;
-        }
-    }
-
-    private void ScanStarted()
-    {
-        Debug.Log("ScanStarted");
-        if (isPatrolEnemy)
-            ChangeState(IEnemyState.IdleState);
-    }
-
-    private void ScanCanceled()
-    {
-        Debug.Log("ScanCanceled");
-        if (isPatrolEnemy)
-            ChangeState(IEnemyState.PatrolState);
-    }
-
-    private void ScanCompleted()
-    {
-        if (!IsTargetExist())
-        {
-            Debug.LogWarning("ScanCompleted, target is null");
-            //ColorDebug.Log("ScanCompleted, target is null", Color.red);
-
-#if UNITY_EDITOR
-            throw new Exception("ScanCompleted, target is null");
-#endif
-        }
-
-        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
-
-        Debug.Log("ScanCompleted");
-        ChangeState(IEnemyState.AttackState);
-
-        onPlayerDetected?.Invoke(this, targetInfo.Value.transform, targetInfo.Value.transform.position);
-    }
-
-    private IEnumerator TargetDistanceCheckCoroutine()
-    {
-        while (true)
-        {
-            foreach ((Transform transform, float distance) in targetDetector.VisibleTargets)
-            {
-                // 1�� �þ� �ȿ� ���� ���
-                if (distance < enemyData.PrimaryViewRadius)
-                {
-                    IncreaseAlert(AlertData.MAX);
-                }
-            }
-
-            yield return targetCheckWait;
-        }
-    }
-
-    private void StartTargetDistanceCheckCoroutine()
-    {
-        if (targetCheckCoroutine == null)
-            targetCheckCoroutine = StartCoroutine(TargetDistanceCheckCoroutine());
-    }
-
-    private void StopTargetDistanceCheckCoroutine()
-    {
-        if (targetCheckCoroutine != null)
-        {
-            StopCoroutine(targetCheckCoroutine);
-            targetCheckCoroutine = null;
-        }
-    }
-
-    private void TargetDetected()
-    {
-        // Todo
-        // 1�� �þ� ���� �Ǻ�
-        // Target�� Detected �Ǿ��ٴ°� 2�� �þ� �ȿ� �ִٴ� ��!
-        StartTargetDistanceCheckCoroutine();
-    }
-
-    private void TargetLosted()
-    {
-        onPlayerLosted?.Invoke(this, targetLastKnownPosition);
-        StopTargetDistanceCheckCoroutine();
-    }
-
-    private IEnumerator IncreaseAlertCoroutine()
-    {
-        // Target�� Detect �ǰ� �ٽ� 1���þ߷� �����ԵǴ� ��� -> �̰͵� Ž���ؾ� ��!
-        WaitForSeconds wait = new WaitForSeconds(AlertData.AlertCheckInterval);
-        int increaseAmount = (int)(AlertData.AlertCheckInterval * AlertData.AlertPerSecond);
-
-        while (alertLevel != AlertData.MAX)
-        {
-            IncreaseAlert(increaseAmount);
-            yield return wait;
-        }
-
-        // alertLevel Coroutine ���� ���..?
-    }
-
-    private void IncreaseAlert(int alertLevel)
-    {
-        this.alertLevel += alertLevel;
-        this.alertLevel = Mathf.Min(this.alertLevel, AlertData.MAX);
-    }
-
-    private void DecreaseAlert(int alertLevel)
-    {
-        this.alertLevel -= alertLevel;
-        this.alertLevel = Mathf.Max(this.alertLevel, AlertData.MIN);
-    }
-
-    internal void ChangeDefaultState()
-    {
-        if (isPatrolEnemy) ChangeState(IEnemyState.PatrolState);
-        else ChangeState(IEnemyState.IdleState);
-    }
-
-    internal void ChangeState(IEnemyState enemyState)
-    {
-        if (currentState is not null)
-        {
-            if (currentState == enemyState) return;
-
-            currentState.Exit(this);
-        }
-
-        currentState = enemyState;
-
-        currentState.Enter(this);
-    }
-
-    public void ReceiveSquadAlert(Transform target, Vector3 lastKnownPosition)
-    {
-        ColorDebug.Log("ReceiveSquadAlert Change AttackState", Color.red);
-
-        targetLastKnownPosition = lastKnownPosition;
-
-        EnableFieldOfView(false);
-        ChangeState(IEnemyState.AttackState);
-    }
-
-    public void SetFormationDestination(Vector3 targetDestination, Vector3 lastKnownPosition)
-    {
-        //ColorDebug.GreenLog($"SetFormationDestination: {targetDestination}");
-
-        this.targetDestination = targetDestination;
-        targetLastKnownPosition = lastKnownPosition;
-
-        //ColorDebug.GreenLog($"IsTargetExist: {IsTargetExist()}");
-
-        if (!IsTargetExist())
-        {
-            SetDestinationOnAgent(targetDestination);
-        }
+        float distance = (currentTarget.Transform.position - transform.position).sqrMagnitude;
+        return distance <= enemyData.AttackRange * enemyData.AttackRange;
     }
 
     internal bool RotateTowardTarget()
     {
-        (Transform transform, float distance)? targetInfo = targetDetector.GetFirstTargetInfo;
+        if (currentTarget is null || !currentTarget.IsValidTarget) return false;
 
-        Vector3 directionToTarget = targetInfo.Value.transform.position - muzzle.position;
-        directionToTarget.y = 0f;
+        Vector3 targetPos = CurrentTarget.Transform.position;
+        Vector3 direction = targetPos - muzzleTransform.position;
+        direction.y = 0f;
 
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
-        Quaternion calibration = Quaternion.Inverse(transform.rotation) * muzzle.rotation;
+        if (direction.sqrMagnitude < float.Epsilon) return true;
 
-        Quaternion finalEnemyRotation = targetRotation * Quaternion.Inverse(calibration);
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, finalEnemyRotation, enemyData.RotateSpeed * Time.deltaTime);
-
-        Vector3 currentMuzzleDir = muzzle.forward;
+        Vector3 currentMuzzleDir = muzzleTransform.forward;
         currentMuzzleDir.y = 0f;
 
-        float angleDifference = Vector3.Angle(currentMuzzleDir, directionToTarget);
+        Quaternion delta = Quaternion.FromToRotation(currentMuzzleDir, direction);
+        Quaternion targetBodyRotation = delta * transform.rotation;
 
-        if (angleDifference < 1f) return true;
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetBodyRotation, enemyData.RotateSpeed * Time.deltaTime);
 
-        return false;
+        float angle = Vector3.Angle(muzzleTransform.forward, direction);
+        return angle <= enemyData.AimAngleThreshold;
     }
 
-    private void EnemyDied()
+    internal void Fire()
     {
-        GetComponent<Collider>().enabled = false;
-        navMeshAgent.enabled = false;
-        enabled = false;
-
-        ChangeState(IEnemyState.DeadState);
+        // Debug.Log("Fire");
+        weapon.Attack();
     }
 
-    [ContextMenu("ChangeStateImmediately")]
-    private void ChangeStateImmediately()
+    internal void EnableFieldOfView(bool isEnable)
     {
-        ChangeState(IEnemyState.CoverState);
+        fieldOfViewVisuals.enabled = isEnable;
     }
 
-    [ContextMenu("SetDestination")]
-    private void SetDestinationImmediately()
+    internal void SetAttackMode(bool isAttackMode)
     {
-        navMeshAgent.SetDestination(new Vector3(14f, 0f, 10f));
-        ChangeState(IEnemyState.CoverState);
+        perceptionSystem.SetAttackMode(isAttackMode);
     }
+
+    private void StartPositionReport()
+    {
+        if (positionReportCoroutine is null)
+            positionReportCoroutine = StartCoroutine(PositionReportCoroutine());
+    }
+
+    private void StopPositionReport()
+    {
+        if (positionReportCoroutine is not null)
+        {
+            StopCoroutine(positionReportCoroutine);
+            positionReportCoroutine = null;
+        }
+    }
+
+    private IEnumerator PositionReportCoroutine()
+    {
+        while (currentTarget is not null && currentTarget.IsValidTarget)
+        {
+            lastKnownPosition = currentTarget.Transform.position;
+
+            Debug.Log("onTargetPositionUpdated");
+            onTargetPositionUpdated?.Invoke(this, currentTarget, lastKnownPosition);
+
+            yield return wait;
+        }
+
+        positionReportCoroutine = null;
+    }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(lastKnownPosition, 1f);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(currentOrderDestination, 1f);
+    }
+#endif
 }

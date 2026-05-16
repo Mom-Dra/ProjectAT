@@ -10,7 +10,7 @@ public abstract class LivingEntity : MonoBehaviour, IDamageable
     public event Action onDeath;
 
     // OnlyServer
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, EntityStatus attacker)
     {
         health -= damage;
 
@@ -19,7 +19,7 @@ public abstract class LivingEntity : MonoBehaviour, IDamageable
             Die();
         }
     }
-    
+
     protected virtual void OnHealthChanged(int previousHealth, int currentHealth)
     {
         // Update UI, Effect, Sounds...

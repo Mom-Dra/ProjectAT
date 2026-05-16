@@ -52,7 +52,7 @@ public class EnemyProjectile : NetworkBehaviour
 
         if (otherObject.CompareTag("Player") && otherObject.TryGetComponent<LivingEntity>(out LivingEntity livingEntity))
         {
-            livingEntity.TakeDamage(damage);
+            // livingEntity.TakeDamage(damage);
             DestroyProjectile();
         }
     }

@@ -9,12 +9,16 @@ public class UIManager
     private PlayerHUD playerHUD;
     private PlayerSkillModule playerSkillModule;
 
-    public UIManager(GameObject healthUIPrefab, PlayerHUD playerHUD)
+    public UIManager(GameObject healthUIPrefab)
     {
         if (healthUIPrefab is null)
             Debug.LogError("healthUIPrefab is null");
 
         this.healthUIPrefab = healthUIPrefab;
+    }
+
+    public void SetPlayerHUD(PlayerHUD playerHUD)
+    {
         this.playerHUD = playerHUD;
     }
 
@@ -33,17 +37,17 @@ public class UIManager
         Managers.Instance.PoolManager.ReturnObject(healthUI.transform.gameObject, healthUIPrefab);
     }
 
-#region  플레이어 HUD - Status
+    #region  플레이어 HUD - Status
     public void InitPlayerStatusInfo(EntityStatus playerStatus)
     {
-        if(playerStatus is null)
+        if (playerStatus is null)
         {
             Debug.LogError("PlayerInitialStatusData is null!");
             return;
         }
 
         playerHUD.SetPlayerPortrait(playerStatus.InitStatusRef.PortatitSprite);
-        SetPlayerHealthUI((float)playerStatus.CurrentHp/playerStatus.MaxHp);
+        SetPlayerHealthUI((float)playerStatus.CurrentHp / playerStatus.MaxHp);
         playerStatus.onHealthChanged += SetPlayerHealthUI;
     }
 
@@ -54,7 +58,7 @@ public class UIManager
 
     public void InitPlayerGunInfo(WeaponHolder myGunHolder)
     {
-        if(myGunHolder.NowWeapon is null)
+        if (myGunHolder.NowWeapon is null)
         {
             Debug.LogError("Player GunData is null!");
             return;
@@ -65,7 +69,7 @@ public class UIManager
 
     public void UpdatePlayerAmmoUI(Gun gun)
     {
-        if(gun is null)
+        if (gun is null)
         {
             Debug.LogError("GunData is null!");
             return;

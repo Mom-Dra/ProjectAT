@@ -5,9 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Start.unity
+    guid: e895715ced77abc4d81b36ff743e5c05
+  - enabled: 1
+    path: Assets/Scenes/DemoScene.unity
+    guid: d8eec460710802541a110d23a49aea47
+  - enabled: 1
+    path: Assets/Scenes/End.unity
+    guid: 7fe11b6d45d1a8b40b3ceb42f5d49f96
   - enabled: 1
     path: Assets/Scenes/NetworkPlayerMovement.unity
     guid: 42032779656a72643b503b7f1831ea36
@@ -18,6 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/NetworkPlayerAttack.unity
     guid: 8b9a252de2912ca4092940826d7f5706
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 37cb1f53a4e3fca43af063f0c1857fa0, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 99f9c9493070a9d4c979a8fec7c5a8d3, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

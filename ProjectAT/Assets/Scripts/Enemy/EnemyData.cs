@@ -10,12 +10,24 @@ public class EnemyData : ScriptableObject
     private float rotateSpeed = 5f;
 
     [SerializeField]
+    private float aimAngleThreshold = 5f;
+
+    [SerializeField]
     private float searchRadius = 10f;
+
+    [SerializeField]
+    private float searchPointWaitTime = 1f;
+
+    [SerializeField]
+    private float searchNavSampleRadius = 2f;
+
+    [SerializeField]
+    private int maxAttempts = 5;
 
     [SerializeField]
     private float targetInformInterval = 0.2f;
 
-    [Header("½Ã¾ß")]
+    [Header("ï¿½Ã¾ï¿½")]
     [SerializeField, Range(0, 360)]
     private float viewAngle;
     [SerializeField]
@@ -36,7 +48,11 @@ public class EnemyData : ScriptableObject
 
     public float AttackRange => attackRange;
     public float RotateSpeed => rotateSpeed;
+    public float AimAngleThreshold => aimAngleThreshold;
     public float SearchRadius => searchRadius;
+    public float SearchPointWaitTime => searchPointWaitTime;
+    public float SearchNavSampleRadius => searchNavSampleRadius;
+    public int SearchMaxAttempts => maxAttempts;
     public float TargetInformInterval => targetInformInterval;
 
     public float ViewAngle => viewAngle;

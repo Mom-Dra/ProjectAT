@@ -1,242 +1,169 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Behavior;
-using Unity.Mathematics;
-using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Tilemaps;
-using UnityEngine.UI;
 
-public struct ViewCastInfo
-{
-    public bool Hit;
-    public Vector3 Point;
-    public float Distance;
-    public float Angle;
-
-    public ViewCastInfo(bool hit, Vector3 point, float distance, float angle)
-    {
-        Hit = hit;
-        Point = point;
-        Distance = distance;
-        Angle = angle;
-    }
-}
-
-public struct EdgeInfo
-{
-    public Vector3 PointA;
-    public Vector3 PointB;
-
-    public EdgeInfo(Vector3 pointA, Vector3 pointB)
-    {
-        PointA = pointA;
-        PointB = pointB;
-    }
-}
-
-[RequireComponent(typeof(TargetDetector))]
+[RequireComponent(typeof(AwarenessModule))]
+[RequireComponent(typeof(PerceptionSystem))]
 public class FieldOfViewVisuals : MonoBehaviour
 {
-    // ½ºÄµ ¾Ö´Ï¸ÞÀÌ¼Ç °ü·Ã ÀÌº¥Æ®
-    public event System.Action onScanComplete;
-    public event System.Action onScanStart;
-    public event System.Action onScanCancel;
+    private readonly struct ViewCastInfo
+    {
+        public readonly bool Hit;
+        public readonly Vector3 Point;
+        public readonly float Distance;
+        public readonly float Angle;
 
-    private TargetDetector targetDetector;
-    private EntityStatus entityStatus;
+        public ViewCastInfo(bool hit, Vector3 point, float distance, float angle)
+        {
+            Hit = hit;
+            Point = point;
+            Distance = distance;
+            Angle = angle;
+        }
+    }
 
-    [Header("Scan Animation")]
-    [SerializeField]
-    private float defaultScanTime = 5f;
+    private readonly struct EdgeInfo
+    {
+        public readonly Vector3 PointA;
+        public readonly Vector3 PointB;
 
-    [Header("Mesh Settings")]
-    [SerializeField]
-    private float meshReolution;
-    [SerializeField]
-    private int edgeResolveIteration;
-    [SerializeField]
-    private float edgeDistanceThreshold;
+        public EdgeInfo(Vector3 pointA, Vector3 pointB)
+        {
+            PointA = pointA;
+            PointB = pointB;
+        }
+    }
 
-    [Header("Mesh Filters")]
-    [SerializeField]
-    private MeshFilter fixedMeshFilter; // °íÁ¤µÈ ÃÖ´ë ½Ã¾ß°¢ (¹è°æ)
-    [SerializeField]
-    private MeshFilter viewmeshFilter;  // Â÷¿À¸£´Â ½Ã¾ß°¢
+    [Header("Mesh Renderers")]
+    [Tooltip("AlertLevelì— ë”°ë¼ ë°˜ê²½ì´ ë³€í•˜ëŠ” ë©”ì‰¬")]
+    [SerializeField] private MeshFilter viewMeshFilter;
 
-    private Mesh fixedMesh;
+    [SerializeField] private MeshFilter fixedMeshFilter;
+
+    [Header("Mesh Quality")]
+    [Tooltip("ê°ë„ 1ë„ë‹¹ ê´‘ì„  ìˆ˜. ë†’ì„ìˆ˜ë¡ ë¶€ë“œëŸ¬ì›€.")]
+    [SerializeField, Range(0.1f, 2f)] private float meshResolution = 0.5f;
+
+    [Tooltip("ìž¥ì• ë¬¼ ê°€ìž¥ìžë¦¬ ì •ë°€í™” ë°˜ë³µ íšŸìˆ˜. 0ì´ë©´ ë¹„í™œì„±.")]
+    [SerializeField, Range(0, 8)] private int edgeResolveIterations = 4;
+
+    [Tooltip("ë‘ ê´‘ì„ ì˜ ê±°ë¦¬ ì°¨ì´ê°€ ì´ ê°’ ì´ìƒì´ë©´ ê°€ìž¥ìžë¦¬ë¡œ ì¸ì‹.")]
+    [SerializeField] private float edgeDistanceThreshold = 0.5f;
+
+    [Header("Mask Offset")]
+    [Tooltip("ë©”ì‰¬ê°€ ì§€ë©´ì— ë¬»ížˆì§€ ì•Šë„ë¡ ì‚´ì§ ë„ì›€")]
+    [SerializeField] private float maskHeightOffset = 0.05f;
+
+    private AwarenessModule awarenessModule;
+    private PerceptionSystem perceptionSystem;
     private Mesh viewMesh;
-    private float viewRadius; // ÇöÀç Â÷¿À¸£´Â ¾Ö´Ï¸ÞÀÌ¼ÇÀÇ ¹ÝÁö¸§
+    private Mesh fixedMesh;
+    private bool fixedMeshDrawn;
 
-    private Coroutine growingCoroutine;
-
-    private Enemy enemy;
-    private EnemyData enemyData;
-
-    public float ViewAngle => enemyData?.ViewAngle ?? 0f;
+    private readonly List<Vector3> viewPoints = new List<Vector3>(64);
 
     private void Awake()
     {
-        targetDetector = GetComponent<TargetDetector>();
-        entityStatus = GetComponent<EntityStatus>();
+        awarenessModule = GetComponent<AwarenessModule>();
+        perceptionSystem = GetComponent<PerceptionSystem>();
 
-        fixedMesh = new Mesh { name = "Full Mesh" };
-        viewMesh = new Mesh { name = "View Mesh" };
+        viewMesh = new Mesh { name = "Fov View Mesh" };
+        viewMeshFilter.mesh = viewMesh;
+        viewMesh.MarkDynamic();
 
+        fixedMesh = new Mesh { name = "FOV Fixed Mesh" };
         fixedMeshFilter.mesh = fixedMesh;
-        viewmeshFilter.mesh = viewMesh;
-    }
-
-    private void OnEnable()
-    {
-        // TargetDetectorÀÇ ÀÌº¥Æ®¿¡ ±¸µ¶
-        // onTargetDetect´Â 0->1, 1->2 µî ¸ðµç "»õ Å½Áö"½Ã È£ÃâµÊ
-        // ½ºÄµ ½ÃÀÛ(StartScan)Àº 0->1 »óÈ²¿¡¼­¸¸ ½ÃÀÛµÇ¾î¾ß ÇÏ¹Ç·Î
-        // StartScan ³»ºÎ¿¡¼­ growingCoroutineÀÌ nullÀÏ ¶§¸¸ ½ÇÇàÇÏµµ·Ï ¹æ¾î
-        targetDetector.onTargetDetect += StartScan;
-        targetDetector.onTargetLosted += CancelScan;
-
-        entityStatus.onDeath += EnemyDied;
     }
 
     private void OnDisable()
     {
-        // ÀÌº¥Æ® ±¸µ¶ ÇØÁ¦
-        targetDetector.onTargetDetect -= StartScan;
-        targetDetector.onTargetLosted -= CancelScan;
+        ClearMesh(viewMesh);
+        ClearMesh(fixedMesh);
+        fixedMeshDrawn = false;
+    }
 
-        entityStatus.onDeath -= EnemyDied;
+    private void OnDestroy()
+    {
+        Destroy(viewMesh);
+        Destroy(fixedMesh);
+    }
 
-        // ºñÈ°¼ºÈ­ ½Ã ÄÚ·çÆ¾ Á¤Áö ¹× ¸Þ½Ã Å¬¸®¾î
-        if (growingCoroutine != null)
+    private void LateUpdate()
+    {
+        DrawMesh();
+    }
+
+    private void DrawMesh()
+    {
+        float alert = awarenessModule.NormalizedAlert;
+        float maxRadius = perceptionSystem.SecondaryViewRadius;
+        float fov = perceptionSystem.ViewAngle;
+
+        if (alert > 0.001f)
         {
-            StopCoroutine(growingCoroutine);
-            growingCoroutine = null;
+            float currentRadius = maxRadius * alert;
+            DrawFieldOfView(viewMesh, currentRadius, fov);
+        }
+        else if (viewMesh.vertexCount > 0)
+        {
+            ClearMesh(viewMesh);
         }
 
-        ClearMesh();
-    }
-
-    public void SetEnemyData(Enemy enemy)
-    {
-        this.enemy = enemy;
-        enemyData = enemy.EnemyData;
-    }
-
-    private void StartScan()
-    {
-        // ÀÌ¹Ì ½ºÄµ(Â÷¿À¸£´Â) ÁßÀÌ ¾Æ´Ò ¶§¸¸ ½ÃÀÛ
-        if (growingCoroutine == null)
+        if (fixedMesh is not null && !fixedMeshDrawn)
         {
-            onScanStart?.Invoke();
-            growingCoroutine = StartCoroutine(GrowingCoroutine());
-        }
-    }
-
-    private void CancelScan()
-    {
-        // ½ºÄµ(Â÷¿À¸£´Â) ÁßÀÏ ¶§¸¸ Ãë¼Ò(ÁÙ¾îµå´Â) ·ÎÁ÷ ½ÇÇà
-        if (growingCoroutine != null)
-        {
-            StopCoroutine(growingCoroutine);
-            growingCoroutine = StartCoroutine(ShrinkingCoroutine());
+            DrawFieldOfView(fixedMesh, maxRadius, fov);
+            fixedMeshDrawn = true;
         }
     }
 
-    private IEnumerator GrowingCoroutine()
+    private void DrawFieldOfView(Mesh mesh, float radius, float fovAngle)
     {
-        float scanTime = defaultScanTime * (enemy.AlertData.CombatThreshold - enemy.AlertLevel) / enemy.AlertData.CombatThreshold;
+        int stepCount = Mathf.Max(1, Mathf.RoundToInt(fovAngle * meshResolution));
+        float stepAngle = fovAngle / stepCount;
 
-        yield return AnimateRadiusCoroutine(enemyData.SecondaryViewRadius, scanTime);
+        viewPoints.Clear();
+        ViewCastInfo oldCast = default;
 
-        viewRadius = enemyData.SecondaryViewRadius;
-        onScanComplete?.Invoke();
-        growingCoroutine = null;
-    }
-
-    private IEnumerator ShrinkingCoroutine()
-    {
-        yield return AnimateRadiusCoroutine(0f, defaultScanTime);
-
-        viewRadius = 0f;
-        onScanCancel?.Invoke();
-        growingCoroutine = null;
-    }
-
-    private IEnumerator AnimateRadiusCoroutine(float targetRadius, float scanTime)
-    {
-        float time = 0f;
-        float startRadius = viewRadius;
-        float journey = Mathf.Abs(targetRadius - startRadius);
-
-        float duration = scanTime * (journey / enemyData.SecondaryViewRadius);
-
-        if (duration <= 0f) yield break;
-
-        while (time <= duration)
+        for (int i = 0; i <= stepCount; ++i)
         {
-            viewRadius = Mathf.Lerp(startRadius, targetRadius, time / duration);
+            float angle = transform.eulerAngles.y - fovAngle * 0.5f + stepAngle * i;
+            ViewCastInfo newCast = ViewCast(angle, radius);
 
-            // viewMesh´Â ÇöÀç radius·Î, fixedMesh´Â ÃÖ´ë radius·Î ±×¸²
-            DrawFieldOfView(viewMesh, viewRadius);
-            DrawFieldOfView(fixedMesh, enemyData.SecondaryViewRadius);
-
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        viewRadius = targetRadius;
-        DrawFieldOfView(viewMesh, viewRadius);
-
-        ClearMesh();
-    }
-
-    private void ClearMesh()
-    {
-        if (viewMesh is not null && viewMesh.vertexCount > 0) viewMesh.Clear();
-        if (fixedMesh is not null && fixedMesh.vertexCount > 0) fixedMesh.Clear();
-    }
-
-    private void DrawFieldOfView(Mesh mesh, float radius)
-    {
-        int stepCount = Mathf.Max(1, Mathf.RoundToInt(enemyData.ViewAngle * meshReolution));
-        float stepAngleSize = enemyData.ViewAngle / stepCount;
-        List<Vector3> viewPoints = new List<Vector3>(stepCount + 2); // Å©±â ³Ë³ËÇÏ°Ô
-        ViewCastInfo oldViewCast;
-
-        float firstAngle = transform.eulerAngles.y - enemyData.ViewAngle / 2;
-        ViewCastInfo firstViewCast = ViewCast(firstAngle, radius);
-        viewPoints.Add(firstViewCast.Point);
-        oldViewCast = firstViewCast;
-
-        for (int i = 1; i <= stepCount; ++i)
-        {
-            float angle = transform.eulerAngles.y - enemyData.ViewAngle / 2 + stepAngleSize * i;
-            ViewCastInfo newViewCast = ViewCast(angle, radius);
-
-            bool tooFar = Mathf.Abs(oldViewCast.Distance - newViewCast.Distance) > edgeDistanceThreshold;
-
-            if (oldViewCast.Hit != newViewCast.Hit || (oldViewCast.Hit && newViewCast.Hit && tooFar))
+            if (i > 0)
             {
-                EdgeInfo edge = FindEdge(oldViewCast, newViewCast, radius);
-                if (edge.PointA != Vector3.zero) viewPoints.Add(edge.PointA);
-                if (edge.PointB != Vector3.zero) viewPoints.Add(edge.PointB);
+                bool tooFar = Mathf.Abs(oldCast.Distance - newCast.Distance) > edgeDistanceThreshold;
+                if (oldCast.Hit != newCast.Hit || (oldCast.Hit && newCast.Hit && tooFar))
+                {
+                    EdgeInfo edge = FindEdge(oldCast, newCast, radius);
+                    if (edge.PointA != Vector3.zero) viewPoints.Add(edge.PointA);
+                    if (edge.PointB != Vector3.zero) viewPoints.Add(edge.PointB);
+                }
             }
 
-            viewPoints.Add(newViewCast.Point);
-            oldViewCast = newViewCast;
+            viewPoints.Add(newCast.Point);
+            oldCast = newCast;
         }
 
-        int vertexCount = viewPoints.Count + 1;
+        BuildMesh(mesh, viewPoints);
+    }
+
+    private void BuildMesh(Mesh mesh, List<Vector3> points)
+    {
+        int vertexCount = points.Count + 1;
+
         Vector3[] vertices = new Vector3[vertexCount];
         int[] triangles = new int[(vertexCount - 2) * 3];
 
-        vertices[0] = Vector3.zero;
-        for (int i = 0; i < viewPoints.Count; ++i)
-            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+        // 0ë²ˆì€ ì›ì  (ë¶€ì±„ê¼´ì˜ ê¼­ì§“ì )
+        vertices[0] = Vector3.up * maskHeightOffset;
+
+        for (int i = 0; i < points.Count; ++i)
+        {
+            Vector3 local = transform.InverseTransformPoint(points[i]);
+            local.y = maskHeightOffset;
+            vertices[i + 1] = local;
+        }
 
         for (int i = 0; i < vertexCount - 2; ++i)
         {
@@ -251,57 +178,52 @@ public class FieldOfViewVisuals : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
-    private EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast, float radius)
+    private EdgeInfo FindEdge(ViewCastInfo a, ViewCastInfo b, float radius)
     {
-        float minAngle = minViewCast.Angle;
-        float maxAngle = maxViewCast.Angle;
-        Vector3 minPt = default; // ±âº»°ª 0
-        Vector3 maxPt = default; // ±âº»°ª 0
+        float minAngle = a.Angle;
+        float maxAngle = b.Angle;
+        Vector3 minPt = Vector3.zero;
+        Vector3 maxPt = Vector3.zero;
 
-        for (int i = 0; i < edgeResolveIteration; ++i)
+        for (int i = 0; i < edgeResolveIterations; i++)
         {
-            float angle = (minAngle + maxAngle) / 2f;
-            ViewCastInfo newViewCast = ViewCast(angle, radius);
-            bool tooFar = Mathf.Abs(minViewCast.Distance - newViewCast.Distance) > edgeDistanceThreshold;
+            float angle = (minAngle + maxAngle) * 0.5f;
+            ViewCastInfo cast = ViewCast(angle, radius);
+            bool tooFar = Mathf.Abs(a.Distance - cast.Distance) > edgeDistanceThreshold;
 
-            if (newViewCast.Hit == minViewCast.Hit && !tooFar)
+            if (cast.Hit == a.Hit && !tooFar)
             {
                 minAngle = angle;
-                minPt = newViewCast.Point;
+                minPt = cast.Point;
             }
             else
             {
                 maxAngle = angle;
-                maxPt = newViewCast.Point;
+                maxPt = cast.Point;
             }
         }
+
         return new EdgeInfo(minPt, maxPt);
     }
 
-    private ViewCastInfo ViewCast(float globalAngle, float radius)
+    private ViewCastInfo ViewCast(float globalAngleDeg, float radius)
     {
-        Vector3 dir = DirFromGlobalAngle(globalAngle);
+        Vector3 dir = DirFromAngle(globalAngleDeg);
 
-        // TargetDetector·ÎºÎÅÍ ObstacleMask¸¦ °¡Á®¿Í »ç¿ë
-        if (Physics.Raycast(transform.position, dir, out RaycastHit hit, radius, targetDetector.ObstacleMask))
-            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+        if (Physics.Raycast(transform.position, dir, out var hit, radius, perceptionSystem.ObstacleMask, QueryTriggerInteraction.Ignore))
+        {
+            return new ViewCastInfo(true, hit.point, hit.distance, globalAngleDeg);
+        }
 
-        return new ViewCastInfo(false, transform.position + dir * radius, radius, globalAngle);
+        return new ViewCastInfo(false, transform.position + dir * radius, radius, globalAngleDeg);
     }
 
-    private Vector3 DirFromGlobalAngle(float deg)
-    {
-        return new Vector3(Mathf.Sin(deg * Mathf.Deg2Rad), 0f, Mathf.Cos(deg * Mathf.Deg2Rad));
-    }
+    private static Vector3 DirFromAngle(float deg) => new Vector3(Mathf.Sin(deg * Mathf.Deg2Rad), 0f, Mathf.Cos(deg * Mathf.Deg2Rad));
 
-    public Vector3 DirFromLocalAngle(float angleInDegrees)
+    private static void ClearMesh(Mesh mesh)
     {
-        angleInDegrees += transform.eulerAngles.y;
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
-    }
+        if (mesh.vertexCount == 0) return;
 
-    private void EnemyDied()
-    {
-        enabled = false;
+        mesh.Clear();
     }
 }
