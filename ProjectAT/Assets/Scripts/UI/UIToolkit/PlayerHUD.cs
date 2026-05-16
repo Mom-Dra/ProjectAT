@@ -59,6 +59,7 @@ public class PlayerHUD : MonoBehaviour
         // 플레이어 초상화 설정 로직 (예: Image 컴포넌트에 Sprite 할당)
         if (_playerPortrait != null)
         {
+            Debug.Log("SetPlayerPortrait");
             _playerPortrait.style.backgroundImage = new StyleBackground(portrait);
         }
     }

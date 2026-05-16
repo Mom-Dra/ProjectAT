@@ -6,9 +6,7 @@ namespace PlayerStateMachine
 {
     public class SkillCastState : PlayerState, IRightClickHandler
     {
-        private PlayerSkillModule mySkillModule;
-        private PlayerMovementModule myMovementModule;
-        private PlayerAnimator myAnimModule;
+
         private SkillContext skillContext;
 
         private float castTimer = 0.0f;
@@ -16,9 +14,6 @@ namespace PlayerStateMachine
 
         public SkillCastState(PlayerController context) : base(context)
         {
-            mySkillModule = context.MySkillModule;
-            myMovementModule = context.MyMovementModule;
-            myAnimModule = context.MyAnimModule;
         }
 
         public void SetSkillContext(SkillContext context)
@@ -114,8 +109,23 @@ namespace PlayerStateMachine
             context.ChangeState(PlayerStateType.Normal);
         }
 
-        public void OnRightClick(RaycastHit hit)
+        public void OnRightClick(RaycastHit castedObject)
         {
+            switch (castedObject.collider.gameObject.layer)
+            {
+                case 6: //Ground Layer
+                    context.PlayerMoveWithIndicator(castedObject.point, false);
+                    break;
+                case 7: //Enemy Layer
+                    context.SetTargetEnemy(castedObject.collider.GetComponent<Enemy>());
+                    break;
+                case 10: //Indicator Layer
+                    context.PlayerMoveWithIndicator(castedObject.point, true);
+                    break;
+                default:
+                    break;
+            }
+
             CancelCasting();
         }
     }

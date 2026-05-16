@@ -40,7 +40,6 @@ public class PlayerSkillModule : MonoBehaviour
     private Skill[] mySkills = new Skill[5]; //갯수 조정 필요
     //private Skill CurrentActivateSkill;
     private SkillNumber currentActivateSkillNumber;
-    private float currentSkillTimer = 0.0f;
     private Dictionary<Skill, float> skillCooldownTimers = new Dictionary<Skill, float>();
     public WeaponHolder MyWeapon => MyCombatModule.MyWeapon;
 

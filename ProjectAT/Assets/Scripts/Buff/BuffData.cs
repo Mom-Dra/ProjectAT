@@ -6,7 +6,6 @@ public abstract class BuffData : ScriptableObject
 {
     [field: SerializeField]
     public string buffName { get; private set; }
-
     [field: SerializeField]
     public float Duration { get; private set; }
 

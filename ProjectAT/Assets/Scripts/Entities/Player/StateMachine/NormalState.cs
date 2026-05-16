@@ -1,89 +1,102 @@
 using UnityEngine;
-using PlayerStateMachine;
 using PlayerStatusCapabilities;
-using System.Data;
 
-public class NormalState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler
+namespace PlayerStateMachine
 {
-    private PlayerCoverModule myCoverModule;
-    private PlayerSkillModule mySkillModule;
+    public class NormalState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler
+    {
+        private PlayerSkillModule mySkillModule;
+        private PlayerInteractionModule myInteractionModule;
 
-    public NormalState(PlayerController playerController) : base(playerController)
-    {
-        myCoverModule = context.MyCoverModule;
-        mySkillModule = context.MySkillModule;
-    }
-
-    public override void OnEnter()
-    {
-        context.CancelEnemySelect();
-    }
-    
-    public override void OnUpdate()
-    {
-        if (context.SelectedEnemy != null)
+        public NormalState(PlayerController playerController) : base(playerController)
         {
-            context.EnemyAttackingSequence();
+            mySkillModule = context.MySkillModule;
+            myInteractionModule = context.MyInteractionModule;
         }
-    }
 
-    public override void OnExit()
-    {
+        public override void OnEnter()
+        {
+            context.CancelEnemySelect();
+        }
         
-    }
-
-    public void OnLeftClick(RaycastHit castedObject)
-    {
-        if (mySkillModule.IsTargetting && mySkillModule.CanSelectTarget(castedObject, out GameObject target, out Vector3 point))
+        // NormalState.cs
+        public override void OnUpdate()
         {
-            mySkillModule.ActivateSelectedSkill();
-            mySkillModule.SetUpSkillContext(target, point);
-            context.ChangeState(PlayerStateType.SkillChase);
+            if (context.SelectedEnemy != null)
+            {
+                if (!context.TryExecuteAttack())
+                {
+                    context.AimingEnemy(false);
+                    context.ChaseEnemy();
+                }
+                else
+                {
+                    context.AimingEnemy(true, context.SelectedEnemy.transform);
+                }
+            }
         }
-    }
-
-    public void OnRightClick(RaycastHit castedObject)
-    {        
-        if(mySkillModule.IsTargetting) // 스킬 UI 중 우클릭 시 UI 해제. 만약 이 로직이 모든 State들의 RightClick에서 공통적으로 일어나면 아예 PlayerController에서 처리하기.
+        
+        public override void OnExit()
         {
-            mySkillModule.CancelTargettingMode();
-            return;
+            
         }
 
-        context.CancelEnemySelect();
-
-        switch (castedObject.collider.gameObject.layer)
+        public void OnLeftClick(RaycastHit castedObject)
         {
-            case 6: //Ground Layer
-                context.PlayerMoveWithIndicator(castedObject.point, false);
-                break;
-            case 7: //Enemy Layer
-                context.SetTargetEnemy(castedObject.collider.GetComponent<Enemy>());
-                break;
-            case 10: //Indicator Layer
-                context.PlayerMoveWithIndicator(castedObject.point, true);
-                break;
-            case 11: // CoverPoint Layer
-                if (castedObject.transform.TryGetComponent(out CoverPoint coverPoint))
-                    myCoverModule.StartMoveToCover(coverPoint);
-                break;
-            case 13: // Interactable Layer
-                context.MyInteractionModule.HandleRightClick();
-                break;
-            default:
-                break;
+            if (mySkillModule.IsTargetting && mySkillModule.CanSelectTarget(castedObject, out GameObject target, out Vector3 point))
+            {
+                mySkillModule.ActivateSelectedSkill();
+                mySkillModule.SetUpSkillContext(target, point);
+                context.ChangeState(PlayerStateType.SkillChase);
+            }
         }
-    }
 
-    public void OnSkillInput(SkillNumber skillNumber)
-    {
-        if(!mySkillModule.IsTargetting)
-        {
-            context.MySkillModule.ActivateTargettingMode(skillNumber);
+        public void OnRightClick(RaycastHit castedObject)
+        {        
+            if(mySkillModule.IsTargetting) // 스킬 UI 중 우클릭 시 UI 해제. 만약 이 로직이 모든 State들의 RightClick에서 공통적으로 일어나면 아예 PlayerController에서 처리하기.
+            {
+                mySkillModule.CancelTargettingMode();
+                return;
+            }
+
+            context.CancelEnemySelect();
+
+            //인터렉터블 오브젝트 처리부분. 해당 로직들이 자주 쓰이면 PlayerController로 빼는거 고려.
+            IInteractable interactable = castedObject.collider.GetComponentInParent<IInteractable>();            
+            if (interactable != null && !interactable.IsInUse) 
+            {
+                Debug.Log("Interactable object detected on right-click");
+                myInteractionModule.CurrentInteractTarget = interactable;
+                context.ChangeState(PlayerStateType.InteractChasing);
+                return;
+            }
+
+            switch (castedObject.collider.gameObject.layer) //검사 후순위
+            {
+                case 6: //Ground Layer
+                    context.PlayerMoveWithIndicator(castedObject.point, false);
+                    break;
+                case 10: //Indicator Layer
+                    context.PlayerMoveWithIndicator(castedObject.point, true);
+                    break;
+                case 7: //Enemy Layer
+                    context.SetTargetEnemy(castedObject.collider.GetComponent<Enemy>());
+                    break;
+                default:
+                    break;
+            }
         }
-        else
+
+        public void OnSkillInput(SkillNumber skillNumber)
         {
-            mySkillModule.CancelTargettingMode();
+            if(!mySkillModule.IsTargetting)
+            {
+                context.MySkillModule.ActivateTargettingMode(skillNumber);
+            }
+            else
+            {
+                mySkillModule.CancelTargettingMode();
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ public class CoverPulse : MonoBehaviour
 
     private void OnDisable()
     {
-        instanceMaterial.SetFloat(Emission, 0);
+        SetEmission(0f);
     }
 
     private void Update()
@@ -35,6 +35,11 @@ public class CoverPulse : MonoBehaviour
         float t = (Mathf.Sin(Time.time * speed) + 1.0f) / 2.0f;
         float currentIntensity = Mathf.Lerp(minIntensity, maxIntensity, t);
 
-        instanceMaterial.SetFloat(Emission, currentIntensity);
+        SetEmission(currentIntensity);
+    }
+
+    private void SetEmission(float intensity)
+    {
+        instanceMaterial.SetFloat(Emission, intensity);
     }
 }

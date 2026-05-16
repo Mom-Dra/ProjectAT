@@ -457,10 +457,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93700d098336304cb57e6331193aa77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 1
+  playerAnimationTrigger: Interact
+  isCarryable: 0
   leftDoor: {fileID: 1671895266209526652}
   rightDoor: {fileID: 3377380784878550954}
   openAngle: 90
   openTime: 0.5
+  offsetDistance: 1
 --- !u!114 &3852211578691884533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2199,10 +2203,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93700d098336304cb57e6331193aa77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 1
+  playerAnimationTrigger: Interact
+  isCarryable: 0
   leftDoor: {fileID: 8619092253421479351}
   rightDoor: {fileID: 7379769113623701816}
   openAngle: 90
   openTime: 0.5
+  offsetDistance: 1
 --- !u!114 &1729283815181887076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2385,7 +2393,7 @@ GameObject:
   - component: {fileID: 5962558525087350345}
   - component: {fileID: 871348112428987350}
   - component: {fileID: 8432312243868570384}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bld_Barracks_a
   m_TagString: Untagged
   m_Icon: {fileID: 0}

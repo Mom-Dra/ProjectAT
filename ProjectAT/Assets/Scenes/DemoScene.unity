@@ -775,6 +775,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &34895369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,6 +887,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &35282676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,6 +999,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &35457673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1481,6 +1493,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &51943392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1589,6 +1605,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &53007066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1822,6 +1842,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &70162982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2078,6 +2102,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &88228461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2328,6 +2356,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &94621808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2536,6 +2568,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &97203379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2644,6 +2680,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &103253199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2803,6 +2843,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &107272438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3091,6 +3135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &112089034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3199,6 +3247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &117080759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3307,6 +3359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &117443696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3469,6 +3525,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &117793298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3644,6 +3704,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &120372823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4089,6 +4153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &135804701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4281,6 +4349,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &137631506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4313,6 +4385,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1606395994}
     m_Modifications:
+    - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729283815181887076, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: outlineParameters.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5962558525087350345, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -90
@@ -4353,9 +4477,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8843322062162533282, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: m_Name
       value: Bld_Barracks_a
+      objectReference: {fileID: 0}
+    - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5126,6 +5298,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &158900234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5745,6 +5921,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &169833968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6204,6 +6384,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &184461323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6442,6 +6626,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &187223864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6582,6 +6770,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &190483124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6740,6 +6932,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &191849317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7283,6 +7479,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &212745189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7396,6 +7596,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &221716399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7691,6 +7895,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &236028213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8000,6 +8208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &244397411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8152,92 +8364,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
   m_PrefabInstance: {fileID: 6645792058073950598}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &253373505
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 253373506}
-  - component: {fileID: 253373507}
-  m_Layer: 8
-  m_Name: Head_Aim
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &253373506
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253373505}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1041160757}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &253373507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253373505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Data:
-    m_ConstrainedObject: {fileID: 1994184353}
-    m_SourceObjects:
-      m_Length: 1
-      m_Item0:
-        transform: {fileID: 1654890981}
-        weight: 1
-      m_Item1:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item2:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item3:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item4:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item5:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item6:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item7:
-        transform: {fileID: 0}
-        weight: 0
-    m_Offset: {x: 0, y: 0, z: 0}
-    m_MinLimit: -60
-    m_MaxLimit: 60
-    m_AimAxis: 4
-    m_UpAxis: 2
-    m_WorldUpType: 0
-    m_WorldUpObject: {fileID: 0}
-    m_WorldUpAxis: 2
-    m_MaintainOffset: 0
-    m_ConstrainedAxes:
-      x: 1
-      y: 1
-      z: 1
 --- !u!1001 &254507903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8372,6 +8498,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &254930079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8585,6 +8715,10 @@ PrefabInstance:
       propertyPath: patrolWaypoints.Array.data[2]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9110633010215283509, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+      propertyPath: deadbodyPref
+      value: 
+      objectReference: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8738,6 +8872,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &261338610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9008,6 +9146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &266583676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9116,6 +9258,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &266772742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9353,6 +9499,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &279135448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9469,39 +9619,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 663994904}
     m_Modifications:
-    - target: {fileID: 100000, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalPosition.z
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
@@ -9509,10 +9651,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
 --- !u!4 &284773916 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
   m_PrefabInstance: {fileID: 284773915}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &286163883
@@ -9561,92 +9703,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &285910492
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 285910493}
-  - component: {fileID: 285910494}
-  m_Layer: 8
-  m_Name: Chest_Aim
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &285910493
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285910492}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1041160757}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &285910494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285910492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 0.4
-  m_Data:
-    m_ConstrainedObject: {fileID: 349638325}
-    m_SourceObjects:
-      m_Length: 1
-      m_Item0:
-        transform: {fileID: 1654890981}
-        weight: 1
-      m_Item1:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item2:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item3:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item4:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item5:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item6:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item7:
-        transform: {fileID: 0}
-        weight: 0
-    m_Offset: {x: -20, y: 0, z: 0}
-    m_MinLimit: -30
-    m_MaxLimit: 30
-    m_AimAxis: 4
-    m_UpAxis: 2
-    m_WorldUpType: 0
-    m_WorldUpObject: {fileID: 0}
-    m_WorldUpAxis: 2
-    m_MaintainOffset: 0
-    m_ConstrainedAxes:
-      x: 1
-      y: 1
-      z: 1
 --- !u!1001 &286600218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9786,6 +9842,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &289454077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9945,6 +10005,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &303154125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10053,6 +10117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &305464565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10223,6 +10291,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &313163617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10499,6 +10571,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &320394466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10605,11 +10681,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2c6f59d949ace4b4c9221a5a2ed36006, type: 3}
   m_PrefabInstance: {fileID: 323167288}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &327323956 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399179754, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &329996561 stripped
 Transform:
@@ -10948,6 +11019,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &342247934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11060,11 +11135,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: eacd77562771b624db2905d69c193443, type: 3}
---- !u!4 &349638325 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399266498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &349977301
 GameObject:
   m_ObjectHideFlags: 0
@@ -11149,6 +11219,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &349977306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11257,6 +11331,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &352650613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11945,6 +12023,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &377797290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12252,6 +12334,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &388491736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12432,6 +12518,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &394391332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12590,6 +12680,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &398638874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12703,6 +12797,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &406854357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12944,6 +13042,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &413028892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13052,6 +13154,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &413712863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13240,6 +13346,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &417194435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13414,6 +13524,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &422773882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13522,6 +13636,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &424173225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13860,6 +13978,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &439737804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13968,6 +14090,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &440158253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14160,6 +14286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &445224511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14285,6 +14415,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &446406967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14571,6 +14705,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &453816236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14813,6 +14951,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &463745423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14972,6 +15114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &465835443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15080,6 +15226,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &466988968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15188,6 +15338,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &468226029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15296,6 +15450,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &469009780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15454,6 +15612,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &470484136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15562,6 +15724,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &473880942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15950,6 +16116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &488739852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16058,6 +16228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &496869504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16246,6 +16420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &501159302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16354,6 +16532,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &502373514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16698,6 +16880,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &508055312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16860,6 +17046,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &508315801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17028,6 +17218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &516599498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17489,6 +17683,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &540470554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17635,6 +17833,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &543865379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17847,6 +18049,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &549297748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17955,6 +18161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &550299172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18063,6 +18273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &553496720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18695,6 +18909,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &566671456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18918,6 +19136,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &570882777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19178,6 +19400,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &578122633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19535,6 +19761,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &587893021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19842,6 +20072,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &590224641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20202,6 +20436,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &600365846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20508,6 +20746,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &608852656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20616,6 +20858,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &609219466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20778,6 +21024,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &610579388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21001,6 +21251,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &615809090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21168,6 +21422,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &621571327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21342,6 +21600,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &622571285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21450,6 +21712,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &625169600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22004,6 +22270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &645773382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22117,6 +22387,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &649699140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22305,6 +22579,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &650436015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22423,6 +22701,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &652376181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22531,6 +22813,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &653027670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22842,125 +23128,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1084799505603142606, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: lineRenderer
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1084799505603142606, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: targettingSkillCursor
-      value: 
-      objectReference: {fileID: 21300000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
     - target: {fileID: 1570168789558711731, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: m_Name
       value: NewPlayerCharacter
       objectReference: {fileID: 0}
-    - target: {fileID: 2145079510353081862, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: arcHeight
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2145079510353081862, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: ObstacleLayer.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
     - target: {fileID: 2384098045390091880, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_Controller
+      propertyPath: m_WarningMessage
       value: 
-      objectReference: {fileID: 9100000, guid: a48cbe0c1c895c048879351105f5723f, type: 2}
-    - target: {fileID: 2384098045399498182, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2474928388271890292, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_AgentTypeID
-      value: -1372625422
-      objectReference: {fileID: 0}
-    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: skillDatas.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: skillDatas.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 034ff0a3c4deca247bc5a574fcf0e107, type: 2}
-    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: skillDatas.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 034ff0a3c4deca247bc5a574fcf0e107, type: 2}
-    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: skillDatas.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 61cdd12c123dc6147adc62992fa676a6, type: 2}
-    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: skillDatas.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3cb82f16f345f304986565e5b082c3eb, type: 2}
-    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: skillDatas.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: d56ecf9f073b8a848ab8a77ea2aa1fc4, type: 2}
-    - target: {fileID: 2753390874998659298, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2753390874998659298, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.785
-      objectReference: {fileID: 0}
-    - target: {fileID: 2753390874998659298, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3095085718169901762, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: aimRigBuilder
-      value: 
-      objectReference: {fileID: 1872947253}
-    - target: {fileID: 3095085718169901762, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: TargetPosition
-      value: 
-      objectReference: {fileID: 1654890981}
-    - target: {fileID: 3095085718169901762, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: TargetTransform
-      value: 
-      objectReference: {fileID: 1654890981}
-    - target: {fileID: 3095085718169901762, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: AimMarkerTransform
-      value: 
-      objectReference: {fileID: 1654890981}
-    - target: {fileID: 3095085718169901762, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: AimedTargetLocation
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3378365268511287941, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: gunHolder
-      value: 
-      objectReference: {fileID: 1673576809}
-    - target: {fileID: 4761380936761485301, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: groundLayer.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266880477995672271, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.49609315
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266880477995672271, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.5038598
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266880477995672271, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.49513295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266880477995672271, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.5048369
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266880477995672271, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 89.889
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266880477995672271, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 91.001
       objectReference: {fileID: 0}
     - target: {fileID: 5706563846340363522, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23002,38 +23176,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7623890290515190309, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 6914519252962164837, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: holdPoint
+      value: 
+      objectReference: {fileID: 1700412577}
+    - target: {fileID: 6914519252962164837, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: interactTime
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: [{fileID: 1084799505603142606, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}]
-    m_RemovedGameObjects: [{fileID: 3793273693824852, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399560856, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399498182, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399539102, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399475184, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399531680, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399522312, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399558268, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399469624, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399537206, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399474166, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399520274, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399541830, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399477306, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399495558, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399545192, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399479108, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399558836, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399536116, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3},
-      {fileID: 2384098045399498350, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}]
-    m_AddedGameObjects: [{targetCorrespondingSourceObject: {fileID: 2384098045399243958, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}, insertIndex: -1, addedObject: {fileID: 1041160757}},
-      {targetCorrespondingSourceObject: {fileID: 2384098045399243958, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}, insertIndex: -1, addedObject: {fileID: 1105063787}},
-      {targetCorrespondingSourceObject: {fileID: 2384098045399246208, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}, insertIndex: -1, addedObject: {fileID: 1261765063}},
-      {targetCorrespondingSourceObject: {fileID: 2384098045399184256, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}, insertIndex: -1, addedObject: {fileID: 1052123031}},
-      {targetCorrespondingSourceObject: {fileID: 2384098045399243982, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}, insertIndex: -1, addedObject: {fileID: 1486964687}}]
-    m_AddedComponents: [{targetCorrespondingSourceObject: {fileID: 1570168789558711731, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}, insertIndex: -1, addedObject: {fileID: 660909033}},
-      {targetCorrespondingSourceObject: {fileID: 2384098045399531734, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}, insertIndex: -1, addedObject: {fileID: 1872947253}}]
+    m_RemovedComponents:
+    - {fileID: 5473086426898581205, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2384098045399243958, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1700412577}
+    m_AddedComponents:
+    - {targetCorrespondingSourceObject: {fileID: 1570168789558711731, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}, insertIndex: -1, addedObject: {fileID: 660909033}}
   m_SourcePrefab: {fileID: 100100000, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
 --- !u!1 &660909032 stripped
 GameObject:
@@ -23625,6 +23784,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &674953424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23733,6 +23896,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &675763718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23986,6 +24153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &680420449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24094,6 +24265,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &686083501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24207,6 +24382,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &692467253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24315,6 +24494,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &693567445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24686,6 +24869,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &710037136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24794,6 +24981,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &711874837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24907,6 +25098,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &713442576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24939,39 +25134,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 663994904}
     m_Modifications:
-    - target: {fileID: 100000, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalPosition.z
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
@@ -24979,10 +25166,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
 --- !u!4 &714961352 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
   m_PrefabInstance: {fileID: 714961351}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &716094682
@@ -25216,6 +25403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &716812626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25458,6 +25649,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &721422683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25566,6 +25761,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &722930763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25674,6 +25873,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &734347799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26123,6 +26326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &749627023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26231,6 +26438,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &750035055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26271,7 +26482,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!120 &752954865
 LineRenderer:
   serializedVersion: 2
@@ -26280,7 +26491,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752954864}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -26654,6 +26865,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &769943742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26762,6 +26977,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &770688874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26786,11 +27005,6 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!4 &771764870 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399243982, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &772168590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26925,6 +27139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &772755215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27033,6 +27251,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &775799670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27141,6 +27363,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &776670832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27249,6 +27475,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &777516165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27560,6 +27790,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &783741143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27844,6 +28078,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &793926792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28091,6 +28329,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &804376760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28354,6 +28596,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &817480797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28542,6 +28788,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &821343655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28814,6 +29064,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &827252229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29252,6 +29506,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &840432344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29516,6 +29774,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &847613597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29674,6 +29936,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &853078246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29782,6 +30048,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &855016306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29940,6 +30210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &859238096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30048,6 +30322,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &859744630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30210,6 +30488,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &860367469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30472,6 +30754,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &870678175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30688,6 +30974,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &879971251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30955,6 +31245,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &890497698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31063,6 +31357,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &896139567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31448,6 +31746,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &923328890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31556,6 +31858,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &923781050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31768,6 +32074,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &931672902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32219,6 +32529,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &940548075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32243,92 +32557,6 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!1 &940826627
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 940826628}
-  - component: {fileID: 940826629}
-  m_Layer: 8
-  m_Name: Spine1_Aim
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &940826628
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940826627}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1041160757}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &940826629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940826627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 0.1
-  m_Data:
-    m_ConstrainedObject: {fileID: 1305971684}
-    m_SourceObjects:
-      m_Length: 1
-      m_Item0:
-        transform: {fileID: 1654890981}
-        weight: 1
-      m_Item1:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item2:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item3:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item4:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item5:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item6:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item7:
-        transform: {fileID: 0}
-        weight: 0
-    m_Offset: {x: -20, y: 0, z: 0}
-    m_MinLimit: -30
-    m_MaxLimit: 30
-    m_AimAxis: 4
-    m_UpAxis: 2
-    m_WorldUpType: 0
-    m_WorldUpObject: {fileID: 0}
-    m_WorldUpAxis: 2
-    m_MaintainOffset: 0
-    m_ConstrainedAxes:
-      x: 1
-      y: 1
-      z: 1
 --- !u!1 &942148901
 GameObject:
   m_ObjectHideFlags: 0
@@ -32413,6 +32641,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &942148906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32571,6 +32803,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &947575062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32679,6 +32915,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &954183962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33119,6 +33359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &964188672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33227,6 +33471,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &969011284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33690,6 +33938,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &977586573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34001,6 +34253,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &983114684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34179,6 +34435,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &984744726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34287,6 +34547,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &985123885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34395,6 +34659,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &986776058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34503,6 +34771,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &987516401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34666,6 +34938,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &988637932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34914,6 +35190,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1001383361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35022,6 +35302,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1002117034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35130,6 +35414,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1002285028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35238,6 +35526,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1004458851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35466,6 +35758,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1012927361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35574,6 +35870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1013674990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36008,67 +36308,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8309780211697738589, guid: fd2486c6c90ff7b4f9a099091754960f, type: 3}
   m_PrefabInstance: {fileID: 1037156183}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1041160756
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1041160757}
-  - component: {fileID: 1041160758}
-  m_Layer: 8
-  m_Name: AimConstraints
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1041160757
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041160756}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1256720090}
-  - {fileID: 1473931901}
-  - {fileID: 940826628}
-  - {fileID: 285910493}
-  - {fileID: 1092881469}
-  - {fileID: 1479689886}
-  - {fileID: 253373506}
-  m_Father: {fileID: 1872947251}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1041160758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041160756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Effectors:
-  - m_Transform: {fileID: 0}
-    m_Style:
-      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.1
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-    m_Visible: 1
 --- !u!1 &1041796458 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 755490944018596935, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
@@ -36180,6 +36419,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1045705463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36344,6 +36587,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1050256579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36368,37 +36615,6 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!1 &1052123030
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1052123031}
-  m_Layer: 8
-  m_Name: Right_Hint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1052123031
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052123030}
-  serializedVersion: 2
-  m_LocalRotation: {x: 4.6586723e-17, y: -1.3501838e-16, z: -4.1020793e-15, w: 1}
-  m_LocalPosition: {x: -0.00030222535, y: 0, z: 0.6270002}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1184614314}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1053587543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36780,6 +36996,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1071502420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36812,54 +37032,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 663994904}
     m_Modifications:
-    - target: {fileID: 100000, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
-      propertyPath: m_Name
-      value: fence_02 (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalPosition.x
       value: -22.7
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalPosition.z
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+    - target: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062335216721830728, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
+      propertyPath: m_Name
+      value: fence (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
 --- !u!4 &1072893883 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400002, guid: d3e74f7c0011b184cbefa590559b054b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 467395708374568123, guid: 1b8e4771e53bd314eac9af21a6d10364, type: 3}
   m_PrefabInstance: {fileID: 1072893882}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1073869414
@@ -36946,6 +37158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1073869419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37206,6 +37422,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1083754090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37582,117 +37802,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1092881468
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1092881469}
-  - component: {fileID: 1092881471}
-  - component: {fileID: 1092881472}
-  m_Layer: 8
-  m_Name: RightHand_Aim
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1092881469
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1092881468}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1041160757}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1092881471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1092881468}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Data:
-    m_Root: {fileID: 327323956}
-    m_Mid: {fileID: 1184614314}
-    m_Tip: {fileID: 771764870}
-    m_Target: {fileID: 0}
-    m_Hint: {fileID: 1052123031}
-    m_TargetPositionWeight: 1
-    m_TargetRotationWeight: 1
-    m_HintWeight: 1
-    m_MaintainTargetPositionOffset: 0
-    m_MaintainTargetRotationOffset: 0
---- !u!114 &1092881472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1092881468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Data:
-    m_ConstrainedObject: {fileID: 771764870}
-    m_SourceObjects:
-      m_Length: 1
-      m_Item0:
-        transform: {fileID: 1654890981}
-        weight: 1
-      m_Item1:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item2:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item3:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item4:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item5:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item6:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item7:
-        transform: {fileID: 0}
-        weight: 0
-    m_Offset: {x: 0, y: 0, z: 0}
-    m_MinLimit: -30
-    m_MaxLimit: 30
-    m_AimAxis: 0
-    m_UpAxis: 4
-    m_WorldUpType: 1
-    m_WorldUpObject: {fileID: 0}
-    m_WorldUpAxis: 2
-    m_MaintainOffset: 0
-    m_ConstrainedAxes:
-      x: 1
-      y: 1
-      z: 1
 --- !u!1 &1095109047
 GameObject:
   m_ObjectHideFlags: 0
@@ -37777,6 +37886,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1095109052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37940,6 +38053,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1097764865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38219,6 +38336,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1103940027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38411,6 +38532,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1104477854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38435,38 +38560,6 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!1 &1105063786
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1105063787}
-  m_Layer: 8
-  m_Name: Constraints_markers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1105063787
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1105063786}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1654890981}
-  m_Father: {fileID: 1872947251}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1109437204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38899,6 +38992,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1129735822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39095,6 +39192,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1133047761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39203,6 +39304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1135514203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39365,6 +39470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1139026295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39559,6 +39668,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1141989312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39784,6 +39897,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1147029992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39892,6 +40009,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1148118349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40000,6 +40121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1149813266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40546,6 +40671,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1160518163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41062,11 +41191,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3600535701204725996, guid: 69c80f63b7f0f574693b1721c6abe171, type: 3}
   m_PrefabInstance: {fileID: 1184605518}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1184614314 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399184256, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1185518349
 GameObject:
   m_ObjectHideFlags: 0
@@ -41151,6 +41275,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1185518354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41400,6 +41528,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1196992905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41508,6 +41640,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1197575225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41621,6 +41757,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1199036314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41729,6 +41869,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1201845964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42032,6 +42176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1213044750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42140,6 +42288,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1213578784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42248,6 +42400,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1214129115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42460,6 +42616,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1223857690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42808,6 +42968,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1233567819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42916,6 +43080,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1234995696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43108,6 +43276,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1238943493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43296,6 +43468,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1245434166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43674,6 +43850,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1254969340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43748,92 +43928,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: af9c4301cafa6e54da4589fd3b905ebb, type: 3}
   m_PrefabInstance: {fileID: 1255280078}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1256720089
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1256720090}
-  - component: {fileID: 1256720091}
-  m_Layer: 8
-  m_Name: Him_Aim
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1256720090
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1256720089}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1041160757}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1256720091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1256720089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Data:
-    m_ConstrainedObject: {fileID: 1605346696}
-    m_SourceObjects:
-      m_Length: 1
-      m_Item0:
-        transform: {fileID: 1654890981}
-        weight: 1
-      m_Item1:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item2:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item3:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item4:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item5:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item6:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item7:
-        transform: {fileID: 0}
-        weight: 0
-    m_Offset: {x: -40, y: 0, z: 0}
-    m_MinLimit: -30
-    m_MaxLimit: 30
-    m_AimAxis: 4
-    m_UpAxis: 2
-    m_WorldUpType: 0
-    m_WorldUpObject: {fileID: 0}
-    m_WorldUpAxis: 2
-    m_MaintainOffset: 0
-    m_ConstrainedAxes:
-      x: 1
-      y: 1
-      z: 1
 --- !u!1 &1257417533
 GameObject:
   m_ObjectHideFlags: 0
@@ -43918,6 +44012,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1257417538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44026,6 +44124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1258396677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44162,37 +44264,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c635baeb0168dde44a142ef5ad8f8725, type: 3}
   m_PrefabInstance: {fileID: 1261620919}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1261765062
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1261765063}
-  m_Layer: 8
-  m_Name: Left_Hint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1261765063
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1261765062}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.404, y: -0, z: -0.524}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1622170430}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1264015892
 GameObject:
   m_ObjectHideFlags: 0
@@ -44442,6 +44513,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1264437853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44567,6 +44642,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1266969175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44702,6 +44781,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1270901031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44971,6 +45054,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1280366726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45129,6 +45216,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1285047488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45357,6 +45448,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1295969220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45465,6 +45560,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1296121052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45573,6 +45672,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1299564893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45825,6 +45928,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1305570327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45849,11 +45956,6 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!4 &1305971684 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399244008, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1309070856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46018,6 +46120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1309943934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46126,6 +46232,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1310665219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46301,6 +46411,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1313030960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46409,6 +46523,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1315515793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46756,6 +46874,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1319860898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47228,6 +47350,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1336034758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47649,6 +47775,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1345245256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47807,6 +47937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1345513456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47915,6 +48049,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1348454869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48023,6 +48161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1350633552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48238,6 +48380,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1356326227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48462,6 +48608,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1363505083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48767,6 +48917,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1371733441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48892,6 +49046,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1373071362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49474,6 +49632,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1394956437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49782,6 +49944,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1406604583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49890,6 +50056,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1408656666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50052,6 +50222,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1412896312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50462,6 +50636,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1432380005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50662,6 +50840,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1433316052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50824,6 +51006,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1438509953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50970,6 +51156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1443011476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51078,6 +51268,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1449213375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51186,6 +51380,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1451535493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51294,6 +51492,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1453241277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51402,6 +51604,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1453767618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51622,6 +51828,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1456219389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51796,92 +52006,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3490775396519495373, guid: d8d94e7eb91bec746bceb28a55b3c874, type: 3}
   m_PrefabInstance: {fileID: 1465123792}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1473931900
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1473931901}
-  - component: {fileID: 1473931902}
-  m_Layer: 8
-  m_Name: Spine_Aim
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1473931901
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473931900}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1041160757}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1473931902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473931900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 0.1
-  m_Data:
-    m_ConstrainedObject: {fileID: 1305971684}
-    m_SourceObjects:
-      m_Length: 1
-      m_Item0:
-        transform: {fileID: 1654890981}
-        weight: 1
-      m_Item1:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item2:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item3:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item4:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item5:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item6:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item7:
-        transform: {fileID: 0}
-        weight: 0
-    m_Offset: {x: -20, y: 0, z: 0}
-    m_MinLimit: -30
-    m_MaxLimit: 30
-    m_AimAxis: 4
-    m_UpAxis: 2
-    m_WorldUpType: 0
-    m_WorldUpObject: {fileID: 0}
-    m_WorldUpAxis: 2
-    m_MaintainOffset: 0
-    m_ConstrainedAxes:
-      x: 1
-      y: 1
-      z: 1
 --- !u!1001 &1474030050
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52011,62 +52135,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: a3ab4168ad24fae4d8ccc06fd2dd6119, type: 3}
   m_PrefabInstance: {fileID: 1478563283}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1479689885
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1479689886}
-  - component: {fileID: 1479689887}
-  m_Layer: 8
-  m_Name: LeftHand_Aim
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1479689886
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479689885}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1041160757}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1479689887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479689885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Data:
-    m_Root: {fileID: 1732003090}
-    m_Mid: {fileID: 1622170430}
-    m_Tip: {fileID: 2022604043}
-    m_Target: {fileID: 1486964687}
-    m_Hint: {fileID: 1261765063}
-    m_TargetPositionWeight: 1
-    m_TargetRotationWeight: 1
-    m_HintWeight: 1
-    m_MaintainTargetPositionOffset: 0
-    m_MaintainTargetRotationOffset: 0
 --- !u!1 &1480603617 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6774320914746626497, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
@@ -52222,6 +52290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1484418891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52452,37 +52524,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4b576e59ef7623e4885ee1f33647820e, type: 3}
   m_PrefabInstance: {fileID: 1486162309}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1486964686
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1486964687}
-  m_Layer: 8
-  m_Name: WeaponGuardPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1486964687
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1486964686}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.75, y: -0.027, z: 0.072}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 771764870}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1488665905
 GameObject:
   m_ObjectHideFlags: 0
@@ -52567,6 +52608,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1488665910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52729,6 +52774,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1492371247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52972,6 +53021,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1507322668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53131,6 +53184,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1510229381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53343,6 +53400,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1523310966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53632,6 +53693,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1529898131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53745,6 +53810,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1533504814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53853,6 +53922,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1543783906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53961,6 +54034,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1544327544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54227,6 +54304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1553298633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54389,6 +54470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1557797688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54844,6 +54929,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1578065398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55407,6 +55496,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1603394218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55515,6 +55608,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1604370217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55539,11 +55636,6 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!4 &1605346696 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399243920, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1605601541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55928,6 +56020,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1614550591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56032,11 +56128,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: eacd77562771b624db2905d69c193443, type: 3}
---- !u!4 &1622170430 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399246208, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1622520727
 GameObject:
   m_ObjectHideFlags: 0
@@ -56121,6 +56212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1622520732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56343,6 +56438,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1626371289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56643,6 +56742,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1631756433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56805,6 +56908,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1636390930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57039,6 +57146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1645826630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57387,6 +57498,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1650914764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57512,37 +57627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283259e59cd1f5945b3bae6de930cf45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1654890980
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1654890981}
-  m_Layer: 8
-  m_Name: Target_Aim
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1654890981
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654890980}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.41, z: 5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1105063787}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1655930481 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7196015647776245927, guid: 615249c34d3415246a5868bfc9ffe257, type: 3}
@@ -57649,6 +57733,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1661333283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57809,8 +57897,14 @@ PrefabInstance:
       objectReference: {fileID: 237933334}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: [{targetCorrespondingSourceObject: {fileID: 7326636684249348986, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}, insertIndex: -1, addedObject: {fileID: 752954866}}]
-    m_AddedComponents: [{targetCorrespondingSourceObject: {fileID: 755490944018596935, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}, insertIndex: -1, addedObject: {fileID: 1041796461}}]
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7326636684249348986, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 752954866}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 755490944018596935, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1041796461}
   m_SourcePrefab: {fileID: 100100000, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
 --- !u!4 &1661943989 stripped
 Transform:
@@ -58155,6 +58249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1667315629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58263,6 +58361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1668079688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58439,6 +58541,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1669249409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58547,6 +58653,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1669557625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58655,6 +58765,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1672955466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58679,11 +58793,6 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!4 &1673576809 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5266880477995672271, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1676217342
 GameObject:
   m_ObjectHideFlags: 0
@@ -58768,6 +58877,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1676217347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59308,6 +59421,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1694922889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59416,6 +59533,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1697751583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59486,6 +59607,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: af9c4301cafa6e54da4589fd3b905ebb, type: 3}
   m_PrefabInstance: {fileID: 1697844700}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1700412576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1700412577}
+  m_Layer: 8
+  m_Name: CarryingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1700412577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700412576}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0.859}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1841208685}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1701393306
 GameObject:
   m_ObjectHideFlags: 0
@@ -59570,6 +59722,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1701393311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59840,6 +59996,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1703533471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60049,6 +60209,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1710166726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60211,6 +60375,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1713165138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60399,6 +60567,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1716274243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60495,6 +60667,10 @@ PrefabInstance:
       propertyPath: patrolWaypoints.Array.data[2]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9110633010215283509, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+      propertyPath: deadbodyPref
+      value: 
+      objectReference: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -60634,6 +60810,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1723331942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60712,11 +60892,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9ae987b4b22703146ab27785fa0d26a5, type: 3}
   m_PrefabInstance: {fileID: 1728636536}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1732003090 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399203412, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1732050594
 GameObject:
@@ -60802,6 +60977,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1732050599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60984,6 +61163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1734142389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61180,6 +61363,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1740823419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61305,6 +61492,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1746817526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61413,6 +61604,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1748240355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61850,6 +62045,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1762334251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62020,6 +62219,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1764516111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62227,6 +62430,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1772867962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62335,6 +62542,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1773387213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62443,6 +62654,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1774071313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62718,6 +62933,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1785216223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62843,6 +63062,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1790499927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62989,6 +63212,10 @@ PrefabInstance:
       propertyPath: patrolWaypoints.Array.data[2]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9110633010215283509, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+      propertyPath: deadbodyPref
+      value: 
+      objectReference: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -63122,6 +63349,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1798783737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63230,6 +63461,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1803611758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63413,6 +63648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1812382417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63521,6 +63760,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1812925990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63750,6 +63993,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1817885196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63858,6 +64105,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1818252158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63966,6 +64217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1823695972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64074,6 +64329,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1824055547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64232,6 +64491,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1828191357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64456,6 +64719,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1835606978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64564,6 +64831,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1836101592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64672,6 +64943,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1836155930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64713,6 +64988,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283259e59cd1f5945b3bae6de930cf45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1841208685 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2384098045399243958, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+  m_PrefabInstance: {fileID: 660909031}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1847219899 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4462229605625277670, guid: aa520c803e3b39d40bef13a55b2a99c5, type: 3}
@@ -64902,6 +65182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1848214646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65411,6 +65695,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1859438005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65737,32 +66025,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c635baeb0168dde44a142ef5ad8f8725, type: 3}
   m_PrefabInstance: {fileID: 1870312520}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1872947250 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2384098045399531734, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1872947251 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399243958, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1872947253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1872947250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RigLayers:
-  - m_Rig: {fileID: 1041160758}
-    m_Active: 1
-  m_Effectors: []
 --- !u!1 &1873811765
 GameObject:
   m_ObjectHideFlags: 0
@@ -65847,6 +66109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1873811770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65960,6 +66226,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1874583944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66263,6 +66533,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1886028699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66371,6 +66645,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1886357657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66550,6 +66828,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1891581625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67020,6 +67302,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1901961224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67186,6 +67472,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1904150397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67294,6 +67584,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1906467705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67702,6 +67996,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1913010918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67878,6 +68176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1915871351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68299,6 +68601,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1939744370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68792,6 +69098,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1948178948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68900,6 +69210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1948827557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69401,6 +69715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1961304393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69614,6 +69932,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1973833772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69722,6 +70044,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1974429302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69830,6 +70156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &1982772286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70259,11 +70589,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: eacd77562771b624db2905d69c193443, type: 3}
---- !u!4 &1994184353 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399243934, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1996268793 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1159989728731938857, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
@@ -70473,6 +70798,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2003127388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70643,6 +70972,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2007776708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70751,6 +71084,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2008270218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70859,6 +71196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2008942854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71049,6 +71390,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1606395994}
     m_Modifications:
+    - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4978874706524440312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5962558525087350345, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -90
@@ -71089,9 +71482,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8843322062162533282, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: m_Name
       value: Bld_Barracks_a (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
+      propertyPath: interactDuration
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -71265,6 +71706,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2022323927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71289,11 +71734,6 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.2}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!4 &2022604043 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2384098045399243988, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
-  m_PrefabInstance: {fileID: 660909031}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2025469320 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1159989728731938851, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
@@ -71638,6 +72078,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2033975840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71901,6 +72345,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2039778578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72340,6 +72788,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2048967481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72635,6 +73087,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2061694534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72743,6 +73199,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2063347704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73215,6 +73675,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2078577145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73323,6 +73787,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2080077987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73431,6 +73899,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2081516296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73539,6 +74011,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2086172642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73759,6 +74235,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2090019379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73993,6 +74473,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2093880246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74231,6 +74715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2098225516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74445,6 +74933,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2101670612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74657,6 +75149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2106626341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74765,6 +75261,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2107208949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74953,6 +75453,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2111357324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75111,6 +75615,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2115451916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75370,6 +75878,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2119739446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75531,6 +76043,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2122734355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75716,6 +76232,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2142642448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75824,6 +76344,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDuration: 0
+  playerAnimationTrigger: Interact
+  nextState: 7
+  canStopInteract: 1
 --- !u!114 &2144385359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76077,6 +76601,63 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1030285419}
   m_SourcePrefab: {fileID: 100100000, guid: 8f1993d7df10d6b4f98a685f80f3efc8, type: 3}
+--- !u!1001 &307032149688550458
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808722485650524718, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_Name
+      value: EnemyDownedBody
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 993923cda2517c5409cc45657b773bba, type: 3}
 --- !u!1001 &401565312576019815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76842,6 +77423,22 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 8179056313333258966, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8179056313333258966, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318811229573893292, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318811229573893292, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8521784956137091816, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.44
@@ -76873,6 +77470,22 @@ PrefabInstance:
     - target: {fileID: 8631981214767861449, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8950685684681052841, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8950685684681052841, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
+      propertyPath: interactDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095314786225264308, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
+      propertyPath: nextState
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095314786225264308, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
+      propertyPath: interactDuration
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -82013,4 +82626,5 @@ SceneRoots:
   - {fileID: 1793893360}
   - {fileID: 260080224}
   - {fileID: 1720156922}
+  - {fileID: 307032149688550458}
   - {fileID: 1093913588}

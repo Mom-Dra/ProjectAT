@@ -1,30 +1,23 @@
 using EPOOutline;
 using UnityEngine;
 
-public class InteractionManager
+public class InteractionUIManager
 {
     private Outlinable currOutlinable;
     private EntityStatus currEntityStatus;
     private HealthUI currHealthUI;
+    private Camera mainCamera;
 
-    private IInteractable currInteractable;
-    private HealthUI interactionUI;
-    private RectTransform interactionUIRectTransform;
-    private Coroutine interactionCoroutine;
-
+    private IUIHoverable currInteractable;
     private LayerMask interactionLayerMask;
 
-    [SerializeField]
-    private float interactTime = 3f;
-    public float InteractTime { get => interactTime; set => interactTime = value; }
-
-    public bool Hasinteractable => currInteractable != null;
-
-    public bool IsInteracting => interactionCoroutine != null;
-
-    public InteractionManager(LayerMask interactionLayerMask)
+    public InteractionUIManager(LayerMask interactionLayerMask)
     {
         this.interactionLayerMask = interactionLayerMask;
+    }
+    public void Start()
+    {
+        mainCamera = Camera.main;
     }
 
     public void Update()
@@ -34,7 +27,7 @@ public class InteractionManager
 
     private void HandleInteractionRaycast(Vector2 mousePos)
     {
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        Ray ray = mainCamera.ScreenPointToRay(mousePos);
 
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
 
@@ -53,7 +46,7 @@ public class InteractionManager
                 }
             }
 
-            IInteractable interactable = hit.transform.GetComponentInParent<IInteractable>();
+            IUIHoverable interactable = hit.transform.GetComponentInParent<IUIHoverable>();
 
             if (interactable is not null)
             {
@@ -62,14 +55,14 @@ public class InteractionManager
                     ClearTarget();
 
                     currInteractable = interactable;
-                    currInteractable.OnHoverEnter();
+                    interactable.OnHoverEnter();
                 }
             }
 
             EntityStatus entityStatus = hit.transform.GetComponentInParent<EntityStatus>();
             UIAnchor uIAnchor = hit.transform.GetComponentInParent<UIAnchor>();
 
-            if(entityStatus is not null)
+            if(entityStatus is not null && uIAnchor is not null)
             {   
                 if(currEntityStatus != entityStatus)
                 {
@@ -101,7 +94,7 @@ public class InteractionManager
     {
         if (currInteractable is null) return;
 
-        currInteractable.OnInteract();
+        //currInteractable.OnInteract();
     }
 
     private void ClearTarget()

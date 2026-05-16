@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Interactable;
 
 public class UseBandage : ConsumableSkill
 {
@@ -20,7 +22,7 @@ public class UseBandage : ConsumableSkill
     {
         if(entityInventory.TryUseItem(neededItemData, 1))
         {
-            if(targetStatus.IsDead)
+            if(targetStatus.IsDead && targetStatus.GetComponent<DownedBody>().enabled)
             {
                 targetStatus.Revive(skillData.BaseDamage/4); //하드코딩됨. 기획에 따라 부활시 체력 어케할지 결정.
             }
@@ -45,9 +47,7 @@ public class UseBandage : ConsumableSkill
 
     public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
     {
-        if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0
-         && hit.collider.gameObject.TryGetComponent<EntityStatus>(out EntityStatus status)&&
-            status.CurrentHp < status.MaxHp)
+        if(CheckHealAvailable(in hit, out EntityStatus status))
         {
             targetStatus = status;
             target = hit.collider.gameObject;
@@ -69,6 +69,14 @@ public class UseBandage : ConsumableSkill
     public override float CalculateFinalRange()
     {
         return 0.5f; //하드코딩됨. 플레이어의 hand 반경을 나타내는 값으로 교체 필요
+    }
+
+    private bool CheckHealAvailable(in RaycastHit hit, out EntityStatus status)
+    {
+        status = null;
+        return ((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0
+         && hit.collider.gameObject.TryGetComponent<EntityStatus>(out status)
+         && status.CurrentHp < status.MaxHp;
     }
 
     #region  old code

@@ -25,7 +25,7 @@ public class Managers : Singleton<Managers>
 
     private InputManager inputManager;
     private CursorManager cursorManager;
-    private InteractionManager interactionManager;
+    private InteractionUIManager interactionManager;
     private UIManager uIManager;
     private PoolManager poolManager;
     private SceneManager sceneManager;
@@ -33,7 +33,7 @@ public class Managers : Singleton<Managers>
 
     public InputManager InputManager => inputManager;
     public CursorManager CursorManager => cursorManager;
-    public InteractionManager InteractionManager => interactionManager;
+    public InteractionUIManager InteractionManager => interactionManager;
     public UIManager UIManager => uIManager;
     public PoolManager PoolManager => poolManager;
     public SceneManager SceneManager => sceneManager;
@@ -45,8 +45,8 @@ public class Managers : Singleton<Managers>
 
         inputManager = new InputManager(inputReader);
         cursorManager = new CursorManager(cursorSettings);
-        interactionManager = new InteractionManager(interactionLayerMask);
-        uIManager = new UIManager(healthUIPrefab);
+        interactionManager = new InteractionUIManager(interactionLayerMask);
+        uIManager = new UIManager(healthUIPrefab, FindFirstObjectByType<PlayerHUD>());
         poolManager = new PoolManager(pooledPrefabs);
         sceneManager = new SceneManager();
         eventManager = new EventManager();
@@ -57,6 +57,11 @@ public class Managers : Singleton<Managers>
         //uIManager.ShowHealthUI(target.GetComponent<EntityStatus>());
         //uIManager.EnableEnemyHealthUI();
         //uIManager.SetHpBarFollowingTarget(target);
+    }
+
+    private void Start()
+    {
+        interactionManager.Start();
     }
 
     private void Update()

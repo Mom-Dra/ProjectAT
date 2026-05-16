@@ -13,6 +13,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     public event Action MouseLeftClickEvent;
 
     public event Action onMouseWheelClicked;
+    public event Action OnInteractableObjectDropEvent;
 
     private PlayerControls controls;
     public Vector2 MousePosition { get; private set; }
@@ -116,5 +117,13 @@ public class InputReader : ScriptableObject, IPlayerActions
     public void OnMouseWheelDelta(InputAction.CallbackContext context)
     {
         MouseWheelDelta = context.ReadValue<Vector2>();
+    }
+
+    public void OnInteractableObjectDrop(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            OnInteractableObjectDropEvent?.Invoke();
+        }
     }
 }

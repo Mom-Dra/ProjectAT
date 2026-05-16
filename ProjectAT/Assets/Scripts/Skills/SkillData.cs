@@ -15,6 +15,5 @@ public class SkillData : ScriptableObject
     [Header("Visual & Animation")]
     public Texture2D CursorSkin;    //TargetingSkill
     public Sprite SkillIcon;
-    public string AnimationTriggerName;
-    public bool RequireAimingPose = false;
+    public string AnimationTriggerName; //안쓰이면 삭제 할 것.
 }

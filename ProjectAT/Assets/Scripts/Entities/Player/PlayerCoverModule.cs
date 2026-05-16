@@ -54,11 +54,10 @@ public class PlayerCoverModule : MonoBehaviour
 
         if (hit.transform.TryGetComponent(out CoverPoint coverPoint))
         {
-            if (currCoverPoint is not null && currCoverPoint != coverPoint)
-                currCoverPoint.HidePulse();
+            //if (currCoverPoint is not null && currCoverPoint != coverPoint) currCoverPoint.HidePulse();
 
             currCoverPoint = coverPoint;
-            currCoverPoint.ShowPulse();
+            //currCoverPoint.ShowPulse();
         }
     }
 
@@ -78,7 +77,7 @@ public class PlayerCoverModule : MonoBehaviour
             {
                 reservedCoverPoint.SetMoveTarget(false);
                 reservedCoverPoint.HideIndicator();
-                reservedCoverPoint.HidePulse();
+                //reservedCoverPoint.HidePulse();
             }
 
             moveCoroutine = null;
@@ -95,7 +94,7 @@ public class PlayerCoverModule : MonoBehaviour
         reservedCoverPoint = coverPoint;
         coverPoint.SetMoveTarget(true);
         coverPoint.ShowIndicator();
-        coverPoint.ShowPulse();
+        //coverPoint.ShowPulse();
 
         reservedCoverPoint.Reserve(gameObject);
 
@@ -109,7 +108,7 @@ public class PlayerCoverModule : MonoBehaviour
 
         coverPoint.SetMoveTarget(false);
         coverPoint.HideIndicator();
-        coverPoint.HidePulse();
+        //coverPoint.HidePulse();
 
         moveCoroutine = null;
     }
@@ -117,7 +116,7 @@ public class PlayerCoverModule : MonoBehaviour
     private void ClearHoverState()
     {
         if (currCoverObject is not null) currCoverObject.HideCoverPoint();
-        if (currCoverPoint is not null) currCoverPoint.HidePulse();
+        //if (currCoverPoint is not null) currCoverPoint.HidePulse();
 
         currCoverObject = null;
         currCoverPoint = null;
