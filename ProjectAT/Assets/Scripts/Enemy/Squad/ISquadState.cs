@@ -23,7 +23,7 @@ public class SquadPatorlState : ISquadState
 {
     public void Enter(Squad squad)
     {
-        squad.squadStateText.text = "Patrol";
+        //squad.squadStateText.text = "Patrol";
         // AssignNext(squad);
     }
 
@@ -72,7 +72,7 @@ public class SquadEngageState : ISquadState
 {
     public void Enter(Squad squad)
     {
-        squad.squadStateText.text = "Engage";
+        //squad.squadStateText.text = "Engage";
         squad.SlotTimer = 0f;
         squad.ReassignRequested = false;
 
@@ -191,7 +191,7 @@ public class SquadSearchState : ISquadState
 {
     public void Enter(Squad squad)
     {
-        squad.squadStateText.text = "Search";
+        //squad.squadStateText.text = "Search";
         squad.Elapsed = 0f;
         squad.ReassignTimer = 0f;
     }

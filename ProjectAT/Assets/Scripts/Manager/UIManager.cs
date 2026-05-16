@@ -9,12 +9,13 @@ public class UIManager
     private PlayerHUD playerHUD;
     private PlayerSkillModule playerSkillModule;
 
-    public UIManager(GameObject healthUIPrefab)
+    public UIManager(GameObject healthUIPrefab, PlayerHUD playerHUD)
     {
         if (healthUIPrefab is null)
             Debug.LogError("healthUIPrefab is null");
 
         this.healthUIPrefab = healthUIPrefab;
+        this.playerHUD = playerHUD;
     }
 
     public void SetPlayerHUD(PlayerHUD playerHUD)

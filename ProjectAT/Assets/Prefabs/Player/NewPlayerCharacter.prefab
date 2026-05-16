@@ -317,13 +317,14 @@ GameObject:
   - component: {fileID: 6028611876402576336}
   - component: {fileID: 951272256506883713}
   - component: {fileID: 7379660419816490058}
-  - component: {fileID: 5473086426898581205}
   - component: {fileID: 4480365549570769902}
   - component: {fileID: 6914519252962164837}
   - component: {fileID: 2197981689903844591}
+  - component: {fileID: 3503328345243926976}
+  - component: {fileID: 754147340102552977}
   m_Layer: 8
   m_Name: NewPlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -381,7 +382,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -551,20 +552,6 @@ MonoBehaviour:
   targetAlpha: 0.5
   fadeDuration: 0.3
   meshRenderer: {fileID: 0}
---- !u!114 &5473086426898581205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1570168789558711731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e6e04b449916684c927f2dd9db35f57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugItemList:
-  - {fileID: 11400000, guid: fa09adfcf317c7d44b1a3cc91ff71903, type: 2}
 --- !u!54 &4480365549570769902
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -604,7 +591,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b519c194c6a9512439ccff74de3477f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactTime: 3
+  myStatus: {fileID: 0}
+  holdPoint: {fileID: 8537165280003072780}
 --- !u!114 &2197981689903844591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,6 +606,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableBuffs: []
+--- !u!114 &3503328345243926976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570168789558711731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeefdc67e0ab6c4439ee2d8da7e8faa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerType: 0
+--- !u!114 &754147340102552977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570168789558711731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 710b233a40edd874a94edb4235b89c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2066797227536388764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +1013,37 @@ MonoBehaviour:
       x: 1
       y: 1
       z: 1
+--- !u!1 &6437489645924452370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8537165280003072780}
+  m_Layer: 8
+  m_Name: CarryingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8537165280003072780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6437489645924452370}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0.859}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2384098045399243958}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6607232567793120474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,6 +1805,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 400050, guid: f8237097254c90a4bbb2528048a2d1e4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6229212918005094790}
+    - targetCorrespondingSourceObject: {fileID: 400050, guid: f8237097254c90a4bbb2528048a2d1e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8537165280003072780}
     - targetCorrespondingSourceObject: {fileID: 402308, guid: f8237097254c90a4bbb2528048a2d1e4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1540244471888428919}
