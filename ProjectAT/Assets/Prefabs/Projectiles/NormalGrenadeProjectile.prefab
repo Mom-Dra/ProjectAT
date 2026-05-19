@@ -103,7 +103,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   groundLayer: 0
-  fuseTime: 3
+  fuseTime: 20
+  impactNoiseRadius: 6
+  explosionNoiseRadius: 18
+  noiseDetectorLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  initialOwnerCollisionIgnoreTime: 0.35
 --- !u!1001 &589522153539378658
 PrefabInstance:
   m_ObjectHideFlags: 0

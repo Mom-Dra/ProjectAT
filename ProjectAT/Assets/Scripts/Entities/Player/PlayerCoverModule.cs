@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
+//이 클래스는 불필요하다고 판단됨. 좀 더 면밀히 본 후 삭제 결정하기 (26.05.18)
 public class PlayerCoverModule : MonoBehaviour
 {
     private InputReader inputReader;

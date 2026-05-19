@@ -86,9 +86,6 @@ public class PlayerCombatModule : MonoBehaviour
         bool condition = CheckPositionInRange(target.transform.position, myWeapon.Range);
         bool condition2 = CheckTargetVisibility(target, eyePoint);
 
-        if(!condition) Debug.Log("Player Combat Module : Target is not in Range");
-        if(!condition2) Debug.Log("Player Combat Module : Target is not Visible");
-
         return condition && condition2;
     }
 
@@ -229,7 +226,11 @@ public class PlayerCombatModule : MonoBehaviour
 
         if (PhysicsMathUtility.CalculateTrajectory(origin, targetPos, arcHeight, out Vector3 velocity, out float time))
         {
-            throwingObject.GetComponent<ProjectileGrenade>().Throw(velocity);
+            ProjectileGrenade grenade = throwingObject.GetComponent<ProjectileGrenade>();
+            if (grenade == null) return;
+
+            grenade.IgnoreCollisionWith(gameObject);
+            grenade.Throw(velocity);
         }
     }
 

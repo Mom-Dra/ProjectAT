@@ -10,6 +10,7 @@ public interface IEnemyState
     static readonly IEnemyState ChaseState = new EnemyChaseState();
     static readonly IEnemyState SearchState = new EnemySearchState();
     // static readonly IEnemyState CoverState = new EnemyCoverState();
+    static readonly IEnemyState InvestigateState = new EnemyInvestigateState();
 
     void Enter(Enemy enemy);
     void Update(Enemy enemy);
@@ -424,6 +425,135 @@ public class EnemySearchState : IEnemyState
         }
     }
 }
+
+public class EnemyInvestigateState : IEnemyState
+{
+    internal enum Phase { MovingToNoise, Waiting, Returning }
+
+    private const float NoisePositionOffset = 3f;
+
+    public void Enter(Enemy enemy)
+    {
+        enemy.stateText.text = "Investigate";
+        enemy.EnableFieldOfView(true);
+        enemy.SetAttackMode(false);
+
+        enemy.WaitTimer = 0f;
+
+        if (TryGetOffsetDestination(enemy, out Vector3 destination))
+        {
+            enemy.InvestigatePhase = Phase.MovingToNoise;
+            MoveTo(enemy, destination);
+        }
+        else
+        {
+            enemy.StopMoving();
+            FacePosition(enemy, enemy.InvestigatePosition);
+            enemy.InvestigatePhase = Phase.Waiting;
+        }
+    }
+
+    public void Update(Enemy enemy)
+    {
+        switch (enemy.InvestigatePhase)
+        {
+            case Phase.MovingToNoise:
+                if (!enemy.HasArrived()) return;
+
+                enemy.StopMoving();
+                FacePosition(enemy, enemy.InvestigatePosition);
+                enemy.WaitTimer = 0f;
+                enemy.InvestigatePhase = Phase.Waiting;
+                break;
+
+            case Phase.Waiting:
+                FacePosition(enemy, enemy.InvestigatePosition);
+
+                enemy.WaitTimer += Time.deltaTime;
+
+                if (enemy.WaitTimer < enemy.EnemyData.InvestigateWaitTime) return;
+
+                enemy.WaitTimer = 0f;
+                enemy.InvestigatePhase = Phase.Returning;
+                MoveTo(enemy, enemy.InvestigateReturnPosition);
+                break;
+
+            case Phase.Returning:
+                if (!enemy.HasArrived()) return;
+
+                enemy.StopMoving();
+                enemy.ChangeState(enemy.InvestigateReturnState ?? IEnemyState.IdleState);
+                break;
+        }
+    }
+
+    public void Exit(Enemy enemy)
+    {
+        enemy.WaitTimer = 0f;
+    }
+
+    public void TargetConfirmed(Enemy enemy, IPerceivable target)
+    {
+        enemy.ChangeState(IEnemyState.AttackState);
+    }
+
+    public void OrderReceived(Enemy enemy, SquadOrder squadOrder)
+    {
+        switch (squadOrder.OrderKind)
+        {
+            case OrderKind.Attack:
+                enemy.ChangeState(IEnemyState.ChaseState);
+                break;
+
+            case OrderKind.Search:
+                enemy.ChangeState(IEnemyState.SearchState);
+                break;
+
+            case OrderKind.Patrol:
+                enemy.ChangeState(IEnemyState.PatrolState);
+                break;
+
+            case OrderKind.Disengage:
+                enemy.ChangeState(IEnemyState.IdleState);
+                break;
+        }
+    }
+
+    private bool TryGetOffsetDestination(Enemy enemy, out Vector3 destination)
+    {
+        Vector3 offsetDirection = enemy.transform.position - enemy.InvestigatePosition;
+        offsetDirection.y = 0f;
+
+        if (offsetDirection.sqrMagnitude <= NoisePositionOffset * NoisePositionOffset)
+        {
+            destination = default;
+            return false;
+        }
+
+        destination = enemy.InvestigatePosition + offsetDirection.normalized * NoisePositionOffset;
+        return true;
+    }
+
+    private void MoveTo(Enemy enemy, Vector3 point)
+    {
+        if (NavMesh.SamplePosition(point, out NavMeshHit hit, enemy.EnemyData.SearchNavSampleRadius, NavMesh.AllAreas))
+            enemy.MoveTo(hit.position);
+        else
+            enemy.MoveTo(point);
+    }
+
+    private void FacePosition(Enemy enemy, Vector3 position)
+    {
+        Vector3 direction = position - enemy.transform.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < float.Epsilon) return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, enemy.EnemyData.RotateSpeed * Time.deltaTime);
+    }
+}
+
 
 // public class EnemyCoverState : IEnemyState
 // {

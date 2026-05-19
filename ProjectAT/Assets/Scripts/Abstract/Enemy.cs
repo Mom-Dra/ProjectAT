@@ -7,7 +7,7 @@ using TMPro;
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(AwarenessModule))]
 [RequireComponent(typeof(PerceptionSystem))]
-public class Enemy : MonoBehaviour, ISquadMember
+public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
 {
     public event Action<ISquadMember, IPerceivable> onTargetDetected;
     public event Action<ISquadMember, IPerceivable, Vector3> onTargetLost;
@@ -32,6 +32,9 @@ public class Enemy : MonoBehaviour, ISquadMember
     private IPerceivable currentTarget;
     private Vector3 lastKnownPosition;
     private Vector3 currentOrderDestination;
+    private Vector3 investigatePosition;
+    private Vector3 investigateReturnPosition;
+    private IEnemyState investigateReturnState;
     private Coroutine positionReportCoroutine;
     private WaitForSeconds wait;
 
@@ -43,6 +46,9 @@ public class Enemy : MonoBehaviour, ISquadMember
     public AwarenessModule AwarenessModule => awarenessModule;
     public Vector3 LastKnownPosition => lastKnownPosition;
     public Vector3 CurrentOrderDestination => currentOrderDestination;
+    internal Vector3 InvestigatePosition => investigatePosition;
+    internal Vector3 InvestigateReturnPosition => investigateReturnPosition;
+    internal IEnemyState InvestigateReturnState => investigateReturnState;
 
     // ISquadMember
     public IPerceivable CurrentTarget => currentTarget;
@@ -78,6 +84,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     internal Vector3 SearchCenter;
     internal Vector3 CurrentPoint;
     internal float WaitTimer;
+    internal EnemyInvestigateState.Phase InvestigatePhase { get; set; }
 
     internal EnemyAnimator EnemyAnimator => enemyAnimator;
 
@@ -153,6 +160,18 @@ public class Enemy : MonoBehaviour, ISquadMember
         currentOrderDestination = squadOrder.Position;
 
         currState?.OrderReceived(this, squadOrder);
+    }
+
+    public void OnNoiseDetect(Vector3 noisePosition)
+    {
+        if (!IsAlive) return;
+        if (IsInCombat || IsChasing) return;
+
+        investigatePosition = noisePosition;
+        investigateReturnPosition = transform.position;
+        investigateReturnState = currState;
+
+        ChangeState(IEnemyState.InvestigateState);
     }
 
     internal void ChangeState(IEnemyState nextState)

@@ -19,6 +19,9 @@ public class EnemyData : ScriptableObject
     private float searchPointWaitTime = 1f;
 
     [SerializeField]
+    private float investigateWaitTime = 2f;
+
+    [SerializeField]
     private float searchNavSampleRadius = 2f;
 
     [SerializeField]
@@ -51,6 +54,7 @@ public class EnemyData : ScriptableObject
     public float AimAngleThreshold => aimAngleThreshold;
     public float SearchRadius => searchRadius;
     public float SearchPointWaitTime => searchPointWaitTime;
+    public float InvestigateWaitTime => investigateWaitTime;
     public float SearchNavSampleRadius => searchNavSampleRadius;
     public int SearchMaxAttempts => maxAttempts;
     public float TargetInformInterval => targetInformInterval;
