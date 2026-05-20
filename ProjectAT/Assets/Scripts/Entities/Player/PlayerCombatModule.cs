@@ -226,8 +226,11 @@ public class PlayerCombatModule : MonoBehaviour
 
         if (PhysicsMathUtility.CalculateTrajectory(origin, targetPos, arcHeight, out Vector3 velocity, out float time))
         {
-            ProjectileGrenade grenade = throwingObject.GetComponent<ProjectileGrenade>();
-            if (grenade == null) return;
+            ProjectileBase grenade = throwingObject.GetComponent<ProjectileBase>();
+            if (grenade == null) {
+                Debug.LogWarning($"{gameObject.name} : The object to throw does not have a ProjectileBase component.");
+                return; 
+            }
 
             grenade.IgnoreCollisionWith(gameObject);
             grenade.Throw(velocity);
