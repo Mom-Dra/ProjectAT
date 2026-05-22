@@ -71,7 +71,7 @@ public class PlayerSkillModule : MonoBehaviour
 
     private void InitiateSkills()
     {
-        mySkills[(int)SkillNumber.MainSkillOne] = new DummySkill(this, skillDatas[(int)SkillNumber.MainSkillOne]); // 팩토리 패턴 필요?
+        mySkills[(int)SkillNumber.MainSkillOne] = new ThrowRock(this, skillDatas[(int)SkillNumber.MainSkillOne]); //NOTE : 팩토리 패턴 필요
         mySkills[(int)SkillNumber.MainSkillTwo] = new DummySkill(this, skillDatas[(int)SkillNumber.MainSkillTwo]);
         mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, skillDatas[(int)SkillNumber.Grenade]);
         mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, skillDatas[(int)SkillNumber.UseBandage]);

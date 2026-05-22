@@ -70,7 +70,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
         {
-            //SkillInputEvent?.Invoke(SkillNumber.MainSkillOne);
+            SkillInputEvent?.Invoke(SkillNumber.MainSkillOne);
         }
     }
 

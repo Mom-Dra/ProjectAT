@@ -1,13 +1,12 @@
-
 using UnityEngine;
 
-public class ThrowGrenade : Skill
+public class ThrowRock : Skill
 {
     private PlayerCombatModule myCombatModule;
     private PlayerAnimator myAnimator;
     private ProjectileSkillData projSkillData => skillData as ProjectileSkillData;
 
-    public ThrowGrenade(PlayerSkillModule context, SkillData data) : base(context, data)
+    public ThrowRock(PlayerSkillModule context, SkillData data) : base(context, data)
     {
         myCombatModule = context.MyCombatModule;
         myAnimator = context.MyAnimModule;
@@ -38,14 +37,12 @@ public class ThrowGrenade : Skill
     {
         if(skillData is ProjectileSkillData projectileData)
         {
-            GameObject grenade = Object.Instantiate(projectileData.ThrowingObjectPrefab, skillContext.CastedPosition, Quaternion.identity);
-            ProjectileGrenade proj = grenade.GetComponent<ProjectileGrenade>();
-            proj.SetUp(projectileData.BaseDamage, projectileData.ExplosionRadius, projectileData.FuseTime, TargetLayer);
-            context.MyCombatModule.ThrowSomthingToTarget(grenade, skillContext.CastedPosition);
+            GameObject rock = Object.Instantiate(projectileData.ThrowingObjectPrefab, skillContext.CastedPosition, Quaternion.identity);
+            context.MyCombatModule.ThrowSomthingToTarget(rock, skillContext.CastedPosition);
         }
         else
         {
-            Debug.LogWarning("SkillData for ThrowGrenade is not of type ProjectileSkillData. Please check the assigned SkillData.");
+            Debug.LogWarning("SkillData for ThrowRock is not of type ProjectileSkillData. Please check the assigned SkillData.");
         }
     }
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2560394924168659346}
   - component: {fileID: 2404816531956942149}
   - component: {fileID: 6945157942804885525}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 729719053380664405}
   - component: {fileID: 4596878617391025210}
   - component: {fileID: 4673366525203728962}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mesh (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,10 +182,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 404420859977797748}
-  - component: {fileID: 5173816274070473586}
+  - component: {fileID: 1507626032363345877}
   - component: {fileID: 6787214574992790448}
   - component: {fileID: 3719147193202429232}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ProjectileRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,8 +208,8 @@ Transform:
   - {fileID: 2560394924168659346}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5173816274070473586
-BoxCollider:
+--- !u!136 &1507626032363345877
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -226,8 +226,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.2, z: 0.2}
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Height: 0
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6787214574992790448
 Rigidbody:
