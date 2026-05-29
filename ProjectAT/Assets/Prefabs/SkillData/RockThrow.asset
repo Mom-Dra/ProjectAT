@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: RockThrow
   BaseDamage: 300
   CastingTime: 1
-  MaxCoolTime: 1
+  MaxCoolTime: 2
   TargetLayer:
     serializedVersion: 2
     m_Bits: 15351

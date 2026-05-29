@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
     private Vector3 currentOrderDestination;
     private Vector3 investigatePosition;
     private Vector3 investigateReturnPosition;
+    private Vector3 investigateReturnDirection;
     private IEnemyState investigateReturnState;
     private Coroutine positionReportCoroutine;
     private WaitForSeconds wait;
@@ -48,6 +49,7 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
     public Vector3 CurrentOrderDestination => currentOrderDestination;
     internal Vector3 InvestigatePosition => investigatePosition;
     internal Vector3 InvestigateReturnPosition => investigateReturnPosition;
+    internal Vector3 InvestigateReturnDirection => investigateReturnDirection;
     internal IEnemyState InvestigateReturnState => investigateReturnState;
 
     // ISquadMember
@@ -162,13 +164,15 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
         currState?.OrderReceived(this, squadOrder);
     }
 
-    public void OnNoiseDetect(Vector3 noisePosition)
+    public void OnNoiseDetect(Vector3 noisePosition) //TODO : Position 뿐만 아니라 Rotation까지 돌게하기
     {
         if (!IsAlive) return;
         if (IsInCombat || IsChasing) return;
 
         investigatePosition = noisePosition;
+        
         investigateReturnPosition = transform.position;
+        investigateReturnDirection = transform.forward;
         investigateReturnState = currState;
 
         ChangeState(IEnemyState.InvestigateState);

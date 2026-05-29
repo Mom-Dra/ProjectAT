@@ -479,10 +479,9 @@ public class EnemyInvestigateState : IEnemyState
                 break;
 
             case Phase.Returning:
-                if (!enemy.HasArrived()) return;
-
+                if (!(enemy.HasArrived() && RotateTowardDirection(enemy, enemy.InvestigateReturnDirection))) return;
                 enemy.StopMoving();
-                enemy.ChangeState(enemy.InvestigateReturnState ?? IEnemyState.IdleState);
+                enemy.ChangeState(enemy.InvestigateReturnState ?? IEnemyState.IdleState); //Enemy의 Rotation 함수를 이용하고 싶음.
                 break;
         }
     }
@@ -551,6 +550,20 @@ public class EnemyInvestigateState : IEnemyState
 
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, enemy.EnemyData.RotateSpeed * Time.deltaTime);
+    }
+
+    private bool RotateTowardDirection(Enemy enemy, Vector3 direction)
+    {
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < float.Epsilon) return false;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, enemy.EnemyData.RotateSpeed * Time.deltaTime);
+
+        if(Quaternion.Angle(enemy.transform.rotation, targetRotation) < 5f)
+            return true;
+        else return false;
     }
 }
 

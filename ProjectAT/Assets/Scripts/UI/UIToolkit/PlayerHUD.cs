@@ -38,19 +38,27 @@ public class PlayerHUD : MonoBehaviour
         var root = _uiDocument.rootVisualElement;
 
         // UI Builder에서 지은 이름 "HealthBar"로 찾기
-        _healthBar = root.Q<RadialProgressBar>("HealthBar");
-        _playerPortrait = root.Q<VisualElement>("Portrait");
+        _healthBar = root.Q<RadialProgressBar>("HealthBar"); CheckUIElement(_healthBar, "HealthBar");
+        _playerPortrait = root.Q<VisualElement>("Portrait"); CheckUIElement(_playerPortrait, "Portrait");
 
-        _playerWeaponIcon = root.Q<VisualElement>("WeaponIcon");
-        _playerAmmoText = root.Q<Label>("AmmoText");
-
+        _playerWeaponIcon = root.Q<VisualElement>("WeaponIcon"); CheckUIElement(_playerWeaponIcon, "WeaponIcon");
+        _playerAmmoText = root.Q<Label>("AmmoText"); CheckUIElement(_playerAmmoText, "AmmoText");
+ 
 
         for (int i = 0; i < skillInfos.Length; i++)
         {
-            skillInfos[i] = root.Q<VisualElement>($"SkillInfo_{i}");
-            skillIcons[i] = skillInfos[i].Q<VisualElement>("Icon");
-            skillItemLabels[i] = skillInfos[i].Q<Label>("ItemCount");
-            skillCooldownOverlays[i] = skillInfos[i].Q<CooldownOverlay>("SkillCoolDown");
+            skillInfos[i] = root.Q<VisualElement>($"SkillInfo_{i}"); CheckUIElement(skillInfos[i], $"SkillInfo_{i}");
+            skillIcons[i] = skillInfos[i].Q<VisualElement>("Icon"); CheckUIElement(skillIcons[i], $"SkillInfo_{i} Icon");
+            skillItemLabels[i] = skillInfos[i].Q<Label>("ItemCount"); CheckUIElement(skillItemLabels[i], $"SkillInfo_{i} ItemCount");
+            skillCooldownOverlays[i] = skillInfos[i].Q<CooldownOverlay>("SkillCoolDown"); CheckUIElement(skillCooldownOverlays[i], $"SkillInfo_{i} SkillCoolDown");
+        }
+    }
+
+    private void CheckUIElement(VisualElement element, string elementName)
+    {
+        if (element == null)
+        {
+            Debug.LogError($"{elementName} UI element not found!");
         }
     }
 

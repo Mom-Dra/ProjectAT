@@ -66,7 +66,6 @@ public class ThrowGrenade : Skill
     public override void OnCastingStart(SkillContext skillContext)
     {
         //애니메이션
-        //myCombatModule.MyWeapon.NowWeaponVisible(false);
         myAnimator.WeaponMeshVisible(false);
         context.MyAnimModule.PlayThrowAnimation();
     }

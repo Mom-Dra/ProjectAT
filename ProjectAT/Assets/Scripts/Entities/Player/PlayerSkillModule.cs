@@ -6,13 +6,6 @@ using PlayerStateMachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum  SkillModuleState : ushort
-{
-    Ready,
-    Chasing,
-    Casting,
-}
-
 public enum SkillNumber : short
 {
     None = -1,
@@ -38,7 +31,6 @@ public class PlayerSkillModule : MonoBehaviour
 
     [Header("Skills")]
     private Skill[] mySkills = new Skill[5]; //갯수 조정 필요
-    //private Skill CurrentActivateSkill;
     private SkillNumber currentActivateSkillNumber;
     private Dictionary<Skill, float> skillCooldownTimers = new Dictionary<Skill, float>();
     public WeaponHolder MyWeapon => MyCombatModule.MyWeapon;
@@ -51,7 +43,6 @@ public class PlayerSkillModule : MonoBehaviour
     public bool IsTargetting {get{ return lastSkillInput != SkillNumber.None; }}
     [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private LayerMask enemyLayer;
 
     public event Action<SkillNumber,float> OnSkillCooldownStart;
     public event Action<SkillNumber, int> OnSkillItemCountChange;
@@ -66,7 +57,6 @@ public class PlayerSkillModule : MonoBehaviour
         MyInventory = GetComponent<Inventory>();
 
         groundLayer = LayerMask.GetMask("Ground");
-        enemyLayer = LayerMask.GetMask("Enemy");
     }
 
     private void InitiateSkills()
@@ -109,7 +99,7 @@ public class PlayerSkillModule : MonoBehaviour
     {
         if (!CanActivateSkill(skillIndex))
         {
-            Debug.Log($"Cannot Activate Skill:{skillIndex}");
+            //Debug.Log($"Cannot Activate Skill:{skillIndex}");
             return;
         }
         if(lastSkillInput != SkillNumber.None || lastSkillInput == skillIndex)
@@ -212,7 +202,7 @@ public class PlayerSkillModule : MonoBehaviour
         skillCooldownTimers[skill] = Time.time;
         OnSkillCooldownStart?.Invoke(currentActivateSkillNumber, skill.SkillMaxCoolTime);
 
-        // 갯수 제거형 스킬 사용 시 인벤토리 아이템 갯수 변경 이벤트 로직 구현하기
+        // TODO : 갯수 제거형 스킬 사용 시 인벤토리 아이템 갯수 변경 이벤트 로직 구현하기
         // if(mySkills[(int)currentActivateSkillNumber] is ConsumableSkill consumableSkill)
         // {
         //     OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, MyInventory.GetItemCount(consumableSkill.NeededItemData));
