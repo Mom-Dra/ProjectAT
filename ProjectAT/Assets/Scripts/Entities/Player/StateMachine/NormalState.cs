@@ -1,17 +1,19 @@
 using UnityEngine;
-using PlayerStatusCapabilities;
+using PlayerStateCapabilities;
 
 namespace PlayerStateMachine
 {
-    public class NormalState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler
+    public class NormalState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler, IReloadInputHandler
     {
         private PlayerSkillModule mySkillModule;
         private PlayerInteractionModule myInteractionModule;
+        private PlayerCombatModule myCombatModule;
 
         public NormalState(PlayerController playerController) : base(playerController)
         {
             mySkillModule = context.MySkillModule;
             myInteractionModule = context.MyInteractionModule;
+            myCombatModule = context.MyCombatModule;
         }
 
         public override void OnEnter()
@@ -19,7 +21,6 @@ namespace PlayerStateMachine
             context.CancelEnemySelect();
         }
         
-        // NormalState.cs
         public override void OnUpdate()
         {
             if (context.SelectedEnemy != null)
@@ -29,16 +30,15 @@ namespace PlayerStateMachine
                     context.AimingEnemy(false);
                     context.ChaseEnemy();
                 }
-                else
-                {
-                    context.AimingEnemy(true, context.SelectedEnemy.transform);
-                }
+            }
+            else
+            {
+                context.AimingEnemy(false);
             }
         }
         
         public override void OnExit()
         {
-            
         }
 
         public void OnLeftClick(RaycastHit castedObject)
@@ -97,6 +97,11 @@ namespace PlayerStateMachine
             {
                 mySkillModule.CancelTargettingMode();
             }
+        }
+
+        public void OnReloadInput()
+        {
+            myCombatModule.RequestWeaponReload();
         }
     }
 }

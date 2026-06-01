@@ -1,5 +1,5 @@
 using UnityEngine;
-using PlayerStatusCapabilities;
+using PlayerStateCapabilities;
 
 namespace PlayerStateMachine
 {

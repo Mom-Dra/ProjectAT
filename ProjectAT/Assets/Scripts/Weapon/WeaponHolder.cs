@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class WeaponHolder : MonoBehaviour
 {
@@ -19,14 +18,11 @@ public class WeaponHolder : MonoBehaviour
 
     [field:SerializeField] public WeaponSlot NowWeaponSlot { get; private set; }
 
-    // [SerializeField] private Gun primaryWeapon;
-    // [SerializeField] private Gun secondaryWeapon;
-    // [SerializeField] private Gun grenade;
     [SerializeField] private Gun[] playerWeapons;
 
     [SerializeField] private List<GameObject> gunPrefabs = new List<GameObject>(); //임시로 만든 것. 만약에 플레이어가 원하는 무기 리스트를 선택할 수 있으면 해당 리스트를 넘겨받아 초기화 하는걸로 할수도..
 
-    [Header("Stats")]
+    [Header("Now Gun Stats")]
     [SerializeField] private int totalDamage;
     [SerializeField] private int currentAmmo;
     [SerializeField] private int maxAmmo;
@@ -39,11 +35,13 @@ public class WeaponHolder : MonoBehaviour
     public float Range { get { return range; } }
     public float FireRate => nowWeapon.GunData.TimeBetFire;
     public Gun NowWeapon => nowWeapon;
-    public Transform GunHolder => gunHolder;
     #endregion
 
-    public Action<Gun> OnWeaponFired;
+    public Action<Gun> OnWeaponFired; //NOTE : Gun을 진짜 넘겨줘야하는지 검토 필요.
     public Action<Gun> OnWeaponChanged;
+    public Action<Gun> OnWeaponReloadStart;
+    public Action<Gun> OnWeaponReloaded;
+    
 
     private void Awake()
     {
@@ -53,7 +51,8 @@ public class WeaponHolder : MonoBehaviour
     public void ChangeWeapon(WeaponSlot newSlot)
     {
 
-        nowWeapon.transform.GetChild(0).gameObject.SetActive(false); //GetChild(0) = Gun의 MeshObject
+        NowWeaponVisible(false);
+        UnSubScribeWeaponEvents(nowWeapon);
         nowWeapon = playerWeapons[(int)newSlot];
 
         NowWeaponSlot = newSlot;
@@ -62,15 +61,16 @@ public class WeaponHolder : MonoBehaviour
         currentAmmo = maxAmmo;       //수정 필요
         range = CalculateRange();
 
+        SubScribeWeaponEvents(nowWeapon);
         OnWeaponChanged?.Invoke(nowWeapon);
-
-        nowWeapon.transform.GetChild(0).gameObject.SetActive(true);
+        NowWeaponVisible(true);
     }
 
     public void NowWeaponVisible(bool visible)
     {
         nowWeapon.transform.GetChild(0).gameObject.SetActive(visible);
     }
+
     #region 초기화함수
     private int CalculateTotalDamage()
     {
@@ -99,44 +99,71 @@ public class WeaponHolder : MonoBehaviour
             playerWeapons[i].transform.GetChild(0).gameObject.SetActive(false);
         }
 
-        // playerWeapons[(int)WeaponSlot.Primary] = Instantiate(gunPrefabs[0], meshHolder).GetComponent<Gun>();
-        // playerWeapons[(int)WeaponSlot.Secondary] = Instantiate(gunPrefabs[1], meshHolder).GetComponent<Gun>();
-        // playerWeapons[(int)WeaponSlot.Grenade] = Instantiate(gunPrefabs[2], meshHolder).GetComponent<Gun>();
-
-        // primaryWeapon = Instantiate(gunPrefabs[0], meshHolder).GetComponent<Gun>();
-        // //secondaryWeapon = Instantiate(gunPrefabs[1], meshHolder).GetComponent<Gun>();
-        // grenade = Instantiate(gunPrefabs[1], meshHolder).GetComponent<Gun>();
-
-        // primaryWeapon.gameObject.SetActive(false);
-        // //secondaryWeapon.gameObject.SetActive(false);
-        // grenade.gameObject.SetActive(false);
-
-        NowWeaponSlot = WeaponSlot.None; //첫번째 changeWeapon()을 원활하게 실행되기 위해 None으로 설정.
+        NowWeaponSlot = WeaponSlot.None;    //NOTE : 첫번째 changeWeapon()을 원활하게 실행되기 위해 None으로 설정.
         nowWeapon = playerWeapons[(int)WeaponSlot.Primary];
         ChangeWeapon(WeaponSlot.Primary);
     }
 
+    private void SubScribeWeaponEvents(Gun gun)
+    {
+        gun.OnWeaponFired += WeaponFired;
+        gun.OnReloadedEnd += ReloadedEnd;
+        gun.OnReloadStart += WeaponReloadStart;
+    }
+
+    private void UnSubScribeWeaponEvents(Gun gun)
+    {
+        gun.OnWeaponFired -= WeaponFired;
+        gun.OnReloadedEnd -= ReloadedEnd;
+        gun.OnReloadStart -= WeaponReloadStart;
+    }
     #endregion
 
     public void FireWeapon()
     {
         nowWeapon.Attack();
-        OnWeaponFired?.Invoke(nowWeapon);
     }
 
-    // public void SpecialFireWeapon()
-    // {
-    //     nowWeapon.PerformSpecialFire();
-    //     OnWeaponFired?.Invoke(nowWeapon);
-    // }
-
-    // public void ReloadingAmmo()
-    // {
-    //     currentAmmo = maxAmmo;
-    // }
-
-    public bool IsAmmoLoaded()
+    public void FireWeapon(float skillDamage, LayerMask targetLayer)
     {
-        return nowWeapon.RemainAmmo > 0;
+        nowWeapon.Attack(skillDamage, targetLayer);
     }
+
+    public bool CanFire()
+    {
+        return nowWeapon.CanFire();
+    }
+
+    public void ReloadingWeapon()
+    {
+        if (nowWeapon.TryReloadStart())
+        {
+            WeaponReloadStart(nowWeapon); //이벤트 구독자들에게 리로드 시작 알림
+        }
+    }
+
+    public void CancelReloadingWeapon()
+    {
+        if (nowWeapon.TryCancelReload())
+        {
+            ReloadedEnd(nowWeapon);
+        }
+    }
+
+    #region 이벤트용 함수
+    private void WeaponReloadStart(Gun gun)
+    {
+        OnWeaponReloadStart?.Invoke(gun);
+    }
+
+    private void ReloadedEnd(Gun gun)
+    {
+        OnWeaponReloaded?.Invoke(gun);
+    }
+
+    private void WeaponFired(Gun gun)
+    {
+        OnWeaponFired?.Invoke(gun);
+    }
+    #endregion
 }

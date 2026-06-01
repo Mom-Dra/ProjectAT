@@ -37,18 +37,24 @@ public class PlayerAnimator : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         entityStatus = GetComponent<EntityStatus>();
         aimRigBuilder = GetComponentInChildren<RigBuilder>();
+        weaponHolder = GetComponentInChildren<WeaponHolder>();
     }
 
     private void OnEnable()
     {
         entityStatus.onDeath += EntityDead;
         entityStatus.onRevive += EntityRevived;
+        weaponHolder.OnWeaponReloaded += StopReloadAnimation;
+        weaponHolder.OnWeaponReloadStart += PlayReloadAnimation;
+
     }
 
     private void OnDisable()
     {
         entityStatus.onDeath -= EntityDead;
         entityStatus.onRevive -= EntityRevived;
+        weaponHolder.OnWeaponReloadStart -= PlayReloadAnimation;
+        weaponHolder.OnWeaponReloaded -= StopReloadAnimation;
     }
 
     private void Start()
@@ -57,6 +63,11 @@ public class PlayerAnimator : MonoBehaviour
     }
 
     private void LateUpdate()
+    {
+        UpdateAimMarkerPosition();
+    }
+
+    private void UpdateAimMarkerPosition()
     {
         AimMarkerTransform.position =  Vector3.up + (AimedTargetLocation != null ? AimedTargetLocation.position : transform.position + transform.forward * 10f);
     }
@@ -86,21 +97,6 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool(IsCrouchHash, isCrouch);
     }
 
-    public void SetWeaponType(WeaponType weaponType)
-    {
-        animator.SetInteger(WeaponTypeHash, (int)weaponType);
-    }
-
-    public void SetWeaponAnimation(int WeaponType)
-    {
-        animator.SetInteger(WeaponTypeHash, WeaponType);
-    }
-
-    public void PlayTriggerAnimation(string triggerName)
-    {
-        animator.SetTrigger(triggerName);
-    }
-
     public void PlayThrowAnimation()
     {
         animator.SetTrigger(ThrowTriggerHash);
@@ -121,5 +117,15 @@ public class PlayerAnimator : MonoBehaviour
     public void WeaponMeshVisible(bool isVisible)
     {
         weaponHolder.NowWeaponVisible(isVisible);
+    }
+
+    public void PlayReloadAnimation(Gun gun)
+    {
+        animator.SetBool(RealoadHash, true);
+    }
+
+    public void StopReloadAnimation(Gun gun)
+    {
+        animator.SetBool(RealoadHash, false);
     }
 }

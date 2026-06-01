@@ -66,6 +66,8 @@ public class UIManager
         }
         playerHUD.SetPlayerWeaponInfo(myGunHolder.NowWeapon);
         myGunHolder.OnWeaponFired += UpdatePlayerAmmoUI;
+        myGunHolder.OnWeaponReloadStart += UpdatePlayerAmmoUI;
+        myGunHolder.OnWeaponReloaded += UpdatePlayerAmmoUI;
     }
 
     public void UpdatePlayerAmmoUI(Gun gun)

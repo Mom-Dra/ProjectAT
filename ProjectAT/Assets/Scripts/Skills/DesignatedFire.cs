@@ -30,7 +30,7 @@ public class DesignatedFire : Skill
 
     public override bool CanExecute(SkillContext skillContext)
     {
-        return context.MyCombatModule.IsTargetInWeaponSight(skillContext.TargetObject);
+        return combatModule.IsTargetInWeaponSight(skillContext.TargetObject) && context.MyWeapon.CanFire();
     }    
     
     public override void OnCastingStart(SkillContext skillContext)
@@ -43,7 +43,7 @@ public class DesignatedFire : Skill
         if (skillContext.TargetObject.TryGetComponent(out IDamageable damageable))
         {
             damageable.TakeDamage(skillContext.FinalDamage);
-            context.MyWeapon.FireWeapon();
+            context.MyWeapon.FireWeapon(0.0f, TargetLayer.value); //눈속임을 위해 0데미지를 줌.
         }
     }
 

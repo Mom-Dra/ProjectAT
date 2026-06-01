@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UseBandage
   m_EditorClassIdentifier: 
   Name: Use Bandage
-  BaseDamage: 0
+  BaseDamage: 50
   CastingTime: 2
   MaxCoolTime: 5
   TargetLayer:

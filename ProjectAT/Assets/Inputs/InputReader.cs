@@ -14,6 +14,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 
     public event Action onMouseWheelClicked;
     public event Action OnInteractableObjectDropEvent;
+    public event Action OnReloadEvent;
 
     private PlayerControls controls;
     public Vector2 MousePosition { get; private set; }
@@ -124,6 +125,14 @@ public class InputReader : ScriptableObject, IPlayerActions
         if(context.performed)
         {
             OnInteractableObjectDropEvent?.Invoke();
+        }
+    }
+
+    public void OnReload(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            OnReloadEvent?.Invoke();
         }
     }
 }

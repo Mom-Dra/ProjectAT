@@ -1,4 +1,4 @@
-using PlayerStatusCapabilities;
+using PlayerStateCapabilities;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 

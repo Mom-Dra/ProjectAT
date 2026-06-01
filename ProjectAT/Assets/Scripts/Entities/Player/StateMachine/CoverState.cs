@@ -1,9 +1,9 @@
 using UnityEngine;
-using PlayerStatusCapabilities;
+using PlayerStateCapabilities;
 
 namespace PlayerStateMachine
 {
-    public class CoverState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler
+    public class CoverState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler, IReloadInputHandler
     {
 
         private PlayerSkillModule mySkillModule;
@@ -58,9 +58,9 @@ namespace PlayerStateMachine
         {
             if (context.SelectedEnemy != null)
             {
-                if (!context.TryExecuteAttack()) // 1. 엄폐 중에도 적이 사거리에 있으면 공격 수행
+                if (!context.TryExecuteAttack())
                 {
-                    context.AimingEnemy(false); // 2. 적이 멀어졌다면? 엄폐 풀기 로직 실행!
+                    context.AimingEnemy(false); 
                     //context.ChangeState(PlayerStateType.Normal); // 상태를 Normal로 바꾸면, 다음 프레임부터 NormalState가 알아서 ChaseEnemy()를 실행함
                 }
                 else
@@ -135,6 +135,11 @@ namespace PlayerStateMachine
             {
                 mySkillModule.CancelTargettingMode();
             }
+        }
+
+        public void OnReloadInput()
+        {
+            context.MyCombatModule.RequestWeaponReload();
         }
     }
 }

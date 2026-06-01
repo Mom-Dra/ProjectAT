@@ -1,6 +1,3 @@
-using UnityEngine;
-using PlayerStateMachine;
-
 namespace PlayerStateMachine
 {
     public abstract class PlayerState : IState

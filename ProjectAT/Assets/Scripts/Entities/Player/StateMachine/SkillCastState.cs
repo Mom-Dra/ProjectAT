@@ -1,4 +1,4 @@
-using PlayerStatusCapabilities;
+using PlayerStateCapabilities;
 using UnityEngine;
 
 

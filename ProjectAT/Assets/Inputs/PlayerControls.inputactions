@@ -112,6 +112,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "ddaee8de-125f-4b75-b277-6808a11682b9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -140,7 +149,7 @@
                 {
                     "name": "",
                     "id": "075c7a83-4446-47b4-b1da-3c326c741371",
-                    "path": "<Keyboard>/#(A)",
+                    "path": "<Keyboard>/a",
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";PC",
@@ -162,7 +171,7 @@
                 {
                     "name": "",
                     "id": "b26024bb-e0d5-485b-852e-a874c651a705",
-                    "path": "<Keyboard>/#(Q)",
+                    "path": "<Keyboard>/q",
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";PC",
@@ -184,7 +193,7 @@
                 {
                     "name": "",
                     "id": "93292c3c-a8fe-4c17-9f01-04329595241f",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/d",
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";PC",
@@ -261,11 +270,22 @@
                 {
                     "name": "",
                     "id": "0188f572-ddc4-4c6d-85d9-4cd8e70c8eb6",
-                    "path": "<Keyboard>/g",
+                    "path": "<Keyboard>/v",
                     "interactions": "",
                     "processors": "",
                     "groups": ";PC",
                     "action": "InteractableObjectDrop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "29d5b935-686c-4344-a3e1-c88e8e2ceba4",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

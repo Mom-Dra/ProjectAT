@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using PlayerStateMachine;
-using PlayerStatusCapabilities;
+using PlayerStateCapabilities;
 using System;
 
 
@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
         InteractingState = new InteractingState(this);
         CoverState = new CoverState(this);
         CarryState = new CarryState(this);
+
         CurrentState = NormalState;
         CurrentState.OnEnter();
     }
@@ -83,7 +84,8 @@ public class PlayerController : MonoBehaviour
         Managers.Instance.InputManager.onSkillInputed += HandlePlayerSkillInput;
         Managers.Instance.InputManager.onMouseRightClicked += HandlePlayerRightClickInput;
         Managers.Instance.InputManager.onMouseLeftClicked += HandleLeftClickInput;
-        Managers.Instance.InputManager.onInteractableObjectDropInput += HandleDropObjectInput;
+        Managers.Instance.InputManager.OnInteractableObjectDropInput += HandleDropObjectInput;
+        Managers.Instance.InputManager.OnReloadEvent += HandleReloadInput;
     }
 
     private void UnLinkInputEventsAll()
@@ -91,7 +93,8 @@ public class PlayerController : MonoBehaviour
         Managers.Instance.InputManager.onSkillInputed -= HandlePlayerSkillInput;
         Managers.Instance.InputManager.onMouseRightClicked -= HandlePlayerRightClickInput;
         Managers.Instance.InputManager.onMouseLeftClicked -= HandleLeftClickInput;
-        Managers.Instance.InputManager.onInteractableObjectDropInput -= HandleDropObjectInput;
+        Managers.Instance.InputManager.OnInteractableObjectDropInput -= HandleDropObjectInput;
+        Managers.Instance.InputManager.OnReloadEvent -= HandleReloadInput;
     }
     #endregion
 
@@ -102,14 +105,6 @@ public class PlayerController : MonoBehaviour
         InitiateStateMachine();
         myCamera = Camera.main;
     }
-
-    // private void Start()
-    // {
-    //     LinkInputEventsAll();
-    //     myStatus.onDeath += OnPlayerDeath;
-    //     Managers.Instance.UIManager.InitPlayerStatusInfo(myStatus);
-    //     //myStatus.onRevive += () => Debug.Log("Player Revived!"); // TODO : Revive 이벤트 활용
-    // }
 
     private void OnEnable()
     {
@@ -195,6 +190,14 @@ public class PlayerController : MonoBehaviour
         PlayerMove(pos, isRun);
         IndicatorManager.Instance.ShowMoveIndicator(pos, IndicatorType.MoveIndicator, 1.0f);
     }
+
+    public void HandleReloadInput()
+    {
+        if(CurrentState is IReloadInputHandler state)
+        {
+            state.OnReloadInput();
+        }
+    }
     #endregion
 
     #region 전투관련 함수
@@ -224,17 +227,16 @@ public class PlayerController : MonoBehaviour
 
         if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
         {
-            myMovementModule.PlayerMoveStop(); // (Cover 상태에서도 멈춤 명령은 무해함)
-            //AimingEnemy(true, SelectedEnemy.transform);
+            myMovementModule.PlayerMoveStop();
 
             if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
             {
                 NormalAttackEnemy();
             }
-            return true; // 공격 로직 정상 수행됨!
+            return true;
         }
 
-        return false; // 사거리를 벗어남! (공격 불가)
+        return false;
     }
 
     public void ChaseEnemy()
@@ -250,14 +252,9 @@ public class PlayerController : MonoBehaviour
 
     private void NormalAttackEnemy()
     {
-        if (myCombatModule.CanFire())
+        if (myCombatModule.CheckWeaponFireReady() && myCombatModule.CheckAimingTargetEnough())
         {
             myCombatModule.NormalAttackEnemy(SelectedEnemy);
-        }
-        if(myCombatModule.MyWeapon.NowWeapon.RemainAmmo <= 0)
-        {
-            //재장전 로직
-            
         }
     }
 
@@ -265,6 +262,7 @@ public class PlayerController : MonoBehaviour
     {
         myMovementModule.PlayerMoveStop();
         mySkillModule.CancelCurrentSkill();
+        myCombatModule.RequestCancelReload();
         CancelEnemySelect();
     }
 

@@ -8,13 +8,10 @@ public class PlayerCombatModule : MonoBehaviour
     [SerializeField] private Transform eyePoint;
     [SerializeField] private EntityStatus myStatus;
     [SerializeField] private Transform throwPoint;
-    //[SerializeField] private GameObject bulletPrefab;
 
     [Header("Params")]
     [SerializeField] private LayerMask enemyLayer;
-    private Collider[] enemyColliderBuffer = new Collider[8];
-    private float LastFireTime;
-    [SerializeField] private float arcHeight = 2.0f; //투사체의 최대 높이
+    [SerializeField] private float arcHeight = 2.0f;
     [SerializeField] private LayerMask ObstacleLayer;
     [SerializeField] private float AimingCoolTime = 0.5f;
     [SerializeField] private float currentAimingTime = 0f;
@@ -26,7 +23,6 @@ public class PlayerCombatModule : MonoBehaviour
     private void Awake()
     {
         InitiateComponents();
-        InitiateParams();
     }
 
     private void InitiateComponents()
@@ -35,12 +31,7 @@ public class PlayerCombatModule : MonoBehaviour
         myStatus = GetComponent<EntityStatus>();
     }
 
-    private void InitiateParams()
-    {
-        //enemyLayer = LayerMask.GetMask("Enemy");
-        //throwPoint = transform.GetChild(2);
-    }
-    
+
     private void Start()
     {
         Managers.Instance.UIManager.InitPlayerGunInfo(myWeapon);
@@ -50,7 +41,7 @@ public class PlayerCombatModule : MonoBehaviour
     {
         if(IsAiming)
         {
-            currentAimingTime = Mathf.Min(Time.deltaTime + currentAimingTime + 0.1f, AimingCoolTime);
+            currentAimingTime = Mathf.Min(Time.deltaTime + currentAimingTime + 0.1f, AimingCoolTime); //시간을 항상 계산하지말고, IsAiming이 true가 될떄 그 순간을 기록하고, fire를 호출할때 Time.time - currentAiming 을 체크하는 방식 고려하기.
         }
     }
 
@@ -81,7 +72,20 @@ public class PlayerCombatModule : MonoBehaviour
         return false;
     }
 
-    public bool IsTargetInWeaponSight(GameObject target) //해당 코드가 잘 유효하면 위의 동명의 함수 제거
+    private bool CheckTargetVisibility(GameObject target, Transform baseTf)
+    {
+        Vector3 directionToTarget = target.transform.position - baseTf.position;
+        directionToTarget.y = baseTf.position.y;
+
+        Ray ray = new Ray(baseTf.position, directionToTarget);
+        if (Physics.Raycast(ray, myStatus.MaxViewingDistance, ObstacleLayer))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool IsTargetInWeaponSight(GameObject target)
     {
         bool condition = CheckPositionInRange(target.transform.position, myWeapon.Range);
         bool condition2 = CheckTargetVisibility(target, eyePoint);
@@ -89,58 +93,15 @@ public class PlayerCombatModule : MonoBehaviour
         return condition && condition2;
     }
 
-    private bool CheckTargetVisibility(GameObject target, Transform baseTf)
+    public bool CheckAimingTargetEnough()
     {
-        Vector3 directionToTarget = target.transform.position - baseTf.position;
-        directionToTarget.y = baseTf.position.y;
-
-        Ray ray = new Ray(baseTf.position, directionToTarget);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
-        {
-            return false;
-        }
-        return true;
+        return Time.time - currentAimingTime >= AimingCoolTime;
     }
 
-    private bool CheckPositionVisibility(Vector3 targetPos) //중복되는 부분이 있다. 리펙토링 고려
+    public bool CheckWeaponFireReady()
     {
-        Ray ray = new Ray(throwPoint.position, targetPos - throwPoint.position);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, ObstacleLayer))
-        {
-            if ((hitInfo.point - targetPos).sqrMagnitude < 0.1f)
-            {
-                return true;
-            }
-        }
-        return false;
+        return myWeapon.CanFire();
     }
-
-    public bool CanFire()
-    {
-        return Time.time - LastFireTime > myWeapon.FireRate 
-        && currentAimingTime >= AimingCoolTime
-        && myWeapon.IsAmmoLoaded();
-    }
-
-    public Enemy FindClosestEnemy()
-    {
-        Enemy scanned = null;
-
-        if (Physics.OverlapSphereNonAlloc(transform.position, myWeapon.Range, enemyColliderBuffer, enemyLayer.value) > 0)
-        {
-            for (int i = 0; i < enemyColliderBuffer.Length; ++i)
-            {
-                if (enemyColliderBuffer[i] != null)
-                {
-                    scanned = enemyColliderBuffer[i].GetComponent<Enemy>();
-                    if(scanned && CheckEnemyVisibility(scanned, eyePoint)) break;
-                }
-            }
-        }
-
-        return scanned;
-    }
-
     
     private void OnDrawGizmosSelected()
     {
@@ -154,13 +115,10 @@ public class PlayerCombatModule : MonoBehaviour
 
     public void NormalAttackEnemy(Enemy target)
     {
-        Debug.Log($"Player Attack : {target.gameObject.name}");
-
         if (target.TryGetComponent(out IDamageable damageable)) 
         {
-            LastFireTime = Time.time;
             myWeapon.FireWeapon();
-            damageable.TakeDamage(myWeapon.Damage);
+            //1damageable.TakeDamage(myWeapon.Damage); //NOTE : FireWeapon에서 이미 데미지를 주는중임. 이 코드 삭제 생각해보기
         }
     }
 
@@ -168,13 +126,12 @@ public class PlayerCombatModule : MonoBehaviour
     {
         if(this.IsAiming != IsAiming){
             this.IsAiming = IsAiming;
-            if(!IsAiming) currentAimingTime = 0f;
+            currentAimingTime = IsAiming ? Time.time : 0f;
         }
     }
 
     public bool CanThrowSomethingToPosition(GameObject projectileObject, Vector3 position)
     {
-        // 최대 투척 사거리 검사 (기존과 동일)
         if (Vector3.SqrMagnitude(position - throwPoint.position) > myStatus.ThrowRange * myStatus.ThrowRange) 
         {
             return false;
@@ -184,10 +141,9 @@ public class PlayerCombatModule : MonoBehaviour
 
         if (!PhysicsMathUtility.CalculateTrajectory(origin, position, arcHeight, out Vector3 initialVelocity, out float totalTime))
         {
-            return false; // 타겟이 너무 높음
+            return false;
         }
 
-        // 콜라이더 반지름 가져오기 (기존과 동일)
         float radius = 0.1f;
         if (projectileObject != null)
         {
@@ -195,7 +151,6 @@ public class PlayerCombatModule : MonoBehaviour
             if (col != null) radius = Mathf.Max(col.bounds.extents.x, col.bounds.extents.z);
         }
 
-        // 궤적 충돌 시뮬레이션
         int segmentCount = 20; 
         float deltaTime = totalTime / segmentCount;
         Vector3 previousPoint = origin;
@@ -206,17 +161,16 @@ public class PlayerCombatModule : MonoBehaviour
             Vector3 nextPoint = origin + (initialVelocity * t) + (0.5f * Physics.gravity * t * t);
             Vector3 direction = nextPoint - previousPoint;
 
-            // 장애물 검사
             if (Physics.SphereCast(previousPoint, radius, direction.normalized, out RaycastHit hit, direction.magnitude, ObstacleLayer))
             {
                 Debug.Log($"Chase State : Trajectory blocked by {hit.collider.gameObject.name} at {hit.point}");
-                return false; // 궤적 막힘
+                return false;
             }
 
             previousPoint = nextPoint;
         }
 
-        return true; // 투척 가능!
+        return true;
     }
 
     public void ThrowSomthingToTarget(GameObject throwingObject, Vector3 targetPos)
@@ -237,35 +191,13 @@ public class PlayerCombatModule : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 시작점에서 목표점까지 지정된 높이의 포물선을 그리며 날아가는 속도를 계산합니다.
-    /// </summary>
-    /// <param name="origin">던지는 위치</param>
-    /// <param name="target">목표 위치</param>
-    /// <param name="height">포물선의 최고 높이(상대값)</param>
-    /// <returns>초기 속도 벡터</returns>
-    private Vector3 CalculateVelocity(Vector3 origin, Vector3 target, float height)
+    public void RequestWeaponReload()
     {
-        float gravity = Physics.gravity.y; // 중력 (보통 -9.81)
-        float displacementY = target.y - origin.y; // 높이 차이
-        
-        // 수평 평면(XZ)에서의 거리 벡터와 거리값
-        Vector3 displacementXZ = new Vector3(target.x - origin.x, 0, target.z - origin.z);
-        float time = 0;
+        myWeapon.ReloadingWeapon();
+    }
 
-        float timeUp = Mathf.Sqrt(-2 * height / gravity);
-
-        // 내려가는 시간 (최고점에서 목표점까지)
-        // sqrt(2 * (dy - h) / g)
-        float timeDown = Mathf.Sqrt(2 * (displacementY - height) / gravity);
-
-        time = timeUp + timeDown;
-
-        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * height);
-        
-        // 수평 속도(Vxz): 거리 / 시간
-        Vector3 velocityXZ = displacementXZ / time;
-
-        return velocityXZ + velocityY;
+    public void RequestCancelReload()
+    {
+        myWeapon.CancelReloadingWeapon();
     }
 }

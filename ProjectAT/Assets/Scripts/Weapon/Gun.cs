@@ -1,6 +1,8 @@
 using Biostart.Bullet;
 using Unity.Netcode;
 using UnityEngine;
+using System;
+using System.Collections;
 
 public class Gun : Weapon
 {
@@ -8,24 +10,27 @@ public class Gun : Weapon
     private GunData gunData;
     public GunData GunData => gunData;
 
-    private IGunState gunState = IGunState.ReadyState;
+    private Coroutine reloadCoroutine;
+    private float currentFireTime;
 
     private LineRenderer lineRenderer;
     private AudioSource audioSource;
     [SerializeField] private ParticleSystem muzzleParticleSystem;
 
-    private int remainAmmo; // ���� ��ü ź��
-    private int magAmmo; // źâ�� ���� ź��
+    private int remainAmmo; // 현재 보유 총알(즉, totalAmmo - magAmmo)
+    private int magAmmo; // 탄창 속 남아있는 총알
 
     internal int RemainAmmo { get => remainAmmo; set => remainAmmo = value; }
     internal int MagAmmo { get => magAmmo; set => magAmmo = value; }
 
-    public override bool IsReady => gunState == IGunState.ReadyState;
-    public override bool IsReloading => gunState == IGunState.ReloadState;
+    public override bool IsReloading => reloadCoroutine != null;
+    public override bool IsReady => Time.time - currentFireTime >= gunData.TimeBetFire;
 
+    public event Action<Gun> OnReloadStart;
+    public event Action<Gun> OnReloadedEnd;
+    public event Action<Gun> OnWeaponFired;
 
-
-    // Animator �� ���� ���� �ٿ����� �����غ���
+    public string Statename;
 
     private void Awake()
     {
@@ -40,39 +45,57 @@ public class Gun : Weapon
         magAmmo = gunData.MagCapacity;
     }
 
-    private void RemainAmmoValueChanged(int previousRemainAmmo, int currentRemainAmmo)
+    private void Start()
     {
-        // UI Update...
-
-    }
-
-    private void MagAmmoValueChanged(int previousMagAmmo, int currentMagAmmo)
-    {
-        // UI Update...
     }
 
     //[Rpc(SendTo.Server)]
-
-    private void Fire()
-    {
-        gunState.Fire(this);
-    }
-
     public override void Attack()
     {
-        Fire();
+        if (CanFire())
+        {
+            PerformFire();
+
+            if(MagAmmo <= 0)
+            {
+                StartReloading();
+            }
+        }
     }
 
-    public void Reload()
+    public void Attack(float damage, LayerMask targetLayer)
     {
-        gunState.Reload(this);
+        if (CanFire())
+        {
+            PerformFire(damage, targetLayer);
+
+            if(MagAmmo <= 0)
+            {
+                TryReloadStart();
+            }
+        }
     }
 
-    internal void ChangeState(IGunState gunState)
+    public bool TryReloadStart()
     {
-        this.gunState = gunState;
-        gunState.Enter(this);
+        if (CanReload())
+        {
+            StartReloading();
+            return true;
+        }
+        return false;
     }
+
+    public bool TryCancelReload()
+    {
+        if (IsReloading)
+        {
+            StopReloading();
+            return true;
+        }
+        return false;
+    }
+
 
     // Only Server
     internal void PerformFire()
@@ -114,11 +137,59 @@ public class Gun : Weapon
                 bullet.SetVelocity(transform.forward * 100f);
             }
         }
+
+        currentFireTime = Time.time;
+        OnWeaponFired?.Invoke(this);
+    }
+
+    //NOTE : 스킬 공격용을 비롯한 특별한 공격력을 주는 사격이 필요할 때 이것을 사용. 물론 DesignatedFire 스킬은 눈속임을 위해 0데미지를 줄 예정.
+    internal void PerformFire(float damage, LayerMask targetLayer)
+    {
+        --magAmmo;
+
+        RaycastHit hit;
+        Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * gunData.MaxDistance, Color.blue, 2f);
+        if (Physics.Raycast(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward, out hit, gunData.MaxDistance, targetLayer))
+        {
+            Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * Vector3.Distance(muzzleParticleSystem.transform.position, hit.point), Color.red, 2f);
+
+            GameObject hitObject = Managers.Instance.PoolManager.GetObject(gunData.HitPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+            if (hitObject.TryGetComponent(out ParticleSystem hitParticle))
+                hitParticle.Play();
+
+            GameObject bulletObject = Managers.Instance.PoolManager.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
+            if (bulletObject.TryGetComponent(out Bullet bullet))
+            {
+                bullet.Initialize(hit.point, 5f);
+                bullet.SetVelocity(transform.forward * 100f);
+            }
+
+            if (hit.transform.TryGetComponent(out IDamageable damageable))
+                damageable.TakeDamage((int)damage);
+        }
+        else
+        {
+            GameObject bulletObject = Managers.Instance.PoolManager.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
+            if (bulletObject.TryGetComponent(out Bullet bullet))
+            {
+                Vector3 dest = muzzleParticleSystem.transform.position + muzzleParticleSystem.transform.forward * gunData.MaxDistance;
+                bullet.Initialize(dest, 5f);
+                bullet.SetVelocity(transform.forward * 100f);
+            }
+        }
+
+        currentFireTime = Time.time;
+        OnWeaponFired?.Invoke(this);
     }
 
     internal bool CanReload()
     {
-        return remainAmmo > 0 && magAmmo < gunData.MagCapacity;
+        return !IsReloading && remainAmmo > 0 && magAmmo < gunData.MagCapacity;
+    }
+
+    public bool CanFire()
+    {
+        return IsReady && magAmmo > 0;
     }
 
     internal void PerformReload()
@@ -128,27 +199,40 @@ public class Gun : Weapon
 
         magAmmo += ammoToMove;
         remainAmmo -= ammoToMove;
+        
+        OnReloadedEnd?.Invoke(this);
     }
 
-    //Client �ʿ��� Effect�� ����� ����
-    //[Rpc(SendTo.ClientsAndHost)]
-    internal void PlayFireRpc()
+    internal void StartReloading()
     {
-        Debug.Log("PlayFireRpc");
-        audioSource.PlayOneShot(gunData.ShotClip);
-
-        // ȭ��
-        // �ϻ� ���� �̹Ƿ� muzzle ����Ʈ�� ���� �ɷ�
-        //muzzleParticleSystem.Play();
+        if (reloadCoroutine == null)
+        {
+            ClearMagAmmo();
+            reloadCoroutine = StartCoroutine(ReloadingCoroutine());
+            OnReloadStart?.Invoke(this);
+        }
     }
 
-    //[Rpc(SendTo.ClientsAndHost)]
-    internal void PlayReloadRpc()
+    internal void StopReloading()
     {
-        Debug.Log("PlayReloadRpc");
-        audioSource.PlayOneShot(gunData.ReloadClip);
-
-        // Reload Animation
+        if (reloadCoroutine != null)
+        {
+            StopCoroutine(reloadCoroutine);
+            reloadCoroutine = null;
+        }
     }
-    // Ready -> 
+
+    private IEnumerator ReloadingCoroutine()
+    {
+        yield return new WaitForSeconds(gunData.ReloadTime);
+
+        PerformReload();
+        reloadCoroutine = null;
+    }
+
+    private void ClearMagAmmo()
+    {
+        remainAmmo += MagAmmo;
+        MagAmmo = 0;
+    }
 }
