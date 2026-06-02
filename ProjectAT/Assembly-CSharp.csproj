@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAttackAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponStatus.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyAlertnessModule.cs" />
     <Compile Include="Assets\Scripts\UI\EnemyUIModule.cs" />
     <Compile Include="Assets\Scripts\Abstract\ICarriable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseAction.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\CarryState.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseTargetPositionAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerInputInterfaces\PlayerStatusCapabilities.cs" />
+    <Compile Include="Assets\Scripts\Enemy\StimulusType.cs" />
     <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Skills\ConsumableSkillData.cs" />

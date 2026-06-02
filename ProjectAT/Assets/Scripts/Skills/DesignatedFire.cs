@@ -44,6 +44,9 @@ public class DesignatedFire : Skill
         {
             damageable.TakeDamage(skillContext.FinalDamage);
             context.MyWeapon.FireWeapon();
+
+            if (skillContext.TargetObject.TryGetComponent(out Enemy enemy) && context.TryGetComponent(out IPerceivable attacker))
+                enemy.ReceiveAttack(attacker);
         }
     }
 

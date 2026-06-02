@@ -12,6 +12,7 @@ public class ProjectileGrenade : MonoBehaviour
     [SerializeField] private float fuseTime = 3f;
 
     private Coroutine explosionCoroutine;
+    private IPerceivable attacker;
 
     private void Awake()
     {
@@ -19,12 +20,13 @@ public class ProjectileGrenade : MonoBehaviour
         groundLayer = LayerMask.NameToLayer("Ground");
     }
 
-    public void SetUp(int damage, float radius, float fuse, LayerMask damageableLayers)
+    public void SetUp(int damage, float radius, float fuse, LayerMask damageableLayers, IPerceivable attacker = null)
     {
         ExplodeDamage = damage;
         ExplosionRadius = radius;
         fuseTime = fuse;
         this.damageableLayers = damageableLayers;
+        this.attacker = attacker;
     }
 
     public void Throw(Vector3 velocity)
@@ -70,6 +72,9 @@ public class ProjectileGrenade : MonoBehaviour
             if (damageable != null)
             {
                 damageable.TakeDamage(ExplodeDamage);
+
+                if (attacker is not null && hitCollider.TryGetComponent(out Enemy enemy))
+                    enemy.ReceiveAttack(attacker);
             }
         }
         Destroy(gameObject);

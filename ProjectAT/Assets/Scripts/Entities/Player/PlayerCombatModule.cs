@@ -9,6 +9,7 @@ public class PlayerCombatModule : MonoBehaviour
     [SerializeField] private EntityStatus myStatus;
     [SerializeField] private Transform throwPoint;
     //[SerializeField] private GameObject bulletPrefab;
+    private IPerceivable myPerceivable;
 
     [Header("Params")]
     [SerializeField] private LayerMask enemyLayer;
@@ -33,6 +34,7 @@ public class PlayerCombatModule : MonoBehaviour
     {
         myWeapon = GetComponentInChildren<WeaponHolder>();
         myStatus = GetComponent<EntityStatus>();
+        TryGetComponent(out myPerceivable);
     }
 
     private void InitiateParams()
@@ -164,6 +166,7 @@ public class PlayerCombatModule : MonoBehaviour
             LastFireTime = Time.time;
             myWeapon.FireWeapon();
             damageable.TakeDamage(myWeapon.Damage);
+            target.ReceiveAttack(myPerceivable);
         }
     }
 

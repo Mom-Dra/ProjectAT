@@ -8,6 +8,7 @@ using TMPro;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(AwarenessModule))]
+[RequireComponent(typeof(EnemyAlertnessModule))]
 [RequireComponent(typeof(PerceptionSystem))]
 public class Enemy : MonoBehaviour, ISquadMember
 {
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     private NavMeshAgent navMeshAgent;
     private PerceptionSystem perceptionSystem;
     private AwarenessModule awarenessModule;
+    private EnemyAlertnessModule alertnessModule;
     private FieldOfViewVisuals fieldOfViewVisuals;
     private EnemyAnimator enemyAnimator;
     private Weapon weapon;
@@ -44,6 +46,10 @@ public class Enemy : MonoBehaviour, ISquadMember
     public NavMeshAgent NavMeshAgent => navMeshAgent;
     public PerceptionSystem PerceptionSystem => perceptionSystem;
     public AwarenessModule AwarenessModule => awarenessModule;
+    public EnemyAlertnessModule AlertnessModule => alertnessModule;
+    public float Alertness => alertnessModule != null ? alertnessModule.Alertness : 0f;
+    public Vector3 LastKnownStimulusPosition => alertnessModule != null ? alertnessModule.LastKnownStimulusPosition : Vector3.zero;
+    public bool HasStimulusPosition => alertnessModule != null && alertnessModule.HasStimulusPosition;
     public Vector3 LastKnownPosition => lastKnownPosition;
     public Vector3 CurrentOrderDestination => currentOrderDestination;
 
@@ -91,6 +97,7 @@ public class Enemy : MonoBehaviour, ISquadMember
         navMeshAgent = GetComponent<NavMeshAgent>();
         perceptionSystem = GetComponent<PerceptionSystem>();
         awarenessModule = GetComponent<AwarenessModule>();
+        alertnessModule = GetComponent<EnemyAlertnessModule>();
         fieldOfViewVisuals = GetComponent<FieldOfViewVisuals>();
         enemyAnimator = GetComponent<EnemyAnimator>();
         weapon = GetComponentInChildren<Gun>();
@@ -103,15 +110,23 @@ public class Enemy : MonoBehaviour, ISquadMember
     private void OnEnable()
     {
         perceptionSystem.onTargetDetected += TargetDetected;
+        awarenessModule.onScanStarted += ScanStarted;
         awarenessModule.onTargetConfirmed += TargetConfirmed;
         awarenessModule.onTargetLost += TargetLost;
+
+        if (alertnessModule is not null)
+            alertnessModule.onAlertThresholdReached += AlertThresholdReached;
     }
 
     private void OnDisable()
     {
         perceptionSystem.onTargetDetected -= TargetDetected;
+        awarenessModule.onScanStarted -= ScanStarted;
         awarenessModule.onTargetConfirmed -= TargetConfirmed;
         awarenessModule.onTargetLost -= TargetLost;
+
+        if (alertnessModule is not null)
+            alertnessModule.onAlertThresholdReached -= AlertThresholdReached;
 
         StopPositionReport();
     }
@@ -130,8 +145,16 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     private void TargetConfirmed(IPerceivable target)
     {
+        ConfirmTarget(target);
+    }
+
+    private void ConfirmTarget(IPerceivable target)
+    {
+        if (target is null || !target.IsValidTarget) return;
+
         currentTarget = target;
         lastKnownPosition = target.Transform.position;
+        currentOrderDestination = lastKnownPosition;
 
         currState?.TargetConfirmed(this, target);
 
@@ -143,6 +166,13 @@ public class Enemy : MonoBehaviour, ISquadMember
     private void TargetDetected(IPerceivable target)
     {
         currState?.TargetDetected(this, target);
+    }
+
+    private void ScanStarted(IPerceivable target)
+    {
+        if (target is null || target.Transform is null) return;
+
+        ReportStimulus(target.Transform.position, StimulusType.BriefSight);
     }
 
     private void TargetLost(IPerceivable target)
@@ -174,6 +204,23 @@ public class Enemy : MonoBehaviour, ISquadMember
         currState?.OrderReceived(this, squadOrder);
     }
 
+    public void ReportStimulus(Vector3 position, StimulusType stimulusType)
+    {
+        alertnessModule.ReportStimulus(position, stimulusType);
+    }
+
+    public void ReportStimulus(Vector3 position, float amount)
+    {
+        alertnessModule.ReportStimulus(position, amount);
+    }
+
+    public void ReceiveAttack(IPerceivable attacker)
+    {
+        if (attacker is null || !attacker.IsValidTarget) return;
+
+        ConfirmTarget(attacker);
+    }
+
     private static IEnemyState GetStateForOrder(SquadOrder squadOrder)
     {
         return squadOrder.OrderKind switch
@@ -195,6 +242,15 @@ public class Enemy : MonoBehaviour, ISquadMember
     {
         if (ReferenceEquals(this.squad, squad))
             this.squad = null;
+    }
+
+    private void AlertThresholdReached(Vector3 position, float alertness)
+    {
+        lastKnownPosition = position;
+
+        if (squad is null) return;
+
+        squad.ReportMemberAlert(this, position, alertness);
     }
 
     internal void ChangeState(IEnemyState nextState)

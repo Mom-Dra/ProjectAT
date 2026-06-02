@@ -40,7 +40,8 @@ public class ThrowGrenade : Skill
         {
             GameObject grenade = Object.Instantiate(projectileData.ThrowingObjectPrefab, skillContext.CastedPosition, Quaternion.identity);
             ProjectileGrenade proj = grenade.GetComponent<ProjectileGrenade>();
-            proj.SetUp(projectileData.BaseDamage, projectileData.ExplosionRadius, projectileData.FuseTime, TargetLayer);
+            context.TryGetComponent(out IPerceivable attacker);
+            proj.SetUp(projectileData.BaseDamage, projectileData.ExplosionRadius, projectileData.FuseTime, TargetLayer, attacker);
             context.MyCombatModule.ThrowSomthingToTarget(grenade, skillContext.CastedPosition);
         }
         else
