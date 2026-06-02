@@ -6,6 +6,7 @@ using TMPro;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(AwarenessModule))]
+[RequireComponent(typeof(EnemyAlertnessModule))]
 [RequireComponent(typeof(PerceptionSystem))]
 public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
 {
@@ -23,10 +24,12 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
     private NavMeshAgent navMeshAgent;
     private PerceptionSystem perceptionSystem;
     private AwarenessModule awarenessModule;
+    private EnemyAlertnessModule alertnessModule;
     private FieldOfViewVisuals fieldOfViewVisuals;
     private EnemyAnimator enemyAnimator;
     private Weapon weapon;
 
+    private Squad squad;
     private IEnemyState currState;
 
     private IPerceivable currentTarget;
@@ -45,6 +48,10 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
     public NavMeshAgent NavMeshAgent => navMeshAgent;
     public PerceptionSystem PerceptionSystem => perceptionSystem;
     public AwarenessModule AwarenessModule => awarenessModule;
+    public EnemyAlertnessModule AlertnessModule => alertnessModule;
+    public float Alertness => alertnessModule != null ? alertnessModule.Alertness : 0f;
+    public Vector3 LastKnownStimulusPosition => alertnessModule != null ? alertnessModule.LastKnownStimulusPosition : Vector3.zero;
+    public bool HasStimulusPosition => alertnessModule != null && alertnessModule.HasStimulusPosition;
     public Vector3 LastKnownPosition => lastKnownPosition;
     public Vector3 CurrentOrderDestination => currentOrderDestination;
     internal Vector3 InvestigatePosition => investigatePosition;
@@ -63,6 +70,8 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
     public Transform Transform => transform;
 
     // State 공유 변수
+    internal bool IsAssignedToSquad => squad != null;
+    internal bool HasPatrolWaypoints => patrolWaypoints != null && patrolWaypoints.Length > 0;
     internal Transform[] Waypoints => patrolWaypoints;
 
     internal int WaypointIndex
@@ -70,7 +79,7 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
         get => wayPointIndex;
         set
         {
-            if (value < 0 && value >= patrolWaypoints.Length)
+            if (value < 0 || value >= patrolWaypoints.Length)
                 Debug.LogError("value < 0 && value >= patrolWaypoints.Length");
 
             wayPointIndex = value;
@@ -78,7 +87,7 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
     }
 
     internal bool UseOrderedDestination { get; set; }
-
+    internal bool PatrolPausedByTarget { get; set; }
     internal float Elapsed { get; set; }
     internal bool ArrivedOnce { get; set; }
 
@@ -95,6 +104,7 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
         navMeshAgent = GetComponent<NavMeshAgent>();
         perceptionSystem = GetComponent<PerceptionSystem>();
         awarenessModule = GetComponent<AwarenessModule>();
+        alertnessModule = GetComponent<EnemyAlertnessModule>();
         fieldOfViewVisuals = GetComponent<FieldOfViewVisuals>();
         enemyAnimator = GetComponent<EnemyAnimator>();
         weapon = GetComponentInChildren<Gun>();
@@ -106,21 +116,31 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
 
     private void OnEnable()
     {
+        perceptionSystem.onTargetDetected += TargetDetected;
+        awarenessModule.onScanStarted += ScanStarted;
         awarenessModule.onTargetConfirmed += TargetConfirmed;
         awarenessModule.onTargetLost += TargetLost;
+
+        if (alertnessModule is not null)
+            alertnessModule.onAlertThresholdReached += AlertThresholdReached;
     }
 
     private void OnDisable()
     {
+        perceptionSystem.onTargetDetected -= TargetDetected;
+        awarenessModule.onScanStarted -= ScanStarted;
         awarenessModule.onTargetConfirmed -= TargetConfirmed;
         awarenessModule.onTargetLost -= TargetLost;
+
+        if (alertnessModule is not null)
+            alertnessModule.onAlertThresholdReached -= AlertThresholdReached;
 
         StopPositionReport();
     }
 
     private void Start()
     {
-        ChangeState(IEnemyState.IdleState);
+        ChangeState(!IsAssignedToSquad && HasPatrolWaypoints ? IEnemyState.PatrolState : IEnemyState.IdleState);
     }
 
     private void Update()
@@ -132,14 +152,34 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
 
     private void TargetConfirmed(IPerceivable target)
     {
+        ConfirmTarget(target);
+    }
+
+    private void ConfirmTarget(IPerceivable target)
+    {
+        if (target is null || !target.IsValidTarget) return;
+
         currentTarget = target;
         lastKnownPosition = target.Transform.position;
+        currentOrderDestination = lastKnownPosition;
 
         currState?.TargetConfirmed(this, target);
 
         StartPositionReport();
 
         onTargetDetected?.Invoke(this, target);
+    }
+
+    private void TargetDetected(IPerceivable target)
+    {
+        currState?.TargetDetected(this, target);
+    }
+
+    private void ScanStarted(IPerceivable target)
+    {
+        if (target is null || target.Transform is null) return;
+
+        ReportStimulus(target.Transform.position, StimulusType.BriefSight);
     }
 
     private void TargetLost(IPerceivable target)
@@ -160,8 +200,64 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
     public void ReceiveOrder(SquadOrder squadOrder)
     {
         currentOrderDestination = squadOrder.Position;
+        UseOrderedDestination = squadOrder.OrderKind == OrderKind.Patrol;
+
+        if (currState == null)
+        {
+            ChangeState(GetStateForOrder(squadOrder));
+            return;
+        }
 
         currState?.OrderReceived(this, squadOrder);
+    }
+
+    public void ReportStimulus(Vector3 position, StimulusType stimulusType)
+    {
+        alertnessModule.ReportStimulus(position, stimulusType);
+    }
+
+    public void ReportStimulus(Vector3 position, float amount)
+    {
+        alertnessModule.ReportStimulus(position, amount);
+    }
+
+    public void ReceiveAttack(IPerceivable attacker)
+    {
+        if (attacker is null || !attacker.IsValidTarget) return;
+
+        ConfirmTarget(attacker);
+    }
+
+    private static IEnemyState GetStateForOrder(SquadOrder squadOrder)
+    {
+        return squadOrder.OrderKind switch
+        {
+            OrderKind.Attack => IEnemyState.ChaseState,
+            OrderKind.Search => IEnemyState.SearchState,
+            OrderKind.Patrol => IEnemyState.PatrolState,
+            OrderKind.Disengage => IEnemyState.IdleState,
+            _ => IEnemyState.IdleState,
+        };
+    }
+
+    internal void JoinSquad(Squad squad)
+    {
+        this.squad = squad;
+    }
+
+    internal void LeaveSquad(Squad squad)
+    {
+        if (ReferenceEquals(this.squad, squad))
+            this.squad = null;
+    }
+
+    private void AlertThresholdReached(Vector3 position, float alertness)
+    {
+        lastKnownPosition = position;
+
+        if (squad is null) return;
+
+        squad.ReportMemberAlert(this, position, alertness);
     }
 
     public void OnNoiseDetect(Vector3 noisePosition) //TODO : Position 뿐만 아니라 Rotation까지 돌게하기
@@ -213,6 +309,8 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
 
     internal bool IsTargetInAttackRange()
     {
+        // CombatModule 로 모듈화 할 것
+
         if (currentTarget is null || !currentTarget.IsValidTarget) return false;
 
         float distance = (currentTarget.Transform.position - transform.position).sqrMagnitude;

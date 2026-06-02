@@ -36,7 +36,7 @@ public class ThrowGrenade : Skill
 
     public override void Execute(SkillContext skillContext)
     {
-        if(skillData is ProjectileSkillData projectileData)
+        if (skillData is ProjectileSkillData projectileData)
         {
             GameObject grenade = Object.Instantiate(projectileData.ThrowingObjectPrefab, skillContext.CastedPosition, Quaternion.identity);
             ProjectileGrenade proj = grenade.GetComponent<ProjectileGrenade>();
@@ -51,13 +51,13 @@ public class ThrowGrenade : Skill
 
     public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
     {
-        if(((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0)
+        if (((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0)
         {
             target = null;
             point = hit.point;
             return true;
         }
-        
+
         target = null;
         point = Vector3.zero;
         return false;

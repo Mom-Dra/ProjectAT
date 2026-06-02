@@ -194,6 +194,8 @@ public class SquadSearchState : ISquadState
         //squad.squadStateText.text = "Search";
         squad.Elapsed = 0f;
         squad.ReassignTimer = 0f;
+
+        Assign(squad);
     }
 
     public void Update(Squad squad)

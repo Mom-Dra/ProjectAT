@@ -84,7 +84,6 @@ public class PerceptionSystem : MonoBehaviour
         {
             if (!colliders[i].TryGetComponent(out IPerceivable perceivable) || !perceivable.IsValidTarget) continue;
             if (!IsInFieldOfView(perceivable.Transform)) continue;
-            if (!perceivable.IsValidTarget) continue;
             if (!HasLineOfSight(perceivable.Transform, out float distance)) continue;
 
             visibleTargets.Add(new DetectedTarget(perceivable, distance));

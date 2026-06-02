@@ -10,6 +10,10 @@ public class Squad : MonoBehaviour
 
     [SerializeField] internal TextMeshProUGUI squadStateText;
 
+    [Header("Member Alert Debug")]
+    [SerializeField] private bool debugMemberAlertLog;
+    [SerializeField] private bool drawMemberAlertGizmos = true;
+
     private readonly List<ISquadMember> members = new List<ISquadMember>();
     private readonly SquadTargetPool squadTargetPool = new SquadTargetPool();
     private readonly List<IPerceivable> scratchRemoved = new List<IPerceivable>();
@@ -17,6 +21,8 @@ public class Squad : MonoBehaviour
     private IFormation formation;
     private ISquadState currState;
     private Vector3 lastKnownPosition;
+    private Vector3 lastMemberAlertPosition;
+    private bool hasMemberAlertPosition;
 
     private int waypointIndex;
 
@@ -25,6 +31,9 @@ public class Squad : MonoBehaviour
     internal SquadConfig SquadConfig => squadConfig;
     internal SquadTargetPool SquadTargetPool => squadTargetPool;
     internal Vector3 LastKnownPosition => lastKnownPosition;
+    internal bool IsInSearchState => ReferenceEquals(currState, ISquadState.SearchState);
+    public Vector3 LastMemberAlertPosition => lastMemberAlertPosition;
+    public bool HasMemberAlertPosition => hasMemberAlertPosition;
 
     internal IEnumerable<ISquadMember> AliveMembers
     {
@@ -97,7 +106,10 @@ public class Squad : MonoBehaviour
     private void OnDestroy()
     {
         foreach (ISquadMember member in members)
+        {
             UnsubscribeMember(member);
+            ReleaseMember(member);
+        }
 
         members.Clear();
         squadTargetPool.Clear();
@@ -112,6 +124,7 @@ public class Squad : MonoBehaviour
         }
 
         members.Add(squadMember);
+        RegisterMember(squadMember);
         SubscribeMember(squadMember);
     }
 
@@ -124,10 +137,45 @@ public class Squad : MonoBehaviour
         }
 
         UnsubscribeMember(squadMember);
+        ReleaseMember(squadMember);
 
         members.Remove(squadMember);
         squadTargetPool.RemoveMemberFromAll(squadMember, scratchRemoved);
         currState?.MemberRemoved(this, squadMember);
+    }
+
+    public void ReportMemberAlert(ISquadMember reporter, Vector3 position, float reporterAlertness)
+    {
+        if (reporter is null || !members.Contains(reporter)) return;
+
+        lastMemberAlertPosition = position;
+        hasMemberAlertPosition = true;
+        lastKnownPosition = position;
+
+        if (debugMemberAlertLog)
+            Debug.Log($"[{name}] Alert from {reporter.Transform.name}: alertness={reporterAlertness:0.##}", this);
+
+        if (squadTargetPool.HasAnyTarget) return;
+
+        if (IsInSearchState)
+        {
+            ReassignTimer = squadConfig.searchReassignInterval;
+            return;
+        }
+
+        ChangeState(ISquadState.SearchState);
+    }
+
+    private void RegisterMember(ISquadMember squadMember)
+    {
+        if (squadMember is Enemy enemy)
+            enemy.JoinSquad(this);
+    }
+
+    private void ReleaseMember(ISquadMember squadMember)
+    {
+        if (squadMember is Enemy enemy)
+            enemy.LeaveSquad(this);
     }
 
     private void SubscribeMember(ISquadMember squadMember)
@@ -196,8 +244,16 @@ public class Squad : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
+        if (!drawMemberAlertGizmos) return;
+
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(lastKnownPosition, 1f);
+
+        if (hasMemberAlertPosition)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(lastMemberAlertPosition, 1.5f);
+        }
     }
 #endif
 }

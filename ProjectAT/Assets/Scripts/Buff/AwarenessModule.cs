@@ -61,8 +61,8 @@ public class AwarenessModule : MonoBehaviour
 
         StopActiveCoroutine();
         scanningTarget = target;
-        onScanStarted?.Invoke(target);
         Debug.Log("onScanStarted");
+        onScanStarted?.Invoke(target);
         activeCoroutine = StartCoroutine(ScanCoroutine(target));
     }
 
