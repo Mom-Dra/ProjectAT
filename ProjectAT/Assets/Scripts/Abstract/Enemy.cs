@@ -4,6 +4,8 @@ using System;
 using UnityEngine.AI;
 using TMPro;
 
+// CombatMoudle로 한번 모듈화 하고..!
+
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(AwarenessModule))]
 [RequireComponent(typeof(PerceptionSystem))]
@@ -27,6 +29,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     private EnemyAnimator enemyAnimator;
     private Weapon weapon;
 
+    private Squad squad;
     private IEnemyState currState;
 
     private IPerceivable currentTarget;
@@ -55,6 +58,8 @@ public class Enemy : MonoBehaviour, ISquadMember
     public Transform Transform => transform;
 
     // State 공유 변수
+    internal bool IsAssignedToSquad => squad != null;
+    internal bool HasPatrolWaypoints => patrolWaypoints != null && patrolWaypoints.Length > 0;
     internal Transform[] Waypoints => patrolWaypoints;
 
     internal int WaypointIndex
@@ -62,7 +67,7 @@ public class Enemy : MonoBehaviour, ISquadMember
         get => wayPointIndex;
         set
         {
-            if (value < 0 && value >= patrolWaypoints.Length)
+            if (value < 0 || value >= patrolWaypoints.Length)
                 Debug.LogError("value < 0 && value >= patrolWaypoints.Length");
 
             wayPointIndex = value;
@@ -70,7 +75,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     }
 
     internal bool UseOrderedDestination { get; set; }
-
+    internal bool PatrolPausedByTarget { get; set; }
     internal float Elapsed { get; set; }
     internal bool ArrivedOnce { get; set; }
 
@@ -97,12 +102,14 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     private void OnEnable()
     {
+        perceptionSystem.onTargetDetected += TargetDetected;
         awarenessModule.onTargetConfirmed += TargetConfirmed;
         awarenessModule.onTargetLost += TargetLost;
     }
 
     private void OnDisable()
     {
+        perceptionSystem.onTargetDetected -= TargetDetected;
         awarenessModule.onTargetConfirmed -= TargetConfirmed;
         awarenessModule.onTargetLost -= TargetLost;
 
@@ -111,7 +118,7 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     private void Start()
     {
-        ChangeState(IEnemyState.IdleState);
+        ChangeState(!IsAssignedToSquad && HasPatrolWaypoints ? IEnemyState.PatrolState : IEnemyState.IdleState);
     }
 
     private void Update()
@@ -133,6 +140,11 @@ public class Enemy : MonoBehaviour, ISquadMember
         onTargetDetected?.Invoke(this, target);
     }
 
+    private void TargetDetected(IPerceivable target)
+    {
+        currState?.TargetDetected(this, target);
+    }
+
     private void TargetLost(IPerceivable target)
     {
         if (!ReferenceEquals(currentTarget, target)) return;
@@ -151,8 +163,38 @@ public class Enemy : MonoBehaviour, ISquadMember
     public void ReceiveOrder(SquadOrder squadOrder)
     {
         currentOrderDestination = squadOrder.Position;
+        UseOrderedDestination = squadOrder.OrderKind == OrderKind.Patrol;
+
+        if (currState == null)
+        {
+            ChangeState(GetStateForOrder(squadOrder));
+            return;
+        }
 
         currState?.OrderReceived(this, squadOrder);
+    }
+
+    private static IEnemyState GetStateForOrder(SquadOrder squadOrder)
+    {
+        return squadOrder.OrderKind switch
+        {
+            OrderKind.Attack => IEnemyState.ChaseState,
+            OrderKind.Search => IEnemyState.SearchState,
+            OrderKind.Patrol => IEnemyState.PatrolState,
+            OrderKind.Disengage => IEnemyState.IdleState,
+            _ => IEnemyState.IdleState,
+        };
+    }
+
+    internal void JoinSquad(Squad squad)
+    {
+        this.squad = squad;
+    }
+
+    internal void LeaveSquad(Squad squad)
+    {
+        if (ReferenceEquals(this.squad, squad))
+            this.squad = null;
     }
 
     internal void ChangeState(IEnemyState nextState)
@@ -190,6 +232,8 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     internal bool IsTargetInAttackRange()
     {
+        // CombatModule 로 모듈화 할 것
+
         if (currentTarget is null || !currentTarget.IsValidTarget) return false;
 
         float distance = (currentTarget.Transform.position - transform.position).sqrMagnitude;

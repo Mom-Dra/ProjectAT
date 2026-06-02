@@ -49,6 +49,7 @@
     <Analyzer Include="C:\Users\HuiYong\UnityProjects\ProjectAT\ProjectAT\Library\PackageCache\com.unity.dt.app-ui@166eda91cea7\Runtime\SourceGenerators\netstandard2.0\EnumToLowerCase.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Interactable\InteractableObject.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerMovementModule.cs" />
     <Compile Include="Assets\Scripts\Skills\UseBandage.cs" />
     <Compile Include="Assets\Scripts\Skills\DummySkill.cs" />
@@ -56,12 +57,14 @@
     <Compile Include="Assets\Scripts\Weapon\IGunState.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillData.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\EnableTrailAfterTime.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\InteractingState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\SkillCastState.cs" />
     <Compile Include="Assets\Scripts\Abstract\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAttackAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Weapon\WeaponStatus.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
     <Compile Include="Assets\Scripts\UI\EnemyUIModule.cs" />
+    <Compile Include="Assets\Scripts\Abstract\ICarriable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseAction.cs" />
     <Compile Include="Assets\Datas\VFXs\Click VFX\Assets\Scripts\ClickManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\EnemyState.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\BulletProjector.cs" />
     <Compile Include="Assets\Scripts\Utils\PoolManager.cs" />
     <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\CoverState.cs" />
     <Compile Include="Assets\Scripts\Mission\MissionData.cs" />
     <Compile Include="Assets\Scripts\Cursor\CursorSettings.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\SquadTargetPool.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="Assets\Scripts\View\FieldOfViewVisuals.cs" />
     <Compile Include="Assets\Scripts\Pool\ReturnParticleOnStop.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityInitialStatus.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\CarryState.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\ChaseTargetPositionAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerInputInterfaces\PlayerStatusCapabilities.cs" />
     <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
@@ -154,6 +159,7 @@
     <Compile Include="Assets\Scripts\Enemy\EnemyAnimator.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerNetworkMovement.cs" />
     <Compile Include="Assets\Scripts\Manager\MissionManager.cs" />
+    <Compile Include="Assets\Scripts\Abstract\IUIHoverable.cs" />
     <Compile Include="Assets\Scripts\Items\ItemData.cs" />
     <Compile Include="Assets\Scripts\Mission\KillTargetData.cs" />
     <Compile Include="Assets\Scripts\Skills\Skill.cs" />
@@ -183,11 +189,11 @@
     <Compile Include="Assets\Scripts\Enemy\Squad\ISquadMember.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponStraight.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\ISquadState.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\InteractionContext.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\CustomControls\CooldownOverlay.cs" />
     <Compile Include="Assets\Scripts\View\SightOfView.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAction.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\ExplosionWave.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\PlayerStateType.cs" />
     <Compile Include="Assets\Scripts\Scene\EndScene.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\UpdateDistanceAction.cs" />
     <Compile Include="Assets\Scripts\Buff\BuffData.cs" />
@@ -219,6 +225,8 @@
     <Compile Include="Assets\Scripts\Skills\SkillContext.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\Squad.cs" />
     <Compile Include="Assets\Scripts\View\Controller.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\InteractChaseState.cs" />
+    <Compile Include="Assets\Scripts\Entities\DeadBody\DownedBody.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverGenerator.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\PlayerHUD.cs" />
     <Compile Include="Assets\Datas\VFXs\Click VFX\Assets\Scripts\PreviewEvent.cs" />

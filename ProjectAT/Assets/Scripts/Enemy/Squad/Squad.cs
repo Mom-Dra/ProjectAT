@@ -97,7 +97,10 @@ public class Squad : MonoBehaviour
     private void OnDestroy()
     {
         foreach (ISquadMember member in members)
+        {
             UnsubscribeMember(member);
+            ReleaseMember(member);
+        }
 
         members.Clear();
         squadTargetPool.Clear();
@@ -112,6 +115,7 @@ public class Squad : MonoBehaviour
         }
 
         members.Add(squadMember);
+        RegisterMember(squadMember);
         SubscribeMember(squadMember);
     }
 
@@ -124,10 +128,23 @@ public class Squad : MonoBehaviour
         }
 
         UnsubscribeMember(squadMember);
+        ReleaseMember(squadMember);
 
         members.Remove(squadMember);
         squadTargetPool.RemoveMemberFromAll(squadMember, scratchRemoved);
         currState?.MemberRemoved(this, squadMember);
+    }
+
+    private void RegisterMember(ISquadMember squadMember)
+    {
+        if (squadMember is Enemy enemy)
+            enemy.JoinSquad(this);
+    }
+
+    private void ReleaseMember(ISquadMember squadMember)
+    {
+        if (squadMember is Enemy enemy)
+            enemy.LeaveSquad(this);
     }
 
     private void SubscribeMember(ISquadMember squadMember)

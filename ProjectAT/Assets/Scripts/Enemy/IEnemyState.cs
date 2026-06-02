@@ -15,6 +15,7 @@ public interface IEnemyState
     void Update(Enemy enemy);
     void Exit(Enemy enemy);
 
+    void TargetDetected(Enemy enemy, IPerceivable target) { }
     void TargetConfirmed(Enemy enemy, IPerceivable target) { }
     void TargetLost(Enemy enemy, IPerceivable target) { }
     void OrderReceived(Enemy enemy, SquadOrder order) { }
@@ -92,9 +93,13 @@ public class EnemyPatrolState : IEnemyState
         enemy.EnableFieldOfView(true);
         enemy.SetAttackMode(false);
 
-        enemy.UseOrderedDestination = false;
+        if (enemy.UseOrderedDestination)
+        {
+            MoveToOrderedDestination(enemy);
+            return;
+        }
 
-        if (enemy.Waypoints is null || enemy.Waypoints.Length == 0)
+        if (!enemy.HasPatrolWaypoints)
         {
             enemy.ChangeState(IEnemyState.IdleState);
             return;
@@ -105,6 +110,20 @@ public class EnemyPatrolState : IEnemyState
 
     public void Update(Enemy enemy)
     {
+        if (enemy.PerceptionSystem.HasAnyTarget)
+        {
+            enemy.PatrolPausedByTarget = true;
+            enemy.StopMoving();
+            return;
+        }
+
+        if (enemy.PatrolPausedByTarget)
+        {
+            enemy.PatrolPausedByTarget = false;
+            ResumePatrol(enemy);
+            return;
+        }
+
         if (!enemy.HasArrived()) return;
 
         if (!enemy.UseOrderedDestination)
@@ -115,7 +134,11 @@ public class EnemyPatrolState : IEnemyState
         else
         {
             enemy.UseOrderedDestination = false;
-            MoveToCurrentWaypoint(enemy);
+
+            if (enemy.HasPatrolWaypoints)
+                MoveToCurrentWaypoint(enemy);
+            else
+                enemy.ChangeState(IEnemyState.IdleState);
         }
     }
 
@@ -127,6 +150,12 @@ public class EnemyPatrolState : IEnemyState
     public void TargetConfirmed(Enemy enemy, IPerceivable target)
     {
         enemy.ChangeState(IEnemyState.AttackState);
+    }
+
+    public void TargetDetected(Enemy enemy, IPerceivable target)
+    {
+        enemy.PatrolPausedByTarget = true;
+        enemy.StopMoving();
     }
 
     public void OrderReceived(Enemy enemy, SquadOrder squadOrder)
@@ -161,8 +190,22 @@ public class EnemyPatrolState : IEnemyState
         Vector3 destination = enemy.CurrentOrderDestination;
 
         if (NavMesh.SamplePosition(destination, out NavMeshHit hit, 3f, NavMesh.AllAreas))
-            enemy.MoveTo(destination);
+            enemy.MoveTo(hit.position);
         else enemy.MoveTo(destination);
+    }
+
+    private void ResumePatrol(Enemy enemy)
+    {
+        if (enemy.UseOrderedDestination)
+        {
+            MoveToOrderedDestination(enemy);
+            return;
+        }
+
+        if (enemy.HasPatrolWaypoints)
+            MoveToCurrentWaypoint(enemy);
+        else
+            enemy.ChangeState(IEnemyState.IdleState);
     }
 }
 
