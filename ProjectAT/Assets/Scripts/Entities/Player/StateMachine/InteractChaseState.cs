@@ -1,4 +1,5 @@
 using UnityEngine;
+using Interactable;
 using PlayerStateCapabilities;
 
 
@@ -18,7 +19,7 @@ namespace PlayerStateMachine
 
         public override void OnEnter()
         {
-            myInteractionModule.CurrentInteractTarget.OnTargetSelected();
+            myInteractionModule.CurrentInteractTarget.OnSelected();
         }
 
         public override void OnExit()
@@ -31,7 +32,7 @@ namespace PlayerStateMachine
 
         public override void OnUpdate()
         {
-            IInteractable target = myInteractionModule.CurrentInteractTarget;
+            InteractableObject target = myInteractionModule.CurrentInteractTarget;
 
             // 안전 장치 1: 추적 중에 대상이 파괴되었거나 null이 된 경우
             if (target == null || (target.IsInUse && target.CurrentInteractor != context.gameObject))
@@ -90,7 +91,7 @@ namespace PlayerStateMachine
                 return;
             }
             
-            if (castedObject.collider.TryGetComponent(out IInteractable interactable)) //인터렉터블 오브젝트 처리.
+            if (castedObject.collider.TryGetComponent(out InteractableObject interactable)) //인터렉터블 오브젝트 처리.
             {
                 myInteractionModule.CurrentInteractTarget = interactable;
                 context.ChangeState(PlayerStateType.InteractChasing);
@@ -131,7 +132,7 @@ namespace PlayerStateMachine
         private void CancelInteractChasing(PlayerStateType nextState)
         {
             //context.PlayerMove(context.transform.position, false); // 이동 멈춤
-            myInteractionModule.CurrentInteractTarget.OnTargetDeselected();
+            myInteractionModule.CurrentInteractTarget.OnDeselected();
             myInteractionModule.CurrentInteractTarget = null;
             context.ChangeState(nextState);
         }

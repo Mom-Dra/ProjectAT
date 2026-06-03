@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyUIModule : MonoBehaviour, IUIHoverable
+public class EnemyUIModule : MonoBehaviour, IHoverableFeedback
 {
     // �� UI�� ����ٴ� ���� Transform
     public Transform target;

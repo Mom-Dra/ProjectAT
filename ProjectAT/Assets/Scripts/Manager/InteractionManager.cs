@@ -1,4 +1,6 @@
+
 using EPOOutline;
+using Interactable;
 using UnityEngine;
 
 public class InteractionUIManager
@@ -8,7 +10,9 @@ public class InteractionUIManager
     private HealthUI currHealthUI;
     private Camera mainCamera;
 
-    private IUIHoverable currInteractable;
+    private IHoverableFeedback currHoverTarget;
+    private ISelectableFeedback currSelectedTarget;
+
     private LayerMask interactionLayerMask;
 
     public InteractionUIManager(LayerMask interactionLayerMask)
@@ -29,89 +33,155 @@ public class InteractionUIManager
     {
         Ray ray = mainCamera.ScreenPointToRay(mousePos);
 
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
-
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, interactionLayerMask))
         {
-            Outlinable outlinable = hit.transform.GetComponentInParent<Outlinable>();
-
-            if(outlinable is not null)
-            {
-                if(currOutlinable != outlinable)
-                {
-                    ClearOutline();
-
-                    currOutlinable = outlinable;
-                    currOutlinable.OutlineParameters.Enabled = true;
-                }
-            }
-
-            IUIHoverable interactable = hit.transform.GetComponentInParent<IUIHoverable>();
-
-            if (interactable is not null)
-            {
-                if (currInteractable != interactable)
-                {
-                    ClearTarget();
-
-                    currInteractable = interactable;
-                    interactable.OnHoverEnter();
-                }
-            }
-
-            EntityStatus entityStatus = hit.transform.GetComponentInParent<EntityStatus>();
-            UIAnchor uIAnchor = hit.transform.GetComponentInParent<UIAnchor>();
-
-            if(entityStatus is not null && uIAnchor is not null)
-            {   
-                if(currEntityStatus != entityStatus)
-                {
-                    ClearEntityStatus();
-                    currEntityStatus = entityStatus;
-
-                    currHealthUI = Managers.Instance.UIManager.ShowHealthUI(uIAnchor.TargetAnchor, entityStatus);
-                }
-            }
+            UpdateHoverTarget(hit);
+            //UpdateHealthUI(hit);
         }
         else
         {
-            ClearOutline();
-            ClearTarget();
-            ClearEntityStatus();
+            ClearHoverTarget();
+            //ClearEntityStatus();
         }
     }
 
-    private void ClearOutline()
+    private void UpdateHoverTarget(RaycastHit hit)
     {
-        if(currOutlinable is not null)
+        IHoverableFeedback nextTarget = hit.transform.GetComponentInParent<IHoverableFeedback>();
+
+        if (currHoverTarget == nextTarget) return;
+
+        ClearHoverTarget();
+
+        currHoverTarget = nextTarget;
+
+        if (currHoverTarget != null) currHoverTarget.OnHoverEnter();
+    }
+
+    private void ClearHoverTarget()
+    {
+        if (currHoverTarget == null) return;
+        currHoverTarget.OnHoverExit();
+        currHoverTarget = null;
+    }
+
+    public void SelectInteractableTarget(InteractableObject target)
+    {
+        if(target.TryGetComponent(out ISelectableFeedback selectable))
         {
-            currOutlinable.OutlineParameters.Enabled = false;
-            currOutlinable = null;
+            SelectTarget(selectable);
         }
     }
 
-    public void HandleRightClick()
+    public void ClearSelectedTarget()
     {
-        if (currInteractable is null) return;
+        if (currSelectedTarget == null)
+            return;
 
-        //currInteractable.OnInteract();
+        currSelectedTarget.OnDeselected();
+        currSelectedTarget = null;
     }
 
-    private void ClearTarget()
+    private void SelectTarget(ISelectableFeedback target)
     {
-        if (currInteractable is null) return;
+        if (currSelectedTarget == target) return;
+        if (currSelectedTarget != null) currSelectedTarget.OnDeselected();
 
-        currInteractable.OnHoverExit();
-        currInteractable = null;
+        currSelectedTarget = target;
+
+        if (currSelectedTarget != null) currSelectedTarget.OnSelected();
     }
 
-    private void ClearEntityStatus()
-    {
-        if (currEntityStatus is null) return;
-        else Debug.Log($"current EntityStatus is {currEntityStatus.gameObject.name}");
-        Managers.Instance.UIManager.HideHealthUI(currHealthUI);
+    // //TODO : HP관련 UI 호출은 나중에 구현.
+    // private void ClearEntityStatus()
+    // {
+    //     if (currEntityStatus is null) return;
+    //     else Debug.Log($"current EntityStatus is {currEntityStatus.gameObject.name}");
+    //     Managers.Instance.UIManager.HideHealthUI(currHealthUI);
 
-        currEntityStatus = null;
-        currHealthUI = null;
-    }
+    //     currEntityStatus = null;
+    //     currHealthUI = null;
+    // }
+
+    // //oldCodes
+    // private void HandleInteractionRaycast(Vector2 mousePos)
+    // {
+    //     Ray ray = mainCamera.ScreenPointToRay(mousePos);
+
+    //     Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+
+    //     if (Physics.Raycast(ray, out RaycastHit hit, 100f, interactionLayerMask))
+    //     {
+    //         Outlinable outlinable = hit.transform.GetComponentInParent<Outlinable>();
+
+    //         if(outlinable is not null)
+    //         {
+    //             if(currOutlinable != outlinable)
+    //             {
+    //                 ClearOutline();
+
+    //                 currOutlinable = outlinable;
+    //                 currOutlinable.OutlineParameters.Enabled = true;
+    //             }
+    //         }
+
+    //         IInteractionFeedback interactable = hit.transform.GetComponentInParent<IInteractionFeedback>();
+
+    //         if (interactable is not null)
+    //         {
+    //             if (currInteractable != interactable)
+    //             {
+    //                 ClearTarget();
+
+    //                 currInteractable = interactable;
+    //                 interactable.OnHoverEnter();
+    //             }
+    //         }
+
+    //         EntityStatus entityStatus = hit.transform.GetComponentInParent<EntityStatus>();
+    //         UIAnchor uIAnchor = hit.transform.GetComponentInParent<UIAnchor>();
+
+    //         if(entityStatus is not null && uIAnchor is not null)
+    //         {   
+    //             if(currEntityStatus != entityStatus)
+    //             {
+    //                 ClearEntityStatus();
+    //                 currEntityStatus = entityStatus;
+
+    //                 currHealthUI = Managers.Instance.UIManager.ShowHealthUI(uIAnchor.TargetAnchor, entityStatus);
+    //             }
+    //         }
+    //     }
+    //     else
+    //     {
+    //         ClearOutline();
+    //         ClearTarget();
+    //         ClearEntityStatus();
+    //     }
+    // }
+
+    // private void ClearOutline()
+    // {
+    //     if(currOutlinable is not null)
+    //     {
+    //         currOutlinable.OutlineParameters.Enabled = false;
+    //         currOutlinable = null;
+    //     }
+    // }
+
+    // public void HandleRightClick()
+    // {
+    //     if (currInteractable is null) return;
+
+    //     //currInteractable.OnInteract();
+    // }
+
+    // private void ClearTarget()
+    // {
+    //     if (currInteractable is null) return;
+
+    //     currInteractable.OnHoverExit();
+    //     currInteractable = null;
+    // }
+
 }

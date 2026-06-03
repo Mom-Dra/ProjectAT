@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Interactable
 {
-    public class DownedBody : InteractableObject, IUIHoverable, ICarriable
+    public class DownedBody : InteractableObject, ICarriable
     {
         private LayerMask groundLayerMask;        
         protected Animator animator;
@@ -42,30 +42,31 @@ namespace Interactable
             return transform.position;
         }
 
-        public void OnHoverEnter()
+        public override void OnHoverEnter()
         {
+            if (!isSelected) outlinable.OutlineParameters.Enabled = true;
+        }
+
+        public override void OnHoverExit()
+        {
+            if (!isSelected) outlinable.OutlineParameters.Enabled = false;
+        }
+
+        public override void OnSelected()
+        {
+            isSelected = true;
             outlinable.OutlineParameters.Enabled = true;
         }
 
-        public void OnHoverExit()
+        public override void OnDeselected()
         {
-            outlinable.OutlineParameters.Enabled = false;
-        }
-
-        public override void OnTargetSelected()
-        {
-            outlinable.OutlineParameters.Enabled = true;
-        }
-
-        public override void OnTargetDeselected()
-        {
+            isSelected = false;
             outlinable.OutlineParameters.Enabled = false;
         }
 
         public override void OnInteractStart(PlayerController player)
         {
-            //Do Nothing
-            outlinable.OutlineParameters.Enabled = true;
+            //원래였으면 시체가 들어올려지는 애니메이션이 있어야하지만 없으므로 아무것도 하지 않음.
         }
 
         public override void OnExecute(PlayerController player)

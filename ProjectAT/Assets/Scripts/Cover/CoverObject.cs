@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CoverObject : MonoBehaviour, IUIHoverable
+public class CoverObject : MonoBehaviour, IHoverableFeedback
 {
     private CoverPoint[] coverPoints;
 

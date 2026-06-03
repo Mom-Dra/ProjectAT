@@ -4,7 +4,7 @@ using EPOOutline;
 using Interactable;
 using UnityEngine.AI; 
 
-public class Door : InteractableObject, IUIHoverable
+public class Door : InteractableObject
 {
     [Header("Door Wings")]
     [SerializeField]
@@ -23,24 +23,12 @@ public class Door : InteractableObject, IUIHoverable
     [SerializeField] private const float navMeshSearchRadius = 1.0f;
 
     private Outlinable outlinable;
-
     private bool isOpen = false;
     private Coroutine runningCoroutine;
 
     private void Awake()
     {
         outlinable = GetComponent<Outlinable>();
-    }
-
-    public void OnHoverEnter()
-    {
-        Managers.Instance.CursorManager.SetImage(CursorType.Door);
-        //outlinable.OutlineParameters.Enabled = true;
-    }
-
-    public void OnHoverExit()
-    {
-        //outlinable.OutlineParameters.Enabled = false;
     }
     public override void OnInteractStart(PlayerController player) { }
 
@@ -85,19 +73,14 @@ public class Door : InteractableObject, IUIHoverable
 
     public override Vector3 GetInteractPosition(Transform playerTransform)
     {
-        // 1. 두 문의 정중앙 위치를 가져옵니다.
         Vector3 centerPos = GetDoorCenterPos();
 
-        // 2. 방향 판별 (앞/뒤)
-        // 중앙 위치를 기준으로 플레이어가 앞인지 뒤인지 판별합니다.
         Vector3 dirToPlayer = (playerTransform.position - centerPos).normalized;
         float dot = Vector3.Dot(transform.forward, dirToPlayer);
         Vector3 interactionSide = dot > 0 ? transform.forward : -transform.forward;
 
-        // 3. 중앙 위치에서 앞/뒤로 offsetDistance만큼 이동한 좌표 계산
         Vector3 calculatedPos = centerPos + (interactionSide * offsetDistance);
 
-        // 4. NavMesh 보정 로직
         NavMeshHit hit;
         if (NavMesh.SamplePosition(calculatedPos, out hit, navMeshSearchRadius, NavMesh.AllAreas))
         {
@@ -110,13 +93,9 @@ public class Door : InteractableObject, IUIHoverable
 
     public override Vector3 GetInteractLookDir(Transform playerTransform)
     {
-        // 1. 두 문의 정중앙 위치를 가져옵니다.
         Vector3 centerPos = GetDoorCenterPos();
-
-        // 2. 플레이어의 위치에서 '문의 정중앙'을 향하는 방향 벡터를 계산합니다.
         Vector3 lookDir = (centerPos - playerTransform.position);
 
-        // 3. Y축 차이로 인한 고개 숙임 방지
         lookDir.y = 0;
 
         return lookDir.normalized;
@@ -124,11 +103,9 @@ public class Door : InteractableObject, IUIHoverable
 
     private Vector3 GetDoorCenterPos()
     {
-        // 만약 둘 중 하나라도 할당되지 않았다면 안전하게 부모의 위치 반환
         if (leftDoor == null || rightDoor == null) 
             return transform.position;
 
-        // 두 위치 벡터를 더하고 2로 나누어 정확한 중간 지점(Midpoint)을 구합니다.
         return (leftDoor.position + rightDoor.position) * 0.5f;
     }
 
@@ -148,13 +125,33 @@ public class Door : InteractableObject, IUIHoverable
         Gizmos.DrawWireSphere(backPos, 0.2f);
     }
 
-    public override void OnTargetSelected()
+    public override void OnHoverEnter()
     {
+        Managers.Instance.CursorManager.SetImage(CursorType.Door);
+
+        if (!isSelected)
+        {
+            outlinable.OutlineParameters.Enabled = true;
+        }
+    }
+
+    public override void OnHoverExit()
+    {
+        if (!isSelected)
+        {
+            outlinable.OutlineParameters.Enabled = false;
+        }
+    }
+
+    public override void OnSelected()
+    {
+        isSelected = true;
         outlinable.OutlineParameters.Enabled = true;
     }
 
-    public override void OnTargetDeselected()
+    public override void OnDeselected()
     {
+        isSelected = false;
         outlinable.OutlineParameters.Enabled = false;
     }
 }

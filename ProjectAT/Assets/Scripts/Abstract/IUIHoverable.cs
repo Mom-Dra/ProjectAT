@@ -1,7 +1,13 @@
 using UnityEngine;
 
-public interface IUIHoverable
+public interface IHoverableFeedback
 {
     void OnHoverEnter();
     void OnHoverExit();
+}
+
+public interface ISelectableFeedback
+{
+    void OnSelected();
+    void OnDeselected();
 }

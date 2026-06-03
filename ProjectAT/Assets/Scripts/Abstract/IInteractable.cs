@@ -36,16 +36,6 @@ public interface IInteractable
     PlayerStateType NextState { get; }
 
     /// <summary>
-    /// 해당 오브젝트가 상호작용 대상으로 선택되었을 때 실행되는 메서드입니다. (예: UI 하이라이트 켜기, 상호작용 가능한 아이콘 띄우기 등)
-    /// </summary>
-    public abstract void OnTargetSelected();
-
-    /// <summary>
-    /// 해당 오브젝트가 상호작용 대상으로 선택 해제되었을 때 실행되는 메서드입니다. (예: UI 하이라이트 끄기, 아이콘 제거 등)
-    /// </summary>
-    public abstract void OnTargetDeselected();
-
-    /// <summary>
     /// 상호작용이 시작될때 해당 오브젝트가 해야할 로직들을 정의합니다. (예: 다른 플레이어가 이미 상호작용 중인 경우 "사용 중" UI 띄우기, 상호작용 시작 사운드 재생 등)
     /// InteractingState의 OnEnter()에서 호출됩니다.
     /// </summary>

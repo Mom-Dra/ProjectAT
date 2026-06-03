@@ -1,4 +1,5 @@
 using UnityEngine;
+using Interactable;
 using PlayerStateCapabilities;
 
 namespace PlayerStateMachine
@@ -95,10 +96,11 @@ namespace PlayerStateMachine
             context.CancelEnemySelect();
 
             //인터렉터블 오브젝트 처리부분. 해당 로직들이 자주 쓰이면 PlayerController로 빼는거 고려.
-            IInteractable interactable = castedObject.collider.GetComponentInParent<IInteractable>();            
+            InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();            
             if (interactable != null && !interactable.IsInUse) 
             {
                 myInteractionModule.CurrentInteractTarget = interactable;
+                Managers.Instance.InteractionManager.SelectInteractableTarget(interactable); //InteractionModule의 이벤트로 뺴는건?
                 context.ChangeState(PlayerStateType.InteractChasing);
                 return;
             }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using PlayerStateCapabilities;
+using Interactable;
 
 namespace PlayerStateMachine
 {
@@ -20,7 +21,7 @@ namespace PlayerStateMachine
         public override void OnEnter()
         {
             Debug.Log($"Enter InteractingState. : {myInteractionModule.CurrentInteractTarget}");
-            myInteractionModule.CurrentInteractTarget.OnTargetSelected();
+            myInteractionModule.CurrentInteractTarget.OnSelected();
             currentInteractTime = 0f;
             isInteractingComplete = false;
 
@@ -32,7 +33,7 @@ namespace PlayerStateMachine
         {
             Debug.Log("Exit InteractingState.");
 
-            IInteractable target = myInteractionModule.CurrentInteractTarget;
+            InteractableObject target = myInteractionModule.CurrentInteractTarget;
 
             //본인 후처리
             if(!isInteractingComplete || nextStateCash == PlayerStateType.Normal)
@@ -43,7 +44,7 @@ namespace PlayerStateMachine
             }
             
             //타겟 후처리
-            target.OnTargetDeselected();
+            target.OnDeselected();
             target.OnInteractEnd(context);
         }
 
@@ -66,7 +67,7 @@ namespace PlayerStateMachine
         {        
             if(!myInteractionModule.CurrentInteractTarget.CanStopInteract) return;
             
-            if (castedObject.collider.TryGetComponent(out IInteractable interactable) && interactable != myInteractionModule.CurrentInteractTarget) //인터렉터블 오브젝트 처리.
+            if (castedObject.collider.TryGetComponent(out InteractableObject interactable) && interactable != myInteractionModule.CurrentInteractTarget) //인터렉터블 오브젝트 처리.
             {
                 myInteractionModule.CurrentInteractTarget = interactable;
                 context.ChangeState(PlayerStateType.InteractChasing);

@@ -1,13 +1,14 @@
 
+using Interactable;
 using UnityEngine;
 
 public class PlayerInteractionModule : MonoBehaviour
 {
-    private IInteractable currInteractObject;
+    private InteractableObject currInteractObject;
     [SerializeField] private EntityStatus myStatus;
     [SerializeField] private Transform holdPoint;
     public Transform HoldPoint { get => holdPoint; set => holdPoint = value; }
-    public IInteractable CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; } //참조횟수가 20임.
+    public InteractableObject CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; }
 
     private void Awake()
     {

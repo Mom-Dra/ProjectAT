@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Interactable;
 
-public class CoverPoint : InteractableObject, IUIHoverable
+public class CoverPoint : InteractableObject
 {
     private DecalProjector decalProjector;
     private CoverPulse coverPulse;
@@ -69,15 +69,6 @@ public class CoverPoint : InteractableObject, IUIHoverable
         Gizmos.DrawSphere(transform.position, 0.2f);
     }
 
-    public void OnHoverEnter()
-    {
-        ShowIndicator();
-    }
-
-    public void OnHoverExit()
-    {
-        HideIndicator();
-    }
     public override Vector3 GetInteractPosition(Transform playerTransform)
     {
         return transform.position;
@@ -94,12 +85,22 @@ public class CoverPoint : InteractableObject, IUIHoverable
         HidePulse();
     }
 
-    public override void OnTargetSelected()
+    public override void OnHoverEnter()
+    {
+        ShowIndicator();
+    }
+
+    public override void OnHoverExit()
+    {
+        HideIndicator();
+    }
+
+    public override void OnSelected()
     {
         ShowPulse();
     }
 
-    public override void OnTargetDeselected()
+    public override void OnDeselected()
     {
         HidePulse();
     }
