@@ -84,7 +84,6 @@ namespace Interactable
         public override void OnInteractEnd(PlayerController player)
         {
             //nextState = (nextState == PlayerStateType.Carry) ? PlayerStateType.Normal : PlayerStateType.Carry;
-            outlinable.OutlineParameters.Enabled = false;
         }
 
         public void StartCarrying(Transform holdPoint)

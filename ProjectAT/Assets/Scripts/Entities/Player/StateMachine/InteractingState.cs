@@ -21,10 +21,10 @@ namespace PlayerStateMachine
         public override void OnEnter()
         {
             Debug.Log($"Enter InteractingState. : {myInteractionModule.CurrentInteractTarget}");
-            myInteractionModule.CurrentInteractTarget.OnSelected();
             currentInteractTime = 0f;
             isInteractingComplete = false;
 
+            context.PlayerMove(context.transform.position, false);
             myAnimationModule.WeaponMeshVisible(false);
             myInteractionModule.CurrentInteractTarget.OnInteractStart(context);
         }
@@ -33,19 +33,16 @@ namespace PlayerStateMachine
         {
             Debug.Log("Exit InteractingState.");
 
-            InteractableObject target = myInteractionModule.CurrentInteractTarget;
-
-            //본인 후처리
-            if(!isInteractingComplete || nextStateCash == PlayerStateType.Normal)
+            myInteractionModule.CurrentInteractTarget.OnInteractEnd(context);
+            if(nextStateCash == PlayerStateType.Carry)
             {
-                target.UnLock();
-                myInteractionModule.CurrentInteractTarget = null;
+                myInteractionModule.UnSelectInteractTarget();
+            }
+            else
+            {
+                myInteractionModule.ClearInteractTarget(true);
                 myAnimationModule.WeaponMeshVisible(true);
             }
-            
-            //타겟 후처리
-            target.OnDeselected();
-            target.OnInteractEnd(context);
         }
 
         public override void OnUpdate()
@@ -55,7 +52,7 @@ namespace PlayerStateMachine
             if (currentInteractTime >= myInteractionModule.CurrentInteractTarget.InteractDuration)
             {
                 isInteractingComplete = true;
-                
+
                 nextStateCash = myInteractionModule.CurrentInteractTarget.NextState;
                 myInteractionModule.CurrentInteractTarget.OnExecute(context);
 
@@ -67,9 +64,10 @@ namespace PlayerStateMachine
         {        
             if(!myInteractionModule.CurrentInteractTarget.CanStopInteract) return;
             
-            if (castedObject.collider.TryGetComponent(out InteractableObject interactable) && interactable != myInteractionModule.CurrentInteractTarget) //인터렉터블 오브젝트 처리.
+            InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();
+            if (interactable != null && interactable != myInteractionModule.CurrentInteractTarget && !interactable.IsInUse) //인터렉터블 오브젝트 처리.
             {
-                myInteractionModule.CurrentInteractTarget = interactable;
+                myInteractionModule.SetInteractTarget(interactable);
                 context.ChangeState(PlayerStateType.InteractChasing);
                 return;
             }

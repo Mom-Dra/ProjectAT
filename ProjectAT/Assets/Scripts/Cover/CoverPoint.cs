@@ -97,11 +97,13 @@ public class CoverPoint : InteractableObject
 
     public override void OnSelected()
     {
+        isSelected = true;
         ShowPulse();
     }
 
     public override void OnDeselected()
     {
+        isSelected = false;
         HidePulse();
     }
 }

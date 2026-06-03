@@ -19,7 +19,7 @@ namespace PlayerStateMachine
 
         public override void OnEnter()
         {
-            myInteractionModule.CurrentInteractTarget.OnSelected();
+            //myInteractionModule.CurrentInteractTarget.OnSelected();
         }
 
         public override void OnExit()
@@ -91,9 +91,10 @@ namespace PlayerStateMachine
                 return;
             }
             
-            if (castedObject.collider.TryGetComponent(out InteractableObject interactable)) //인터렉터블 오브젝트 처리.
+            InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();
+            if (interactable != null && interactable != myInteractionModule.CurrentInteractTarget && !interactable.IsInUse)
             {
-                myInteractionModule.CurrentInteractTarget = interactable;
+                myInteractionModule.SetInteractTarget(interactable);
                 context.ChangeState(PlayerStateType.InteractChasing);
                 return;
             }
@@ -131,9 +132,10 @@ namespace PlayerStateMachine
 
         private void CancelInteractChasing(PlayerStateType nextState)
         {
+            if(myInteractionModule.CurrentInteractTarget == null) return;
+            
             //context.PlayerMove(context.transform.position, false); // 이동 멈춤
-            myInteractionModule.CurrentInteractTarget.OnDeselected();
-            myInteractionModule.CurrentInteractTarget = null;
+            myInteractionModule.ClearInteractTarget();
             context.ChangeState(nextState);
         }
     }

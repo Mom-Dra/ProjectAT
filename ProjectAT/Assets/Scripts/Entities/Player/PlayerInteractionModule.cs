@@ -10,6 +10,9 @@ public class PlayerInteractionModule : MonoBehaviour
     public Transform HoldPoint { get => holdPoint; set => holdPoint = value; }
     public InteractableObject CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; }
 
+    //public Action OnInteractionStart; 인터렉션 모듈 리펙토링 하자..
+
+
     private void Awake()
     {
         myStatus = GetComponent<EntityStatus>();
@@ -37,6 +40,59 @@ public class PlayerInteractionModule : MonoBehaviour
             currInteractObject = null;
         }
     }
+
+    public void SetInteractTarget(InteractableObject target)
+    {
+        if (currInteractObject == target) return;
+
+        ClearInteractTarget(false);
+        currInteractObject = target;
+
+        if (currInteractObject != null) SelectInteractTarget(currInteractObject);
+    }
+
+
+    public void ClearInteractTarget(bool withUnLock = false)
+    {
+        if (currInteractObject == null) return;
+
+        if (withUnLock && currInteractObject.CurrentInteractor == gameObject)
+        {
+            currInteractObject.UnLock();
+        }
+
+        UnSelectInteractTarget();
+        currInteractObject = null;
+    }
+
+    public void SelectInteractTarget(InteractableObject target)
+    {
+        Managers.Instance.InteractionManager.SelectInteractableTarget(target);
+    }
+
+    public void UnSelectInteractTarget()
+    {
+        Managers.Instance.InteractionManager.ClearSelectedTarget();
+    }
+
+
+    // public void RequestInteractionStart(PlayerController context) //나중에 플레이어 스테이트 머신쪽 리펙토링 하자.
+    // {
+    //     if(context != null && currInteractObject != null)
+    //     {
+    //         currInteractObject.OnInteractStart(context);
+    //     }
+    // }
+
+    // public void RequestInteractionEnd(PlayerController context)
+    // {
+    //     if(context != null && currInteractObject != null)
+    //     {
+    //         currInteractObject.OnInteractEnd(context);
+    //     }
+
+    // }
+
     // public void HandleInteractionRaycast(Vector2 mousePos)
     // {
     //     Ray ray = Camera.main.ScreenPointToRay(mousePos);

@@ -49,7 +49,7 @@ public interface IInteractable
     void OnExecute(PlayerController player); //이 매개변수가 필요할지 고려하기.
 
     /// <summary>
-    /// 상호작용이 완료되었든, 도중에 취소되었든 상관없이 상호작용이 끝날 때 실행되는 메서드입니다. (예: 상호작용 애니메이션 끝나고 원래대로 돌아오기, UI 초기화 등)
+    /// 성공여부에 상관 없이 상호작용이 모두 끝날 때 실행되는 메서드입니다. (예: 상호작용 애니메이션 끝나고 원래대로 돌아오기, UI 초기화 등)
     /// InteractingState의 OnExit()에서 호출됩니다.
     /// </summary>
     /// <param name="player"></param>

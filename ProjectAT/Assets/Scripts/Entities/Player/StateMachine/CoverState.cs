@@ -46,11 +46,10 @@ namespace PlayerStateMachine
             // context.MyStatModule.RemoveDefense(CoverDefenseBonus);
             // context.MyStatModule.RemoveAccuracy(CoverAccuracyBonus);
 
-            IInteractable occupiedCoverPoint = myInteractionModule.CurrentInteractTarget;
+            InteractableObject occupiedCoverPoint = myInteractionModule.CurrentInteractTarget;
             if(occupiedCoverPoint != null && occupiedCoverPoint.CurrentInteractor == context.gameObject)
             {
-                occupiedCoverPoint.UnLock();
-                myInteractionModule.CurrentInteractTarget = null; // 엄폐 상태에서 나갈 때는 현재 상호작용 타겟 초기화. (엄폐 상태에서만 상호작용 타겟이 엄폐 지점이므로)
+                myInteractionModule.ClearInteractTarget(true);
             }
             myAnimationModule.SetCrouch(false);
         }
@@ -95,12 +94,10 @@ namespace PlayerStateMachine
 
             context.CancelEnemySelect();
 
-            //인터렉터블 오브젝트 처리부분. 해당 로직들이 자주 쓰이면 PlayerController로 빼는거 고려.
             InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();            
             if (interactable != null && !interactable.IsInUse) 
             {
-                myInteractionModule.CurrentInteractTarget = interactable;
-                Managers.Instance.InteractionManager.SelectInteractableTarget(interactable); //InteractionModule의 이벤트로 뺴는건?
+                myInteractionModule.SetInteractTarget(interactable);
                 context.ChangeState(PlayerStateType.InteractChasing);
                 return;
             }
