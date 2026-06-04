@@ -11,7 +11,7 @@ public class InteractionUIManager
     private Camera mainCamera;
 
     private IHoverableFeedback currHoverTarget;
-    private ISelectableFeedback currSelectedTarget;
+    private ITargetableFeedback currSelectedTarget;
 
     private LayerMask interactionLayerMask;
 
@@ -67,7 +67,7 @@ public class InteractionUIManager
 
     public void SelectInteractableTarget(InteractableObject target)
     {
-        if(target.TryGetComponent(out ISelectableFeedback selectable))
+        if(target.TryGetComponent(out ITargetableFeedback selectable))
         {
             SelectTarget(selectable);
         }
@@ -78,18 +78,18 @@ public class InteractionUIManager
         if (currSelectedTarget == null)
             return;
 
-        currSelectedTarget.OnDeselected();
+        currSelectedTarget.OnUntargeted();
         currSelectedTarget = null;
     }
 
-    private void SelectTarget(ISelectableFeedback target)
+    private void SelectTarget(ITargetableFeedback target)
     {
         if (currSelectedTarget == target) return;
-        if (currSelectedTarget != null) currSelectedTarget.OnDeselected();
+        if (currSelectedTarget != null) currSelectedTarget.OnUntargeted();
 
         currSelectedTarget = target;
 
-        if (currSelectedTarget != null) currSelectedTarget.OnSelected();
+        if (currSelectedTarget != null) currSelectedTarget.OnTargeted();
     }
 
     // //TODO : HP관련 UI 호출은 나중에 구현.

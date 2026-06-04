@@ -52,13 +52,13 @@ namespace Interactable
             if (!isSelected) outlinable.OutlineParameters.Enabled = false;
         }
 
-        public override void OnSelected()
+        public override void OnTargeted()
         {
             isSelected = true;
             outlinable.OutlineParameters.Enabled = true;
         }
 
-        public override void OnDeselected()
+        public override void OnUntargeted()
         {
             isSelected = false;
             outlinable.OutlineParameters.Enabled = false;

@@ -1,11 +1,9 @@
-using System;
 using PlayerStateMachine;
-using Unity.Networking.Transport;
 using UnityEngine;
 
 namespace Interactable
 {
-    public abstract class InteractableObject : MonoBehaviour, IInteractable, IHoverableFeedback, ISelectableFeedback
+    public abstract class InteractableObject : MonoBehaviour, IInteractable, IHoverableFeedback, ITargetableFeedback
     {
         [Header("Interactable Object Settings")]
         [SerializeField] private float interactDuration = 1.0f;
@@ -48,8 +46,8 @@ namespace Interactable
         protected bool isSelected = false;
         public abstract void OnHoverEnter();
         public abstract void OnHoverExit();
-        public abstract void OnSelected();
-        public abstract void OnDeselected();
+        public abstract void OnTargeted();
+        public abstract void OnUntargeted();
         #endregion
     }
 }
