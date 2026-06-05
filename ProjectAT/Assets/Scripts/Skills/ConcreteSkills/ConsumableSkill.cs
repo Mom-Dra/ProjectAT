@@ -1,6 +1,7 @@
 using UnityEngine;
 using SkillOptionInterfaces;
 
+//이 클래스는 삭제할 예정
 public abstract class ConsumableSkill : Skill, IInventoryCostSkill
 {
     protected Inventory entityInventory = null;
@@ -10,11 +11,11 @@ public abstract class ConsumableSkill : Skill, IInventoryCostSkill
     protected ConsumableSkill(PlayerSkillModule context, SkillData skillData) : base(context, skillData)
     {
         entityInventory = context.MyInventory;
-        if(skillData is ConsumableSkillData consumableData)
-        {
-            neededItemData = consumableData.NeededItemData;
-            neededItemAmount = consumableData.NeededItemAmount;   
-        }
+        // if(skillData is ConsumableSkillData consumableData)
+        // {
+        //     neededItemData = consumableData.NeededItemData;
+        //     neededItemAmount = consumableData.NeededItemAmount;   
+        // }
     }
 
 

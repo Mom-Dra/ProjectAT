@@ -5,8 +5,10 @@ using SkillDataOptionInterfaces;
 public class ProjectileSkillData : SkillData, IAoESkillData
 {
     [Header("Projectile Stats")]
-    public GameObject ThrowingObjectPrefab;   // 투사체로 사용할 프리팹.
-    public float LandedNoiseRange;
+    [SerializeField] protected GameObject throwingObjectPrefab;   // 투사체로 사용할 프리팹.
+    [SerializeField] protected float landedNoiseRange;
 
     public virtual float AoERadius => LandedNoiseRange;
+    public float LandedNoiseRange => landedNoiseRange;
+    public GameObject ThrowingObjectPrefab => throwingObjectPrefab;
 }

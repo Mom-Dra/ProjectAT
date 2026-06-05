@@ -19,6 +19,12 @@ namespace SkillOptionInterfaces
 
 namespace SkillDataOptionInterfaces
 {
+    public interface IConsumableSkillData
+    {
+        ItemData NeededItemData {get;}
+        int NeededItemAmount {get;}
+    }
+    
     public interface IAoESkillData
     {
         float AoERadius {get;}

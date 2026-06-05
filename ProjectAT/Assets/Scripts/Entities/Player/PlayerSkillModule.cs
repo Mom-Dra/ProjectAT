@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using EntitySkills;
 using PlayerStateMachine;
 using SkillDataOptionInterfaces;
-using Unity.VisualScripting;
+using SkillOptionInterfaces;
 using UnityEngine;
 
 public enum SkillNumber : short
@@ -80,9 +78,9 @@ public class PlayerSkillModule : MonoBehaviour
         for(int i = 0 ; i < mySkills.Length ; i++)
         {
             OnSkillCooldownStart?.Invoke((SkillNumber)i, mySkills[i].SkillMaxCoolTime);
-            if(mySkills[i] is ConsumableSkill consumableSkill)
+            if(mySkills[i] is IInventoryCostSkill inventoryCostSkill)
             {
-                OnSkillItemCountChange?.Invoke((SkillNumber)i, MyInventory.GetItemCount(consumableSkill.NeededItemData));
+                OnSkillItemCountChange?.Invoke((SkillNumber)i, MyInventory.GetItemCount(inventoryCostSkill.NeededItemData));
             }
         }
 
