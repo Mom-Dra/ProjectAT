@@ -20,6 +20,7 @@ public interface IEnemyState
     void TargetConfirmed(Enemy enemy, IPerceivable target) { }
     void TargetLost(Enemy enemy, IPerceivable target) { }
     void OrderReceived(Enemy enemy, SquadOrder order) { }
+    void NoiseDetected(Enemy enemy, Vector3 noisePosition) { }
 }
 
 public class EnemyIdleState : IEnemyState
@@ -63,6 +64,12 @@ public class EnemyIdleState : IEnemyState
                 enemy.ChangeState(IEnemyState.PatrolState);
                 break;
         }
+    }
+
+    public void NoiseDetected(Enemy enemy, Vector3 noisePosition)
+    {
+        enemy.SetInvestigateContext(noisePosition);
+        enemy.ChangeState(IEnemyState.InvestigateState);
     }
 }
 
@@ -176,6 +183,12 @@ public class EnemyPatrolState : IEnemyState
                 MoveToOrderedDestination(enemy);
                 break;
         }
+    }
+
+    public void NoiseDetected(Enemy enemy, Vector3 noisePosition)
+    {
+        enemy.SetInvestigateContext(noisePosition);
+        enemy.ChangeState(IEnemyState.InvestigateState);
     }
 
     private void MoveToCurrentWaypoint(Enemy enemy)
@@ -604,7 +617,7 @@ public class EnemyInvestigateState : IEnemyState
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, enemy.EnemyData.RotateSpeed * Time.deltaTime);
 
-        if(Quaternion.Angle(enemy.transform.rotation, targetRotation) < 5f)
+        if (Quaternion.Angle(enemy.transform.rotation, targetRotation) < 5f)
             return true;
         else return false;
     }

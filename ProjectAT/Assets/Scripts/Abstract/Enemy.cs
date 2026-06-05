@@ -8,7 +8,7 @@ using TMPro;
 [RequireComponent(typeof(AwarenessModule))]
 [RequireComponent(typeof(EnemyAlertnessModule))]
 [RequireComponent(typeof(PerceptionSystem))]
-public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
+public class Enemy : MonoBehaviour, ISquadMember
 {
     public event Action<ISquadMember, IPerceivable> onTargetDetected;
     public event Action<ISquadMember, IPerceivable, Vector3> onTargetLost;
@@ -221,6 +221,15 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
         alertnessModule.ReportStimulus(position, amount);
     }
 
+    public void NoiseDetected(Vector3 noisePosition)
+    {
+        if (!IsAlive) return;
+
+        ReportStimulus(noisePosition, StimulusType.Sound);
+
+        currState?.NoiseDetected(this, noisePosition);
+    }
+
     public void ReceiveAttack(IPerceivable attacker)
     {
         if (attacker is null || !attacker.IsValidTarget) return;
@@ -258,20 +267,6 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
         if (squad is null) return;
 
         squad.ReportMemberAlert(this, position, alertness);
-    }
-
-    public void OnNoiseDetect(Vector3 noisePosition) //TODO : Position 뿐만 아니라 Rotation까지 돌게하기
-    {
-        if (!IsAlive) return;
-        if (IsInCombat || IsChasing) return;
-
-        investigatePosition = noisePosition;
-        
-        investigateReturnPosition = transform.position;
-        investigateReturnDirection = transform.forward;
-        investigateReturnState = currState;
-
-        ChangeState(IEnemyState.InvestigateState);
     }
 
     internal void ChangeState(IEnemyState nextState)
@@ -353,6 +348,14 @@ public class Enemy : MonoBehaviour, ISquadMember, INoiseDetector
     internal void SetAttackMode(bool isAttackMode)
     {
         perceptionSystem.SetAttackMode(isAttackMode);
+    }
+
+    internal void SetInvestigateContext(Vector3 noisePosition)
+    {
+        investigatePosition = noisePosition;
+        investigateReturnPosition = transform.position;
+        investigateReturnDirection = transform.forward;
+        investigateReturnState = currState;
     }
 
     private void StartPositionReport()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using NUnit.Framework;
+using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(PerceptionSystem))]
@@ -38,12 +39,14 @@ public class AwarenessModule : MonoBehaviour
     {
         perceptionSystem.onTargetDetected += TargetDetected;
         perceptionSystem.onTargetLost += TargetLost;
+        perceptionSystem.onNoiseDetected += NoiseDetected;
     }
 
     private void OnDisable()
     {
         perceptionSystem.onTargetDetected -= TargetDetected;
         perceptionSystem.onTargetLost -= TargetLost;
+        perceptionSystem.onNoiseDetected -= NoiseDetected;
 
         StopActiveCoroutine();
     }
@@ -160,5 +163,11 @@ public class AwarenessModule : MonoBehaviour
             StopCoroutine(activeCoroutine);
             activeCoroutine = null;
         }
+    }
+
+    private void NoiseDetected(Vector3 noisePosition)
+    {
+        enemy.ReportStimulus(noisePosition, StimulusType.Sound);
+        enemy.NoiseDetected(noisePosition);
     }
 }

@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PerceptionSystem : MonoBehaviour
+public class PerceptionSystem : MonoBehaviour, INoiseDetector
 {
     public event Action<IPerceivable> onTargetDetected;
     public event Action<IPerceivable> onTargetLost;
+    public event Action<Vector3> onNoiseDetected;
 
     [SerializeField] private float detectInterval = 0.2f;
     [SerializeField] private LayerMask targetMask;
@@ -61,6 +62,11 @@ public class PerceptionSystem : MonoBehaviour
     public bool IsTargetDetected()
     {
         return visibleTargets.Count > 0;
+    }
+
+    public void OnNoiseDetect(Vector3 noisePosition)
+    {
+        onNoiseDetected?.Invoke(noisePosition);
     }
 
     private void Scan()
