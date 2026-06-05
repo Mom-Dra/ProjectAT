@@ -23155,6 +23155,10 @@ PrefabInstance:
       propertyPath: 'skillDatas.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 5cc270554cc2f214cbc4159f098395b8, type: 2}
+    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: 'skillDatas.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 45e857534b98f96439c6cafdd84097db, type: 2}
     - target: {fileID: 5706563846340363522, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 54.27
@@ -23195,6 +23199,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6028611876402576336, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: debugItemList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028611876402576336, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: 'debugItemList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f02561f720be1074baeacdf870eacda1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -36290,7 +36302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveIndicatorPrefab: {fileID: 7977531431303113237, guid: 6a4dd4f9b305ff640964010989a8a332, type: 3}
-  groundSkillIndicatorPrefab: {fileID: 807812522776249577, guid: de41452c2f5ce58488bc9110b7b85ff2, type: 3}
+  skillAoEIndicatorPrefab: {fileID: 807812522776249577, guid: de41452c2f5ce58488bc9110b7b85ff2, type: 3}
   targettingSkillCursor: {fileID: 21300000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
   indicators: []
   lineRenderer: {fileID: 752954865}

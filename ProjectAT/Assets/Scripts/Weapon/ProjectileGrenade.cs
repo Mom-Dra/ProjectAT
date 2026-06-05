@@ -1,12 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class ProjectileGrenade : ProjectileBase
+public class ProjectileGrenade : ThrowProjectileBase
 {
     [SerializeField] private ParticleSystem explosionEffect;
     [SerializeField] public int ExplodeDamage{get; private set;}
     [SerializeField] public float ExplosionRadius{get; private set;}
-    [SerializeField] private LayerMask damageableLayers;
     [SerializeField] int groundLayer;
     [SerializeField] private float fuseTime = 3f;
     [SerializeField] private float explosionNoiseRadius = 18f;
@@ -28,12 +27,12 @@ public class ProjectileGrenade : ProjectileBase
         if(explosionCoroutine != null) StopCoroutine(explosionCoroutine);
     }
 
-    public void SetUp(int damage, float radius, float fuse, LayerMask damageableLayers)
+    public void SetUp(int damage, float radius, float fuseTime, float explosionNoiseRadius)
     {
         ExplodeDamage = damage;
         ExplosionRadius = radius;
-        fuseTime = fuse;
-        this.damageableLayers = damageableLayers;
+        this.fuseTime = fuseTime;
+        this.explosionNoiseRadius = explosionNoiseRadius;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -71,7 +70,7 @@ public class ProjectileGrenade : ProjectileBase
             effect.Play();
         }
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, damageableLayers);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, effectedEntityLayer);
         foreach (Collider hitCollider in hitColliders)
         {
             Physics.Raycast(transform.position, (hitCollider.transform.position - transform.position).normalized, out RaycastHit hitInfo, ExplosionRadius);

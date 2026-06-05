@@ -34,8 +34,8 @@ public class EffectModule : MonoBehaviour
         indicators = new IndicatorBase[Enum.GetNames(typeof(IndicatorType)).Length];
         indicators[(int)IndicatorType.MoveIndicator] = Instantiate(moveIndicatorPrefab).GetComponent<IndicatorBase>();
 
-        indicators[(int)IndicatorType.GroundSkillIndicator] = Instantiate(groundSkillIndicatorPrefab).GetComponent<IndicatorBase>();
-        indicators[(int)IndicatorType.GroundSkillIndicator].Hide();
+        indicators[(int)IndicatorType.SkillAoEIndicator] = Instantiate(groundSkillIndicatorPrefab).GetComponent<IndicatorBase>();
+        indicators[(int)IndicatorType.SkillAoEIndicator].Hide();
     }
 
     private void Update()

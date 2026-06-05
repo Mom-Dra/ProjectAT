@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a051769720ac78747a3fc3d48e8ba7b6, type: 3}
+  m_Name: NormalGrenade
+  m_EditorClassIdentifier: 
+  ItemName: NormalGrenade
+  Icon: {fileID: 0}
+  ItemCode: 0
+  MaxStack: 2
+  Description: "\uC218\uB958\uD0C4\uC785\uB2C8\uB2E4."

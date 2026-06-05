@@ -9,10 +9,9 @@ public class SkillData : ScriptableObject
     public float CastingTime;
     public float MaxCoolTime;
     public LayerMask TargetLayer;
-    public SkillType SkillType;         //이는 스킬의 커서 종류를 결정하는데 이용되야함. 따라서 커서 스킨은 제거하고 이걸 EffectModule에서 처리할 수 있도록 함.
-    public IndicatorType IndicatorType;
 
     [Header("Visual & Animation")]
+    public IndicatorType IndicatorType;
     public Texture2D CursorSkin;    //TargetingSkill
     public Sprite SkillIcon;
     public string AnimationTriggerName; //안쓰이면 삭제 할 것.

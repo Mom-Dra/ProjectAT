@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using EntitySkills;
 using PlayerStateMachine;
+using SkillDataOptionInterfaces;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -111,8 +113,8 @@ public class PlayerSkillModule : MonoBehaviour
         lastSkillInput = skillIndex;
         switch (mySkills[(int)skillIndex].IndicatorType)
         {
-            case IndicatorType.GroundSkillIndicator:
-                IndicatorManager.Instance.ShowAreaIndicator(MyCombatModule.ThrowPoint, (skillDatas[(int)lastSkillInput] as ProjectileSkillData).ExplosionRadius);
+            case IndicatorType.SkillAoEIndicator:
+                IndicatorManager.Instance.ShowAreaIndicator(MyCombatModule.ThrowPoint, (skillDatas[(int)lastSkillInput] as IAoESkillData).AoERadius);
                 break;
             case IndicatorType.TargettingSkillIndicator:
                 IndicatorManager.Instance.ShowAimingCursor();
@@ -125,7 +127,7 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void UpdateSkillIndicator(Ray mouseToScreenPosRay)
     {
-        if(mySkills[(int)lastSkillInput].IndicatorType == IndicatorType.GroundSkillIndicator)
+        if(mySkills[(int)lastSkillInput].IndicatorType == IndicatorType.SkillAoEIndicator)
         {
             if(Physics.Raycast(mouseToScreenPosRay, out RaycastHit hit, 100f, groundLayer))
             {

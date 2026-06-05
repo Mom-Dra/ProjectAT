@@ -19,11 +19,9 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 15351
-  SkillType: 1
   IndicatorType: 1
   CursorSkin: {fileID: 0}
   SkillIcon: {fileID: 21300000, guid: 51d6855e342a91e4ba5876741e4565f6, type: 3}
   AnimationTriggerName: 
   ThrowingObjectPrefab: {fileID: 6315830395957330255, guid: f88ccc5b2e7baef408587745bdab598b, type: 3}
-  ExplosionRadius: 0
-  FuseTime: 0
+  LandedNoiseRange: 4

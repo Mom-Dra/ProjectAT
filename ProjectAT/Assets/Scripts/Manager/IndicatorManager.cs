@@ -4,8 +4,8 @@ using System;
 public enum IndicatorType : ushort
 {
     MoveIndicator,
-    GroundSkillIndicator, //AOE Inicator 로 바꾸는건?
-    TargettingSkillIndicator
+    SkillAoEIndicator,
+    TargettingSkillIndicator,
 }
 
 public class IndicatorManager : MonoBehaviour
@@ -14,7 +14,7 @@ public class IndicatorManager : MonoBehaviour
 
     [Header("Indicator Prefabs")]
     [SerializeField] private GameObject moveIndicatorPrefab;
-    [SerializeField] private GameObject groundSkillIndicatorPrefab;
+    [SerializeField] private GameObject skillAoEIndicatorPrefab;
     [SerializeField] private Sprite targettingSkillCursor;
 
     [Header("Indicator References")]
@@ -66,8 +66,8 @@ public class IndicatorManager : MonoBehaviour
         
         indicators[(int)IndicatorType.MoveIndicator] = Instantiate(moveIndicatorPrefab).GetComponent<IndicatorBase>();
         indicators[(int)IndicatorType.MoveIndicator].Hide();
-        indicators[(int)IndicatorType.GroundSkillIndicator] = Instantiate(groundSkillIndicatorPrefab).GetComponent<IndicatorBase>();
-        indicators[(int)IndicatorType.GroundSkillIndicator].Hide();
+        indicators[(int)IndicatorType.SkillAoEIndicator] = Instantiate(skillAoEIndicatorPrefab).GetComponent<IndicatorBase>();
+        indicators[(int)IndicatorType.SkillAoEIndicator].Hide();
     }
 
     public void HideIndicator(IndicatorType type)
@@ -77,7 +77,7 @@ public class IndicatorManager : MonoBehaviour
             case IndicatorType.TargettingSkillIndicator:
                 ResetCursor();
                 break;
-            case IndicatorType.GroundSkillIndicator:
+            case IndicatorType.SkillAoEIndicator:
                 HideAoeIndicator();
                 break;
             default:
@@ -108,18 +108,18 @@ public class IndicatorManager : MonoBehaviour
 
     public void ShowAreaIndicator(Vector3 dest, float radius)
     {
-        indicators[(int)IndicatorType.GroundSkillIndicator].transform.position = dest;
-        indicators[(int)IndicatorType.GroundSkillIndicator].Show(radius * 2);
+        indicators[(int)IndicatorType.SkillAoEIndicator].transform.position = dest;
+        indicators[(int)IndicatorType.SkillAoEIndicator].Show(radius * 2);
     }
 
     public void UpdateAoeIndicator(Vector3 fromPos, Vector3 toPos, Vector3 velocity, float PlayerRange)
     {
-        indicators[(int)IndicatorType.GroundSkillIndicator].UpdateIndicator(toPos, velocity);
+        indicators[(int)IndicatorType.SkillAoEIndicator].UpdateIndicator(toPos, velocity);
         DrawThrowingLine(fromPos + Vector3.up, toPos, 1f, PlayerRange);
     }
     public void HideAoeIndicator()
     {
-        indicators[(int)IndicatorType.GroundSkillIndicator].Hide();
+        indicators[(int)IndicatorType.SkillAoEIndicator].Hide();
         ClearLine();
     }
 

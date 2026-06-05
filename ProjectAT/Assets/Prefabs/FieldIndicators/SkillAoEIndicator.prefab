@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7447237492197646468}
   - component: {fileID: 118904485123451203}
   m_Layer: 10
-  m_Name: GroundSkillIndicator
+  m_Name: SkillAoEIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

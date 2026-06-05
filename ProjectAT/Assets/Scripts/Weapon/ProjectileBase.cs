@@ -2,10 +2,10 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class ProjectileBase : MonoBehaviour, IThrowableProjectile
+public abstract class ThrowProjectileBase : MonoBehaviour, IThrowableProjectile
 {
     [SerializeField] protected Rigidbody myRigid;
-    [SerializeField] protected LayerMask noiseDetectorLayers = ~0;
+    [SerializeField] protected LayerMask effectedEntityLayer = ~0;
     [SerializeField] protected float initialOwnerCollisionIgnoreTime = 0.35f;
     [SerializeField] protected float impactNoiseRadius = 6f;
 
@@ -18,6 +18,12 @@ public abstract class ProjectileBase : MonoBehaviour, IThrowableProjectile
     {
         if (myRigid == null) myRigid = GetComponent<Rigidbody>();
         myRigid.linearVelocity = velocity;
+    }
+
+    public virtual void Setup(float impactNoiseRadius, LayerMask effectedEntityLayer)
+    {
+        this.impactNoiseRadius = impactNoiseRadius;
+        this.effectedEntityLayer = effectedEntityLayer;
     }
 
     public void IgnoreCollisionWith(GameObject owner)
@@ -58,7 +64,7 @@ public abstract class ProjectileBase : MonoBehaviour, IThrowableProjectile
     {
         if (radius <= 0f) return;
 
-        Collider[] noiseHits = Physics.OverlapSphere(transform.position, radius, noiseDetectorLayers, QueryTriggerInteraction.Ignore);
+        Collider[] noiseHits = Physics.OverlapSphere(transform.position, radius, effectedEntityLayer, QueryTriggerInteraction.Ignore);
         HashSet<INoiseDetector> notifiedDetectors = new HashSet<INoiseDetector>(); //여러개의 Collider를 가진 Enemy일 경우 중복 감지 방지
 
         foreach (Collider noiseHit in noiseHits)

@@ -1,4 +1,3 @@
-using Unity.Behavior;
 using UnityEngine;
 
 public class PlayerCombatModule : MonoBehaviour
@@ -15,10 +14,13 @@ public class PlayerCombatModule : MonoBehaviour
     [SerializeField] private LayerMask ObstacleLayer;
     [SerializeField] private float AimingCoolTime = 0.5f;
     [SerializeField] private float currentAimingTime = 0f;
+    
+    #region Properties
     public bool IsAiming {get; private set;}
-
+    public float ThrowRange => myStatus.ThrowRange;
     public WeaponHolder MyWeapon => myWeapon;
     public Vector3 ThrowPoint => throwPoint.position;
+    #endregion
 
     private void Awake()
     {
@@ -173,21 +175,17 @@ public class PlayerCombatModule : MonoBehaviour
         return true;
     }
 
-    public void ThrowSomthingToTarget(GameObject throwingObject, Vector3 targetPos)
+    public void ThrowSomthingToTarget(ThrowProjectileBase throwingObject, Vector3 targetPos)
     {
-        throwingObject.transform.position = throwPoint.position;
+        if(throwingObject == null) return;
+
+        throwingObject.gameObject.transform.position = throwPoint.position;
         Vector3 origin = throwPoint.position;
 
         if (PhysicsMathUtility.CalculateTrajectory(origin, targetPos, arcHeight, out Vector3 velocity, out float time))
         {
-            ProjectileBase grenade = throwingObject.GetComponent<ProjectileBase>();
-            if (grenade == null) {
-                Debug.LogWarning($"{gameObject.name} : The object to throw does not have a ProjectileBase component.");
-                return; 
-            }
-
-            grenade.IgnoreCollisionWith(gameObject);
-            grenade.Throw(velocity);
+            throwingObject.IgnoreCollisionWith(gameObject);
+            throwingObject.Throw(velocity);
         }
     }
 
