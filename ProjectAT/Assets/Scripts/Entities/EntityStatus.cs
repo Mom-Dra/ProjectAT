@@ -89,8 +89,6 @@ public class EntityStatus : MonoBehaviour, IDamageable
         if (CurrentHp <= 0)
         {
             Die();
-
-            Debug.Log("Dead!");
         }
     }
 

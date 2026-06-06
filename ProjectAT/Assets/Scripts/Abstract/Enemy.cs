@@ -21,6 +21,11 @@ public class Enemy : MonoBehaviour, ISquadMember
     [SerializeField] internal TextMeshProUGUI stateText;
     [SerializeField] private Transform muzzleTransform;
 
+    [SerializeField] private Renderer[] renderersToHide;
+    [SerializeField] private Collider[] collidersToDisable;
+
+    private EntityStatus entityStatus;
+
     private NavMeshAgent navMeshAgent;
     private PerceptionSystem perceptionSystem;
     private AwarenessModule awarenessModule;
@@ -108,6 +113,10 @@ public class Enemy : MonoBehaviour, ISquadMember
         fieldOfViewVisuals = GetComponent<FieldOfViewVisuals>();
         enemyAnimator = GetComponent<EnemyAnimator>();
         weapon = GetComponentInChildren<Gun>();
+        entityStatus = GetComponent<EntityStatus>();
+
+        renderersToHide = GetComponentsInChildren<Renderer>(true);
+        collidersToDisable = GetComponentsInChildren<Collider>(true);
 
         perceptionSystem.Initialize(enemyData.ViewAngle, enemyData.SearchRadius, enemyData.SecondaryViewRadius);
 
@@ -120,6 +129,8 @@ public class Enemy : MonoBehaviour, ISquadMember
         awarenessModule.onScanStarted += ScanStarted;
         awarenessModule.onTargetConfirmed += TargetConfirmed;
         awarenessModule.onTargetLost += TargetLost;
+        entityStatus.onDeath += Die;
+        perceptionSystem.onCorpseDetected += CorpseDetected;
 
         if (alertnessModule is not null)
             alertnessModule.onAlertThresholdReached += AlertThresholdReached;
@@ -131,6 +142,8 @@ public class Enemy : MonoBehaviour, ISquadMember
         awarenessModule.onScanStarted -= ScanStarted;
         awarenessModule.onTargetConfirmed -= TargetConfirmed;
         awarenessModule.onTargetLost -= TargetLost;
+        entityStatus.onDeath -= Die;
+        perceptionSystem.onCorpseDetected -= CorpseDetected;
 
         if (alertnessModule is not null)
             alertnessModule.onAlertThresholdReached -= AlertThresholdReached;
@@ -197,12 +210,38 @@ public class Enemy : MonoBehaviour, ISquadMember
         onTargetLost?.Invoke(this, target, lastPosition);
     }
 
+    private void CorpseDetected(EnemyCorpse enemyCorpse)
+    {
+        if (!IsAlive || enemyCorpse is null) return;
+        if (currentTarget is not null && currentTarget.IsValidTarget) return;
+
+        if (squad is not null)
+        {
+            squad.TryReportCorpseFound(this, enemyCorpse);
+            return;
+        }
+
+        Vector3 corpsePosition = enemyCorpse.Transform.position;
+        currentOrderDestination = corpsePosition;
+        lastKnownPosition = corpsePosition;
+
+        ReceiveOrder(SquadOrder.Search(corpsePosition));
+    }
+
+    private void Die()
+    {
+        if (!IsAlive) return;
+        IsAlive = true;
+
+        ChangeState(IEnemyState.DeadState);
+    }
+
     public void ReceiveOrder(SquadOrder squadOrder)
     {
         currentOrderDestination = squadOrder.Position;
         UseOrderedDestination = squadOrder.OrderKind == OrderKind.Patrol;
 
-        if (currState == null)
+        if (currState is null)
         {
             ChangeState(GetStateForOrder(squadOrder));
             return;
@@ -358,13 +397,22 @@ public class Enemy : MonoBehaviour, ISquadMember
         investigateReturnState = currState;
     }
 
+    internal void HideOriginalVisual()
+    {
+        foreach (Renderer renderer in renderersToHide)
+            renderer.enabled = false;
+
+        foreach (Collider collider in collidersToDisable)
+            collider.enabled = false;
+    }
+
     private void StartPositionReport()
     {
         if (positionReportCoroutine is null)
             positionReportCoroutine = StartCoroutine(PositionReportCoroutine());
     }
 
-    private void StopPositionReport()
+    internal void StopPositionReport()
     {
         if (positionReportCoroutine is not null)
         {
@@ -386,6 +434,13 @@ public class Enemy : MonoBehaviour, ISquadMember
         }
 
         positionReportCoroutine = null;
+    }
+
+    internal void SpawnCorpse()
+    {
+        if (enemyData.CorpsePrefab is null) return;
+
+        Instantiate(enemyData.CorpsePrefab, transform.position, transform.rotation);
     }
 
 #if UNITY_EDITOR

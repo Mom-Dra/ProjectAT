@@ -7,14 +7,19 @@ public class PerceptionSystem : MonoBehaviour, INoiseDetector
     public event Action<IPerceivable> onTargetDetected;
     public event Action<IPerceivable> onTargetLost;
     public event Action<Vector3> onNoiseDetected;
+    public event Action<EnemyCorpse> onCorpseDetected;
 
     [SerializeField] private float detectInterval = 0.2f;
     [SerializeField] private LayerMask targetMask;
     [SerializeField] private LayerMask obstacleMask;
+    [SerializeField] private LayerMask corpseMask;
 
     private readonly List<DetectedTarget> visibleTargets = new List<DetectedTarget>();
     private readonly List<IPerceivable> previousTargets = new List<IPerceivable>();
     private readonly Collider[] colliders = new Collider[16];
+
+    private readonly HashSet<EnemyCorpse> detectedCorpses = new HashSet<EnemyCorpse>();
+    private readonly Collider[] corpseColliders = new Collider[16];
 
     private float viewAngle;
     private float searchRadius;
@@ -50,7 +55,8 @@ public class PerceptionSystem : MonoBehaviour, INoiseDetector
 
     private void Update()
     {
-        Scan();
+        ScanTargets();
+        ScanCorpses();
         DebugRay();
     }
 
@@ -69,7 +75,7 @@ public class PerceptionSystem : MonoBehaviour, INoiseDetector
         onNoiseDetected?.Invoke(noisePosition);
     }
 
-    private void Scan()
+    private void ScanTargets()
     {
         scanTimer += Time.deltaTime;
 
@@ -98,6 +104,25 @@ public class PerceptionSystem : MonoBehaviour, INoiseDetector
         visibleTargets.Sort(CompareByDistance);
 
         EmitDiffEvents();
+    }
+
+    private void ScanCorpses()
+    {
+        if (isAttackMode) return;
+
+        float radius = secondaryViewRadius;
+        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, corpseColliders, corpseMask);
+
+        for (int i = 0; i < count; ++i)
+        {
+            if (!corpseColliders[i].TryGetComponent(out EnemyCorpse enemyCorpse)) continue;
+            if (detectedCorpses.Contains(enemyCorpse)) continue;
+            if (!IsInFieldOfView(enemyCorpse.Transform)) continue;
+            if (!HasLineOfSight(enemyCorpse.Transform, out float distance)) continue;
+
+            detectedCorpses.Add(enemyCorpse);
+            onCorpseDetected?.Invoke(enemyCorpse);
+        }
     }
 
     private void EmitDiffEvents()
@@ -183,6 +208,8 @@ public class PerceptionSystem : MonoBehaviour, INoiseDetector
 
         Vector3 dir = delta / distance;
 
+        // Debug.DrawLine(from, from + dir * distance, Color.red);
+
         return !Physics.Raycast(from, dir, distance, obstacleMask, QueryTriggerInteraction.Ignore);
     }
 
@@ -220,6 +247,7 @@ public class PerceptionSystem : MonoBehaviour, INoiseDetector
 
         visibleTargets.Clear();
         previousTargets.Clear();
+        detectedCorpses.Clear();
     }
 
 #if UNITY_EDITOR

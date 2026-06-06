@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4482254477252368633}
   - component: {fileID: 6928954087579991920}
   - component: {fileID: 1210594867247737006}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4930,7 +4930,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7548801920616881655}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: UpperLeg_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4962,7 +4962,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7615450828705410655}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Head_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4997,7 +4997,7 @@ GameObject:
   - component: {fileID: 7833256950624956188}
   - component: {fileID: 2651888649598907713}
   - component: {fileID: 7585559093389604661}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: scp_we_assault_rifle_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5105,7 +5105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6736956656847550772}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Arm_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5137,7 +5137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7670555670775138817}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Hips_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5171,7 +5171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4764237484055045365}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Shoulder_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5203,7 +5203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8426600624058630168}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: LowerLeg_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5235,7 +5235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2932660162318684262}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Chest_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5269,7 +5269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5259948230141814032}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Spine_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5301,7 +5301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3876526138620134134}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Toe_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5332,7 +5332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1215566395439760497}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Foot_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5368,7 +5368,7 @@ GameObject:
   - component: {fileID: 2419111065560664877}
   - component: {fileID: 2217192123437757227}
   - component: {fileID: 443634148613817763}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: scp_we_assault_rifle_02_trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5478,7 +5478,7 @@ GameObject:
   - component: {fileID: 6809956685682739791}
   - component: {fileID: 8036003561607365662}
   - component: {fileID: 8587360187573156559}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: flash_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10440,7 +10440,7 @@ GameObject:
   - component: {fileID: 7377649469006593083}
   - component: {fileID: 5727890410021948540}
   - component: {fileID: 198410364541275179}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: MS_GasMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10573,7 +10573,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5329516714003110897}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: AK47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10610,7 +10610,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4907003985601845664}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Hand_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10642,7 +10642,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4193554623511044841}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Forearm_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10674,7 +10674,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 147773652482032816}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Foot_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10706,7 +10706,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5977005162864418156}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Spine_jnt 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10742,7 +10742,8 @@ GameObject:
   - component: {fileID: 8885261097730327645}
   - component: {fileID: 2256895900883449451}
   - component: {fileID: 9140967551861383957}
-  m_Layer: 13
+  - component: {fileID: 1080569558893723315}
+  m_Layer: 14
   m_Name: EnemyDownedBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10910,7 +10911,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -10932,6 +10933,18 @@ MonoBehaviour:
   playerAnimationTrigger: LiftUp
   nextState: 6
   canStopInteract: 0
+--- !u!114 &1080569558893723315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6259296754884981823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ff2a0a5e3acece44b8ca1ead80cd328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6280071282847952083
 GameObject:
   m_ObjectHideFlags: 0
@@ -10945,7 +10958,7 @@ GameObject:
   - component: {fileID: 8634206709188737761}
   - component: {fileID: 2895488549787911174}
   - component: {fileID: 6631618864759291242}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: scp_we_assault_rifle_02_mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11053,7 +11066,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8703340577330695168}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Toe_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11088,7 +11101,7 @@ GameObject:
   - component: {fileID: 8213509058217441736}
   - component: {fileID: 3190143178216202584}
   - component: {fileID: 1742195244701212972}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: scp_we_assault_rifle_02_stock_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11196,7 +11209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8042061997339924122}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Shoulder_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11230,7 +11243,7 @@ GameObject:
   - component: {fileID: 8357658031021047667}
   - component: {fileID: 5157406490922344324}
   - component: {fileID: 5492307198176722463}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FX_Shoot_01_muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16191,7 +16204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2776400766050465931}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: LowerLeg_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16223,7 +16236,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7841164319711591824}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Forearm_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16255,7 +16268,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 704988609452413786}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: UpperLeg_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16287,7 +16300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5085305266095803277}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Hand_Left_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16318,7 +16331,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4148322443093104892}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Neck_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16350,7 +16363,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3173632994748213497}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Arm_Right_jnt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16386,7 +16399,7 @@ GameObject:
   - component: {fileID: 4247113771133884887}
   - component: {fileID: 589308147739303830}
   - component: {fileID: 7298453487603087832}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: scp_we_assault_rifle_02_cocking_lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}

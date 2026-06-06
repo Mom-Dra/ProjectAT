@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 4707261957272810557}
   - component: {fileID: 6799859087643227885}
   - component: {fileID: 3286008573471988237}
+  - component: {fileID: 8355978113245686850}
   m_Layer: 7
   m_Name: SimpleMilitary_GasMaskSoldier_Black
   m_TagString: Untagged
@@ -303,6 +304,8 @@ MonoBehaviour:
   positionReportInterval: 0.5
   stateText: {fileID: 916501346858467435}
   muzzleTransform: {fileID: 4982355012492184542}
+  renderersToHide: []
+  collidersToDisable: []
 --- !u!114 &7762445275386043354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +325,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 2560
+  corpseMask:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!114 &5675281037249933612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,7 +406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e984056c0a326a4a9c2b14e757fa0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetUIAnchor: {fileID: 4459095058158508001}
+  hpBarPositionAnchor: {fileID: 4459095058158508001}
+  outline: {fileID: 0}
+  myStatus: {fileID: 0}
 --- !u!114 &6799859087643227885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,6 +530,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scanTime: 3
   decayTime: 2
+--- !u!114 &8355978113245686850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 874e1242c9e84462a108f6ec4df528e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertness: 0
+  maxAlertness: 100
+  alertnessDecayRate: 5
+  squadAlertThreshold: 40
+  soundStimulusAlertness: 15
+  suspiciousEventStimulusAlertness: 20
+  briefSightStimulusAlertness: 25
+  customStimulusAlertness: 10
+  debugAlertnessLog: 0
+  drawAlertnessGizmos: 1
 --- !u!1 &100074
 GameObject:
   m_ObjectHideFlags: 0
@@ -1875,6 +1905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: fc1a2e35c9e205b47b8fa244bd978371, type: 2}
   muzzleParticleSystem: {fileID: 0}
+  Statename: 
 --- !u!4 &1159989728732044299 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400010, guid: 7bf057be0eafd5446814890dcdfe2eb1, type: 3}

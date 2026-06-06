@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Squad : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class Squad : MonoBehaviour
     private readonly List<ISquadMember> members = new List<ISquadMember>();
     private readonly SquadTargetPool squadTargetPool = new SquadTargetPool();
     private readonly List<IPerceivable> scratchRemoved = new List<IPerceivable>();
+    private readonly HashSet<EnemyCorpse> reportedCorpses = new HashSet<EnemyCorpse>();
 
     private IFormation formation;
     private ISquadState currState;
@@ -164,6 +167,28 @@ public class Squad : MonoBehaviour
         }
 
         ChangeState(ISquadState.SearchState);
+    }
+
+    public bool TryReportCorpseFound(ISquadMember reporter, EnemyCorpse enemyCorpse)
+    {
+        Debug.Log("TryReportCorpseFound");
+
+        if (reporter is null || enemyCorpse is null) return false;
+        if (!members.Contains(reporter)) return false;
+        if (!reportedCorpses.Add(enemyCorpse)) return false;
+
+        lastKnownPosition = enemyCorpse.Transform.position;
+        lastMemberAlertPosition = enemyCorpse.Transform.position;
+        hasMemberAlertPosition = true;
+
+        if (IsInSearchState)
+        {
+            ReassignTimer = squadConfig.searchReassignInterval;
+            return true;
+        }
+
+        ChangeState(ISquadState.SearchState);
+        return true;
     }
 
     private void RegisterMember(ISquadMember squadMember)

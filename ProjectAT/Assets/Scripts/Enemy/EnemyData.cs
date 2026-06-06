@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Scriptable Objects/EnemyData")]
 public class EnemyData : ScriptableObject
 {
+    [SerializeField] private EnemyCorpse corpsePrefab;
+
     [SerializeField]
     private float attackRange = 10f;
 
@@ -48,6 +50,8 @@ public class EnemyData : ScriptableObject
 
     [SerializeField]
     private float reactionTime = 0.6f;
+
+    public EnemyCorpse CorpsePrefab => corpsePrefab;
 
     public float AttackRange => attackRange;
     public float RotateSpeed => rotateSpeed;

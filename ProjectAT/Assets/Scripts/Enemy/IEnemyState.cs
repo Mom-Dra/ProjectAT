@@ -77,9 +77,13 @@ public class EnemyDeadState : IEnemyState
 {
     public void Enter(Enemy enemy)
     {
+        enemy.StopPositionReport();
         enemy.EnableFieldOfView(false);
         enemy.SetAttackMode(false);
         enemy.StopMoving();
+        enemy.HideOriginalVisual();
+
+        enemy.SpawnCorpse();
     }
 
     public void Update(Enemy enemy)

@@ -222,6 +222,7 @@
     <Compile Include="Assets\Scripts\Entities\Player\PlayerPerceptionModule.cs" />
     <Compile Include="Assets\Scripts\Manager\IndicatorManager.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\NextPrefab.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyCorpse.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\AutoDestroy.cs" />
     <Compile Include="Assets\Scripts\Pool\PooledObject.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />
