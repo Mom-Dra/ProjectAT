@@ -23163,6 +23163,10 @@ PrefabInstance:
       propertyPath: 'skillDatas.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 3cb82f16f345f304986565e5b082c3eb, type: 2}
+    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: 'skillDatas.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 99656e4c5d720c04ab03c016695a0ac6, type: 2}
     - target: {fileID: 5706563846340363522, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 54.27

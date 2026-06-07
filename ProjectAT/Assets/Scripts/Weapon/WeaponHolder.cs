@@ -150,6 +150,11 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
+    public bool HasAmmoInMagazine()
+    {
+        return currentAmmo > 0;
+    }
+
     #region 이벤트용 함수
     private void WeaponReloadStart(Gun gun)
     {

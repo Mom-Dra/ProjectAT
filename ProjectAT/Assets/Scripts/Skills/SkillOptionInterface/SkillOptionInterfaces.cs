@@ -12,7 +12,7 @@ namespace SkillOptionInterfaces
 
     public interface IWeaponUsingSkill
     {
-        bool RequeiresAmmo{get;}
+        bool RequiresAmmo{get;}
         bool HasEnoughAmmo();
     }
 }
@@ -23,6 +23,12 @@ namespace SkillDataOptionInterfaces
     {
         ItemData NeededItemData {get;}
         int NeededItemAmount {get;}
+    }
+
+    public interface IWeaponUsingSkillData
+    {
+        bool RequiresAmmo {get;}
+        int AmmoCostPerShot {get;}
     }
     
     public interface IAoESkillData

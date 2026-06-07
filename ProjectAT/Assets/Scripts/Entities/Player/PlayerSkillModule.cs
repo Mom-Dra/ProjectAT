@@ -12,7 +12,7 @@ public enum SkillNumber : short
     MainSkillOne,   //q
     MainSkillTwo,   //w
     Grenade,        //e
-    UseBandage,     //r
+    UseBandage,     //d
     DesignatedFire, //a
 }
 
@@ -216,8 +216,8 @@ public class PlayerSkillModule : MonoBehaviour
             SkillToExecute = mySkills[(int)currentActivateSkillNumber],
             TargetObject = target,
             CastedPosition = point,
-            FinalDamage = skillDatas[(int)currentActivateSkillNumber].BaseDamage, //데미지 계산 로직 필요
-            FinalRange = (skillDatas[(int)currentActivateSkillNumber] is ProjectileSkillData) ? MyStatus.ThrowRange : MyWeapon.Range, //사거리 계산 로직 필요
+            FinalDamage = skillDatas[(int)currentActivateSkillNumber].BaseDamage, //데미지 계산 로직 필요 -> skill.CalCulateFinalDamage()로 바꾸는 것.
+            FinalRange = (skillDatas[(int)currentActivateSkillNumber] is ProjectileSkillData) ? MyStatus.ThrowRange : MyWeapon.Range, //사거리 계산 로직 필요 => skill.CalculateFinalRange()로 바꾸는 것
         };
 
         skillChaseState.SetSkillContext(skillContext);
