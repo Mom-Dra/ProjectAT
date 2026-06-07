@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using EntitySkills;
 using PlayerStateMachine;
 using SkillDataOptionInterfaces;
 using SkillOptionInterfaces;
@@ -61,21 +60,21 @@ public class PlayerSkillModule : MonoBehaviour
 
     private void InitiateSkills()
     {
-        mySkills[(int)SkillNumber.MainSkillOne] = new ThrowRock(this, skillDatas[(int)SkillNumber.MainSkillOne]); //NOTE : 팩토리 패턴 필요
-        mySkills[(int)SkillNumber.MainSkillTwo] = new DummySkill(this, skillDatas[(int)SkillNumber.MainSkillTwo]);
-        mySkills[(int)SkillNumber.Grenade] = new ThrowGrenade(this, skillDatas[(int)SkillNumber.Grenade]);
-        mySkills[(int)SkillNumber.UseBandage] = new UseBandage(this, skillDatas[(int)SkillNumber.UseBandage]);
-        mySkills[(int)SkillNumber.DesignatedFire] = new DesignatedFire(this, skillDatas[(int)SkillNumber.DesignatedFire]);
-
-        skillCooldownTimers.Add(mySkills[(int)SkillNumber.MainSkillOne], Time.time);
-        skillCooldownTimers.Add(mySkills[(int)SkillNumber.MainSkillTwo], Time.time);
-        skillCooldownTimers.Add(mySkills[(int)SkillNumber.Grenade], Time.time);
-        skillCooldownTimers.Add(mySkills[(int)SkillNumber.UseBandage], Time.time);
-        skillCooldownTimers.Add(mySkills[(int)SkillNumber.DesignatedFire], Time.time);
+     
+        for(int i = (int)SkillNumber.MainSkillOne ; i < mySkills.Length ; i++)
+        {
+            mySkills[i] = SkillFactory.Create(this, skillDatas[i]);
+            if(mySkills[i] == null)
+            {
+                Debug.LogError($"Failed to create skill for SkillNumber {(SkillNumber)i} with SkillData {skillDatas[i]?.name}. Check if the SkillData is correct and if the SkillFactory has a creation method for this skill.");
+                mySkills[i] = new DummySkill(this, skillDatas[i]);
+            }
+            skillCooldownTimers.Add(mySkills[i], Time.time);
+        }
         
         Managers.Instance.UIManager.InitPlayerSkillInfo(this, skillDatas);
 
-        for(int i = 0 ; i < mySkills.Length ; i++)
+        for(int i = (int)SkillNumber.MainSkillOne ; i < mySkills.Length ; i++)
         {
             OnSkillCooldownStart?.Invoke((SkillNumber)i, mySkills[i].SkillMaxCoolTime);
             if(mySkills[i] is IInventoryCostSkill inventoryCostSkill)
@@ -202,11 +201,12 @@ public class PlayerSkillModule : MonoBehaviour
         skillCooldownTimers[skill] = Time.time;
         OnSkillCooldownStart?.Invoke(currentActivateSkillNumber, skill.SkillMaxCoolTime);
 
-        // TODO : 갯수 제거형 스킬 사용 시 인벤토리 아이템 갯수 변경 이벤트 로직 구현하기
-        // if(mySkills[(int)currentActivateSkillNumber] is ConsumableSkill consumableSkill)
-        // {
-        //     OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, MyInventory.GetItemCount(consumableSkill.NeededItemData));
-        // }
+        // TODO : 아이템 사용형 스킬 사용 시 인벤토리 아이템 갯수 변경 이벤트 로직 구현하기
+        if(mySkills[(int)currentActivateSkillNumber] is IConsumableSkillData consumableSkill)
+        {
+            OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, MyInventory.GetItemCount(consumableSkill.NeededItemData));
+            //TODO : 만약 아이템이 부족한 경우라면 아예 비활성화 시키기.
+        }
     }
 
     public void SetUpSkillContext(in GameObject target, in Vector3 point)
@@ -229,4 +229,5 @@ public class PlayerSkillModule : MonoBehaviour
         skillChaseState.SetSkillContext(null);
         skillCastState.SetSkillContext(null);
     }
+
 }
