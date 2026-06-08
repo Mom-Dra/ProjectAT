@@ -777,7 +777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &34895369
 MonoBehaviour:
@@ -889,7 +889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &35282676
 MonoBehaviour:
@@ -1001,7 +1001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &35457673
 MonoBehaviour:
@@ -1478,7 +1478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &51943392
 MonoBehaviour:
@@ -1590,7 +1590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &53007066
 MonoBehaviour:
@@ -1838,7 +1838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &70162982
 MonoBehaviour:
@@ -2159,7 +2159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &88228461
 MonoBehaviour:
@@ -2413,7 +2413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &94621808
 MonoBehaviour:
@@ -2625,7 +2625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &97203379
 MonoBehaviour:
@@ -2737,7 +2737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &103253199
 MonoBehaviour:
@@ -2900,7 +2900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &107272438
 MonoBehaviour:
@@ -3175,7 +3175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &112089034
 MonoBehaviour:
@@ -3287,7 +3287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &117080759
 MonoBehaviour:
@@ -3399,7 +3399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &117443696
 MonoBehaviour:
@@ -3565,7 +3565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &117793298
 MonoBehaviour:
@@ -3744,7 +3744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &120372823
 MonoBehaviour:
@@ -4193,7 +4193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &135804701
 MonoBehaviour:
@@ -4389,7 +4389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &137631506
 MonoBehaviour:
@@ -4425,7 +4425,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4433,7 +4433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4445,7 +4445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4453,7 +4453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4461,7 +4461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4469,7 +4469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4517,7 +4517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4525,7 +4525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4533,7 +4533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4541,7 +4541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4549,7 +4549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -4561,7 +4561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -5338,7 +5338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &158900234
 MonoBehaviour:
@@ -5961,7 +5961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &169833968
 MonoBehaviour:
@@ -6424,7 +6424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &184461323
 MonoBehaviour:
@@ -6666,7 +6666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &187223864
 MonoBehaviour:
@@ -6810,7 +6810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &190483124
 MonoBehaviour:
@@ -6972,7 +6972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &191849317
 MonoBehaviour:
@@ -7519,7 +7519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &212745189
 MonoBehaviour:
@@ -7636,7 +7636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &221716399
 MonoBehaviour:
@@ -7935,7 +7935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &236028213
 MonoBehaviour:
@@ -8248,7 +8248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &244397411
 MonoBehaviour:
@@ -8538,7 +8538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &254930079
 MonoBehaviour:
@@ -8813,7 +8813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &261338610
 MonoBehaviour:
@@ -9087,7 +9087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &266583676
 MonoBehaviour:
@@ -9199,7 +9199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &266772742
 MonoBehaviour:
@@ -9440,7 +9440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &279135448
 MonoBehaviour:
@@ -9783,7 +9783,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &289454077
 MonoBehaviour:
@@ -9946,7 +9946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &303154125
 MonoBehaviour:
@@ -10058,7 +10058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &305464565
 MonoBehaviour:
@@ -10236,7 +10236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &313163617
 MonoBehaviour:
@@ -10516,7 +10516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &320394466
 MonoBehaviour:
@@ -11025,7 +11025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &342247934
 MonoBehaviour:
@@ -11225,7 +11225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &349977306
 MonoBehaviour:
@@ -11337,7 +11337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &352650613
 MonoBehaviour:
@@ -12029,7 +12029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &377797290
 MonoBehaviour:
@@ -12340,7 +12340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &388491736
 MonoBehaviour:
@@ -12524,7 +12524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &394391332
 MonoBehaviour:
@@ -12686,7 +12686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &398638874
 MonoBehaviour:
@@ -12803,7 +12803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &406854357
 MonoBehaviour:
@@ -13031,7 +13031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &413028892
 MonoBehaviour:
@@ -13143,7 +13143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &413712863
 MonoBehaviour:
@@ -13335,7 +13335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &417194435
 MonoBehaviour:
@@ -13513,7 +13513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &422773882
 MonoBehaviour:
@@ -13625,7 +13625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &424173225
 MonoBehaviour:
@@ -14028,7 +14028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &439737804
 MonoBehaviour:
@@ -14140,7 +14140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &440158253
 MonoBehaviour:
@@ -14336,7 +14336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &445224511
 MonoBehaviour:
@@ -14465,7 +14465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &446406967
 MonoBehaviour:
@@ -14755,7 +14755,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &453816236
 MonoBehaviour:
@@ -15001,7 +15001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &463745423
 MonoBehaviour:
@@ -15164,7 +15164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &465835443
 MonoBehaviour:
@@ -15276,7 +15276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &466988968
 MonoBehaviour:
@@ -15388,7 +15388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &468226029
 MonoBehaviour:
@@ -15500,7 +15500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &469009780
 MonoBehaviour:
@@ -15662,7 +15662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &470484136
 MonoBehaviour:
@@ -15779,7 +15779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &473880942
 MonoBehaviour:
@@ -16171,7 +16171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &488739852
 MonoBehaviour:
@@ -16283,7 +16283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &496869504
 MonoBehaviour:
@@ -16475,7 +16475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &501159302
 MonoBehaviour:
@@ -16587,7 +16587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &502373514
 MonoBehaviour:
@@ -16935,7 +16935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &508055312
 MonoBehaviour:
@@ -17101,7 +17101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &508315801
 MonoBehaviour:
@@ -17273,7 +17273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &516599498
 MonoBehaviour:
@@ -17738,7 +17738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &540470554
 MonoBehaviour:
@@ -17888,7 +17888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &543865379
 MonoBehaviour:
@@ -18104,7 +18104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &549297748
 MonoBehaviour:
@@ -18216,7 +18216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &550299172
 MonoBehaviour:
@@ -18328,7 +18328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &553496720
 MonoBehaviour:
@@ -18964,7 +18964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &566671456
 MonoBehaviour:
@@ -19191,7 +19191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &570882777
 MonoBehaviour:
@@ -19455,7 +19455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &578122633
 MonoBehaviour:
@@ -19799,7 +19799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &587893021
 MonoBehaviour:
@@ -20110,7 +20110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &590224641
 MonoBehaviour:
@@ -20474,7 +20474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &600365846
 MonoBehaviour:
@@ -20784,7 +20784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &608852656
 MonoBehaviour:
@@ -20896,7 +20896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &609219466
 MonoBehaviour:
@@ -21062,7 +21062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &610579388
 MonoBehaviour:
@@ -21289,7 +21289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &615809090
 MonoBehaviour:
@@ -21460,7 +21460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &621571327
 MonoBehaviour:
@@ -21638,7 +21638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &622571285
 MonoBehaviour:
@@ -21750,7 +21750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &625169600
 MonoBehaviour:
@@ -22308,7 +22308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &645773382
 MonoBehaviour:
@@ -22425,7 +22425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &649699140
 MonoBehaviour:
@@ -22617,7 +22617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &650436015
 MonoBehaviour:
@@ -22739,7 +22739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &652376181
 MonoBehaviour:
@@ -22851,7 +22851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &653027670
 MonoBehaviour:
@@ -23152,9 +23152,17 @@ PrefabInstance:
       value: NewPlayerCharacter
       objectReference: {fileID: 0}
     - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: 'skillDatas.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 5cc270554cc2f214cbc4159f098395b8, type: 2}
+    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: 'skillDatas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 197062702a574fd4d9769c5f024013e1, type: 2}
     - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: 'skillDatas.Array.data[2]'
       value: 
@@ -23794,7 +23802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &674953424
 MonoBehaviour:
@@ -23906,7 +23914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &675763718
 MonoBehaviour:
@@ -24163,7 +24171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &680420449
 MonoBehaviour:
@@ -24275,7 +24283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &686083501
 MonoBehaviour:
@@ -24392,7 +24400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &692467253
 MonoBehaviour:
@@ -24504,7 +24512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &693567445
 MonoBehaviour:
@@ -24879,7 +24887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &710037136
 MonoBehaviour:
@@ -24991,7 +24999,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &711874837
 MonoBehaviour:
@@ -25108,7 +25116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &713442576
 MonoBehaviour:
@@ -25413,7 +25421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &716812626
 MonoBehaviour:
@@ -25659,7 +25667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &721422683
 MonoBehaviour:
@@ -25771,7 +25779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &722930763
 MonoBehaviour:
@@ -25883,7 +25891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &734347799
 MonoBehaviour:
@@ -26336,7 +26344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &749627023
 MonoBehaviour:
@@ -26448,7 +26456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &750035055
 MonoBehaviour:
@@ -26875,7 +26883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &769943742
 MonoBehaviour:
@@ -26987,7 +26995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &770688874
 MonoBehaviour:
@@ -27149,7 +27157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &772755215
 MonoBehaviour:
@@ -27261,7 +27269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &775799670
 MonoBehaviour:
@@ -27373,7 +27381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &776670832
 MonoBehaviour:
@@ -27485,7 +27493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &777516165
 MonoBehaviour:
@@ -27800,7 +27808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &783741143
 MonoBehaviour:
@@ -28088,7 +28096,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &793926792
 MonoBehaviour:
@@ -28339,7 +28347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &804376760
 MonoBehaviour:
@@ -28606,7 +28614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &817480797
 MonoBehaviour:
@@ -28798,7 +28806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &821343655
 MonoBehaviour:
@@ -29074,7 +29082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &827252229
 MonoBehaviour:
@@ -29516,7 +29524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &840432344
 MonoBehaviour:
@@ -29784,7 +29792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &847613597
 MonoBehaviour:
@@ -29946,7 +29954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &853078246
 MonoBehaviour:
@@ -30058,7 +30066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &855016306
 MonoBehaviour:
@@ -30220,7 +30228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &859238096
 MonoBehaviour:
@@ -30332,7 +30340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &859744630
 MonoBehaviour:
@@ -30498,7 +30506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &860367469
 MonoBehaviour:
@@ -30764,7 +30772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &870678175
 MonoBehaviour:
@@ -30984,7 +30992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &879971251
 MonoBehaviour:
@@ -31255,7 +31263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &890497698
 MonoBehaviour:
@@ -31372,7 +31380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &896139567
 MonoBehaviour:
@@ -31761,7 +31769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &923328890
 MonoBehaviour:
@@ -31873,7 +31881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &923781050
 MonoBehaviour:
@@ -32089,7 +32097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &931672902
 MonoBehaviour:
@@ -32544,7 +32552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &940548075
 MonoBehaviour:
@@ -32656,7 +32664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &942148906
 MonoBehaviour:
@@ -32818,7 +32826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &947575062
 MonoBehaviour:
@@ -32930,7 +32938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &954183962
 MonoBehaviour:
@@ -33374,7 +33382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &964188672
 MonoBehaviour:
@@ -33486,7 +33494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &969011284
 MonoBehaviour:
@@ -33936,7 +33944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &977586573
 MonoBehaviour:
@@ -34251,7 +34259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &983114684
 MonoBehaviour:
@@ -34433,7 +34441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &984744726
 MonoBehaviour:
@@ -34545,7 +34553,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &985123885
 MonoBehaviour:
@@ -34657,7 +34665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &986776058
 MonoBehaviour:
@@ -34769,7 +34777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &987516401
 MonoBehaviour:
@@ -34936,7 +34944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &988637932
 MonoBehaviour:
@@ -35171,7 +35179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1001383361
 MonoBehaviour:
@@ -35283,7 +35291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1002117034
 MonoBehaviour:
@@ -35395,7 +35403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1002285028
 MonoBehaviour:
@@ -35507,7 +35515,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1004458851
 MonoBehaviour:
@@ -35739,7 +35747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1012927361
 MonoBehaviour:
@@ -35851,7 +35859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1013674990
 MonoBehaviour:
@@ -36400,7 +36408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1045705463
 MonoBehaviour:
@@ -36568,7 +36576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1050256579
 MonoBehaviour:
@@ -36977,7 +36985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1071502420
 MonoBehaviour:
@@ -37139,7 +37147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1073869419
 MonoBehaviour:
@@ -37403,7 +37411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1083754090
 MonoBehaviour:
@@ -37879,7 +37887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1095109052
 MonoBehaviour:
@@ -38046,7 +38054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1097764865
 MonoBehaviour:
@@ -38312,7 +38320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1103940027
 MonoBehaviour:
@@ -38508,7 +38516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1104477854
 MonoBehaviour:
@@ -38968,7 +38976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1129735822
 MonoBehaviour:
@@ -39168,7 +39176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1133047761
 MonoBehaviour:
@@ -39280,7 +39288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1135514203
 MonoBehaviour:
@@ -39446,7 +39454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1139026295
 MonoBehaviour:
@@ -39644,7 +39652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1141989312
 MonoBehaviour:
@@ -39873,7 +39881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1147029992
 MonoBehaviour:
@@ -39985,7 +39993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1148118349
 MonoBehaviour:
@@ -40097,7 +40105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1149813266
 MonoBehaviour:
@@ -40647,7 +40655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1160518163
 MonoBehaviour:
@@ -41267,7 +41275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1185518354
 MonoBehaviour:
@@ -41520,7 +41528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1196992905
 MonoBehaviour:
@@ -41632,7 +41640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1197575225
 MonoBehaviour:
@@ -41749,7 +41757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1199036314
 MonoBehaviour:
@@ -41861,7 +41869,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1201845964
 MonoBehaviour:
@@ -42168,7 +42176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1213044750
 MonoBehaviour:
@@ -42280,7 +42288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1213578784
 MonoBehaviour:
@@ -42392,7 +42400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1214129115
 MonoBehaviour:
@@ -42608,7 +42616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1223857690
 MonoBehaviour:
@@ -42960,7 +42968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1233567819
 MonoBehaviour:
@@ -43072,7 +43080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1234995696
 MonoBehaviour:
@@ -43268,7 +43276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1238943493
 MonoBehaviour:
@@ -43460,7 +43468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1245434166
 MonoBehaviour:
@@ -43842,7 +43850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1254969340
 MonoBehaviour:
@@ -44004,7 +44012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1257417538
 MonoBehaviour:
@@ -44116,7 +44124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1258396677
 MonoBehaviour:
@@ -44505,7 +44513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1264437853
 MonoBehaviour:
@@ -44634,7 +44642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1266969175
 MonoBehaviour:
@@ -44773,7 +44781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1270901031
 MonoBehaviour:
@@ -45046,7 +45054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1280366726
 MonoBehaviour:
@@ -45208,7 +45216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1285047488
 MonoBehaviour:
@@ -45440,7 +45448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1295969220
 MonoBehaviour:
@@ -45552,7 +45560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1296121052
 MonoBehaviour:
@@ -45664,7 +45672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1299564893
 MonoBehaviour:
@@ -45903,7 +45911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1305570327
 MonoBehaviour:
@@ -46095,7 +46103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1309943934
 MonoBehaviour:
@@ -46207,7 +46215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1310665219
 MonoBehaviour:
@@ -46386,7 +46394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1313030960
 MonoBehaviour:
@@ -46498,7 +46506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1315515793
 MonoBehaviour:
@@ -46849,7 +46857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1319860898
 MonoBehaviour:
@@ -47325,7 +47333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1336034758
 MonoBehaviour:
@@ -47750,7 +47758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1345245256
 MonoBehaviour:
@@ -47912,7 +47920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1345513456
 MonoBehaviour:
@@ -48024,7 +48032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1348454869
 MonoBehaviour:
@@ -48136,7 +48144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1350633552
 MonoBehaviour:
@@ -48355,7 +48363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1356326227
 MonoBehaviour:
@@ -48583,7 +48591,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1363505083
 MonoBehaviour:
@@ -48903,7 +48911,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1371733441
 MonoBehaviour:
@@ -49032,7 +49040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1373071362
 MonoBehaviour:
@@ -49618,7 +49626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1394956437
 MonoBehaviour:
@@ -49930,7 +49938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1406604583
 MonoBehaviour:
@@ -50042,7 +50050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1408656666
 MonoBehaviour:
@@ -50213,7 +50221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1412896312
 MonoBehaviour:
@@ -50627,7 +50635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1432380005
 MonoBehaviour:
@@ -50831,7 +50839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1433316052
 MonoBehaviour:
@@ -50997,7 +51005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1438509953
 MonoBehaviour:
@@ -51147,7 +51155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1443011476
 MonoBehaviour:
@@ -51259,7 +51267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1449213375
 MonoBehaviour:
@@ -51371,7 +51379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1451535493
 MonoBehaviour:
@@ -51483,7 +51491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1453241277
 MonoBehaviour:
@@ -51595,7 +51603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1453767618
 MonoBehaviour:
@@ -51819,7 +51827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1456219389
 MonoBehaviour:
@@ -52286,7 +52294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1484418891
 MonoBehaviour:
@@ -52604,7 +52612,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1488665910
 MonoBehaviour:
@@ -52770,7 +52778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1492371247
 MonoBehaviour:
@@ -53017,7 +53025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1507322668
 MonoBehaviour:
@@ -53180,7 +53188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1510229381
 MonoBehaviour:
@@ -53396,7 +53404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1523310966
 MonoBehaviour:
@@ -53689,7 +53697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1529898131
 MonoBehaviour:
@@ -53806,7 +53814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1533504814
 MonoBehaviour:
@@ -53918,7 +53926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1543783906
 MonoBehaviour:
@@ -54030,7 +54038,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1544327544
 MonoBehaviour:
@@ -54300,7 +54308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1553298633
 MonoBehaviour:
@@ -54466,7 +54474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1557797688
 MonoBehaviour:
@@ -54925,7 +54933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1578065398
 MonoBehaviour:
@@ -55492,7 +55500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1603394218
 MonoBehaviour:
@@ -55604,7 +55612,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1604370217
 MonoBehaviour:
@@ -56016,7 +56024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1614550591
 MonoBehaviour:
@@ -56208,7 +56216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1622520732
 MonoBehaviour:
@@ -56434,7 +56442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1626371289
 MonoBehaviour:
@@ -56738,7 +56746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1631756433
 MonoBehaviour:
@@ -56904,7 +56912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1636390930
 MonoBehaviour:
@@ -57142,7 +57150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1645826630
 MonoBehaviour:
@@ -57494,7 +57502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1650914764
 MonoBehaviour:
@@ -57729,7 +57737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1661333283
 MonoBehaviour:
@@ -58245,7 +58253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1667315629
 MonoBehaviour:
@@ -58357,7 +58365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1668079688
 MonoBehaviour:
@@ -58537,7 +58545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1669249409
 MonoBehaviour:
@@ -58649,7 +58657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1669557625
 MonoBehaviour:
@@ -58761,7 +58769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1672955466
 MonoBehaviour:
@@ -58873,7 +58881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1676217347
 MonoBehaviour:
@@ -59417,7 +59425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1694922889
 MonoBehaviour:
@@ -59529,7 +59537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1697751583
 MonoBehaviour:
@@ -59687,7 +59695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1701393311
 MonoBehaviour:
@@ -59961,7 +59969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1703533471
 MonoBehaviour:
@@ -60174,7 +60182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1710166726
 MonoBehaviour:
@@ -60340,7 +60348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1713165138
 MonoBehaviour:
@@ -60532,7 +60540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1716274243
 MonoBehaviour:
@@ -60694,7 +60702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1723331942
 MonoBehaviour:
@@ -60861,7 +60869,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1732050599
 MonoBehaviour:
@@ -61047,7 +61055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1734142389
 MonoBehaviour:
@@ -61247,7 +61255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1740823419
 MonoBehaviour:
@@ -61376,7 +61384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1746817526
 MonoBehaviour:
@@ -61488,7 +61496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1748240355
 MonoBehaviour:
@@ -61945,7 +61953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1762334251
 MonoBehaviour:
@@ -62119,7 +62127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1764516111
 MonoBehaviour:
@@ -62330,7 +62338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1772867962
 MonoBehaviour:
@@ -62442,7 +62450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1773387213
 MonoBehaviour:
@@ -62554,7 +62562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1774071313
 MonoBehaviour:
@@ -62833,7 +62841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1785216223
 MonoBehaviour:
@@ -62962,7 +62970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1790499927
 MonoBehaviour:
@@ -63129,7 +63137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1798783737
 MonoBehaviour:
@@ -63241,7 +63249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1803611758
 MonoBehaviour:
@@ -63428,7 +63436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1812382417
 MonoBehaviour:
@@ -63540,7 +63548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1812925990
 MonoBehaviour:
@@ -63773,7 +63781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1817885196
 MonoBehaviour:
@@ -63885,7 +63893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1818252158
 MonoBehaviour:
@@ -63997,7 +64005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1823695972
 MonoBehaviour:
@@ -64109,7 +64117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1824055547
 MonoBehaviour:
@@ -64271,7 +64279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1828191357
 MonoBehaviour:
@@ -64499,7 +64507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1835606978
 MonoBehaviour:
@@ -64611,7 +64619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1836101592
 MonoBehaviour:
@@ -64723,7 +64731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1836155930
 MonoBehaviour:
@@ -64957,7 +64965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1848214646
 MonoBehaviour:
@@ -65470,7 +65478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1859438005
 MonoBehaviour:
@@ -65884,7 +65892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1873811770
 MonoBehaviour:
@@ -66001,7 +66009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1874583944
 MonoBehaviour:
@@ -66308,7 +66316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1886028699
 MonoBehaviour:
@@ -66420,7 +66428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1886357657
 MonoBehaviour:
@@ -66603,7 +66611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1891581625
 MonoBehaviour:
@@ -67077,7 +67085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1901961224
 MonoBehaviour:
@@ -67247,7 +67255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1904150397
 MonoBehaviour:
@@ -67359,7 +67367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1906467705
 MonoBehaviour:
@@ -67771,7 +67779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1913010918
 MonoBehaviour:
@@ -67951,7 +67959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1915871351
 MonoBehaviour:
@@ -68376,7 +68384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1939744370
 MonoBehaviour:
@@ -68873,7 +68881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1948178948
 MonoBehaviour:
@@ -68985,7 +68993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1948827557
 MonoBehaviour:
@@ -69490,7 +69498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1961304393
 MonoBehaviour:
@@ -69707,7 +69715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1973833772
 MonoBehaviour:
@@ -69819,7 +69827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1974429302
 MonoBehaviour:
@@ -69931,7 +69939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &1982772286
 MonoBehaviour:
@@ -70539,7 +70547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2003127388
 MonoBehaviour:
@@ -70713,7 +70721,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2007776708
 MonoBehaviour:
@@ -70825,7 +70833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2008270218
 MonoBehaviour:
@@ -70937,7 +70945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2008942854
 MonoBehaviour:
@@ -71131,7 +71139,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 380755891104487367, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71139,7 +71147,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 783580636795336923, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71147,7 +71155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1826437187872707394, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71155,7 +71163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4084398230337589007, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71167,7 +71175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5268217405263448792, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71175,7 +71183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5810608796631741330, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71223,7 +71231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5983452627401941904, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71231,7 +71239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6939573061150152266, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71239,7 +71247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7240294601450810312, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71247,7 +71255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7633588461668698016, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71255,7 +71263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7936122030928502946, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71267,7 +71275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9134885788384322670, guid: 4a1724a4b9433054896a4a84ead1d35b, type: 3}
       propertyPath: interactDuration
@@ -71447,7 +71455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2022323927
 MonoBehaviour:
@@ -71802,7 +71810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2033975840
 MonoBehaviour:
@@ -72069,7 +72077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2039778578
 MonoBehaviour:
@@ -72512,7 +72520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2048967481
 MonoBehaviour:
@@ -72811,7 +72819,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2061694534
 MonoBehaviour:
@@ -72923,7 +72931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2063347704
 MonoBehaviour:
@@ -73399,7 +73407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2078577145
 MonoBehaviour:
@@ -73511,7 +73519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2080077987
 MonoBehaviour:
@@ -73623,7 +73631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2081516296
 MonoBehaviour:
@@ -73735,7 +73743,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2086172642
 MonoBehaviour:
@@ -73959,7 +73967,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2090019379
 MonoBehaviour:
@@ -74197,7 +74205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2093880246
 MonoBehaviour:
@@ -74439,7 +74447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2098225516
 MonoBehaviour:
@@ -74657,7 +74665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2101670612
 MonoBehaviour:
@@ -74873,7 +74881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2106626341
 MonoBehaviour:
@@ -74985,7 +74993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2107208949
 MonoBehaviour:
@@ -75177,7 +75185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2111357324
 MonoBehaviour:
@@ -75339,7 +75347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2115451916
 MonoBehaviour:
@@ -75602,7 +75610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2119739446
 MonoBehaviour:
@@ -75767,7 +75775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2122734355
 MonoBehaviour:
@@ -75956,7 +75964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2142642448
 MonoBehaviour:
@@ -76068,7 +76076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0
   playerAnimationTrigger: Interact
-  nextState: 7
+  nextState: 8
   canStopInteract: 1
 --- !u!114 &2144385359
 MonoBehaviour:
@@ -77147,7 +77155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8179056313333258966, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8179056313333258966, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: interactDuration
@@ -77155,7 +77163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8318811229573893292, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8318811229573893292, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: interactDuration
@@ -77195,7 +77203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8950685684681052841, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8950685684681052841, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: interactDuration
@@ -77203,7 +77211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9095314786225264308, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: nextState
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9095314786225264308, guid: c38b99db08759f846a1b9d1a39a72eab, type: 3}
       propertyPath: interactDuration

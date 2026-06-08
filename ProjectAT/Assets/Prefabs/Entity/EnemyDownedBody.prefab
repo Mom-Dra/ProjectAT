@@ -10930,7 +10930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactDuration: 0.5
   playerAnimationTrigger: LiftUp
-  nextState: 6
+  nextState: 7
   canStopInteract: 0
 --- !u!1 &6280071282847952083
 GameObject:

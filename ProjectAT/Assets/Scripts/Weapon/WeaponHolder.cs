@@ -33,7 +33,8 @@ public class WeaponHolder : MonoBehaviour
     public int CurrentAmmo { get { return currentAmmo; } }
     public int MaxAmmo { get { return maxAmmo; } }
     public float Range { get { return range; } }
-    public float FireRate => nowWeapon.GunData.TimeBetFire;
+    public float SemiAutoFireRate => nowWeapon.GunData.TimeBetFire;
+    public float FullAutoFireRate => nowWeapon.GunData.FullAutoFireRate;
     public Gun NowWeapon => nowWeapon;
     #endregion
 
@@ -124,14 +125,19 @@ public class WeaponHolder : MonoBehaviour
         nowWeapon.Attack();
     }
 
-    public void FireWeapon(float skillDamage, LayerMask targetLayer)
+    public void FireWeaponOnlyVFX(Vector3 targetPosition, bool FullAuto = false)
     {
-        nowWeapon.Attack(skillDamage, targetLayer);
+        nowWeapon.AttackOnlyVFX(targetPosition, FullAuto);
     }
 
     public bool CanFire()
     {
         return nowWeapon.CanFire();
+    }
+
+    public bool CanFire(bool FullAuto)
+    {
+        return nowWeapon.CanFire(FullAuto);
     }
 
     public void ReloadingWeapon()
@@ -152,7 +158,7 @@ public class WeaponHolder : MonoBehaviour
 
     public bool HasAmmoInMagazine()
     {
-        return currentAmmo > 0;
+        return nowWeapon != null && nowWeapon.MagAmmo > 0;
     }
 
     #region 이벤트용 함수

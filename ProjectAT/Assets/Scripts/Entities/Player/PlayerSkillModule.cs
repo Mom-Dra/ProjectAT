@@ -27,6 +27,8 @@ public class PlayerSkillModule : MonoBehaviour
 
     private SkillChaseState skillChaseState;
     private SkillCastState skillCastState;
+    private SkillExecuteState skillExecuteState;
+
 
     [Header("Skills")]
     private Skill[] mySkills = new Skill[5]; //갯수 조정 필요
@@ -58,6 +60,13 @@ public class PlayerSkillModule : MonoBehaviour
         groundLayer = LayerMask.GetMask("Ground");
     }
 
+    private void Start()
+    {
+        InitiateSkills();
+        InitiateSkillState();
+        lastSkillInput = SkillNumber.None;
+    }
+
     private void InitiateSkills()
     {
      
@@ -82,16 +91,13 @@ public class PlayerSkillModule : MonoBehaviour
                 OnSkillItemCountChange?.Invoke((SkillNumber)i, MyInventory.GetItemCount(inventoryCostSkill.NeededItemData));
             }
         }
-
-        skillChaseState = MyPlayerController.GetState(PlayerStateType.SkillChase) as SkillChaseState;
-        skillCastState = MyPlayerController.GetState(PlayerStateType.SkillCast) as SkillCastState;
-
     }
 
-    private void Start()
+    private void InitiateSkillState()
     {
-        InitiateSkills();
-        lastSkillInput = SkillNumber.None;
+        skillChaseState = MyPlayerController.GetState(PlayerStateType.SkillChase) as SkillChaseState;
+        skillCastState = MyPlayerController.GetState(PlayerStateType.SkillCast) as SkillCastState;
+        skillExecuteState = MyPlayerController.GetState(PlayerStateType.SkillExecute) as SkillExecuteState;
     }
 
     public void ActivateTargettingMode(SkillNumber skillIndex)
@@ -165,6 +171,13 @@ public class PlayerSkillModule : MonoBehaviour
 
     public bool CanSelectTarget(in RaycastHit hit, out GameObject target, out Vector3 point)
     {
+        if(skillDatas[(int)lastSkillInput] is IAoESkillData && (((1 << hit.collider.gameObject.layer) & groundLayer.value) != 0))
+        {
+             target = null;
+             point = hit.point;
+             return true;
+        }
+
         return mySkills[(int)lastSkillInput].IsValidTarget(hit, out target, out point);
     }
     //아래부터 stateMachine을 위한 함수
@@ -211,23 +224,31 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void SetUpSkillContext(in GameObject target, in Vector3 point)
     {
+        Skill skill = mySkills[(int)currentActivateSkillNumber];
+        SkillData skillData = skillDatas[(int)currentActivateSkillNumber];
+        
         SkillContext skillContext = new SkillContext
         {
-            SkillToExecute = mySkills[(int)currentActivateSkillNumber],
+            SkillToExecute = skill,
             TargetObject = target,
             CastedPosition = point,
-            FinalDamage = skillDatas[(int)currentActivateSkillNumber].BaseDamage, //데미지 계산 로직 필요 -> skill.CalCulateFinalDamage()로 바꾸는 것.
-            FinalRange = (skillDatas[(int)currentActivateSkillNumber] is ProjectileSkillData) ? MyStatus.ThrowRange : MyWeapon.Range, //사거리 계산 로직 필요 => skill.CalculateFinalRange()로 바꾸는 것
+            FinalDamage = skillData.BaseDamage, //데미지 계산 로직 필요 -> skillData.CalCulateFinalDamage()로 바꾸는 것.
+            FinalRange = skill.CalculateFinalRange(), //사거리 계산 로직 필요 => skillData.CalculateFinalRange()로 바꾸는 것
         };
 
+        SetSkillContext(skillContext);
+    }
+
+    private void SetSkillContext(SkillContext skillContext)
+    {
         skillChaseState.SetSkillContext(skillContext);
         skillCastState.SetSkillContext(skillContext);
+        skillExecuteState.SetSkillContext(skillContext);
     }
 
     private void CancelSkillContext()
     {
-        skillChaseState.SetSkillContext(null);
-        skillCastState.SetSkillContext(null);
+        SetSkillContext(null);
     }
 
 }

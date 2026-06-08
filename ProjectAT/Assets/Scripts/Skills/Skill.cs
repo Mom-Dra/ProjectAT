@@ -36,7 +36,10 @@ public abstract class Skill
 
     public abstract void Execute(SkillContext skillContext);
 
-    public virtual void OnExecuteStart(SkillContext skillContext){ Execute(skillContext);}
+    public virtual void OnExecuteStart(SkillContext skillContext)
+    { 
+        Execute(skillContext);
+    }
 
     public virtual void OnExecuteUpdate(SkillContext skillContext, float deltaTime) { }
 

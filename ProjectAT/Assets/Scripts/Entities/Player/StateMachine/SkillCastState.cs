@@ -67,16 +67,26 @@ namespace PlayerStateMachine
 
         private void FinishCastingAndExecute()
         {
-            if (skillContext.SkillToExecute.CanExecute(skillContext))
-            {
-                skillContext.SkillToExecute.Execute(skillContext);
-                context.MySkillModule.SetSkillCooldownTimer(skillContext.SkillToExecute);
-                CancelCasting(); 
-            }
-            else
+            // if (skillContext.SkillToExecute.CanExecute(skillContext))
+            // {
+            //     skillContext.SkillToExecute.Execute(skillContext);
+            //     context.MySkillModule.SetSkillCooldownTimer(skillContext.SkillToExecute);
+            //     CancelCasting(); 
+            // }
+            // else
+            // {
+            //     ResumeChasing();
+            // }
+            if (!skillContext.SkillToExecute.CanExecute(skillContext))
             {
                 ResumeChasing();
+                return;
             }
+
+            skillContext.SkillToExecute.OnCastingEnd(skillContext);
+            // SkillExecuteState executeState = context.GetState(PlayerStateType.SkillExecute) as SkillExecuteState;
+            // executeState.SetSkillContext(skillContext);
+            context.ChangeState(PlayerStateType.SkillExecute);
         }
 
         // 다시 추적 상태로 돌아가는 로직
@@ -84,8 +94,8 @@ namespace PlayerStateMachine
         {
             skillContext.SkillToExecute.OnCastingEnd(skillContext);
 
-            SkillChaseState skillChaseState = context.GetState(PlayerStateType.SkillChase) as SkillChaseState; //굳이 필요한 로직인가?
-            skillChaseState.SetSkillContext(skillContext);
+            // SkillChaseState skillChaseState = context.GetState(PlayerStateType.SkillChase) as SkillChaseState; //굳이 필요한 로직인가?
+            // skillChaseState.SetSkillContext(skillContext);
 
             context.ChangeState(PlayerStateType.SkillChase);
         }

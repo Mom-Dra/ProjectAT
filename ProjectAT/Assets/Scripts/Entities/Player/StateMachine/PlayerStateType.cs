@@ -10,6 +10,7 @@ namespace PlayerStateMachine
         Dead,
         SkillChase,
         SkillCast,
+        SkillExecute,
         InteractChasing,
         Interacting,
         Carry,

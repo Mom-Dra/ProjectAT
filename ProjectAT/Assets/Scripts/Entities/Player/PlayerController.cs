@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     public NormalState NormalState{ get; private set; }
     public SkillChaseState SkillChaseState { get; private set; }
     public SkillCastState SkillCastingState { get; private set; }
+    public SkillExecuteState SkillExecuteState { get; private set; }
+
     public DeadState DeadState { get; private set; }
     public InteractChaseState InteractChaseState { get; private set; }
     public InteractingState InteractingState { get; private set; }
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour
         NormalState = new NormalState(this);
         SkillChaseState = new SkillChaseState(this);
         SkillCastingState = new SkillCastState(this);
+        SkillExecuteState = new SkillExecuteState(this);
         DeadState = new DeadState(this);
         InteractChaseState = new InteractChaseState(this);
         InteractingState = new InteractingState(this);
@@ -288,6 +291,7 @@ public class PlayerController : MonoBehaviour
             PlayerStateType.Normal => NormalState,
             PlayerStateType.SkillChase => SkillChaseState,
             PlayerStateType.SkillCast => SkillCastingState,
+            PlayerStateType.SkillExecute => SkillExecuteState,
             PlayerStateType.Dead => DeadState,
             PlayerStateType.InteractChasing => InteractChaseState,
             PlayerStateType.Interacting => InteractingState,

@@ -23,6 +23,7 @@ public static class SkillFactory
             SkillId.ThrowGrenade => CreateThrowGrenade(context, data),
             SkillId.UseBandage => CreateUseBandage(context, data),
             SkillId.DesignatedFire => CreateDesignatedFire(context, data),
+            SkillId.SuppressiveFire => CreateSuppressiveFire(context, data),
 
             // 나중에 구현
             // SkillId.SuppressiveFire => new SuppressiveFire(context, data),
@@ -63,6 +64,14 @@ public static class SkillFactory
             LogDataMismatch(data, nameof(WeaponSkillData));
         return new DesignatedFire(context, data);
     }
+
+    private static Skill CreateSuppressiveFire(PlayerSkillModule context, SkillData data)
+    {
+        if (data is not DurationAreaWeaponSkillData)
+            LogDataMismatch(data, nameof(DurationAreaWeaponSkillData));
+        return new SuppressiveFire(context, data);
+    }
+
 
     private static Skill CreateUnsupportedSkill(PlayerSkillModule context, SkillData data)
     {

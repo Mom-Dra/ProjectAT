@@ -71,7 +71,7 @@ public class DesignatedFire : TargetSkill, IWeaponUsingSkill
         if (!skillContext.TargetObject.TryGetComponent(out IDamageable damageable)) return;
         
         damageable.TakeDamage(skillContext.FinalDamage);
-        context.MyWeapon.FireWeapon(0.0f, TargetLayer); // 0 데미지로 발사 연출/탄약 소모/발사 이벤트만 처리.
+        context.MyWeapon.FireWeaponOnlyVFX(skillContext.CastedPosition, false); // 0 데미지로 발사 연출/탄약 소모/발사 이벤트만 처리.
     }
 
     public override void OnCastingEnd(SkillContext skillContext)

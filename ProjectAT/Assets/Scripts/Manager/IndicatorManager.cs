@@ -4,7 +4,7 @@ using System;
 public enum IndicatorType : ushort
 {
     MoveIndicator,
-    SkillAoEIndicator,
+    SkillAoEIndicator, //SkillAoEIndicatorWithLine 도 만들어둬야할듯.
     TargettingSkillIndicator,
 }
 

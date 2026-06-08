@@ -70,6 +70,18 @@ public class PlayerMovementModule : MonoBehaviour
             return false;
         }
     }
+
+    public void PlayerRotateImmediately(Vector3 targetPos)
+    {
+        Vector3 direction = (targetPos - transform.position).normalized;
+        direction.y = 0;
+
+        if (direction.sqrMagnitude > 0.0001f)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = lookRotation;
+        }
+    }
     
     public void PlayerMoveStop()
     {

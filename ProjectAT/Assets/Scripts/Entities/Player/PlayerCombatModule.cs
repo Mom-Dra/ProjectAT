@@ -117,10 +117,15 @@ public class PlayerCombatModule : MonoBehaviour
 
     public void NormalAttackEnemy(Enemy target)
     {
+        NormalAttackTarget(target.gameObject);
+    }
+
+    public void NormalAttackTarget(GameObject target)
+    {
         if (target.TryGetComponent(out IDamageable damageable)) 
         {
-            myWeapon.FireWeapon();
-            //1damageable.TakeDamage(myWeapon.Damage); //NOTE : FireWeapon에서 이미 데미지를 주는중임. 이 코드 삭제 생각해보기
+            myWeapon.FireWeaponOnlyVFX(target.transform.position, false);
+            damageable.TakeDamage(myWeapon.Damage);
         }
     }
 
