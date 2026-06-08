@@ -156,9 +156,9 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
                 continue;
             }
 
-            IDamageable damageable = hit.GetComponent<IDamageable>() ?? hit.GetComponentInParent<IDamageable>();
+            //if (!hit.TryGetComponent(out IDamageable damageable)) damageable = hit.GetComponentInParent<IDamageable>();
 
-            if (damageable != null && damagedTargets.Add(damageable))
+            if (hit.TryGetComponent(out IDamageable damageable) && damagedTargets.Add(damageable))
             {
                 damageable.TakeDamage(skillData.BaseDamage);
             }
@@ -177,24 +177,20 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
 
     private bool IsInsideSuppressiveFireArea(Vector3 origin, Vector3 targetCenter, Vector3 fireDirection, float targetDistance, float aoeRadius, Vector3 targetPosition)
     {
-        origin.y = 0f;
-        targetCenter.y = 0f;
-        targetPosition.y = 0f;
-
-        float sqrDistanceToAoeCenter = (targetPosition - targetCenter).sqrMagnitude;
-        if (sqrDistanceToAoeCenter <= aoeRadius * aoeRadius)
-            return true;
-
         Vector3 toTarget = targetPosition - origin;
+        toTarget.y = 0f;
 
-        float forwardDistance = Vector3.Dot(toTarget, fireDirection);
-        if (forwardDistance < 0f || forwardDistance > targetDistance)
-            return false;
+        Vector3 right = Vector3.Cross(Vector3.up, fireDirection);
 
-        Vector3 closestPointOnCenterLine = origin + fireDirection * forwardDistance;
-        Vector3 lateralOffset = targetPosition - closestPointOnCenterLine;
-        float allowedRadius = aoeRadius * (forwardDistance / targetDistance);
+        float forward = Vector3.Dot(toTarget, fireDirection); 
+        float side = Vector3.Dot(toTarget, right);
 
-        return lateralOffset.sqrMagnitude <= allowedRadius * allowedRadius;
+        float dzFromCenter = forward - targetDistance; 
+        
+        if (side * side + dzFromCenter * dzFromCenter <= aoeRadius * aoeRadius) return true;
+        if (forward < 0f || forward > targetDistance) return false;
+
+        float allowedSide = aoeRadius * (forward / targetDistance);
+        return side * side <= allowedSide * allowedSide;
     }
 }
