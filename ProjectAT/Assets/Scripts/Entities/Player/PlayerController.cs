@@ -125,16 +125,11 @@ public class PlayerController : MonoBehaviour
         //myStatus.onRevive -= () => Debug.Log("Player Revived!");
     }
 
-    private void FixedUpdate()
-    {
-        CurrentState.OnUpdate();
-    }
-
     private void Update()
     {
         myCoverModule.HandleCoverRaycast(Managers.Instance.InputManager.MousePosition);
         
-        //CurrentState.OnUpdate();
+        CurrentState.OnUpdate();
         if(mySkillModule.IsTargetting) UpdateSkillIndicator();
         myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity()); //애니메이션을 위한 이동속도 조절.
     }

@@ -9,7 +9,6 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
     private readonly HashSet<IDamageable> damagedTargets = new HashSet<IDamageable>();
     private readonly Collider[] hits = new Collider[32];
     
-
     private DurationAreaWeaponSkillData suppressiveData => skillData as DurationAreaWeaponSkillData;
 
     private float elapsed;
@@ -81,9 +80,8 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
         elapsed += deltaTime;
         tickTimer += deltaTime;
 
-        if (tickTimer < suppressiveData.TickInterval)
-            return;
-
+        if (tickTimer < suppressiveData.TickInterval) return;
+        
         tickTimer = 0f;
         FireTick(skillContext);
     }
