@@ -19,7 +19,7 @@ public class PlayerCombatModule : MonoBehaviour
     public bool IsAiming {get; private set;}
     public float ThrowRange => myStatus.ThrowRange;
     public WeaponHolder MyWeapon => myWeapon;
-    public Vector3 ThrowPoint => throwPoint.position;
+    public Transform ThrowPoint => throwPoint;
     #endregion
 
     private void Awake()

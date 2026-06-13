@@ -15,12 +15,12 @@ MonoBehaviour:
   skillId: 5
   skillName: Suppressive Fire
   baseDamage: 20
-  castingTime: 1
+  castingTime: 0.5
   maxCoolTime: 5
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  indicatorType: 1
+  indicatorType: 3
   cursorSkin: {fileID: 0}
   skillIcon: {fileID: 21300000, guid: 2f0da3c635957d84cbd5b6f585b52d44, type: 3}
   animationTriggerName: 
@@ -28,4 +28,5 @@ MonoBehaviour:
   ammoCostPerShot: 1
   duration: 2
   tickInterval: 0.1
-  aoeRadius: 5
+  aoeRadius: 10
+  aoeLength: 20

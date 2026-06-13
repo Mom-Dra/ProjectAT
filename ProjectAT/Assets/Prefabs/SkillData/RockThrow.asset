@@ -19,7 +19,7 @@ MonoBehaviour:
   maxCoolTime: 3
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   indicatorType: 1
   cursorSkin: {fileID: 0}
   skillIcon: {fileID: 21300000, guid: 51d6855e342a91e4ba5876741e4565f6, type: 3}

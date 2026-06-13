@@ -33,6 +33,7 @@ namespace SkillDataOptionInterfaces
     
     public interface IAoESkillData
     {
-        float AoERadius {get;}
+        float AoERadius { get; }
+        float AoELength { get; } 
     }
 }

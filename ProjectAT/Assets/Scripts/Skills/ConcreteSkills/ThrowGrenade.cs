@@ -49,7 +49,13 @@ namespace EntitySkills
 
         protected override void SetupProjectile(ThrowProjectileBase projectile)
         {
-            if (grenadeSkillData == null) return;
+            if (projectile == null)
+            {
+                Debug.LogWarning($"{GetType().Name}: projectile is null.");
+                return;
+            }
+            
+            base.SetupProjectile(projectile);
             if (projectile.TryGetComponent(out ProjectileGrenade grenade))
             {
                 grenade.SetUp(

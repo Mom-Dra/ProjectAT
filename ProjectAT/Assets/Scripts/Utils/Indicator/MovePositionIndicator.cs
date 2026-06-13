@@ -21,7 +21,7 @@ public class MovePositionIndicator : IndicatorBase
         eventId = Shader.PropertyToID(eventName);
     }
 
-    public override void Show(float size = 1f)
+    public override void Show()
     {  
         gameObject.SetActive(true);
         if (indicatorCoroutine != null)
@@ -48,6 +48,4 @@ public class MovePositionIndicator : IndicatorBase
         myCol.enabled = false;
         gameObject.SetActive(false);
     }
-
-    public override void UpdateIndicator(Vector3 position, Vector3 velocity) { }
 }

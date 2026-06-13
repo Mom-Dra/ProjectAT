@@ -4,8 +4,10 @@ using System;
 public enum IndicatorType : ushort
 {
     MoveIndicator,
-    SkillAoEIndicator, //SkillAoEIndicatorWithLine 도 만들어둬야할듯.
+    ThrowingIndicator, //SkillAoEIndicatorWithLine 도 만들어둬야할듯.
     TargettingSkillIndicator,
+    SectorAoEIndicator
+
 }
 
 public class IndicatorManager : MonoBehaviour
@@ -14,12 +16,14 @@ public class IndicatorManager : MonoBehaviour
 
     [Header("Indicator Prefabs")]
     [SerializeField] private GameObject moveIndicatorPrefab;
-    [SerializeField] private GameObject skillAoEIndicatorPrefab;
+    [SerializeField] private GameObject throwingIndicatorPrefab;
+    [SerializeField] private GameObject sectorAoEIndicatorPrefab;
     [SerializeField] private Sprite targettingSkillCursor;
 
     [Header("Indicator References")]
-    [SerializeField] private IndicatorBase[] indicators;
-    [SerializeField] private LineRenderer lineRenderer;
+    private MovePositionIndicator moveIndicator;
+    private ThrowingIndicator throwingIndicator;
+    private SectorAoEIndicator sectorAoEIndicator;
 
     private void Awake()
     {
@@ -37,37 +41,20 @@ public class IndicatorManager : MonoBehaviour
     private void Initialize()
     {
         InitializeIndicators();
-        
-        if (lineRenderer == null)
-        {
-            GameObject obj = new GameObject("LineRenderer");
-            obj.transform.SetParent(transform);
-            lineRenderer = obj.AddComponent<LineRenderer>();
-            lineRenderer.colorGradient = new Gradient()
-            {
-                colorKeys = new GradientColorKey[]
-                {
-                    new GradientColorKey(new Color(249, 77, 77), 0f),
-                    new GradientColorKey(new Color(249, 77, 77), 1f)
-                },
-                alphaKeys = new GradientAlphaKey[]
-                {
-                    new GradientAlphaKey(1f, 0f),
-                    new GradientAlphaKey(1f, 1f)
-                }
-            };
-            lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0f, 0.1f), new Keyframe(1f, 0.1f));
-        }
     }
 
     private void InitializeIndicators()
     {
-        indicators = new IndicatorBase[Enum.GetNames(typeof(IndicatorType)).Length];
         
-        indicators[(int)IndicatorType.MoveIndicator] = Instantiate(moveIndicatorPrefab).GetComponent<IndicatorBase>();
-        indicators[(int)IndicatorType.MoveIndicator].Hide();
-        indicators[(int)IndicatorType.SkillAoEIndicator] = Instantiate(skillAoEIndicatorPrefab).GetComponent<IndicatorBase>();
-        indicators[(int)IndicatorType.SkillAoEIndicator].Hide();
+        moveIndicator = Instantiate(moveIndicatorPrefab).GetComponent<MovePositionIndicator>();
+        moveIndicator.Hide();
+        
+        throwingIndicator = Instantiate(throwingIndicatorPrefab).GetComponent<ThrowingIndicator>();
+        throwingIndicator.Hide();
+        
+        sectorAoEIndicator = Instantiate(sectorAoEIndicatorPrefab).GetComponent<SectorAoEIndicator>();
+        sectorAoEIndicator.Hide();
+
     }
 
     public void HideIndicator(IndicatorType type)
@@ -77,23 +64,22 @@ public class IndicatorManager : MonoBehaviour
             case IndicatorType.TargettingSkillIndicator:
                 ResetCursor();
                 break;
-            case IndicatorType.SkillAoEIndicator:
-                HideAoeIndicator();
+            case IndicatorType.ThrowingIndicator:
+                HideThrowingIndicator();
+                break;
+            case IndicatorType.SectorAoEIndicator:
+                HideSectorAoEIndicator();
+                sectorAoEIndicator.Hide();
                 break;
             default:
                 break;
         }
     }
 
-    public void ShowMoveIndicator(Vector3 dest, IndicatorType type, float radius = 1f)
+    public void ShowMoveIndicator(Vector3 dest)
     {
-        if (type == IndicatorType.TargettingSkillIndicator)
-        {
-            ShowAimingCursor();
-            return;
-        }
-        indicators[(int)type].transform.position = dest;
-        indicators[(int)type].Show(radius * 2);
+        moveIndicator.transform.position = dest;
+        moveIndicator.Show();
     }
 
     public void ShowAimingCursor()
@@ -106,75 +92,41 @@ public class IndicatorManager : MonoBehaviour
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
-    public void ShowAreaIndicator(Vector3 dest, float radius)
+
+    public void ShowThrowingIndicator(Transform caller, float radius)
     {
-        indicators[(int)IndicatorType.SkillAoEIndicator].transform.position = dest;
-        indicators[(int)IndicatorType.SkillAoEIndicator].Show(radius * 2);
+        throwingIndicator.SetTarget(caller);
+        throwingIndicator.SetRadius(radius * 2f);
+        throwingIndicator.Show();
     }
 
-    public void UpdateAoeIndicator(Vector3 fromPos, Vector3 toPos, Vector3 velocity, float PlayerRange)
+    public void UpdateThrowingIndicator(Vector3 toPos, float PlayerRange)
     {
-        indicators[(int)IndicatorType.SkillAoEIndicator].UpdateIndicator(toPos, velocity);
-        DrawThrowingLine(fromPos + Vector3.up, toPos, 1f, PlayerRange);
-    }
-    public void HideAoeIndicator()
-    {
-        indicators[(int)IndicatorType.SkillAoEIndicator].Hide();
-        ClearLine();
+        throwingIndicator.UpdateIndicator(toPos);
+        throwingIndicator.DrawThrowingLine(toPos, 1f, PlayerRange);
     }
 
-    // public void DrawThrowingLine(Vector3 fromPos, Vector3 toPos, float height)
-    // {
-    //     lineRenderer.enabled = true;
-    //     int segmentCount = 20;
-    //     lineRenderer.positionCount = segmentCount + 1;
-
-    //     for (int i = 0; i <= segmentCount; i++)
-    //     {
-    //         float t = (float)i / segmentCount;
-    //         // 매니저의 위치(transform.position)가 아니라, 던지는 사람의 위치(fromPos)를 기준으로 계산해야 합니다.
-    //         Vector3 point = Vector3.Lerp(fromPos, toPos, t); 
-    //         point.y += height * 4 * t * (1 - t); // 포물선 효과
-    //         lineRenderer.SetPosition(i, point);
-    //     }
-    // }
-    public void DrawThrowingLine(Vector3 fromPos, Vector3 toPos, float arcHeight, float PlayerRange)
+    private void HideThrowingIndicator()
     {
-        if(Vector3.SqrMagnitude(toPos - fromPos) > PlayerRange * PlayerRange)
-        {
-            lineRenderer.enabled = false;
-            return;
-        }
-        // ★ 단 한 줄로 속도와 비행 시간을 모두 알아옵니다!
-        if (!PhysicsMathUtility.CalculateTrajectory(fromPos, toPos, arcHeight, out Vector3 initialVelocity, out float totalTime))
-        {
-            // 타겟이 너무 높아 계산 실패 시 선을 숨김
-            lineRenderer.enabled = false;
-            return;
-        }
-
-        lineRenderer.enabled = true;
-        int segmentCount = 20;
-        lineRenderer.positionCount = segmentCount + 1;
-        
-        // 선을 그리기 위한 시간 간격
-        float deltaTime = totalTime / segmentCount;
-
-        for (int i = 0; i <= segmentCount; i++)
-        {
-            float t = i * deltaTime;
-            
-            // 물리 공식: 현재 위치 = 시작위치 + (초기속도 * 시간) + (0.5 * 중력 * 시간^2)
-            Vector3 point = fromPos + (initialVelocity * t) + (0.5f * Physics.gravity * t * t);
-            
-            lineRenderer.SetPosition(i, point);
-        }
+        throwingIndicator.Hide();
+        throwingIndicator.ClearLine();
     }
 
-    public void ClearLine()
+    public void ShowSectorAoEIndicator(Transform attachedTarget, float radius, float length)
     {
-        lineRenderer.enabled = false;
-        lineRenderer.positionCount = 0;
-        //Debug
+        sectorAoEIndicator.SetTarget(attachedTarget);
+        sectorAoEIndicator.SetSize(radius, length);
+        sectorAoEIndicator.Show();
     }
+
+    public void UpdateSectorAoEIndicator(Vector3 toPos)
+    {
+        sectorAoEIndicator.UpdateIndicator(toPos);
+    }
+
+    private void HideSectorAoEIndicator()
+    {
+        sectorAoEIndicator.Hide();
+    }
+
 }

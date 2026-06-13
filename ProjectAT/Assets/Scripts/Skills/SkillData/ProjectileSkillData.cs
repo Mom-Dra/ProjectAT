@@ -9,6 +9,10 @@ public class ProjectileSkillData : SkillData, IAoESkillData
     [SerializeField] protected float landedNoiseRange;
 
     public virtual float AoERadius => LandedNoiseRange;
+    public virtual float AoELength => LandedNoiseRange;
+
     public float LandedNoiseRange => landedNoiseRange;
     public GameObject ThrowingObjectPrefab => throwingObjectPrefab;
+
+    
 }

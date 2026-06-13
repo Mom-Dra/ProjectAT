@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SuppressiveFire : Skill, IWeaponUsingSkill
 {
-    private readonly PlayerCombatModule combatModule;
     private readonly PlayerAnimator animator;
 
     private readonly HashSet<IDamageable> damagedTargets = new HashSet<IDamageable>();
@@ -16,12 +15,12 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
     private float elapsed;
     private float tickTimer;
 
-    private float AreaWidth => suppressiveData != null ? suppressiveData.AoERadius : 0f;
+    private float AoERadius => suppressiveData != null ? suppressiveData.AoERadius : 0f;
+    private float AoELength => suppressiveData != null ? suppressiveData.AoELength : 0f;
 
     public SuppressiveFire(PlayerSkillModule context, SkillData data) : base(context, data)
     {
         animator = context.MyAnimModule;
-        combatModule = context.MyCombatModule;
     }
 
     public bool RequiresAmmo => suppressiveData?.RequiresAmmo?? true;
@@ -109,7 +108,7 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
 
     public override float CalculateFinalRange()
     {
-        return context.MyWeapon.Range - AreaWidth;
+        return AoELength;
     }
 
     private void FireTick(SkillContext skillContext)
@@ -129,20 +128,20 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
 
         fireDirection.Normalize();
 
-        ApplySuppressiveFireDamage(origin, targetCenter, fireDirection, targetDistance, suppressiveData.AoERadius);
+        ApplySuppressiveFireDamage(origin, fireDirection, AoERadius, AoELength);
     }
 
-    private void ApplySuppressiveFireDamage(Vector3 origin, Vector3 targetCenter, Vector3 fireDirection, float targetDistance, float aoeRadius)
+    private void ApplySuppressiveFireDamage(Vector3 origin, Vector3 fireDirection, float aoeRadius, float aoeLength)
     {
         damagedTargets.Clear();
 
-        float queryLength = targetDistance + aoeRadius;
-        Vector3 boxCenter = origin + fireDirection * (queryLength * 0.5f);
-        Vector3 halfExtents = new Vector3(aoeRadius, 3f, queryLength * 0.5f);
+        Vector3 boxCenter = origin + fireDirection * (aoeLength * 0.5f);
+        Vector3 halfExtents = new Vector3(aoeRadius, 3f, aoeLength * 0.5f);
 
         Quaternion boxRotation = Quaternion.LookRotation(fireDirection, Vector3.up);
 
         int count = Physics.OverlapBoxNonAlloc(boxCenter, halfExtents, hits, boxRotation, TargetLayer, QueryTriggerInteraction.Ignore);
+
 
         for (int i = 0; i < count; i++)
         {
@@ -151,12 +150,11 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
 
             Vector3 targetPos = hit.bounds.center;
 
-            if (!IsInsideSuppressiveFireArea(origin, targetCenter, fireDirection, targetDistance, aoeRadius, targetPos))
+            if (!IsInsideSuppressiveFireArea(origin, fireDirection, aoeLength, aoeRadius, targetPos))
             {
                 continue;
             }
 
-            //if (!hit.TryGetComponent(out IDamageable damageable)) damageable = hit.GetComponentInParent<IDamageable>();
 
             if (hit.TryGetComponent(out IDamageable damageable) && damagedTargets.Add(damageable))
             {
@@ -168,29 +166,34 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
     private float FireRandomBulletAngleInArea(SkillContext skillContext)
     {
         float coneHeight = skillContext.FinalRange;
-        float coneEndWidth = suppressiveData.AoERadius;
+        float coneEndWidth = AoERadius;
 
         return coneHeight > 0.001f
             ? Mathf.Atan2(coneEndWidth, coneHeight) * Mathf.Rad2Deg
             : 0f;
     }
 
-    private bool IsInsideSuppressiveFireArea(Vector3 origin, Vector3 targetCenter, Vector3 fireDirection, float targetDistance, float aoeRadius, Vector3 targetPosition)
+    private bool IsInsideSuppressiveFireArea(Vector3 origin, Vector3 fireDirection, float aoeLength, float aoeRadius , Vector3 targetPosition)
     {
         Vector3 toTarget = targetPosition - origin;
         toTarget.y = 0f;
 
+        if (toTarget.sqrMagnitude > aoeLength * aoeLength)
+        {
+            return false;
+        }
+
         Vector3 right = Vector3.Cross(Vector3.up, fireDirection);
 
-        float forward = Vector3.Dot(toTarget, fireDirection); 
-        float side = Vector3.Dot(toTarget, right);
+        float forward = Vector3.Dot(toTarget, fireDirection);
+        float side = Mathf.Abs(Vector3.Dot(toTarget, right));
 
-        float dzFromCenter = forward - targetDistance; 
-        
-        if (side * side + dzFromCenter * dzFromCenter <= aoeRadius * aoeRadius) return true;
-        if (forward < 0f || forward > targetDistance) return false;
+        if (forward < 0f || forward > aoeLength)
+        {
+            return false;
+        }
 
-        float allowedSide = aoeRadius * (forward / targetDistance);
-        return side * side <= allowedSide * allowedSide;
+        float allowedSide = aoeRadius * (forward / aoeLength);
+        return side <= allowedSide;
     }
 }

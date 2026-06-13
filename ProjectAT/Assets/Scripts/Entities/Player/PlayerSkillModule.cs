@@ -116,11 +116,15 @@ public class PlayerSkillModule : MonoBehaviour
         lastSkillInput = skillIndex;
         switch (mySkills[(int)skillIndex].IndicatorType)
         {
-            case IndicatorType.SkillAoEIndicator:
-                IndicatorManager.Instance.ShowAreaIndicator(MyCombatModule.ThrowPoint, (skillDatas[(int)lastSkillInput] as IAoESkillData).AoERadius);
+            case IndicatorType.ThrowingIndicator:
+                IndicatorManager.Instance.ShowThrowingIndicator(MyCombatModule.ThrowPoint, (skillDatas[(int)lastSkillInput] as IAoESkillData).AoERadius);
                 break;
             case IndicatorType.TargettingSkillIndicator:
                 IndicatorManager.Instance.ShowAimingCursor();
+                break;
+            case IndicatorType.SectorAoEIndicator:
+                IAoESkillData aoeSkillData = skillDatas[(int)lastSkillInput] as IAoESkillData;
+                IndicatorManager.Instance.ShowSectorAoEIndicator(transform, aoeSkillData.AoERadius, aoeSkillData.AoELength);
                 break;
             default:
                 break;
@@ -130,11 +134,18 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void UpdateSkillIndicator(Ray mouseToScreenPosRay)
     {
-        if(mySkills[(int)lastSkillInput].IndicatorType == IndicatorType.SkillAoEIndicator)
+        if(Physics.Raycast(mouseToScreenPosRay, out RaycastHit hit, 100f, groundLayer))
         {
-            if(Physics.Raycast(mouseToScreenPosRay, out RaycastHit hit, 100f, groundLayer))
+            switch (mySkills[(int)lastSkillInput].IndicatorType)
             {
-                IndicatorManager.Instance.UpdateAoeIndicator(transform.position, hit.point, Vector3.zero, MyStatus.ThrowRange);
+                case IndicatorType.ThrowingIndicator:
+                    IndicatorManager.Instance.UpdateThrowingIndicator(hit.point, MyStatus.ThrowRange);
+                    break;
+                case IndicatorType.SectorAoEIndicator:
+                    IndicatorManager.Instance.UpdateSectorAoEIndicator(hit.point);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -147,12 +158,6 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void ActivateSelectedSkill()
     {
-        // //ModuleState = SkillModuleState.Casting;
-        // ModuleState = SkillModuleState.Chasing;
-        
-        // currentActivateSkillNumber = lastSkillInput;
-        // MyCombatModule.SetAiming(false);
-        // CancelTargettingMode();
         currentActivateSkillNumber = lastSkillInput;
         CancelTargettingMode();
     }
