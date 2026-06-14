@@ -9,18 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9232c5f7d6bc62b4089e592f2680c62a, type: 3}
+  m_Script: {fileID: 11500000, guid: 33305c2d7d1a1314ba8ac645338889b8, type: 3}
   m_Name: DesignatedFire
   m_EditorClassIdentifier: 
-  Name: DesignatedFire
-  BaseDamage: 100
-  CastingTime: 0.5
-  MaxCoolTime: 0.5
-  TargetLayer:
+  skillId: 4
+  skillName: DesignatedFire
+  baseDamage: 100
+  castingTime: 0.5
+  maxCoolTime: 0.5
+  targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  SkillType: 0
-  IndicatorType: 2
-  CursorSkin: {fileID: 2800000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
-  SkillIcon: {fileID: 21300000, guid: d660eca1603ca55428640737c627b15c, type: 3}
-  AnimationTriggerName: 
+  indicatorType: 2
+  cursorSkin: {fileID: 2800000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
+  skillIcon: {fileID: 21300000, guid: d660eca1603ca55428640737c627b15c, type: 3}
+  animationTriggerName: 
+  requiresAmmo: 1
+  ammoCostPerShot: 1

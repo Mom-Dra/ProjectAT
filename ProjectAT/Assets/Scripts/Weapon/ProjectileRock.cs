@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ProjectileRock : ProjectileBase
+public class ProjectileRock : ThrowProjectileBase
 {
     [SerializeField] private int groundLayer;
     [SerializeField] private float destroyDelay = 2f;
@@ -13,6 +13,7 @@ public class ProjectileRock : ProjectileBase
         base.Awake();
         groundLayer = LayerMask.NameToLayer("Ground");
     }
+    
     private void OnDisable()
     {
         if(destroyCoroutine != null) StopCoroutine(destroyCoroutine);

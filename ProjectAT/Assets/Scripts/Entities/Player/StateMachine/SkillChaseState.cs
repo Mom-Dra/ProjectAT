@@ -7,19 +7,13 @@ namespace PlayerStateMachine
 {
     public class SkillChaseState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler
     {
-    #region  Needed Modules
         private PlayerSkillModule mySkillModule;
-        private PlayerCoverModule myCoverModule;
-
-    #endregion
-
 
         private SkillContext nowActivatedSkillContext;
 
         public SkillChaseState(PlayerController context) : base(context) 
         {
             mySkillModule = context.MySkillModule;
-            myCoverModule = context.MyCoverModule;
         }
 
         public void SetSkillContext(SkillContext context)

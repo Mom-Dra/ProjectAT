@@ -1,7 +1,7 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using SkillDataOptionInterfaces;
 
 public class PlayerHUD : MonoBehaviour
 {
@@ -117,7 +117,7 @@ public class PlayerHUD : MonoBehaviour
                 Debug.LogError($"Skill data for skill index {i} is null!");
                 continue;
             }
-            if (skillDatas[i] is not ConsumableSkillData)
+            if (skillDatas[i] is not IConsumableSkillData)
             {
                 skillItemLabels[i].style.display = DisplayStyle.None;
             }

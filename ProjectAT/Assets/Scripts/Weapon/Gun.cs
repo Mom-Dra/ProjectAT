@@ -63,11 +63,11 @@ public class Gun : Weapon
         }
     }
 
-    public void Attack(float damage, LayerMask targetLayer)
+    public void AttackOnlyVFX(Vector3 targetPosition, bool FullAuto = false)
     {
-        if (CanFire())
+        if (CanFire(FullAuto))
         {
-            PerformFire(damage, targetLayer);
+            PerformFire(targetPosition);
 
             if(MagAmmo <= 0)
             {
@@ -143,41 +143,36 @@ public class Gun : Weapon
     }
 
     //NOTE : 스킬 공격용을 비롯한 특별한 공격력을 주는 사격이 필요할 때 이것을 사용. 물론 DesignatedFire 스킬은 눈속임을 위해 0데미지를 줄 예정.
-    internal void PerformFire(float damage, LayerMask targetLayer)
+    internal void PerformFire(Vector3 targetPosition)
     {
-        --magAmmo;
+        Vector3 origin = muzzleParticleSystem.transform.position;
+        Vector3 direction = targetPosition - origin;
 
-        RaycastHit hit;
-        Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * gunData.MaxDistance, Color.blue, 2f);
-        if (Physics.Raycast(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward, out hit, gunData.MaxDistance, targetLayer))
+        if (direction.sqrMagnitude < 0.001f)
         {
-            Debug.DrawRay(muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.forward * Vector3.Distance(muzzleParticleSystem.transform.position, hit.point), Color.red, 2f);
-
-            GameObject hitObject = Managers.Instance.PoolManager.GetObject(gunData.HitPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-            if (hitObject.TryGetComponent(out ParticleSystem hitParticle))
-                hitParticle.Play();
-
-            GameObject bulletObject = Managers.Instance.PoolManager.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
-            if (bulletObject.TryGetComponent(out Bullet bullet))
-            {
-                bullet.Initialize(hit.point, 5f);
-                bullet.SetVelocity(transform.forward * 100f);
-            }
-
-            if (hit.transform.TryGetComponent(out IDamageable damageable))
-                damageable.TakeDamage((int)damage);
+            direction = muzzleParticleSystem.transform.forward;
+            targetPosition = origin + direction * gunData.MaxDistance;
         }
         else
         {
-            GameObject bulletObject = Managers.Instance.PoolManager.GetObject(gunData.BulletPrefab, muzzleParticleSystem.transform.position, muzzleParticleSystem.transform.rotation);
-            if (bulletObject.TryGetComponent(out Bullet bullet))
-            {
-                Vector3 dest = muzzleParticleSystem.transform.position + muzzleParticleSystem.transform.forward * gunData.MaxDistance;
-                bullet.Initialize(dest, 5f);
-                bullet.SetVelocity(transform.forward * 100f);
-            }
+            direction.Normalize();
         }
 
+        Debug.DrawRay(origin, direction * gunData.MaxDistance, Color.blue, 2f);
+
+        GameObject bulletObject = Managers.Instance.PoolManager.GetObject(
+            gunData.BulletPrefab,
+            origin,
+            Quaternion.LookRotation(direction, Vector3.up)
+        );
+
+        if (bulletObject.TryGetComponent(out Bullet bullet))
+        {
+            bullet.Initialize(origin + direction * gunData.MaxDistance, 5f);
+            bullet.SetVelocity(direction * 100f);
+        }
+
+        --magAmmo;
         currentFireTime = Time.time;
         OnWeaponFired?.Invoke(this);
     }
@@ -190,6 +185,14 @@ public class Gun : Weapon
     public bool CanFire()
     {
         return IsReady && magAmmo > 0;
+    }
+
+    public bool CanFire(bool FullAuto)
+    {
+        if(FullAuto)
+            return Time.time - currentFireTime >= gunData.FullAutoFireRate && magAmmo > 0;
+        else
+            return CanFire();
     }
 
     internal void PerformReload()

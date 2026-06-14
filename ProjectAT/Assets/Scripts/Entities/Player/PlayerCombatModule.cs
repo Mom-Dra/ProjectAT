@@ -1,4 +1,3 @@
-using Unity.Behavior;
 using UnityEngine;
 
 public class PlayerCombatModule : MonoBehaviour
@@ -15,10 +14,14 @@ public class PlayerCombatModule : MonoBehaviour
     [SerializeField] private LayerMask ObstacleLayer;
     [SerializeField] private float AimingCoolTime = 0.5f;
     [SerializeField] private float currentAimingTime = 0f;
+    
+    #region Properties
     public bool IsAiming {get; private set;}
-
+    public float ThrowRange => myStatus.ThrowRange;
     public WeaponHolder MyWeapon => myWeapon;
-    public Vector3 ThrowPoint => throwPoint.position;
+    public Transform ThrowPoint => throwPoint;
+    public Transform EyePoint => eyePoint;
+    #endregion
 
     private void Awake()
     {
@@ -72,13 +75,17 @@ public class PlayerCombatModule : MonoBehaviour
         return false;
     }
 
-    private bool CheckTargetVisibility(GameObject target, Transform baseTf)
+    private bool CheckTargetVisibility(GameObject target)
     {
-        Vector3 directionToTarget = target.transform.position - baseTf.position;
-        directionToTarget.y = baseTf.position.y;
+        return CheckPositionVisibility(target.transform.position);
+    }
 
-        Ray ray = new Ray(baseTf.position, directionToTarget);
-        if (Physics.Raycast(ray, myStatus.MaxViewingDistance, ObstacleLayer))
+    public bool CheckPositionVisibility(Vector3 position)
+    {
+        Vector3 directionToTarget = position - eyePoint.position;
+        directionToTarget.y = eyePoint.position.y;
+
+        if (Physics.Raycast(eyePoint.position, directionToTarget, directionToTarget.magnitude, ObstacleLayer))
         {
             return false;
         }
@@ -87,10 +94,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool IsTargetInWeaponSight(GameObject target)
     {
-        bool condition = CheckPositionInRange(target.transform.position, myWeapon.Range);
-        bool condition2 = CheckTargetVisibility(target, eyePoint);
-
-        return condition && condition2;
+        return CheckPositionInRange(target.transform.position, myWeapon.Range) && CheckTargetVisibility(target);
     }
 
     public bool CheckAimingTargetEnough()
@@ -115,10 +119,15 @@ public class PlayerCombatModule : MonoBehaviour
 
     public void NormalAttackEnemy(Enemy target)
     {
+        NormalAttackTarget(target.gameObject);
+    }
+
+    public void NormalAttackTarget(GameObject target)
+    {
         if (target.TryGetComponent(out IDamageable damageable)) 
         {
-            myWeapon.FireWeapon();
-            //1damageable.TakeDamage(myWeapon.Damage); //NOTE : FireWeapon에서 이미 데미지를 주는중임. 이 코드 삭제 생각해보기
+            myWeapon.FireWeaponOnlyVFX(target.transform.position, Vector3.up * 1.5f, false);
+            damageable.TakeDamage(myWeapon.Damage);
         }
     }
 
@@ -173,21 +182,17 @@ public class PlayerCombatModule : MonoBehaviour
         return true;
     }
 
-    public void ThrowSomthingToTarget(GameObject throwingObject, Vector3 targetPos)
+    public void ThrowSomthingToTarget(ThrowProjectileBase throwingObject, Vector3 targetPos)
     {
-        throwingObject.transform.position = throwPoint.position;
+        if(throwingObject == null) return;
+
+        throwingObject.gameObject.transform.position = throwPoint.position;
         Vector3 origin = throwPoint.position;
 
         if (PhysicsMathUtility.CalculateTrajectory(origin, targetPos, arcHeight, out Vector3 velocity, out float time))
         {
-            ProjectileBase grenade = throwingObject.GetComponent<ProjectileBase>();
-            if (grenade == null) {
-                Debug.LogWarning($"{gameObject.name} : The object to throw does not have a ProjectileBase component.");
-                return; 
-            }
-
-            grenade.IgnoreCollisionWith(gameObject);
-            grenade.Throw(velocity);
+            throwingObject.IgnoreCollisionWith(gameObject);
+            throwingObject.Throw(velocity);
         }
     }
 

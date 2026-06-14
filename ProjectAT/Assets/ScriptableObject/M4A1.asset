@@ -20,6 +20,7 @@ MonoBehaviour:
   startRemainAmmo: 30
   magCapacity: 30
   timeBetFire: 1
+  fullAutoFireRate: 0.1
   reloadTime: 1.8
-  maxDistance: 100
+  maxDistance: 20
   gunIcon: {fileID: 21300000, guid: d2bb5447ca4b0774ea0b80a1c104b9b7, type: 3}

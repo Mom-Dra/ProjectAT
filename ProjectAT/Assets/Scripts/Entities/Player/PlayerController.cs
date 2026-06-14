@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     public NormalState NormalState{ get; private set; }
     public SkillChaseState SkillChaseState { get; private set; }
     public SkillCastState SkillCastingState { get; private set; }
+    public SkillExecuteState SkillExecuteState { get; private set; }
+
     public DeadState DeadState { get; private set; }
     public InteractChaseState InteractChaseState { get; private set; }
     public InteractingState InteractingState { get; private set; }
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour
         NormalState = new NormalState(this);
         SkillChaseState = new SkillChaseState(this);
         SkillCastingState = new SkillCastState(this);
+        SkillExecuteState = new SkillExecuteState(this);
         DeadState = new DeadState(this);
         InteractChaseState = new InteractChaseState(this);
         InteractingState = new InteractingState(this);
@@ -188,7 +191,7 @@ public class PlayerController : MonoBehaviour
     public void PlayerMoveWithIndicator(Vector3 pos, bool isRun)
     {        
         PlayerMove(pos, isRun);
-        IndicatorManager.Instance.ShowMoveIndicator(pos, IndicatorType.MoveIndicator, 1.0f);
+        IndicatorManager.Instance.ShowMoveIndicator(pos);
     }
 
     public void HandleReloadInput()
@@ -205,7 +208,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!castedEnemy) return;
         SelectedEnemy = castedEnemy;
-        myPlayerAnimator.SetAiming(true, SelectedEnemy.transform);     
+        myPlayerAnimator.SetAiming(false, SelectedEnemy.transform);
     }
 
     public void CancelEnemySelect()
@@ -228,6 +231,7 @@ public class PlayerController : MonoBehaviour
         if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
         {
             myMovementModule.PlayerMoveStop();
+            AimingEnemy(true, SelectedEnemy.transform);
 
             if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
             {
@@ -288,6 +292,7 @@ public class PlayerController : MonoBehaviour
             PlayerStateType.Normal => NormalState,
             PlayerStateType.SkillChase => SkillChaseState,
             PlayerStateType.SkillCast => SkillCastingState,
+            PlayerStateType.SkillExecute => SkillExecuteState,
             PlayerStateType.Dead => DeadState,
             PlayerStateType.InteractChasing => InteractChaseState,
             PlayerStateType.Interacting => InteractingState,

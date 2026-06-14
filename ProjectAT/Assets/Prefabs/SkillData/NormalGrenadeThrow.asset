@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beaaa3df5e3cc0d43a2cbf74b87bfc36, type: 3}
+  m_Name: NormalGrenadeThrow
+  m_EditorClassIdentifier: 
+  skillId: 2
+  skillName: ThrowGrenade
+  baseDamage: 300
+  castingTime: 1.4
+  maxCoolTime: 5
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 384
+  indicatorType: 1
+  cursorSkin: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: c65dcc322ce2ad14fabef6a1efd1519b, type: 3}
+  animationTriggerName: 
+  throwingObjectPrefab: {fileID: 5801574965826310662, guid: d6d05aa84ea333d4cb0f95c900695142, type: 3}
+  landedNoiseRange: 3
+  requiredGrenadeItem: {fileID: 11400000, guid: f02561f720be1074baeacdf870eacda1, type: 2}
+  requiredGrenadeItemAmount: 1
+  explosionRadius: 5
+  fuseTime: 3
+  explosionNoiseRadius: 10

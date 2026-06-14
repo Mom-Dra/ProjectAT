@@ -135,4 +135,12 @@ public class InputReader : ScriptableObject, IPlayerActions
             OnReloadEvent?.Invoke();
         }
     }
+
+    public void OnSkillTwo(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            SkillInputEvent?.Invoke(SkillNumber.MainSkillTwo);
+        }
+    }
 }

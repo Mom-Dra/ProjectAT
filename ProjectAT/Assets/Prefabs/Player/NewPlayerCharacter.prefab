@@ -482,13 +482,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillDatas:
   - {fileID: 11400000, guid: 5cc270554cc2f214cbc4159f098395b8, type: 2}
-  - {fileID: 11400000, guid: 034ff0a3c4deca247bc5a574fcf0e107, type: 2}
-  - {fileID: 11400000, guid: 61cdd12c123dc6147adc62992fa676a6, type: 2}
+  - {fileID: 11400000, guid: 197062702a574fd4d9769c5f024013e1, type: 2}
+  - {fileID: 11400000, guid: 45e857534b98f96439c6cafdd84097db, type: 2}
   - {fileID: 11400000, guid: 3cb82f16f345f304986565e5b082c3eb, type: 2}
-  - {fileID: 11400000, guid: d56ecf9f073b8a848ab8a77ea2aa1fc4, type: 2}
+  - {fileID: 11400000, guid: 99656e4c5d720c04ab03c016695a0ac6, type: 2}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!114 &3095085718169901762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,6 +503,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 3378365268511287941}
   animationFPS: 30
+  suppressiveFireAimDistance: 10
+  suppressiveFireSweepSpeed: 8
   AimMarkerTransform: {fileID: 8234328004829182358}
   AimedTargetLocation: {fileID: 0}
   aimRigBuilder: {fileID: 6649381434334265693}
@@ -520,6 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugItemList:
   - {fileID: 11400000, guid: fa09adfcf317c7d44b1a3cc91ff71903, type: 2}
+  - {fileID: 11400000, guid: f02561f720be1074baeacdf870eacda1, type: 2}
 --- !u!114 &951272256506883713
 MonoBehaviour:
   m_ObjectHideFlags: 0
