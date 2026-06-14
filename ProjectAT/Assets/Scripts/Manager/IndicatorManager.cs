@@ -46,13 +46,13 @@ public class IndicatorManager : MonoBehaviour
     private void InitializeIndicators()
     {
         
-        moveIndicator = Instantiate(moveIndicatorPrefab).GetComponent<MovePositionIndicator>();
+        moveIndicator = Instantiate(moveIndicatorPrefab, transform).GetComponent<MovePositionIndicator>();
         moveIndicator.Hide();
         
-        throwingIndicator = Instantiate(throwingIndicatorPrefab).GetComponent<ThrowingIndicator>();
+        throwingIndicator = Instantiate(throwingIndicatorPrefab, transform).GetComponent<ThrowingIndicator>();
         throwingIndicator.Hide();
         
-        sectorAoEIndicator = Instantiate(sectorAoEIndicatorPrefab).GetComponent<SectorAoEIndicator>();
+        sectorAoEIndicator = Instantiate(sectorAoEIndicatorPrefab, transform).GetComponent<SectorAoEIndicator>();
         sectorAoEIndicator.Hide();
 
     }

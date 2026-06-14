@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!castedEnemy) return;
         SelectedEnemy = castedEnemy;
-        myPlayerAnimator.SetAiming(true, SelectedEnemy.transform);     
+        myPlayerAnimator.SetAiming(false, SelectedEnemy.transform);
     }
 
     public void CancelEnemySelect()
@@ -231,6 +231,7 @@ public class PlayerController : MonoBehaviour
         if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
         {
             myMovementModule.PlayerMoveStop();
+            AimingEnemy(true, SelectedEnemy.transform);
 
             if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
             {

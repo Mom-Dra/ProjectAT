@@ -180,7 +180,7 @@ public class PlayerAnimator : MonoBehaviour
 
             yield return null;
 
-            weaponHolder.FireWeaponOnlyVFX(AimMarkerTransform.position, true); // Suppressive Fire는 풀오토 발사 연출
+            weaponHolder.FireWeaponOnlyVFX(AimMarkerTransform.position, Vector3.zero, true); // Suppressive Fire는 풀오토 발사 연출
         }
     }
 

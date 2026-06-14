@@ -8,6 +8,7 @@ public class WeaponSkillData : SkillData, IWeaponUsingSkillData
     [SerializeField] private bool requiresAmmo;
     [SerializeField] private int ammoCostPerShot;
 
+
     public bool RequiresAmmo => requiresAmmo;
-    public int AmmoCostPerShot => ammoCostPerShot;    
+    public int AmmoCostPerShot => ammoCostPerShot;
 }

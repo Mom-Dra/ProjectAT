@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SuppressiveFire : Skill, IWeaponUsingSkill
 {
+    private readonly PlayerCombatModule combatModule;
     private readonly PlayerAnimator animator;
 
     private readonly HashSet<IDamageable> damagedTargets = new HashSet<IDamageable>();
@@ -20,6 +21,7 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
     public SuppressiveFire(PlayerSkillModule context, SkillData data) : base(context, data)
     {
         animator = context.MyAnimModule;
+        combatModule = context.MyCombatModule;
     }
 
     public bool RequiresAmmo => suppressiveData?.RequiresAmmo?? true;
@@ -148,7 +150,8 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
 
             Vector3 targetPos = hit.bounds.center;
 
-            if (!IsInsideSuppressiveFireArea(origin, fireDirection, aoeLength, aoeRadius, targetPos))
+            if (!IsInsideSuppressiveFireArea(origin, fireDirection, aoeLength, aoeRadius, targetPos) 
+            || !combatModule.CheckPositionVisibility(targetPos))
             {
                 continue;
             }

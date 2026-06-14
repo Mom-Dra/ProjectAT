@@ -20,6 +20,7 @@ public class PlayerCombatModule : MonoBehaviour
     public float ThrowRange => myStatus.ThrowRange;
     public WeaponHolder MyWeapon => myWeapon;
     public Transform ThrowPoint => throwPoint;
+    public Transform EyePoint => eyePoint;
     #endregion
 
     private void Awake()
@@ -74,13 +75,17 @@ public class PlayerCombatModule : MonoBehaviour
         return false;
     }
 
-    private bool CheckTargetVisibility(GameObject target, Transform baseTf)
+    private bool CheckTargetVisibility(GameObject target)
     {
-        Vector3 directionToTarget = target.transform.position - baseTf.position;
-        directionToTarget.y = baseTf.position.y;
+        return CheckPositionVisibility(target.transform.position);
+    }
 
-        Ray ray = new Ray(baseTf.position, directionToTarget);
-        if (Physics.Raycast(ray, myStatus.MaxViewingDistance, ObstacleLayer))
+    public bool CheckPositionVisibility(Vector3 position)
+    {
+        Vector3 directionToTarget = position - eyePoint.position;
+        directionToTarget.y = eyePoint.position.y;
+
+        if (Physics.Raycast(eyePoint.position, directionToTarget, directionToTarget.magnitude, ObstacleLayer))
         {
             return false;
         }
@@ -89,10 +94,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool IsTargetInWeaponSight(GameObject target)
     {
-        bool condition = CheckPositionInRange(target.transform.position, myWeapon.Range);
-        bool condition2 = CheckTargetVisibility(target, eyePoint);
-
-        return condition && condition2;
+        return CheckPositionInRange(target.transform.position, myWeapon.Range) && CheckTargetVisibility(target);
     }
 
     public bool CheckAimingTargetEnough()
@@ -124,7 +126,7 @@ public class PlayerCombatModule : MonoBehaviour
     {
         if (target.TryGetComponent(out IDamageable damageable)) 
         {
-            myWeapon.FireWeaponOnlyVFX(target.transform.position, false);
+            myWeapon.FireWeaponOnlyVFX(target.transform.position, Vector3.up * 1.5f, false);
             damageable.TakeDamage(myWeapon.Damage);
         }
     }

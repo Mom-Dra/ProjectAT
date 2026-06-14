@@ -107,6 +107,7 @@ public class SectorAoEIndicator : IndicatorBase, ISectorIndicator
 
     private void Awake()
     {
+        attachedTarget = transform;
         EnsureMesh();
         RebuildIfNeeded(true);
     }
@@ -293,10 +294,10 @@ public class SectorAoEIndicator : IndicatorBase, ISectorIndicator
     }
 
     private SectorCastInfo CastSectorPoint(float localAngle)
-    {
+    {        
         Vector3 localDirection = DirectionFromAngle(localAngle);
         Vector3 worldDirection = transform.TransformDirection(localDirection).normalized;
-        Vector3 rayOrigin = transform.position + Vector3.up * obstacleRayHeight;
+        Vector3 rayOrigin = attachedTarget.position + Vector3.up * obstacleRayHeight;
 
         if (obstacleLayerMask.value != 0 &&
             Physics.Raycast(rayOrigin, worldDirection, out RaycastHit hit, width, obstacleLayerMask, QueryTriggerInteraction.Ignore))
@@ -647,8 +648,7 @@ public class SectorAoEIndicator : IndicatorBase, ISectorIndicator
     public override void Hide()
     {
         gameObject.SetActive(false);
-        attachedTarget = null;
-        
+        attachedTarget = transform;   
     }
 
     public override void UpdateIndicator(Vector3 toDest)

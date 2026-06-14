@@ -129,10 +129,11 @@ MonoBehaviour:
   createCollider: 1
   colliderIsTrigger: 0
   colliderHeight: 0.5
-  clipByObstacle: 1
+  clipByObstacle: 0
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 512
   obstacleRayHeight: 0.5
   edgeResolveIterations: 3
   edgeDistanceThreshold: 0.5
+  attachedTarget: {fileID: 0}

@@ -125,9 +125,9 @@ public class WeaponHolder : MonoBehaviour
         nowWeapon.Attack();
     }
 
-    public void FireWeaponOnlyVFX(Vector3 targetPosition, bool FullAuto = false)
+    public void FireWeaponOnlyVFX(Vector3 targetPosition, Vector3 posOffset, bool FullAuto = false)
     {
-        nowWeapon.AttackOnlyVFX(targetPosition, FullAuto);
+        nowWeapon.AttackOnlyVFX(targetPosition + posOffset, FullAuto);
     }
 
     public bool CanFire()
