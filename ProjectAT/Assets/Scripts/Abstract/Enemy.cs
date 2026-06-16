@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using Interactable;
 using UnityEngine.AI;
 using TMPro;
 using UnityEngine.Animations.Rigging;
@@ -217,18 +218,18 @@ public class Enemy : MonoBehaviour, ISquadMember
         onTargetLost?.Invoke(this, target, lastPosition);
     }
 
-    private void CorpseDetected(EnemyCorpse enemyCorpse)
+    private void CorpseDetected(DownedBody downedBody)
     {
-        if (!IsAlive || enemyCorpse is null) return;
+        if (!IsAlive || downedBody is null) return;
         if (currentTarget is not null && currentTarget.IsValidTarget) return;
 
         if (squad is not null)
         {
-            squad.TryReportCorpseFound(this, enemyCorpse);
+            squad.TryReportCorpseFound(this, downedBody);
             return;
         }
 
-        Vector3 corpsePosition = enemyCorpse.Transform.position;
+        Vector3 corpsePosition = downedBody.Transform.position;
         currentOrderDestination = corpsePosition;
         lastKnownPosition = corpsePosition;
 
@@ -238,7 +239,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     private void Die()
     {
         if (!IsAlive) return;
-        IsAlive = true;
+        IsAlive = false;
 
         ChangeState(IEnemyState.DeadState);
     }

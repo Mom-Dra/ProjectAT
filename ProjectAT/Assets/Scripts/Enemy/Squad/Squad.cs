@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Interactable;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class Squad : MonoBehaviour
     private readonly List<ISquadMember> members = new List<ISquadMember>();
     private readonly SquadTargetPool squadTargetPool = new SquadTargetPool();
     private readonly List<IPerceivable> scratchRemoved = new List<IPerceivable>();
-    private readonly HashSet<EnemyCorpse> reportedCorpses = new HashSet<EnemyCorpse>();
+    private readonly HashSet<DownedBody> reportedCorpses = new HashSet<DownedBody>();
 
     private IFormation formation;
     private ISquadState currState;
@@ -169,16 +170,16 @@ public class Squad : MonoBehaviour
         ChangeState(ISquadState.SearchState);
     }
 
-    public bool TryReportCorpseFound(ISquadMember reporter, EnemyCorpse enemyCorpse)
+    public bool TryReportCorpseFound(ISquadMember reporter, DownedBody downedBody)
     {
         Debug.Log("TryReportCorpseFound");
 
-        if (reporter is null || enemyCorpse is null) return false;
+        if (reporter is null || downedBody is null) return false;
         if (!members.Contains(reporter)) return false;
-        if (!reportedCorpses.Add(enemyCorpse)) return false;
+        if (!reportedCorpses.Add(downedBody)) return false;
 
-        lastKnownPosition = enemyCorpse.Transform.position;
-        lastMemberAlertPosition = enemyCorpse.Transform.position;
+        lastKnownPosition = downedBody.Transform.position;
+        lastMemberAlertPosition = downedBody.Transform.position;
         hasMemberAlertPosition = true;
 
         if (IsInSearchState)
