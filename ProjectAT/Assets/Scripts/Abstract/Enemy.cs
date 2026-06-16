@@ -127,8 +127,7 @@ public class Enemy : MonoBehaviour, ISquadMember
 
         wait = new WaitForSeconds(positionReportInterval);
 
-        foreach (RigLayer rigLayer in rigBuilder.layers)
-            rigLayer.active = false;
+        AimAtTarget(false);
     }
 
     private void OnEnable()
