@@ -3663,6 +3663,7 @@ GameObject:
   - component: {fileID: 305225314493114437}
   - component: {fileID: 5828929310756788786}
   - component: {fileID: 6618171029978640322}
+  - component: {fileID: 453780012250612233}
   m_Layer: 0
   m_Name: Bld_Barracks_Back_CeilWall
   m_TagString: Untagged
@@ -3716,7 +3717,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: af9d3101091f90d4db78a2097d5dcb84, type: 2}
+  - {fileID: 2100000, guid: ce7c153d52f7b094aab8e90c91bac736, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3824,6 +3825,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &453780012250612233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4037690854597923272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74586eeb3fe1dd048ae3d46fdc1926c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderers:
+  - {fileID: 305225314493114437}
+  collectChildrenOnReset: 1
+  warnIfShaderDoesNotSupportDither: 1
 --- !u!1 &5483874273658938851
 GameObject:
   m_ObjectHideFlags: 0
@@ -5305,6 +5322,7 @@ GameObject:
   - component: {fileID: 8143986005994046184}
   - component: {fileID: 2031783755150648935}
   - component: {fileID: 2447517853619851793}
+  - component: {fileID: 713717005573206594}
   m_Layer: 0
   m_Name: Bld_Barracks_Front_CeilWall
   m_TagString: Untagged
@@ -5358,7 +5376,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: af9d3101091f90d4db78a2097d5dcb84, type: 2}
+  - {fileID: 2100000, guid: ce7c153d52f7b094aab8e90c91bac736, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5466,6 +5484,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &713717005573206594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6705881224521845499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74586eeb3fe1dd048ae3d46fdc1926c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderers:
+  - {fileID: 8143986005994046184}
+  collectChildrenOnReset: 1
+  warnIfShaderDoesNotSupportDither: 1
 --- !u!1 &6983722972743310150
 GameObject:
   m_ObjectHideFlags: 0
@@ -6897,6 +6931,7 @@ GameObject:
   - component: {fileID: 4374069356205900438}
   - component: {fileID: 6619520882513231028}
   - component: {fileID: 7200684695592747469}
+  - component: {fileID: 2142055882264130672}
   m_Layer: 0
   m_Name: Bld_Barracks_a_ceil
   m_TagString: Untagged
@@ -6950,7 +6985,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: af9d3101091f90d4db78a2097d5dcb84, type: 2}
+  - {fileID: 2100000, guid: ce7c153d52f7b094aab8e90c91bac736, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7691,6 +7726,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &2142055882264130672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9125311193729542020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74586eeb3fe1dd048ae3d46fdc1926c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderers:
+  - {fileID: 4374069356205900438}
+  collectChildrenOnReset: 1
+  warnIfShaderDoesNotSupportDither: 1
 --- !u!1 &9171789038816013189
 GameObject:
   m_ObjectHideFlags: 0
