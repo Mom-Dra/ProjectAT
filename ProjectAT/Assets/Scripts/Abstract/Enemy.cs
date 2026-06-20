@@ -390,7 +390,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     internal void AimAtTarget(bool isActive)
     {
         if (currentTarget is not null)
-            aimTarget.transform.position = currentTarget.Transform.position;
+            aimTarget.transform.position = currentTarget.Transform.position + Vector3.up;
 
         foreach (RigLayer rigLayer in rigBuilder.layers)
             rigLayer.active = isActive;

@@ -11,6 +11,7 @@ namespace Interactable
         private const float BushSyncRadius = 0.25f;
 
         [SerializeField] private LayerMask bushMask = ~0;
+        [SerializeField] private DitherFadeController fadeController;
 
         protected Animator animator;
         private readonly int downedAnimationHash = Animator.StringToHash("DeadType");
@@ -23,11 +24,26 @@ namespace Interactable
         public Transform Transform => transform;
         public bool IsHidden => hidingBushes.Count > 0;
 
+        protected virtual void Awake()
+        {
+            animator = GetComponent<Animator>();
+            outlinable = GetComponent<Outlinable>();
+            corpseCollider = GetComponent<Collider>();
+            fadeController = GetComponent<DitherFadeController>();
+
+            PlayDownedAnimation(2);
+
+            groundLayerMask = LayerMask.GetMask("Ground");
+
+            SyncHiddenVisual();
+        }
+
         public void EnterBush(Bush bush)
         {
             if (bush is null) return;
 
             hidingBushes.Add(bush);
+            SyncHiddenVisual();
         }
 
         public void ExitBush(Bush bush)
@@ -35,6 +51,7 @@ namespace Interactable
             if (bush is null) return;
 
             hidingBushes.Remove(bush);
+            SyncHiddenVisual();
         }
 
         public bool CanBeDetectedBy(Transform observer)
@@ -75,6 +92,8 @@ namespace Interactable
 
                 hidingBushes.Add(bush);
             }
+
+            SyncHiddenVisual();
         }
 
         private Bounds GetBushSyncBounds()
@@ -101,14 +120,11 @@ namespace Interactable
                 out _);
         }
 
-        protected virtual void Awake()
+        private void SyncHiddenVisual()
         {
-            animator = GetComponent<Animator>();
-            outlinable = GetComponent<Outlinable>();
-            corpseCollider = GetComponent<Collider>();
-            PlayDownedAnimation(2);
+            if (fadeController is null) return;
 
-            groundLayerMask = LayerMask.GetMask("Ground");
+            fadeController.SetHidden(IsHidden);
         }
 
         public void PlayDownedAnimation(int type = 1)
@@ -201,6 +217,8 @@ namespace Interactable
             {
                 transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             }
+
+            RefreshHidingBushes();
         }
     }
 }
