@@ -192,7 +192,7 @@ MonoBehaviour:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0.5, y: 0.5, z: 0.5}
     CutoutThreshold: 0.5
-    CullMode: 2
+    CullMode: 0
     cutoutTextureName: 
     cutoutTextureIndex: 0
   - CutoutMask: 8
@@ -203,7 +203,7 @@ MonoBehaviour:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0.5, y: 0.5, z: 0.5}
     CutoutThreshold: 0.5
-    CullMode: 2
+    CullMode: 0
     cutoutTextureName: 
     cutoutTextureIndex: 0
   renderStyle: 1
@@ -216,18 +216,18 @@ MonoBehaviour:
       shader: {fileID: 0}
       serializedProperties: []
   backParameters:
-    enabled: 1
+    enabled: 0
     color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    dilateShift: 1
-    blurShift: 1
+    dilateShift: 0
+    blurShift: 0.5
     fillPass:
       shader: {fileID: 0}
       serializedProperties: []
   frontParameters:
-    enabled: 1
+    enabled: 0
     color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    dilateShift: 1
-    blurShift: 1
+    dilateShift: 0
+    blurShift: 0.5
     fillPass:
       shader: {fileID: 0}
       serializedProperties: []
@@ -2689,11 +2689,81 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 182
+  m_VersionIndex: 215
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &956957549620916258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7114271686384561960}
+  - component: {fileID: 7906199384625824390}
+  - component: {fileID: 2433185836454439391}
+  m_Layer: 0
+  m_Name: InnnerCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7114271686384561960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956957549620916258}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2262633845481546087}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7906199384625824390
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956957549620916258}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9.761772, y: 3.9160619, z: 21.15988}
+  m_Center: {x: -0.009029388, y: 1.9749687, z: -0.0015368462}
+--- !u!114 &2433185836454439391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956957549620916258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63cc952f6163a14488c90801c40167d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 3655435965559109826}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1180692183656508869
 GameObject:
   m_ObjectHideFlags: 0
@@ -3663,7 +3733,6 @@ GameObject:
   - component: {fileID: 305225314493114437}
   - component: {fileID: 5828929310756788786}
   - component: {fileID: 6618171029978640322}
-  - component: {fileID: 453780012250612233}
   m_Layer: 0
   m_Name: Bld_Barracks_Back_CeilWall
   m_TagString: Untagged
@@ -3684,7 +3753,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2262633845481546087}
+  m_Father: {fileID: 1864155390204090041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6835367911394179492
 MeshFilter:
@@ -3798,7 +3867,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 167
+  m_VersionIndex: 200
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3825,22 +3894,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &453780012250612233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4037690854597923272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74586eeb3fe1dd048ae3d46fdc1926c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetRenderers:
-  - {fileID: 305225314493114437}
-  collectChildrenOnReset: 1
-  warnIfShaderDoesNotSupportDither: 1
 --- !u!1 &5483874273658938851
 GameObject:
   m_ObjectHideFlags: 0
@@ -4166,7 +4219,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 229
+  m_VersionIndex: 262
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5166,7 +5219,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 182
+  m_VersionIndex: 215
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5322,7 +5375,6 @@ GameObject:
   - component: {fileID: 8143986005994046184}
   - component: {fileID: 2031783755150648935}
   - component: {fileID: 2447517853619851793}
-  - component: {fileID: 713717005573206594}
   m_Layer: 0
   m_Name: Bld_Barracks_Front_CeilWall
   m_TagString: Untagged
@@ -5343,7 +5395,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2262633845481546087}
+  m_Father: {fileID: 1864155390204090041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6218548932901384366
 MeshFilter:
@@ -5457,7 +5509,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 66
+  m_VersionIndex: 99
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5484,22 +5536,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &713717005573206594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6705881224521845499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74586eeb3fe1dd048ae3d46fdc1926c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetRenderers:
-  - {fileID: 8143986005994046184}
-  collectChildrenOnReset: 1
-  warnIfShaderDoesNotSupportDither: 1
 --- !u!1 &6983722972743310150
 GameObject:
   m_ObjectHideFlags: 0
@@ -5704,7 +5740,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 177
+  m_VersionIndex: 210
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5938,12 +5974,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1864155390204090041}
-  - {fileID: 5310697810823919831}
-  - {fileID: 1616563108786554835}
   - {fileID: 4801904019931818922}
   - {fileID: 8574336183656308801}
   - {fileID: 3586426860852049636}
   - {fileID: 4385175631063333470}
+  - {fileID: 7114271686384561960}
   m_Father: {fileID: 368137107387128263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2706493255918453917
@@ -6046,7 +6081,7 @@ MonoBehaviour:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0.5, y: 0.5, z: 0.5}
     CutoutThreshold: 0.5
-    CullMode: 2
+    CullMode: 0
     cutoutTextureName: 
     cutoutTextureIndex: 0
   - CutoutMask: 8
@@ -6057,7 +6092,7 @@ MonoBehaviour:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0.5, y: 0.5, z: 0.5}
     CutoutThreshold: 0.5
-    CullMode: 2
+    CullMode: 0
     cutoutTextureName: 
     cutoutTextureIndex: 0
   renderStyle: 1
@@ -6070,18 +6105,18 @@ MonoBehaviour:
       shader: {fileID: 0}
       serializedProperties: []
   backParameters:
-    enabled: 1
+    enabled: 0
     color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    dilateShift: 1
-    blurShift: 1
+    dilateShift: 0
+    blurShift: 0.5
     fillPass:
       shader: {fileID: 0}
       serializedProperties: []
   frontParameters:
-    enabled: 1
+    enabled: 0
     color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    dilateShift: 1
-    blurShift: 1
+    dilateShift: 0
+    blurShift: 0.5
     fillPass:
       shader: {fileID: 0}
       serializedProperties: []
@@ -6913,7 +6948,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 179
+  m_VersionIndex: 212
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -6931,7 +6966,8 @@ GameObject:
   - component: {fileID: 4374069356205900438}
   - component: {fileID: 6619520882513231028}
   - component: {fileID: 7200684695592747469}
-  - component: {fileID: 2142055882264130672}
+  - component: {fileID: 3655435965559109826}
+  - component: {fileID: 2653989777874908587}
   m_Layer: 0
   m_Name: Bld_Barracks_a_ceil
   m_TagString: Untagged
@@ -6951,7 +6987,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5310697810823919831}
+  - {fileID: 1616563108786554835}
   m_Father: {fileID: 2262633845481546087}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4435519646895515820
@@ -7699,7 +7737,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 31
+  m_VersionIndex: 64
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -7726,7 +7764,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &2142055882264130672
+--- !u!114 &3655435965559109826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7735,13 +7773,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 9125311193729542020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74586eeb3fe1dd048ae3d46fdc1926c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b1417fa224709549b30636837016f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRenderers:
+  roofRenderers:
   - {fileID: 4374069356205900438}
-  collectChildrenOnReset: 1
-  warnIfShaderDoesNotSupportDither: 1
+  - {fileID: 8143986005994046184}
+  - {fileID: 305225314493114437}
+  targetAlpha: 0.1
+  fadeDuration: 0.2
+  interiorTriggers: {fileID: 2433185836454439391}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &2653989777874908587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9125311193729542020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5499891123c8cc41ba984cf38bbf15f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 3655435965559109826}
 --- !u!1 &9171789038816013189
 GameObject:
   m_ObjectHideFlags: 0

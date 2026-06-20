@@ -16,7 +16,7 @@ public abstract class TargetSkill : Skill
 
         GameObject hitObject = hit.collider.gameObject;
 
-        if (((1 << hitObject.layer) & TargetLayer.value) == 0)
+        if (!hitObject.IsSameLayer(TargetLayer))
             return false;
 
         return CheckExtraConditionOnTarget(hit, out target, out point);
