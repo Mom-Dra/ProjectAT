@@ -141,9 +141,9 @@ public class PlayerController : MonoBehaviour
     {
         if(EventSystem.current.IsPointerOverGameObject()) return;
         
-        if(CurrentState is IRightClickHandler state)
+        if(CurrentState is IRightClickHandler state && RaycastAtMouseLocation(out RaycastHit ray))
         {
-            state.OnRightClick(RaycastAtMouseLocation(out RaycastHit ray) ? ray : new RaycastHit());
+            state.OnRightClick(ray);
         }
     }
 

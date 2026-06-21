@@ -10,13 +10,11 @@ namespace Interactable
         private LayerMask groundLayerMask;        
         protected Animator animator;
         private readonly int downedAnimationHash = Animator.StringToHash("DeadType");
-        protected Outlinable outlinable;
 
         protected override void Awake()
         {
             base.Awake();
             animator = GetComponent<Animator>();
-            outlinable = GetComponent<Outlinable>();
             PlayDownedAnimation(2);
 
             groundLayerMask = LayerMask.GetMask("Ground");

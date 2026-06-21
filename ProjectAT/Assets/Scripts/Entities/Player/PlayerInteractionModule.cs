@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class PlayerInteractionModule : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private PlayerMovementModule myMovementModule;
+    
+    [Header("Settings")]
+    [SerializeField] private float interactLocationCheckInterval = 0.2f;
+    private float currentInteractLocationCheckTime = 0f;
+
     private InteractableObject currInteractObject;
     private Vector3 currentInteractPosition;
     private Vector3 currentInteractLookDir;
@@ -18,6 +24,7 @@ public class PlayerInteractionModule : MonoBehaviour
     private void Awake()
     {
         myMovementModule = GetComponent<PlayerMovementModule>();
+        currentInteractLocationCheckTime = Time.time;
     }
 
     private void OnEnable()
@@ -70,6 +77,7 @@ public class PlayerInteractionModule : MonoBehaviour
 
     public bool TrySetInteractTarget(RaycastHit castedObject)
     {
+        
         InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();
         if (!(interactable != null && !interactable.IsInUse))
         {
@@ -110,6 +118,8 @@ public class PlayerInteractionModule : MonoBehaviour
     public bool CheckCurrentInteractTargetReachable()
     {
         if (currInteractObject == null) return false;
+        if(Time.time - currentInteractLocationCheckTime < interactLocationCheckInterval) return true;
+        currentInteractLocationCheckTime = Time.time;
 
         if (myMovementModule.CanReachPosition(currentInteractPosition))
         {
@@ -121,8 +131,8 @@ public class PlayerInteractionModule : MonoBehaviour
 
     public bool CheckCurrentInteractObjectAvailable()
     {
-        return currInteractObject == null 
-        || (currInteractObject.IsInUse && currInteractObject.CurrentInteractor != gameObject);
+        return currInteractObject != null 
+        && (!(currInteractObject.IsInUse && currInteractObject.CurrentInteractor != gameObject));
     }
 
     private bool TryUpdateInteractLocation(InteractableObject interactable)

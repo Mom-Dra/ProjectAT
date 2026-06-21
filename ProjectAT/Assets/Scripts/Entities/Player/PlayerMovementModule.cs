@@ -100,6 +100,11 @@ public class PlayerMovementModule : MonoBehaviour
 
     public bool CanReachPosition(Vector3 targetPos)
     {
+        if(myAgent == null || !myAgent.enabled || !myAgent.isOnNavMesh)
+        {
+            return false;
+        }
+        
         NavMeshPath path = new NavMeshPath();
         if(!myAgent.CalculatePath(targetPos, path))
         {

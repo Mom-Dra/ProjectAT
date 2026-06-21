@@ -37,7 +37,7 @@ namespace PlayerStateMachine
             InteractableObject target = myInteractionModule.CurrentInteractTarget;
 
             // 안전 장치 1: 추적 중에 대상이 파괴되었거나 null이 된 경우
-            if (myInteractionModule.CheckCurrentInteractObjectAvailable())
+            if (!myInteractionModule.CheckCurrentInteractObjectAvailable())
             {
                 context.PlayerMove(context.transform.position, false); // 이동 멈춤
                 CancelInteractChasing(PlayerStateType.Normal);
@@ -48,6 +48,7 @@ namespace PlayerStateMachine
             {
                 context.PlayerMove(context.transform.position, false); // 이동 멈춤
                 CancelInteractChasing(PlayerStateType.Normal);
+                return;
             }
 
             Vector3 requiredPos = myInteractionModule.CurrentInteractPosition;
@@ -90,7 +91,7 @@ namespace PlayerStateMachine
 
         public void OnRightClick(RaycastHit castedObject)
         {        
-            if(mySkillModule.IsTargetting) // 스킬 UI 중 우클릭 시 UI 해제. 만약 이 로직이 모든 State들의 RightClick에서 공통적으로 일어나면 아예 PlayerController에서 처리하기.
+            if(mySkillModule.IsTargetting)
             {
                 mySkillModule.CancelTargettingMode();
                 return;
@@ -134,9 +135,7 @@ namespace PlayerStateMachine
         }
 
         private void CancelInteractChasing(PlayerStateType nextState)
-        {
-            if(myInteractionModule.CurrentInteractTarget == null) return;
-            
+        {            
             myInteractionModule.ClearInteractTarget();
             context.ChangeState(nextState);
         }

@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 using EPOOutline;
 using Interactable;
-using UnityEngine.AI; 
+using UnityEngine.AI;
 
-public class Door : InteractableObject
+public class Door : StaticInteractableObject
 {
     [Header("Door Wings")]
     [SerializeField]
@@ -20,17 +20,11 @@ public class Door : InteractableObject
     [SerializeField]
     private float openTime = 1f;
     [SerializeField] private float offsetDistance = 0.3f; 
-    [SerializeField] private const float navMeshSearchRadius = 1.0f;
 
-    private Outlinable outlinable;
     private bool isOpen = false;
     private Coroutine runningCoroutine;
+    
 
-    protected override void Awake()
-    {
-        base.Awake();
-        outlinable = GetComponent<Outlinable>();
-    }
     public override void OnInteractStart(PlayerController player) { }
 
     public override void OnExecute(PlayerController player)
@@ -71,66 +65,6 @@ public class Door : InteractableObject
 
         runningCoroutine = null;
     }
-    
-    public override bool TryGetInteractLocation(Transform playerTransform, out Vector3 sampledPosition, out Vector3 sampledLookDir, NavMeshAgent agent)
-    {
-        sampledPosition = Vector3.zero;
-        sampledLookDir = Vector3.zero;
-        float bestSqrDistance = float.MaxValue;
-        Vector3 playerPosXZ = new Vector3(playerTransform.position.x, 0f, playerTransform.position.z);
-
-        foreach (Vector3 candidate in interactPositionCandidates)
-        {
-            if (!NavMesh.SamplePosition(candidate, out NavMeshHit hit, navMeshSearchRadius, agent.areaMask))
-            {
-                continue;
-            }
-
-            NavMeshPath path = new NavMeshPath();
-
-            if (!agent.CalculatePath(hit.position, path) || path.status != NavMeshPathStatus.PathComplete)
-            {
-                continue;
-            }
-
-            Vector3 hitPosXZ = new Vector3(hit.position.x, 0f, hit.position.z);
-            float sqrDistance = Vector3.SqrMagnitude(playerPosXZ - hitPosXZ);
-
-            if (sqrDistance < bestSqrDistance)
-            {
-                bestSqrDistance = sqrDistance;
-                sampledPosition = hit.position;
-            }
-        }
-
-        if (sampledPosition == Vector3.zero)
-        {
-            return false;
-        }
-
-        sampledLookDir = GetInteractLookDir(sampledPosition);
-        return true;
-    }
-
-    protected override Vector3 GetInteractPosition(Transform playerTransform)
-    {
-        Vector3 centerPos = GetDoorCenterPos();
-
-        Vector3 dirToPlayer = (playerTransform.position - centerPos).normalized;
-        float dot = Vector3.Dot(transform.forward, dirToPlayer);
-        Vector3 interactionSide = dot > 0 ? transform.forward : -transform.forward;
-
-        Vector3 calculatedPos = centerPos + (interactionSide * offsetDistance);
-
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(calculatedPos, out hit, navMeshSearchRadius, NavMesh.AllAreas))
-        {
-            return hit.position; 
-        }
-
-        Debug.LogWarning($"Door 상호작용 위치({calculatedPos}) 근처에 NavMesh가 없습니다!");
-        return calculatedPos;
-    }
 
     protected override void InitiateInteractPositions()
     {
@@ -147,7 +81,7 @@ public class Door : InteractableObject
         if (leftDoor == null || rightDoor == null)  return transform.position;
         else return (leftDoor.position + rightDoor.position) * 0.5f;
     }
-    
+
     protected override Vector3 GetInteractLookDir(Vector3 sampledPosition)
     {
         Vector3 centerPos = GetDoorCenterPos();

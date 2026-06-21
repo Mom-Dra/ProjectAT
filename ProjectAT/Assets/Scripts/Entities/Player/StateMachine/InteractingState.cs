@@ -19,6 +19,7 @@ namespace PlayerStateMachine
 
         public override void OnEnter()
         {
+            nextStateCash = PlayerStateType.Normal;
             currentInteractTime = 0f;
 
             context.PlayerMove(context.transform.position, false);
@@ -28,7 +29,11 @@ namespace PlayerStateMachine
 
         public override void OnExit()
         {
-            myInteractionModule.CurrentInteractTarget.OnInteractEnd(context);
+            if(myInteractionModule.CurrentInteractTarget != null)
+            {
+                myInteractionModule.CurrentInteractTarget.OnInteractEnd(context);
+            }
+
             if(nextStateCash == PlayerStateType.Carry)
             {
                 myInteractionModule.UnSelectInteractTarget();
@@ -42,6 +47,12 @@ namespace PlayerStateMachine
 
         public override void OnUpdate()
         {
+            if(!myInteractionModule.CheckCurrentInteractObjectAvailable())
+            {
+                context.ChangeState(PlayerStateType.Normal);
+                return;
+            }
+
             currentInteractTime += Time.deltaTime;
 
             if (currentInteractTime >= myInteractionModule.CurrentInteractTarget.InteractDuration)

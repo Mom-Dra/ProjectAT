@@ -1,4 +1,5 @@
 using PlayerStateMachine;
+using EPOOutline;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,12 +7,14 @@ namespace Interactable
 {
     public abstract class InteractableObject : MonoBehaviour, IInteractable, IHoverableFeedback, ITargetableFeedback
     {
+        [Header("References")]
+        [SerializeField] protected Outlinable outlinable;
+
         [Header("Interactable Object Settings")]
         [SerializeField] private float interactDuration = 1.0f;
         [SerializeField] private string playerAnimationTrigger = "Interact";
         [SerializeField] protected PlayerStateType nextState = PlayerStateType.Normal;
         [SerializeField] private bool canStopInteract = true;
-        protected Vector3[] interactPositionCandidates;
         
         #region Properties
         public GameObject CurrentInteractor {get; protected set;}
@@ -25,7 +28,7 @@ namespace Interactable
         protected virtual void Awake()
         {
             CurrentInteractor = null;
-            InitiateInteractPositions();
+            outlinable = GetComponent<Outlinable>();
         }
         
         #region Interaction Functions
@@ -39,9 +42,7 @@ namespace Interactable
                 return false;
             }
 
-            Vector3 candidate = GetInteractPosition(playerTransform);
-
-            if (!NavMesh.SamplePosition(candidate, out NavMeshHit hit, 1.0f, agent.areaMask))
+            if (!NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1.0f, agent.areaMask))
             {
                 return false;
             }
@@ -65,16 +66,6 @@ namespace Interactable
             return dir.normalized;
         }
 
-        protected virtual Vector3 GetInteractPosition(Transform playerTransform)
-        {
-           return interactPositionCandidates.Length > 0 ? interactPositionCandidates[0] : transform.position;
-        }
-
-        protected virtual void InitiateInteractPositions()
-        {
-            interactPositionCandidates = new Vector3[] { transform.position };
-        }
-        
         public abstract void OnInteractStart(PlayerController player);
         public abstract void OnExecute(PlayerController player);
         public virtual void OnInteractEnd(PlayerController player) {}
