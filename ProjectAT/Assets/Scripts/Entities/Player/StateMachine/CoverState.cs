@@ -94,10 +94,8 @@ namespace PlayerStateMachine
 
             context.CancelEnemySelect();
 
-            InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();            
-            if (interactable != null && !interactable.IsInUse) 
+            if(myInteractionModule.TrySetInteractTarget(castedObject))
             {
-                myInteractionModule.SetInteractTarget(interactable);
                 context.ChangeState(PlayerStateType.InteractChasing);
                 return;
             }

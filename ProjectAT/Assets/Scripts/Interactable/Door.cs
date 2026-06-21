@@ -26,8 +26,9 @@ public class Door : InteractableObject
     private bool isOpen = false;
     private Coroutine runningCoroutine;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         outlinable = GetComponent<Outlinable>();
     }
     public override void OnInteractStart(PlayerController player) { }
@@ -70,8 +71,48 @@ public class Door : InteractableObject
 
         runningCoroutine = null;
     }
+    
+    public override bool TryGetInteractLocation(Transform playerTransform, out Vector3 sampledPosition, out Vector3 sampledLookDir, NavMeshAgent agent)
+    {
+        sampledPosition = Vector3.zero;
+        sampledLookDir = Vector3.zero;
+        float bestSqrDistance = float.MaxValue;
+        Vector3 playerPosXZ = new Vector3(playerTransform.position.x, 0f, playerTransform.position.z);
 
-    public override Vector3 GetInteractPosition(Transform playerTransform)
+        foreach (Vector3 candidate in interactPositionCandidates)
+        {
+            if (!NavMesh.SamplePosition(candidate, out NavMeshHit hit, navMeshSearchRadius, agent.areaMask))
+            {
+                continue;
+            }
+
+            NavMeshPath path = new NavMeshPath();
+
+            if (!agent.CalculatePath(hit.position, path) || path.status != NavMeshPathStatus.PathComplete)
+            {
+                continue;
+            }
+
+            Vector3 hitPosXZ = new Vector3(hit.position.x, 0f, hit.position.z);
+            float sqrDistance = Vector3.SqrMagnitude(playerPosXZ - hitPosXZ);
+
+            if (sqrDistance < bestSqrDistance)
+            {
+                bestSqrDistance = sqrDistance;
+                sampledPosition = hit.position;
+            }
+        }
+
+        if (sampledPosition == Vector3.zero)
+        {
+            return false;
+        }
+
+        sampledLookDir = GetInteractLookDir(sampledPosition);
+        return true;
+    }
+
+    protected override Vector3 GetInteractPosition(Transform playerTransform)
     {
         Vector3 centerPos = GetDoorCenterPos();
 
@@ -91,22 +132,29 @@ public class Door : InteractableObject
         return calculatedPos;
     }
 
-    public override Vector3 GetInteractLookDir(Transform playerTransform)
+    protected override void InitiateInteractPositions()
     {
         Vector3 centerPos = GetDoorCenterPos();
-        Vector3 lookDir = (centerPos - playerTransform.position);
 
-        lookDir.y = 0;
+        Vector3 frontPos = centerPos + (transform.forward * offsetDistance);
+        Vector3 backPos = centerPos + (-transform.forward * offsetDistance);
 
-        return lookDir.normalized;
+        interactPositionCandidates = new Vector3[] { frontPos, backPos };
     }
 
     private Vector3 GetDoorCenterPos()
     {
-        if (leftDoor == null || rightDoor == null) 
-            return transform.position;
+        if (leftDoor == null || rightDoor == null)  return transform.position;
+        else return (leftDoor.position + rightDoor.position) * 0.5f;
+    }
+    
+    protected override Vector3 GetInteractLookDir(Vector3 sampledPosition)
+    {
+        Vector3 centerPos = GetDoorCenterPos();
+        Vector3 lookDir = centerPos - sampledPosition;
+        lookDir.y = 0f;
 
-        return (leftDoor.position + rightDoor.position) * 0.5f;
+        return lookDir.sqrMagnitude > 0.0001f ? lookDir.normalized : Vector3.zero;
     }
 
     private void OnDrawGizmosSelected()

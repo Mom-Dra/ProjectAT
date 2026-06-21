@@ -58,10 +58,8 @@ namespace PlayerStateMachine
         {        
             if(!myInteractionModule.CurrentInteractTarget.CanStopInteract) return;
             
-            InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();
-            if (interactable != null && interactable != myInteractionModule.CurrentInteractTarget && !interactable.IsInUse) //인터렉터블 오브젝트 처리.
+            if(myInteractionModule.TrySetInteractTarget(castedObject))
             {
-                myInteractionModule.SetInteractTarget(interactable);
                 context.ChangeState(PlayerStateType.InteractChasing);
                 return;
             }

@@ -4,28 +4,30 @@ using UnityEngine;
 
 public class PlayerInteractionModule : MonoBehaviour
 {
+    [SerializeField] private PlayerMovementModule myMovementModule;
     private InteractableObject currInteractObject;
-    [SerializeField] private EntityStatus myStatus;
+    private Vector3 currentInteractPosition;
+    private Vector3 currentInteractLookDir;
+
     [SerializeField] private Transform holdPoint;
     public Transform HoldPoint { get => holdPoint; set => holdPoint = value; }
     public InteractableObject CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; }
-
-    //public Action OnInteractionStart; 인터렉션 모듈 리펙토링 하자..
-
+    public Vector3 CurrentInteractPosition => currentInteractPosition;
+    public Vector3 CurrentInteractLookDir => currentInteractLookDir;
 
     private void Awake()
     {
-        myStatus = GetComponent<EntityStatus>();
+        myMovementModule = GetComponent<PlayerMovementModule>();
     }
 
     private void OnEnable()
     {
-        myStatus.onDeath += DropHoldedObject;   
+        GetComponent<EntityStatus>().onDeath += DropHoldedObject;   
     }
 
     private void OnDisable()
     {
-        myStatus.onDeath -= DropHoldedObject;
+        GetComponent<EntityStatus>().onDeath -= DropHoldedObject;
     }
 
     public void DropHoldedObject()
@@ -41,17 +43,6 @@ public class PlayerInteractionModule : MonoBehaviour
         }
     }
 
-    public void SetInteractTarget(InteractableObject target)
-    {
-        if (currInteractObject == target) return;
-
-        ClearInteractTarget(false);
-        currInteractObject = target;
-
-        if (currInteractObject != null) SelectInteractTarget(currInteractObject);
-    }
-
-
     public void ClearInteractTarget(bool withUnLock = false)
     {
         if (currInteractObject == null) return;
@@ -63,6 +54,8 @@ public class PlayerInteractionModule : MonoBehaviour
 
         UnSelectInteractTarget();
         currInteractObject = null;
+        currentInteractPosition = Vector3.zero;
+        currentInteractLookDir = Vector3.zero;
     }
 
     public void SelectInteractTarget(InteractableObject target)
@@ -75,178 +68,70 @@ public class PlayerInteractionModule : MonoBehaviour
         Managers.Instance.InteractionManager.ClearSelectedTarget();
     }
 
+    public bool TrySetInteractTarget(RaycastHit castedObject)
+    {
+        InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();
+        if (!(interactable != null && !interactable.IsInUse))
+        {
+            return false;
+        }
 
-    // public void RequestInteractionStart(PlayerController context) //나중에 플레이어 스테이트 머신쪽 리펙토링 하자.
-    // {
-    //     if(context != null && currInteractObject != null)
-    //     {
-    //         currInteractObject.OnInteractStart(context);
-    //     }
-    // }
+        if(TryUpdateInteractLocation(interactable))
+        {
+            SetInteractTarget(interactable);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-    // public void RequestInteractionEnd(PlayerController context)
-    // {
-    //     if(context != null && currInteractObject != null)
-    //     {
-    //         currInteractObject.OnInteractEnd(context);
-    //     }
+    private void SetInteractTarget(InteractableObject target)
+    {
+        if (currInteractObject == target) return;
 
-    // }
+        ClearInteractTarget(false);
+        currInteractObject = target;
 
-    // public void HandleInteractionRaycast(Vector2 mousePos)
-    // {
-    //     Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        if (currInteractObject != null) SelectInteractTarget(currInteractObject);
+    }
 
-    //     Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+    private void SetInteractLocation(Vector3 position, Vector3 lookDir)
+    {
+        currentInteractPosition = position;
+        currentInteractLookDir = lookDir;
+    }
 
-    //     if (Physics.Raycast(ray, out RaycastHit hit, 100f, LayerMask.GetMask("Interactable")))
-    //     {
-    //         IUIHoverable interactable = hit.transform.GetComponentInParent<IUIHoverable>();
+    /// <summary>
+    /// 현재 상호작용 대상이 유효하거나 도달 가능한 위치에 있는지 검사. 유효하지만 도달 불가능한 경우, NavMesh에서 샘플링된 위치로 상호작용 위치를 업데이트 시도. 그래도 불가능하면 false 반환.
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckCurrentInteractTargetReachable()
+    {
+        if (currInteractObject == null) return false;
 
-    //         if(interactable is not null)
-    //         {
-    //             if (currInteractObject != interactable)
-    //             {
-    //                 ClearTarget();
+        if (myMovementModule.CanReachPosition(currentInteractPosition))
+        {
+            return true;
+        }
 
-    //                 //currInteractObject = interactable;
-    //                 interactable.OnHoverEnter();
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         ClearTarget();
-    //     }
-    // }
+        return TryUpdateInteractLocation(currInteractObject);
+    }
 
-    // public void HandleRightClick()
-    // {
-    //     if (currInteractObject is null) return;
-    //     //아마 여기서 상태전이 필요할듯
-    //     currInteractObject.OnInteract();
-    // }
+    public bool CheckCurrentInteractObjectAvailable()
+    {
+        return currInteractObject == null 
+        || (currInteractObject.IsInUse && currInteractObject.CurrentInteractor != gameObject);
+    }
 
-    // private void ClearTarget()
-    // {
-    //     if (currInteractObject is null) return;
-
-    //     //currInteractObject.OnHoverExit();
-    //     currInteractObject = null;
-    // }
-
-    #region old code
-    //public void InteractEnter(Player player)
-    //{
-    //    MyPlayer = player;
-    //    interactionCoroutine = StartCoroutine(InterationCoroutine());
-    //    MyPlayer.IsInputRock = true;
-
-    //    interactable?.OnInteractEnter();
-    //}
-
-    //public void InteractExit(Player player)
-    //{
-    //    if (IsInteracting)
-    //        StopCoroutine(interactionCoroutine);
-
-    //    MyPlayer = null;
-    //    interactable?.OnInteractExit();
-    //}
-
-    //public void InteractUpdate(Player player)
-    //{
-
-    //}
-
-    //public void CancelInteract(Player player)
-    //{
-    //    if (IsInteracting)
-    //    {
-    //        StopCoroutine(interactionCoroutine);
-    //        interactionCoroutine = null;
-
-    //        player.IsInputRock = false;
-
-    //        interactionUI?.CloseImage();
-    //        interactable?.OnInteractCanceled();
-
-    //        player.Animator.SetBool("isInteraction", false);
-    //        player.ChangeState(PlayerState.Idle);
-    //    }
-    //}
-
-    //public void CloseUI()
-    //{
-    //    if (interactable != null && interactable is IUIClosable closable)
-    //    {
-    //        closable.CloseUI();
-    //    }
-    //}
-
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.TryGetComponent(out IInteractable component))
-    //     {
-    //         //interactionUI.transform.position = other.transform.position;
-
-    //         //interactionUIRectTransform.position = Camera.main.WorldToScreenPoint(other.transform.position);
-
-    //         //interactionUI?.ShowFkeyImage();
-    //         //interactable.OnTriggerEntered();
-    //     }
-    // }
-
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if (other.TryGetComponent(out IInteractable component) && currInteractable == component)
-    //     {
-    //         //if (IsInteracting)
-    //         //{
-    //         //    StopCoroutine(interactionCoroutine);
-    //         //    interactionCoroutine = null;
-    //         //    interactable?.OnInteractCanceled();
-    //         //    MyPlayer.LookRockClear();
-    //         //}
-
-    //         //interactable?.OnTriggerExited();
-    //         //interactable = null;
-    //         //interactionUI?.CloseImage();
-    //     }
-    // }
-
-    //private IEnumerator InterationCoroutine()
-    //{
-    //    float time = 0f;
-
-    //    MyPlayer.IsCancel = false;
-
-    //    interactionUI?.SetRatio(0f);
-    //    interactionUI?.ShowProgressImage();
-
-    //    while (time < interactTime)
-    //    {
-    //        time += Time.deltaTime;
-
-    //        if (MyPlayer.IsCancel)
-    //            break;
-
-    //        yield return null;
-    //    }
-
-    //    interactionUI?.SetRatio(1f);
-    //    interactionUI?.CloseImage();
-
-    //    interactable?.OnInteractCompleted();
-    //    interactionCoroutine = null;
-
-    //    if (MyPlayer.IsCancel) MyPlayer.LookRockClear();
-    //    else interactable?.OnInteractCompleted();
-
-    //    MyPlayer.Animator.SetBool("isInteraction", false);
-    //    interactionCoroutine = null;
-
-    //    MyPlayer.ChangeState(PlayerState.Idle);
-    //}
-    #endregion
+    private bool TryUpdateInteractLocation(InteractableObject interactable)
+    {
+        if(interactable.TryGetInteractLocation(transform, out Vector3 sampledPosition, out Vector3 sampledLookDir, myMovementModule.Agent))
+        {
+            SetInteractLocation(sampledPosition, sampledLookDir);
+            return true;
+        }
+        return false;
+    }
 }

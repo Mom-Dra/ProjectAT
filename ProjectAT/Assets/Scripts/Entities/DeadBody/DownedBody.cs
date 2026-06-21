@@ -12,8 +12,9 @@ namespace Interactable
         private readonly int downedAnimationHash = Animator.StringToHash("DeadType");
         protected Outlinable outlinable;
 
-        protected virtual void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             animator = GetComponent<Animator>();
             outlinable = GetComponent<Outlinable>();
             PlayDownedAnimation(2);
@@ -27,19 +28,6 @@ namespace Interactable
             {
                 animator.SetInteger(downedAnimationHash, type);
             }
-        }
-
-        public override Vector3 GetInteractLookDir(Transform playerTransform)
-        {
-            // 상호작용 시 플레이어가 시체를 바라보도록 방향 계산 (Y축 회전만 고려)
-            Vector3 dir = transform.position - playerTransform.position;
-            dir.y = 0; 
-            return dir.normalized;
-        }
-
-        public override Vector3 GetInteractPosition(Transform playerTransform)
-        {
-            return transform.position;
         }
 
         public override void OnHoverEnter()

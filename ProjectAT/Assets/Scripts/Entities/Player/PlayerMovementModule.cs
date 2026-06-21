@@ -8,6 +8,8 @@ public class PlayerMovementModule : MonoBehaviour
 
     public float deltaRotation = 20f;
 
+    public NavMeshAgent Agent => myAgent;
+
     private void Awake()
     {
         myAgent = GetComponent<NavMeshAgent>();
@@ -94,5 +96,15 @@ public class PlayerMovementModule : MonoBehaviour
     public float GetVelocity()
     {
         return myAgent.velocity.magnitude;
+    }
+
+    public bool CanReachPosition(Vector3 targetPos)
+    {
+        NavMeshPath path = new NavMeshPath();
+        if(!myAgent.CalculatePath(targetPos, path))
+        {
+            return false;
+        }
+        return path.status == NavMeshPathStatus.PathComplete;
     }
 }

@@ -11,8 +11,9 @@ public class CoverPoint : InteractableObject
     
     //버프 제공용 변수도 필요할듯.(IBuffProvider 인터페이스 구현?)
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         decalProjector = GetComponent<DecalProjector>();
         decalProjector.enabled = false;
 
@@ -67,16 +68,6 @@ public class CoverPoint : InteractableObject
     {
         Gizmos.color = CurrentInteractor != null ? Color.red : Color.green;
         Gizmos.DrawSphere(transform.position, 0.2f);
-    }
-
-    public override Vector3 GetInteractPosition(Transform playerTransform)
-    {
-        return transform.position;
-    }
-
-    public override Vector3 GetInteractLookDir(Transform playerTransform)
-    {
-        return Vector3.zero; 
     }
 
     public override void OnInteractStart(PlayerController player) { }
