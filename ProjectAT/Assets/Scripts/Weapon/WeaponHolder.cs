@@ -161,6 +161,11 @@ public class WeaponHolder : MonoBehaviour
         return nowWeapon != null && nowWeapon.MagAmmo > 0;
     }
 
+    public bool HasAnyAmmo()
+    {
+        return nowWeapon != null && nowWeapon.HasAnyAmmo;
+    }
+
     #region 이벤트용 함수
     private void WeaponReloadStart(Gun gun)
     {

@@ -56,22 +56,7 @@ namespace PlayerStateMachine
 
         public override void OnUpdate()
         {
-            if (context.SelectedEnemy != null)
-            {
-                if (!context.TryExecuteAttack())
-                {
-                    context.AimingEnemy(false); 
-                    //context.ChangeState(PlayerStateType.Normal); // 상태를 Normal로 바꾸면, 다음 프레임부터 NormalState가 알아서 ChaseEnemy()를 실행함
-                }
-                else
-                {
-                    context.AimingEnemy(true, context.SelectedEnemy.transform); // 3. 공격이 성공적으로 수행됐다면? -> 엄폐 유지한 채로 에임만 적으로 고정!
-                }
-            }
-            else
-            {
-                context.AimingEnemy(false);
-            }
+            context.UpdateNormalAttack(false);
         }
 
         public void OnLeftClick(RaycastHit castedObject)
@@ -112,10 +97,6 @@ namespace PlayerStateMachine
                     break;
                 case 7: //Enemy Layer
                     context.SetTargetEnemy(castedObject.collider.GetComponent<Enemy>());
-                    if (!context.TryExecuteAttack())
-                    {
-                        context.ChangeState(PlayerStateType.Normal);
-                    }
                     break;
                 default:
                     break;

@@ -42,15 +42,16 @@ public class PlayerCombatModule : MonoBehaviour
 
     private void Update()
     {
-        if(IsAiming)
+        if (IsAiming)
         {
-            currentAimingTime = Mathf.Min(Time.deltaTime + currentAimingTime + 0.1f, AimingCoolTime); //시간을 항상 계산하지말고, IsAiming이 true가 될떄 그 순간을 기록하고, fire를 호출할때 Time.time - currentAiming 을 체크하는 방식 고려하기.
+            currentAimingTime = Mathf.Min(currentAimingTime + Time.deltaTime, AimingCoolTime);
         }
     }
 
-    public bool IsEnemyInWeaponSight(Enemy enemy)
+    
+    public bool IsEnemyInWeaponSight(Enemy enemy, float rangeOffset = 0f)
     {
-        return CheckPositionInRange(enemy.transform.position, myWeapon.Range)
+        return CheckPositionInRange(enemy.transform.position, myWeapon.Range + rangeOffset)
             && CheckEnemyVisibility(enemy, eyePoint);
     }
 
@@ -99,12 +100,17 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool CheckAimingTargetEnough()
     {
-        return Time.time - currentAimingTime >= AimingCoolTime;
+        return currentAimingTime >= AimingCoolTime;
     }
 
     public bool CheckWeaponFireReady()
     {
         return myWeapon.CanFire();
+    }
+
+    public bool HasNormalAttackAmmo()
+    {
+        return myWeapon != null && myWeapon.HasAnyAmmo();
     }
     
     private void OnDrawGizmosSelected()
@@ -131,12 +137,12 @@ public class PlayerCombatModule : MonoBehaviour
         }
     }
 
-    public void SetAiming(bool IsAiming)
+    public void SetAiming(bool isAiming)
     {
-        if(this.IsAiming != IsAiming){
-            this.IsAiming = IsAiming;
-            currentAimingTime = IsAiming ? Time.time : 0f;
-        }
+        if (IsAiming == isAiming) return;
+
+        IsAiming = isAiming;
+        currentAimingTime = 0f;
     }
 
     public bool CanThrowSomethingToPosition(GameObject projectileObject, Vector3 position)

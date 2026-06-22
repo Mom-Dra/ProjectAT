@@ -24,23 +24,10 @@ namespace PlayerStateMachine
         
         public override void OnUpdate()
         {
-            if (context.SelectedEnemy != null)
-            {
-                if (!context.TryExecuteAttack())
-                {
-                    context.AimingEnemy(false);
-                    context.ChaseEnemy();
-                }
-            }
-            else
-            {
-                context.AimingEnemy(false);
-            }
+            context.UpdateNormalAttack(true);
         }
         
-        public override void OnExit()
-        {
-        }
+        public override void OnExit() {}
 
         public void OnLeftClick(RaycastHit castedObject)
         {

@@ -25,6 +25,8 @@ public class Gun : Weapon
 
     public override bool IsReloading => reloadCoroutine != null;
     public override bool IsReady => Time.time - currentFireTime >= gunData.TimeBetFire;
+    public bool HasAnyAmmo => magAmmo > 0 || remainAmmo > 0;
+
 
     public event Action<Gun> OnReloadStart;
     public event Action<Gun> OnReloadedEnd;

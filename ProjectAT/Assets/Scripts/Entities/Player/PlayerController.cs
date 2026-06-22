@@ -20,8 +20,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera myCamera;
 
     [Header("Enemy")]
-    public Enemy SelectedEnemy;
-    public GameObject SelectedObject;
+    public Enemy SelectedEnemy {get; private set;}
+
+    private const float AttackChaseRangeOffset = 1f;
+    private const float AttackAimReleaseMargin = 0.75f;
 
     [Header("Layers")]
     [SerializeField] private LayerMask rightClickInteractableLayer;
@@ -171,7 +173,7 @@ public class PlayerController : MonoBehaviour
     public void HandleDropObjectInput()
     {
         if(CurrentState is IDropObjectHandler state)
-        {
+        { 
             state.OnDropObjectInput();
         }
     }
@@ -207,6 +209,12 @@ public class PlayerController : MonoBehaviour
     public void SetTargetEnemy(Enemy castedEnemy)
     {
         if (!castedEnemy) return;
+        if (!myCombatModule.HasNormalAttackAmmo())
+        {
+            CancelEnemySelect();
+            return;
+        }
+
         SelectedEnemy = castedEnemy;
         myPlayerAnimator.SetAiming(false, SelectedEnemy.transform);
     }
@@ -243,9 +251,94 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    public void UpdateNormalAttack(bool canChase)
+    {
+        if (SelectedEnemy == null)
+        {
+            AimingEnemy(false);
+            return;
+        }
+
+        if (!myCombatModule.HasNormalAttackAmmo())
+        {
+            CancelEnemySelect();
+            return;
+        }
+
+        bool enemyInSight = myCombatModule.IsEnemyInWeaponSight(SelectedEnemy);
+
+        if (!myCombatModule.IsAiming)
+        {
+            if (enemyInSight)
+            {
+                myMovementModule.PlayerMoveStop();
+                AimingEnemy(true, SelectedEnemy.transform);
+                return;
+            }
+
+            AimingEnemy(false);
+
+            if (canChase)
+            {
+                ChaseEnemy();
+            }
+
+            return;
+        }
+
+        if (!myCombatModule.CheckAimingTargetEnough())
+        {
+            myMovementModule.PlayerMoveStop();
+            myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position);
+            return;
+        }
+
+        if (!enemyInSight)
+        {
+            AimingEnemy(false);
+
+            if (canChase)
+            {
+                ChaseEnemy();
+            }
+
+            return;
+        }
+
+        myMovementModule.PlayerMoveStop();
+
+        if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
+        {
+            NormalAttackEnemy();
+        }
+    }
+
+    public bool CanKeepAimingSelectedEnemy()
+    {
+        if (SelectedEnemy == null) return false;
+
+        return myCombatModule.IsEnemyInWeaponSight(SelectedEnemy, AttackAimReleaseMargin);
+    }
+
     public void ChaseEnemy()
     {
-        myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
+        if (SelectedEnemy == null) return;
+
+        Vector3 playerPosition = transform.position;
+        Vector3 enemyPosition = SelectedEnemy.transform.position;
+        Vector3 directionFromEnemyToPlayer = playerPosition - enemyPosition;
+        directionFromEnemyToPlayer.y = 0f;
+
+        if (directionFromEnemyToPlayer.sqrMagnitude < 0.001f)
+        {
+            myMovementModule.PlayerWalk(enemyPosition);
+            return;
+        }
+
+        float chaseDistance = Mathf.Max(0f, myCombatModule.MyWeapon.Range - AttackChaseRangeOffset);
+        Vector3 chasePosition = enemyPosition + directionFromEnemyToPlayer.normalized * chaseDistance;
+
+        myMovementModule.PlayerWalk(chasePosition);
     }
 
     public void AimingEnemy(bool isAiming, Transform targetTf = default)
@@ -256,7 +349,7 @@ public class PlayerController : MonoBehaviour
 
     private void NormalAttackEnemy()
     {
-        if (myCombatModule.CheckWeaponFireReady() && myCombatModule.CheckAimingTargetEnough())
+        if (myCombatModule.CheckWeaponFireReady())
         {
             myCombatModule.NormalAttackEnemy(SelectedEnemy);
         }
