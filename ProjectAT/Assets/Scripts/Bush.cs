@@ -38,16 +38,12 @@ public class Bush : MonoBehaviour, IFadeable
         if (isFirstColliderInBush)
         {
             bushHideable?.EnterBush(this);
-        }
 
-        if (other.TryGetComponent(out IStealthable stealthable))
-        {
-            stealthable.SetVisibility(true);
-        }
+            IStealthable stealthable = other.GetComponentInParent<IStealthable>();
+            stealthable?.SetVisibility(true);
 
-        if (other.TryGetComponent(out IFadeable fadeable))
-        {
-            fadeable.FadeOut();
+            IFadeable fadeable = other.GetComponentInParent<IFadeable>();
+            fadeable?.FadeOut();
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -65,16 +61,12 @@ public class Bush : MonoBehaviour, IFadeable
         if (isLastColliderOutOfBush)
         {
             bushHideable?.ExitBush(this);
-        }
 
-        if (other.TryGetComponent(out IStealthable stealthable))
-        {
-            stealthable.SetVisibility(false);
-        }
+            IStealthable stealthable = other.GetComponentInParent<IStealthable>();
+            stealthable?.SetVisibility(false);
 
-        if (other.TryGetComponent(out IFadeable fadeable))
-        {
-            fadeable.FadeIn();
+            IFadeable fadeable = other.GetComponentInParent<IFadeable>();
+            fadeable?.FadeIn();
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))

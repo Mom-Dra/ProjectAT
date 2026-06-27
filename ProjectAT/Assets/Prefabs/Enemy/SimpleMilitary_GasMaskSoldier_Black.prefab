@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 3286008573471988237}
   - component: {fileID: 8355978113245686850}
   - component: {fileID: 1814738183316163472}
+  - component: {fileID: 8932496217895623001}
   m_Layer: 7
   m_Name: SimpleMilitary_GasMaskSoldier_Black
   m_TagString: Untagged
@@ -246,6 +247,22 @@ Transform:
   - {fileID: 1655204336469484110}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8932496217895623001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df3e739bc58e25b4e8f3dca7b809046f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visibleStrength: 1
+  hiddenStrength: 0.5
+  fadeDuration: 0.3
+  renderers: []
 --- !u!95 &9501830
 Animator:
   serializedVersion: 7
@@ -2416,6 +2433,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 7bf057be0eafd5446814890dcdfe2eb1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dfc623877faab4e49a868a669e99059b, type: 2}
+    - target: {fileID: 2300002, guid: 7bf057be0eafd5446814890dcdfe2eb1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dfc623877faab4e49a868a669e99059b, type: 2}
+    - target: {fileID: 2300004, guid: 7bf057be0eafd5446814890dcdfe2eb1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dfc623877faab4e49a868a669e99059b, type: 2}
+    - target: {fileID: 2300006, guid: 7bf057be0eafd5446814890dcdfe2eb1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dfc623877faab4e49a868a669e99059b, type: 2}
+    - target: {fileID: 2300008, guid: 7bf057be0eafd5446814890dcdfe2eb1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dfc623877faab4e49a868a669e99059b, type: 2}
     - target: {fileID: 400010, guid: 7bf057be0eafd5446814890dcdfe2eb1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

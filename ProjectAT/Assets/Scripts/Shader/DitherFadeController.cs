@@ -1,7 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DitherFadeController : MonoBehaviour
+public class DitherFadeController : MonoBehaviour, IFadeable
 {
     private static readonly int DitherProperty = Shader.PropertyToID("_DitherStrength");
 
@@ -20,7 +21,10 @@ public class DitherFadeController : MonoBehaviour
         propertyBlock = new MaterialPropertyBlock();
         currentStrength = visibleStrength;
 
-        renderers = GetComponentsInChildren<Renderer>();
+        if (renderers == null || renderers.Length == 0)
+        {
+            renderers = GetDitherRenderers();
+        }
 
         Apply(currentStrength);
     }
@@ -32,6 +36,16 @@ public class DitherFadeController : MonoBehaviour
         this.isHidden = isHidden;
 
         StartFade(isHidden ? hiddenStrength : visibleStrength);
+    }
+
+    public void FadeOut()
+    {
+        SetHidden(true);
+    }
+
+    public void FadeIn()
+    {
+        SetHidden(false);
     }
 
     private void StartFade(float target)
@@ -71,12 +85,25 @@ public class DitherFadeController : MonoBehaviour
         foreach (Renderer renderer in renderers)
         {
             if (renderer is null) continue;
-
-            Debug.Log($"SetFloat: {strength}");
+            if (renderer is ParticleSystemRenderer) continue;
 
             renderer.GetPropertyBlock(propertyBlock);
             propertyBlock.SetFloat(DitherProperty, strength);
             renderer.SetPropertyBlock(propertyBlock);
         }
+    }
+
+    private Renderer[] GetDitherRenderers()
+    {
+        Renderer[] childRenderers = GetComponentsInChildren<Renderer>(true);
+        List<Renderer> filteredRenderers = new List<Renderer>(childRenderers.Length);
+
+        foreach (Renderer renderer in childRenderers)
+        {
+            if (renderer is ParticleSystemRenderer) continue;
+            filteredRenderers.Add(renderer);
+        }
+
+        return filteredRenderers.ToArray();
     }
 }
