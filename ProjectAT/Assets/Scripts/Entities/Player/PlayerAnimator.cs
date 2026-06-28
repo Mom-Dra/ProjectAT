@@ -13,15 +13,9 @@ public class PlayerAnimator : MonoBehaviour
     #region  Animation Hashes
     private static readonly int SpeedHash = Animator.StringToHash("Speed_f");
     private static readonly int IsCrouchHash = Animator.StringToHash("Crouch_b");
-    private static readonly int WeaponTypeHash = Animator.StringToHash("WeaponType_int");
     private static readonly int ShootHash = Animator.StringToHash("Shoot_b");
     private static readonly int RealoadHash= Animator.StringToHash("Reload_b");
-    private static readonly int FullAutoHash = Animator.StringToHash("FullAuto_b");
-
-    private static readonly int HeadHorizontalHash = Animator.StringToHash("Head_Horizontal_f");
-    private static readonly int HeadVerticalHash = Animator.StringToHash("Head_Vertical_f");
     private static readonly int IsDeadHash = Animator.StringToHash("Death_b");
-    
     private static readonly int CancelTriggerHash = Animator.StringToHash("Cancel_t");
     private static readonly int ThrowTriggerHash = Animator.StringToHash("Throw_t");
     #endregion

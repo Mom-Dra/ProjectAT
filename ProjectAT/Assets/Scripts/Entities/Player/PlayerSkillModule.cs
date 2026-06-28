@@ -219,14 +219,20 @@ public class PlayerSkillModule : MonoBehaviour
     public void SetSkillCooldownTimer(Skill skill)
     {
         skillCooldownTimers[skill] = Time.time;
-        OnSkillCooldownStart?.Invoke(currentActivateSkillNumber, skill.SkillMaxCoolTime);
+        float cooldownDuration = skill.SkillMaxCoolTime;
 
-        // TODO : 아이템 사용형 스킬 사용 시 인벤토리 아이템 갯수 변경 이벤트 로직 구현하기
-        if(mySkills[(int)currentActivateSkillNumber] is IConsumableSkillData consumableSkill)
+        if(mySkills[(int)currentActivateSkillNumber] is IInventoryCostSkill  inventorySkill)
         {
-            OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, MyInventory.GetItemCount(consumableSkill.NeededItemData));
-            //TODO : 만약 아이템이 부족한 경우라면 아예 비활성화 시키기.
+            int itemCount = MyInventory.GetItemCount(inventorySkill.NeededItemData);
+            if(itemCount <= 0)
+            {
+                itemCount = 0;
+                cooldownDuration = -1f; //SkillDisabled
+            }
+            OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, itemCount);
         }
+
+        OnSkillCooldownStart?.Invoke(currentActivateSkillNumber, cooldownDuration);
     }
 
     public void SetUpSkillContext(in Collider targetCollider, in Vector3 point)

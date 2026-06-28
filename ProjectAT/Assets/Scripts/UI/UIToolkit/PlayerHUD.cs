@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using SkillDataOptionInterfaces;
+using Unity.AppUI.UI;
 
 public class PlayerHUD : MonoBehaviour
 {
@@ -147,6 +148,11 @@ public class PlayerHUD : MonoBehaviour
 
     public void StartSkillCooldown(SkillNumber index, float cooldownDuration)
     {
+        if(cooldownDuration < 0f)
+        {
+            DisableSkillInfo(index);
+            return;
+        }
         StartCoroutine(CooldownCoroutine(index, cooldownDuration));
     }
 
@@ -156,13 +162,13 @@ public class PlayerHUD : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            SetSkillCooldown(index, elapsed / duration);
+            SetSkillClockWipe(index, elapsed / duration);
             yield return null;
         }
-        SetSkillCooldown(index, 1f);
+        SetSkillClockWipe(index, 1f);
     }
 
-    private void SetSkillCooldown(SkillNumber index, float cooldownProgress)
+    private void SetSkillClockWipe(SkillNumber index, float cooldownProgress)
     {
         if (skillCooldownOverlays[(int)index] != null)
         {
@@ -174,15 +180,19 @@ public class PlayerHUD : MonoBehaviour
     {
         if (skillItemLabels[(int)index] != null)
         {
-            if (itemCount < 0)
-            {
-                skillInfos[(int)index].SetEnabled(false);
-            }
-            else
-            {
-                skillInfos[(int)index].SetEnabled(true);
-            }
             skillItemLabels[(int)index].text = itemCount.ToString();
+        }
+    }
+
+    public void DisableSkillInfo(SkillNumber index)
+    {
+        if (skillInfos[(int)index] != null)
+        {
+            SetSkillClockWipe(index, 0f);
+        }
+        if( skillItemLabels[(int)index] != null)
+        {
+            skillItemLabels[(int)index].visible = false;
         }
     }
 }

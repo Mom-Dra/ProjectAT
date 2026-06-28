@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public Collider SelectedEnemyCollider {get; private set;}
 
     private Coroutine chaseCoroutine;
-    private WaitForSeconds nextChaseWait = new WaitForSeconds(0.5f);
+    private WaitForSeconds nextChaseWait = new WaitForSeconds(0.2f);
     public bool IsChasingEnemy => chaseCoroutine != null;
 
 

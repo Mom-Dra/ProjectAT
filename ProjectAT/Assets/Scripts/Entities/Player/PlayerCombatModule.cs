@@ -175,6 +175,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool CanThrowSomethingToPosition(Collider projectileObjectCollider, Vector3 position)
     {
+        if(projectileObjectCollider == null) return false;
         if (Vector3.SqrMagnitude(position - throwPoint.position) > myStatus.ThrowRange * myStatus.ThrowRange) 
         {
             return false;
