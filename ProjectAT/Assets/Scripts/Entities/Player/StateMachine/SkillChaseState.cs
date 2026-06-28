@@ -8,8 +8,10 @@ namespace PlayerStateMachine
     public class SkillChaseState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler
     {
         private PlayerSkillModule mySkillModule;
-
         private SkillContext nowActivatedSkillContext;
+        private float logicCheckingDuration = 0.2f;
+        private float currentCheckTime = 0f;
+
 
         public SkillChaseState(PlayerController context) : base(context) 
         {
@@ -23,6 +25,7 @@ namespace PlayerStateMachine
 
         public override void OnEnter()
         {
+            currentCheckTime = 0f;
         }
 
         public override void OnExit()
@@ -32,23 +35,30 @@ namespace PlayerStateMachine
 
         public override void OnUpdate()
         {
+            if(logicCheckingDuration > Time.time - currentCheckTime)
+            {
+                return;
+            } 
+            
+            currentCheckTime = Time.time;
+
             if (mySkillModule.CanCastingSkill(nowActivatedSkillContext))
             {
                 context.ChangeState(PlayerStateType.SkillCast);
             }
             else
             {
-                if (nowActivatedSkillContext.TargetObject != null)
+                if (nowActivatedSkillContext.TargetCollider != null)
                 {
-                    if (!nowActivatedSkillContext.TargetObject.activeInHierarchy)
+                    if (!nowActivatedSkillContext.TargetCollider.gameObject.activeInHierarchy)
                     {
                         mySkillModule.CancelCurrentSkill();
                         context.ChangeState(PlayerStateType.Normal);
                         return;
                     }
-                    context.PlayerMove(nowActivatedSkillContext.TargetObject.transform.position, false);
+                    context.PlayerMove(nowActivatedSkillContext.CastedPosition, false);
                 }
-                else  // 타겟 오브젝트가 없는 스킬인 경우 (지점 지정형 스킬 등)에는 캐릭터가 지정된 지점으로 이동하도록
+                else
                 {   
                     Debug.Log("ChaseState : 스킬 추적 중. 타겟 위치로 이동합니다.");
                     context.PlayerMove(nowActivatedSkillContext.CastedPosition, false);
@@ -108,10 +118,10 @@ namespace PlayerStateMachine
 
         public void OnLeftClick(RaycastHit castedObject)
         {
-            if (mySkillModule.IsTargetting && mySkillModule.CanSelectTarget(castedObject, out GameObject target, out Vector3 point))
+            if (mySkillModule.IsTargetting && mySkillModule.CanSelectTarget(castedObject, out Collider castedCollider, out Vector3 point))
             {
                 mySkillModule.ActivateSelectedSkill();
-                mySkillModule.SetUpSkillContext(target, point);
+                mySkillModule.SetUpSkillContext(castedCollider, point);
                 context.ChangeState(PlayerStateType.SkillChase);
             }
         }

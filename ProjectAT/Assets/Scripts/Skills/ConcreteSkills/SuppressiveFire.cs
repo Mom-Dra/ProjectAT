@@ -36,9 +36,9 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
         return base.CanActivate() && HasEnoughAmmo();
     }
 
-    public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
+    public override bool IsValidTarget(RaycastHit hit, out Collider castedCollider, out Vector3 point)
     {
-        target = null;
+        castedCollider = null;
 
         if (hit.collider == null)
         {
@@ -150,8 +150,8 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
 
             Vector3 targetPos = hit.bounds.center;
 
-            if (!IsInsideSuppressiveFireArea(origin, fireDirection, aoeLength, aoeRadius, targetPos) 
-            || !combatModule.CheckPositionVisibility(targetPos))
+            if (!IsInsideSuppressiveFireArea(origin, fireDirection, aoeLength, aoeRadius, targetPos)
+                || !combatModule.IsTargetVisible(hit, targetPos, TargetLayer))
             {
                 continue;
             }
@@ -197,4 +197,5 @@ public class SuppressiveFire : Skill, IWeaponUsingSkill
         float allowedSide = aoeRadius * (forward / aoeLength);
         return side <= allowedSide;
     }
+
 }

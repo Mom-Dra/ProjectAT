@@ -6,9 +6,9 @@ public abstract class TargetSkill : Skill
     {
     }
 
-    public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
+    public override bool IsValidTarget(RaycastHit hit, out Collider castedCollider, out Vector3 point)
     {
-        target = null;
+        castedCollider = null;
         point = Vector3.zero;
 
         if (hit.collider == null)
@@ -19,12 +19,12 @@ public abstract class TargetSkill : Skill
         if (!hitObject.IsSameLayer(TargetLayer))
             return false;
 
-        return CheckExtraConditionOnTarget(hit, out target, out point);
+        return CheckExtraConditionOnTarget(hit, out castedCollider, out point);
     }
 
     protected abstract bool CheckExtraConditionOnTarget(
         RaycastHit hit,
-        out GameObject target,
+        out Collider castedCollider,
         out Vector3 point
     );
 }

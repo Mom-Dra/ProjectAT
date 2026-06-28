@@ -31,14 +31,14 @@ namespace PlayerStateMachine
 
         public override void OnUpdate()
         {
-            if (skillContext.TargetObject != null && !skillContext.TargetObject.activeInHierarchy)
+            if (skillContext.TargetCollider != null && !skillContext.TargetCollider.gameObject.activeInHierarchy)
             {
                 CancelCasting();
                 return;
             }
 
-            Vector3 lookTarget = skillContext.TargetObject != null 
-                ? skillContext.TargetObject.transform.position 
+            Vector3 lookTarget = skillContext.TargetCollider != null 
+                ? skillContext.TargetCollider.transform.position 
                 : skillContext.CastedPosition;
             lookTarget.y = context.transform.position.y; 
 

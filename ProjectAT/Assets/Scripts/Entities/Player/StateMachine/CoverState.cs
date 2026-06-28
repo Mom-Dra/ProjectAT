@@ -61,10 +61,10 @@ namespace PlayerStateMachine
 
         public void OnLeftClick(RaycastHit castedObject)
         {
-            if (mySkillModule.IsTargetting && mySkillModule.CanSelectTarget(castedObject, out GameObject target, out Vector3 point))
+            if (mySkillModule.IsTargetting && mySkillModule.CanSelectTarget(castedObject, out Collider castedCollider, out Vector3 point))
             {
                 mySkillModule.ActivateSelectedSkill();
-                mySkillModule.SetUpSkillContext(target, point);
+                mySkillModule.SetUpSkillContext(castedCollider, point);
                 context.ChangeState(PlayerStateType.SkillChase);
             }
         }

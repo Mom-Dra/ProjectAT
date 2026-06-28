@@ -23742,6 +23742,10 @@ PrefabInstance:
       propertyPath: AimingCoolTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2145079510353081862, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: obstacleLayer.m_Bits
+      value: 33280
+      objectReference: {fileID: 0}
     - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
@@ -23766,6 +23770,18 @@ PrefabInstance:
       propertyPath: 'skillDatas.Array.data[4]'
       value: 
       objectReference: {fileID: 11400000, guid: 99656e4c5d720c04ab03c016695a0ac6, type: 2}
+    - target: {fileID: 4703819780765142057, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.335
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703819780765142057, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703819780765142057, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.61
+      objectReference: {fileID: 0}
     - target: {fileID: 5706563846340363522, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 54.27
@@ -38747,7 +38763,7 @@ Transform:
   m_GameObject: {fileID: 1093913586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.62, y: 0.15, z: -16.95}
+  m_LocalPosition: {x: -5.58, y: 0.15, z: -34.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -79238,6 +79254,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyDownedBody
       objectReference: {fileID: 0}
+    - target: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -79484,6 +79504,10 @@ PrefabInstance:
     - target: {fileID: 588466147540945618, guid: eddf5bd0f6b69a149977b65213450640, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1133926076459224053, guid: eddf5bd0f6b69a149977b65213450640, type: 3}
+      propertyPath: m_Convex
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1223134278120667880, guid: eddf5bd0f6b69a149977b65213450640, type: 3}
       propertyPath: m_Layer

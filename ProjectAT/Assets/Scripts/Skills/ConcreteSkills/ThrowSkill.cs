@@ -6,11 +6,13 @@ namespace EntitySkills{
         protected PlayerCombatModule combatModule;
         protected PlayerAnimator animator;
         protected ProjectileSkillData projectileData => skillData as ProjectileSkillData;
+        protected Collider projectileCollider;
 
         public ThrowSkill(PlayerSkillModule context, SkillData skillData) : base(context, skillData)
         {
             combatModule = context.MyCombatModule;
             animator = context.MyAnimModule;
+            projectileCollider = projectileData?.ThrowingObjectPrefab?.GetComponent<Collider>();
         }
 
         public override float CalCulateFinalDamage()
@@ -23,16 +25,16 @@ namespace EntitySkills{
             return combatModule.ThrowRange;
         }
 
-        public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
+        public override bool IsValidTarget(RaycastHit hit, out Collider castedCollider, out Vector3 point)
         {
+            castedCollider = null;
+
             if (((1 << hit.collider.gameObject.layer) & TargetLayer.value) != 0)
             {
-                target = null;
                 point = hit.point;
                 return true;
             }
 
-            target = null;
             point = Vector3.zero;
             return false;
         }
@@ -46,7 +48,7 @@ namespace EntitySkills{
         {
             return projectileData != null &&
                 combatModule.CanThrowSomethingToPosition(
-                    projectileData.ThrowingObjectPrefab,
+                    projectileCollider,
                     skillContext.CastedPosition
                 );
         }

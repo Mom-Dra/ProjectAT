@@ -41,7 +41,7 @@ namespace PlayerStateMachine
             if (finished || nowActivatedSkillContext == null || nowActivatedSkillContext.SkillToExecute == null)
                 return;
 
-            if (nowActivatedSkillContext.TargetObject != null && !nowActivatedSkillContext.TargetObject.activeInHierarchy)
+            if (nowActivatedSkillContext.TargetCollider != null && !nowActivatedSkillContext.TargetCollider.gameObject.activeInHierarchy)
             {
                 Finish(false);
                 return;

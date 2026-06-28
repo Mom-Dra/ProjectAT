@@ -174,31 +174,33 @@ public class PlayerSkillModule : MonoBehaviour
         return mySkills[(int)skillIndex].CanActivate();
     }
 
-    public bool CanSelectTarget(in RaycastHit hit, out GameObject target, out Vector3 point)
+    public bool CanSelectTarget(in RaycastHit hit, out Collider castedCollider, out Vector3 point)
     {
-        if(skillDatas[(int)lastSkillInput] is IAoESkillData && (((1 << hit.collider.gameObject.layer) & groundLayer.value) != 0))
+        castedCollider = null;
+
+        if(skillDatas[(int)lastSkillInput] is IAoESkillData 
+        && (((1 << hit.collider.gameObject.layer) & groundLayer.value) != 0))
         {
-             target = null;
-             point = hit.point;
-             return true;
+            point = hit.point;
+            return true;
         }
 
-        return mySkills[(int)lastSkillInput].IsValidTarget(hit, out target, out point);
+        return mySkills[(int)lastSkillInput].IsValidTarget(hit, out castedCollider, out point);
     }
     //아래부터 stateMachine을 위한 함수
 
     /// <summary>
-    /// 스킬 시전이 가능한지 체크하는 함수. 스킬 시전 가능 범위 내에 있는지, 벽 등으로 가려져 있지는 않은지 등을 체크한다. ChaseState에서 지속적으로 체크하면서 범위 내에 들어왔을 때 CastState로 전환하는 로직에서 사용한다.
+    /// 스킬 시전이 가능한지 체크하는 함수. ChaseState에서 지속적으로 체크하면서 범위 내에 들어왔을 때 CastState로 전환하는 로직에서 사용한다.
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
     public bool CanCastingSkill(SkillContext context)
     {
         if (context == null || context.SkillToExecute == null) return false;
-        if(context.TargetObject != null && !context.TargetObject.activeInHierarchy) return false; //타겟이 비활성화된 상태면 시전 불가능
+        if(context.TargetCollider != null && !context.TargetCollider.gameObject.activeInHierarchy) return false; //타겟이 비활성화된 상태면 시전 불가능
 
 
-        Vector3 destination = (context.TargetObject != null) ? context.TargetObject.transform.position : context.CastedPosition;
+        Vector3 destination = (context.TargetCollider != null) ? context.TargetCollider.transform.position : context.CastedPosition;
         float sqrtDistance = Vector3.SqrMagnitude(transform.position - destination);
 
         if (sqrtDistance <= context.FinalRange * context.FinalRange)
@@ -227,7 +229,7 @@ public class PlayerSkillModule : MonoBehaviour
         }
     }
 
-    public void SetUpSkillContext(in GameObject target, in Vector3 point)
+    public void SetUpSkillContext(in Collider targetCollider, in Vector3 point)
     {
         Skill skill = mySkills[(int)currentActivateSkillNumber];
         SkillData skillData = skillDatas[(int)currentActivateSkillNumber];
@@ -235,7 +237,7 @@ public class PlayerSkillModule : MonoBehaviour
         SkillContext skillContext = new SkillContext
         {
             SkillToExecute = skill,
-            TargetObject = target,
+            TargetCollider = targetCollider,
             CastedPosition = point,
             FinalDamage = skillData.BaseDamage, //데미지 계산 로직 필요 -> skillData.CalCulateFinalDamage()로 바꾸는 것.
             FinalRange = skill.CalculateFinalRange(), //사거리 계산 로직 필요 => skillData.CalculateFinalRange()로 바꾸는 것

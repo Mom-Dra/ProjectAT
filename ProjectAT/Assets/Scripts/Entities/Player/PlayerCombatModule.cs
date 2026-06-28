@@ -10,8 +10,8 @@ public class PlayerCombatModule : MonoBehaviour
 
     [Header("Params")]
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private float arcHeight = 2.0f;
-    [SerializeField] private LayerMask ObstacleLayer;
     [SerializeField] private float AimingCoolTime = 0.5f;
     [SerializeField] private float currentAimingTime = 0f;
     
@@ -34,7 +34,6 @@ public class PlayerCombatModule : MonoBehaviour
         myStatus = GetComponent<EntityStatus>();
     }
 
-
     private void Start()
     {
         Managers.Instance.UIManager.InitPlayerGunInfo(myWeapon);
@@ -48,11 +47,16 @@ public class PlayerCombatModule : MonoBehaviour
         }
     }
 
-    
-    public bool IsEnemyInWeaponSight(Enemy enemy, float rangeOffset = 0f)
+    public bool IsEnemyInWeaponRange(Enemy enemy, float rangeOffset = 0f)
     {
-        return CheckPositionInRange(enemy.transform.position, myWeapon.Range + rangeOffset)
-            && CheckEnemyVisibility(enemy, eyePoint);
+
+        return enemy != null && myWeapon != null
+        && CheckPositionInRange(enemy.transform.position, myWeapon.Range + rangeOffset);
+    }
+
+    public bool IsTargetVisible(Collider targetCollider)
+    {
+        return targetCollider != null && CheckTargetVisibility(targetCollider, eyePoint);
     }
 
     private bool CheckPositionInRange(Vector3 pos, float range)
@@ -60,43 +64,68 @@ public class PlayerCombatModule : MonoBehaviour
         return (pos - transform.position).sqrMagnitude <= range * range;
     }
 
-    private bool CheckEnemyVisibility(Enemy targetEnemy, Transform baseTf)
+    private bool CheckTargetVisibility(Collider targetCollider, Transform baseTf)
     {
-        Vector3 directionToEnemy = targetEnemy.transform.position - baseTf.position;
-        directionToEnemy.y = 0.0f;
-
-        Ray ray = new Ray(baseTf.position, directionToEnemy);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, enemyLayer))
+        if (targetCollider == null || baseTf == null)
         {
-            if (hitInfo.collider.gameObject == targetEnemy.gameObject)
-            {
-                return true;
-            }
+            Debug.LogWarning($"{nameof(CheckTargetVisibility)}: targetCollider or baseTf is null.");
+            return false;
         }
-        return false;
+
+        return IsTargetVisibleFrom(targetCollider, targetCollider.bounds.center, enemyLayer, baseTf.position);
     }
 
-    private bool CheckTargetVisibility(GameObject target)
+    public bool IsTargetInWeaponSight(Collider targetCollider, LayerMask targetLayer)
     {
-        return CheckPositionVisibility(target.transform.position);
+        if (targetCollider == null || myWeapon == null) return false;
+
+        return CheckPositionInRange(targetCollider.transform.position, myWeapon.Range)
+            && IsTargetVisible(targetCollider, targetLayer);
     }
 
-    public bool CheckPositionVisibility(Vector3 position)
+    public bool IsTargetVisible(Collider targetCollider, LayerMask targetLayer)
     {
-        Vector3 directionToTarget = position - eyePoint.position;
-        directionToTarget.y = eyePoint.position.y;
+        if (targetCollider == null) return false;
 
-        if (Physics.Raycast(eyePoint.position, directionToTarget, directionToTarget.magnitude, ObstacleLayer))
+        return IsTargetVisibleFrom(targetCollider, targetCollider.bounds.center, targetLayer, eyePoint.position);
+    }
+
+    public bool IsTargetVisible(Collider targetCollider, Vector3 targetPoint, LayerMask targetLayer)
+    {
+        if (targetCollider == null) return false;
+
+        return IsTargetVisibleFrom(targetCollider, targetPoint, targetLayer, eyePoint.position);
+    }
+
+    private bool IsTargetVisibleFrom(Collider targetCollider, Vector3 targetPoint, LayerMask targetLayer, Vector3 origin)
+    {
+        Vector3 directionToTarget = targetPoint - origin;
+        float distance = directionToTarget.magnitude;
+
+        if (distance <= Mathf.Epsilon) return true;
+        if (distance > myStatus.MaxViewingDistance) return false;
+
+        int visibilityMask = targetLayer.value | obstacleLayer.value;
+
+        if (!Physics.Raycast(origin, directionToTarget / distance, out RaycastHit hitInfo, distance, visibilityMask, QueryTriggerInteraction.Ignore))
         {
             return false;
         }
-        return true;
+
+        return IsHitTarget(hitInfo, targetCollider.gameObject);
     }
 
-    public bool IsTargetInWeaponSight(GameObject target)
+    private bool IsHitTarget(RaycastHit hitInfo, GameObject target)
     {
-        return CheckPositionInRange(target.transform.position, myWeapon.Range) && CheckTargetVisibility(target);
+        if (hitInfo.collider == null || target == null) return false;
+
+        Transform hitTransform = hitInfo.collider.transform;
+        Transform targetTransform = target.transform;
+
+        if (hitTransform == targetTransform || hitTransform.IsChildOf(targetTransform)) return true;
+        return false;
     }
+
 
     public bool CheckAimingTargetEnough()
     {
@@ -122,7 +151,6 @@ public class PlayerCombatModule : MonoBehaviour
         Gizmos.DrawLine(eyePoint.position, eyePoint.position + eyePoint.forward * myWeapon.Range);
     }
 
-
     public void NormalAttackEnemy(Enemy target)
     {
         NormalAttackTarget(target.gameObject);
@@ -145,7 +173,7 @@ public class PlayerCombatModule : MonoBehaviour
         currentAimingTime = 0f;
     }
 
-    public bool CanThrowSomethingToPosition(GameObject projectileObject, Vector3 position)
+    public bool CanThrowSomethingToPosition(Collider projectileObjectCollider, Vector3 position)
     {
         if (Vector3.SqrMagnitude(position - throwPoint.position) > myStatus.ThrowRange * myStatus.ThrowRange) 
         {
@@ -160,10 +188,9 @@ public class PlayerCombatModule : MonoBehaviour
         }
 
         float radius = 0.1f;
-        if (projectileObject != null)
+        if (projectileObjectCollider != null)
         {
-            Collider col = projectileObject.GetComponentInChildren<Collider>();
-            if (col != null) radius = Mathf.Max(col.bounds.extents.x, col.bounds.extents.z);
+            radius = Mathf.Max(projectileObjectCollider.bounds.extents.x, projectileObjectCollider.bounds.extents.z);
         }
 
         int segmentCount = 20; 
@@ -176,9 +203,8 @@ public class PlayerCombatModule : MonoBehaviour
             Vector3 nextPoint = origin + (initialVelocity * t) + (0.5f * Physics.gravity * t * t);
             Vector3 direction = nextPoint - previousPoint;
 
-            if (Physics.SphereCast(previousPoint, radius, direction.normalized, out RaycastHit hit, direction.magnitude, ObstacleLayer))
+            if (Physics.SphereCast(previousPoint, radius, direction.normalized, out RaycastHit _, direction.magnitude, obstacleLayer))
             {
-                Debug.Log($"Chase State : Trajectory blocked by {hit.collider.gameObject.name} at {hit.point}");
                 return false;
             }
 

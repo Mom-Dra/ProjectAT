@@ -89,17 +89,19 @@ public class UseBandage : TargetSkill, IInventoryCostSkill
          && status.CurrentHp < status.MaxHp;
     }
 
-    protected override bool CheckExtraConditionOnTarget(RaycastHit hit, out GameObject target, out Vector3 point)
+    protected override bool CheckExtraConditionOnTarget(RaycastHit hit, out Collider castedCollider, out Vector3 point)
     {
+        castedCollider = null;
+        point = Vector3.zero;
+
         if(CheckHealAvailable(in hit, out EntityStatus status))
         {
             targetStatus = status;
-            target = hit.collider.gameObject;
+            castedCollider = hit.collider;
             point = hit.point;
             return true;
         }
         
-        target = null;
         point = Vector3.zero;
         Debug.Log("Bandage) Invalid Target.");
         return false;

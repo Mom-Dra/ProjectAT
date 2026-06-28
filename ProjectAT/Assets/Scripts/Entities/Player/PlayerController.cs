@@ -3,9 +3,7 @@ using UnityEngine.EventSystems;
 using PlayerStateMachine;
 using PlayerStateCapabilities;
 using System;
-
-
-public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey }
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,9 +19,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("Enemy")]
     public Enemy SelectedEnemy {get; private set;}
+    public Collider SelectedEnemyCollider {get; private set;}
 
-    private const float AttackChaseRangeOffset = 1f;
-    private const float AttackAimReleaseMargin = 0.75f;
+    private Coroutine chaseCoroutine;
+    private WaitForSeconds nextChaseWait = new WaitForSeconds(0.5f);
+    public bool IsChasingEnemy => chaseCoroutine != null;
+
 
     [Header("Layers")]
     [SerializeField] private LayerMask rightClickInteractableLayer;
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Managers.Instance.InputManager.onSkillInputed += HandlePlayerSkillInput;
-        Managers.Instance.InputManager.onMouseRightClicked += HandlePlayerRightClickInput;
+        Managers.Instance.InputManager.onMouseRightClicked += HandleRightClickInput;
         Managers.Instance.InputManager.onMouseLeftClicked += HandleLeftClickInput;
         Managers.Instance.InputManager.OnInteractableObjectDropInput += HandleDropObjectInput;
         Managers.Instance.InputManager.OnReloadEvent += HandleReloadInput;
@@ -96,7 +97,7 @@ public class PlayerController : MonoBehaviour
     private void UnLinkInputEventsAll()
     {
         Managers.Instance.InputManager.onSkillInputed -= HandlePlayerSkillInput;
-        Managers.Instance.InputManager.onMouseRightClicked -= HandlePlayerRightClickInput;
+        Managers.Instance.InputManager.onMouseRightClicked -= HandleRightClickInput;
         Managers.Instance.InputManager.onMouseLeftClicked -= HandleLeftClickInput;
         Managers.Instance.InputManager.OnInteractableObjectDropInput -= HandleDropObjectInput;
         Managers.Instance.InputManager.OnReloadEvent -= HandleReloadInput;
@@ -139,20 +140,26 @@ public class PlayerController : MonoBehaviour
     #endregion
     #region 입력 관련 함수
 
-    public void HandlePlayerRightClickInput()
+    public bool RaycastAtMouseLocation(out RaycastHit ray)
+    {
+        return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
+    }
+    public void HandleRightClickInput()
     {
         if(EventSystem.current.IsPointerOverGameObject()) return;
         
         if(CurrentState is IRightClickHandler state && RaycastAtMouseLocation(out RaycastHit ray))
         {
+            if(chaseCoroutine != null)
+            {
+                StopCoroutine(chaseCoroutine);
+                chaseCoroutine = null;
+            }
+
             state.OnRightClick(ray);
         }
     }
 
-    public bool RaycastAtMouseLocation(out RaycastHit ray)
-    {
-        return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
-    }
 
     public void HandleLeftClickInput()
     {
@@ -214,75 +221,53 @@ public class PlayerController : MonoBehaviour
             CancelEnemySelect();
             return;
         }
+        if(!castedEnemy.TryGetComponent<Collider>(out _))
+        {
+            return;
+        }
 
         SelectedEnemy = castedEnemy;
+        SelectedEnemyCollider = castedEnemy.GetComponent<Collider>();
         myPlayerAnimator.SetAiming(false, SelectedEnemy.transform);
     }
 
     public void CancelEnemySelect()
     {
         SelectedEnemy = null;
+        SelectedEnemyCollider = null;
         myPlayerAnimator.SetAiming(false, null);
-    }
-
-    /// <summary>
-    /// 공격 시도 함수. 사거리 내에 적이 있으면 공격 로직 수행 후 true 반환, 사거리 밖이면 false 반환 (즉, 공격 실패)
-    /// </summary>
-    /// <returns></returns>
-    public bool TryExecuteAttack()
-    {
-        if (SelectedEnemy == null) 
-        {
-            return false;
-        }
-
-        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
-        {
-            myMovementModule.PlayerMoveStop();
-            AimingEnemy(true, SelectedEnemy.transform);
-
-            if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
-            {
-                NormalAttackEnemy();
-            }
-            return true;
-        }
-
-        return false;
     }
 
     public void UpdateNormalAttack(bool canChase)
     {
+        if(chaseCoroutine != null) return;
         if (SelectedEnemy == null)
         {
             AimingEnemy(false);
             return;
         }
-
         if (!myCombatModule.HasNormalAttackAmmo())
         {
             CancelEnemySelect();
             return;
         }
 
-        bool enemyInSight = myCombatModule.IsEnemyInWeaponSight(SelectedEnemy);
+        if (!(myCombatModule.IsEnemyInWeaponRange(SelectedEnemy) && myCombatModule.IsTargetVisible(SelectedEnemyCollider)))
+        {
+            AimingEnemy(false);
+            
+            if (canChase)
+            {
+                chaseCoroutine = StartCoroutine(ChaseEnemyCoroutine());
+            }
+
+            return;
+        }
 
         if (!myCombatModule.IsAiming)
         {
-            if (enemyInSight)
-            {
-                myMovementModule.PlayerMoveStop();
-                AimingEnemy(true, SelectedEnemy.transform);
-                return;
-            }
-
-            AimingEnemy(false);
-
-            if (canChase)
-            {
-                ChaseEnemy();
-            }
-
+            myMovementModule.PlayerMoveStop();
+            AimingEnemy(true, SelectedEnemy.transform);
             return;
         }
 
@@ -290,18 +275,6 @@ public class PlayerController : MonoBehaviour
         {
             myMovementModule.PlayerMoveStop();
             myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position);
-            return;
-        }
-
-        if (!enemyInSight)
-        {
-            AimingEnemy(false);
-
-            if (canChase)
-            {
-                ChaseEnemy();
-            }
-
             return;
         }
 
@@ -313,32 +286,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool CanKeepAimingSelectedEnemy()
+    private IEnumerator ChaseEnemyCoroutine()
     {
-        if (SelectedEnemy == null) return false;
-
-        return myCombatModule.IsEnemyInWeaponSight(SelectedEnemy, AttackAimReleaseMargin);
-    }
-
-    public void ChaseEnemy()
-    {
-        if (SelectedEnemy == null) return;
-
-        Vector3 playerPosition = transform.position;
-        Vector3 enemyPosition = SelectedEnemy.transform.position;
-        Vector3 directionFromEnemyToPlayer = playerPosition - enemyPosition;
-        directionFromEnemyToPlayer.y = 0f;
-
-        if (directionFromEnemyToPlayer.sqrMagnitude < 0.001f)
+        while(SelectedEnemy != null 
+        && !(myCombatModule.IsEnemyInWeaponRange(SelectedEnemy) && myCombatModule.IsTargetVisible(SelectedEnemyCollider)))
         {
-            myMovementModule.PlayerWalk(enemyPosition);
-            return;
+            myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
+            yield return nextChaseWait;
         }
 
-        float chaseDistance = Mathf.Max(0f, myCombatModule.MyWeapon.Range - AttackChaseRangeOffset);
-        Vector3 chasePosition = enemyPosition + directionFromEnemyToPlayer.normalized * chaseDistance;
-
-        myMovementModule.PlayerWalk(chasePosition);
+        chaseCoroutine = null;
     }
 
     public void AimingEnemy(bool isAiming, Transform targetTf = default)

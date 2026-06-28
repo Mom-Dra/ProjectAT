@@ -30,4 +30,4 @@ MonoBehaviour:
   requiredGrenadeItemAmount: 1
   explosionRadius: 5
   fuseTime: 3
-  explosionNoiseRadius: 10
+  explosionNoiseRadius: 50

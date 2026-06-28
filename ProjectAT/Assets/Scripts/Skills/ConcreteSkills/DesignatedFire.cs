@@ -29,26 +29,27 @@ public class DesignatedFire : TargetSkill, IWeaponUsingSkill
 
     public override bool ExtraCastingCondition(SkillContext skillContext)
     {
-        return CheckTargetActivation(skillContext) && combatModule.IsTargetInWeaponSight(skillContext.TargetObject);
+        return CheckTargetActivation(skillContext) && combatModule.IsTargetVisible(skillContext.TargetCollider, TargetLayer);
     }
 
     private bool CheckTargetActivation(SkillContext skillContext)
     {
         return skillContext != null &&
-               skillContext.TargetObject != null &&
-               skillContext.TargetObject.activeInHierarchy;
+               skillContext.TargetCollider != null &&
+               skillContext.TargetCollider.gameObject.activeInHierarchy;
     }
 
-    protected override bool CheckExtraConditionOnTarget(RaycastHit hit, out GameObject target, out Vector3 point)
+    protected override bool CheckExtraConditionOnTarget(RaycastHit hit, out Collider castedCollider, out Vector3 point)
     {
-        if (hit.collider.gameObject.TryGetComponent(out Enemy enemy))
+        castedCollider = null;
+
+        if (hit.collider.gameObject.TryGetComponent<Enemy>(out _))
         {
-            target = enemy.gameObject;
-            point = enemy.transform.position;
+            castedCollider = hit.collider;
+            point = hit.collider.bounds.center;
             return true;
         }
 
-        target = null;
         point = Vector3.zero;
         return false;
     }
@@ -56,19 +57,19 @@ public class DesignatedFire : TargetSkill, IWeaponUsingSkill
     public override bool CanExecute(SkillContext skillContext)
     {
         return  CheckTargetActivation(skillContext) && 
-                combatModule.IsTargetInWeaponSight(skillContext.TargetObject) && 
+                combatModule.IsTargetInWeaponSight(skillContext.TargetCollider, TargetLayer) && 
                 context.MyWeapon.CanFire();
     }
 
     public override void OnCastingStart(SkillContext skillContext)
     {
-        animModule.SetAiming(true, skillContext.TargetObject?.transform);
+        animModule.SetAiming(true, skillContext.TargetCollider?.transform);
     }
 
     public override void Execute(SkillContext skillContext)
     {
         if (!CheckTargetActivation(skillContext)) return;
-        if (!skillContext.TargetObject.TryGetComponent(out IDamageable damageable)) return;
+        if (!skillContext.TargetCollider.gameObject.TryGetComponent(out IDamageable damageable)) return;
         
         damageable.TakeDamage(skillContext.FinalDamage);
         context.MyWeapon.FireWeaponOnlyVFX(skillContext.CastedPosition, Vector3.up, false); // 0 데미지로 발사 연출/탄약 소모/발사 이벤트만 처리.

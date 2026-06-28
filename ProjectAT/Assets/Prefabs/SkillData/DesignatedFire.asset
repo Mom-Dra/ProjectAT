@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillId: 4
   skillName: DesignatedFire
-  baseDamage: 100
+  baseDamage: 500
   castingTime: 0.5
   maxCoolTime: 0.5
   targetLayer:

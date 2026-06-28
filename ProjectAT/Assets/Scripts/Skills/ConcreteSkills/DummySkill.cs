@@ -29,10 +29,10 @@ public class DummySkill : Skill
         Debug.LogWarning("DummySkill : Execute is called. This should be replaced with actual execution logic for the skill.");
     }
 
-    public override bool IsValidTarget(RaycastHit hit, out GameObject target, out Vector3 point)
+    public override bool IsValidTarget(RaycastHit hit, out Collider castedCollider, out Vector3 point)
     {
         Debug.LogWarning("DummySkill : IsValidTarget is called. This should be replaced with actual logic to determine if the target is valid for this skill.");
-        target = null;
+        castedCollider = null;
         point = Vector3.zero;
         return false;
     }
