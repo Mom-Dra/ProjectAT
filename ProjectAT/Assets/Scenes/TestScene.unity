@@ -564,6 +564,9 @@ MonoBehaviour:
   positionReportInterval: 0.5
   stateText: {fileID: 909468450}
   muzzleTransform: {fileID: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  aimTarget: {fileID: 0}
 --- !u!4 &130757457
 Transform:
   m_ObjectHideFlags: 0
@@ -633,6 +636,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  corpseMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &130757461
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -813,6 +819,9 @@ MonoBehaviour:
   positionReportInterval: 0.5
   stateText: {fileID: 1970353018}
   muzzleTransform: {fileID: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  aimTarget: {fileID: 0}
 --- !u!114 &184901321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,6 +855,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  corpseMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &184901323
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1128,6 +1140,9 @@ MonoBehaviour:
   positionReportInterval: 0.5
   stateText: {fileID: 1433115048}
   muzzleTransform: {fileID: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  aimTarget: {fileID: 0}
 --- !u!4 &241002803
 Transform:
   m_ObjectHideFlags: 0
@@ -1197,6 +1212,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  corpseMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &241002807
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1770,6 +1788,9 @@ MonoBehaviour:
   positionReportInterval: 0.5
   stateText: {fileID: 1738347902}
   muzzleTransform: {fileID: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  aimTarget: {fileID: 0}
 --- !u!4 &556735356
 Transform:
   m_ObjectHideFlags: 0
@@ -1839,6 +1860,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  corpseMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &556735360
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2242,6 +2266,9 @@ MonoBehaviour:
   positionReportInterval: 0.5
   stateText: {fileID: 1327601418}
   muzzleTransform: {fileID: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  aimTarget: {fileID: 0}
 --- !u!114 &752308369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2275,6 +2302,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  corpseMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &752308371
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2850,11 +2880,6 @@ RectTransform:
   m_AnchoredPosition: {x: -952.41284, y: -537.1038}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!33 &959147714 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: 9143717513416591198, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-  m_PrefabInstance: {fileID: 1165564426}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1015329181 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3237815293034372801, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
@@ -3248,24 +3273,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5210935763651436238, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 5675281037249933612, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: viewMeshFilter
-      value: 
-      objectReference: {fileID: 1543172127}
-    - target: {fileID: 5675281037249933612, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: fixedMeshFilter
-      value: 
-      objectReference: {fileID: 959147714}
-    - target: {fileID: 8355978113245686850, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-      propertyPath: debugAlertnessLog
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6199891821672161589, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -4133,6 +4141,9 @@ MonoBehaviour:
   positionReportInterval: 0.5
   stateText: {fileID: 1114263245}
   muzzleTransform: {fileID: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  aimTarget: {fileID: 0}
 --- !u!4 &1355969280
 Transform:
   m_ObjectHideFlags: 0
@@ -4202,6 +4213,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  corpseMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &1355969284
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4969,11 +4983,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!33 &1543172127 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: 2844627402502313568, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
-  m_PrefabInstance: {fileID: 1165564426}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1599091983
 GameObject:
   m_ObjectHideFlags: 0
@@ -5476,6 +5485,9 @@ MonoBehaviour:
   positionReportInterval: 0.5
   stateText: {fileID: 126348871}
   muzzleTransform: {fileID: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  aimTarget: {fileID: 0}
 --- !u!4 &1743019834
 Transform:
   m_ObjectHideFlags: 0
@@ -5545,6 +5557,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  corpseMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &1743019838
 NavMeshAgent:
   m_ObjectHideFlags: 0

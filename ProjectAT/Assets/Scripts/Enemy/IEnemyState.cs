@@ -294,16 +294,21 @@ public class EnemyAttackState : IEnemyState
         if (enemy.IsTargetInAttackRange())
         {
             enemy.StopMoving();
+            enemy.AimAtTarget(true);
 
             bool aimed = enemy.RotateTowardTarget();
 
             if (aimed) enemy.Fire();
         }
+        else
+        {
+            enemy.AimAtTarget(false);
+        }
     }
 
     public void Exit(Enemy enemy)
     {
-
+        enemy.AimAtTarget(false);
     }
 
     public void TargetLost(Enemy enemy, IPerceivable target)

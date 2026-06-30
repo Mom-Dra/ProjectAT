@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Bush : MonoBehaviour, IFadeable
@@ -21,6 +22,8 @@ public class Bush : MonoBehaviour, IFadeable
 
     private Coroutine fadeCoroutine;
 
+    private readonly Dictionary<Transform, int> containedTargets = new Dictionary<Transform, int>();
+
     private void Awake()
     {
         propertyBlock = new MaterialPropertyBlock();
@@ -28,14 +31,19 @@ public class Bush : MonoBehaviour, IFadeable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IStealthable stealthable))
-        {
-            stealthable.SetVisibility(true);
-        }
+        IBushHideable bushHideable = other.GetComponentInParent<IBushHideable>();
+        Transform target = GetContainedTarget(other, bushHideable);
+        bool isFirstColliderInBush = AddContainedTarget(target);
 
-        if (other.TryGetComponent(out IFadeable fadeable))
+        if (isFirstColliderInBush)
         {
-            fadeable.FadeOut();
+            bushHideable?.EnterBush(this);
+
+            IStealthable stealthable = other.GetComponentInParent<IStealthable>();
+            stealthable?.SetVisibility(true);
+
+            IFadeable fadeable = other.GetComponentInParent<IFadeable>();
+            fadeable?.FadeOut();
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -46,20 +54,70 @@ public class Bush : MonoBehaviour, IFadeable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out IStealthable stealthable))
-        {
-            stealthable.SetVisibility(false);
-        }
+        IBushHideable bushHideable = other.GetComponentInParent<IBushHideable>();
+        Transform target = GetContainedTarget(other, bushHideable);
+        bool isLastColliderOutOfBush = RemoveContainedTarget(target);
 
-        if (other.TryGetComponent(out IFadeable fadeable))
+        if (isLastColliderOutOfBush)
         {
-            fadeable.FadeIn();
+            bushHideable?.ExitBush(this);
+
+            IStealthable stealthable = other.GetComponentInParent<IStealthable>();
+            stealthable?.SetVisibility(false);
+
+            IFadeable fadeable = other.GetComponentInParent<IFadeable>();
+            fadeable?.FadeIn();
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             FadeIn();
         }
+    }
+
+    public bool Contains(Transform target)
+    {
+        if (target is null) return false;
+
+        return containedTargets.ContainsKey(target) || containedTargets.ContainsKey(target.root);
+    }
+
+    private static Transform GetContainedTarget(Collider other, IBushHideable bushHideable)
+    {
+        if (bushHideable is Component component) return component.transform;
+
+        return other.transform.root;
+    }
+
+    private bool AddContainedTarget(Transform target)
+    {
+        if (target is null) return false;
+
+        if (containedTargets.TryGetValue(target, out int count))
+        {
+            containedTargets[target] = count + 1;
+            return false;
+        }
+
+        containedTargets.Add(target, 1);
+        return true;
+    }
+
+    private bool RemoveContainedTarget(Transform target)
+    {
+        if (target is null) return false;
+        if (!containedTargets.TryGetValue(target, out int count)) return false;
+
+        count--;
+
+        if (count > 0)
+        {
+            containedTargets[target] = count;
+            return false;
+        }
+
+        containedTargets.Remove(target);
+        return true;
     }
 
     private void StartFade(float target)

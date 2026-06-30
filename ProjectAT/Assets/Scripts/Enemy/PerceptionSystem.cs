@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Interactable;
 using UnityEngine;
 
 public class PerceptionSystem : MonoBehaviour, INoiseDetector
@@ -7,7 +8,7 @@ public class PerceptionSystem : MonoBehaviour, INoiseDetector
     public event Action<IPerceivable> onTargetDetected;
     public event Action<IPerceivable> onTargetLost;
     public event Action<Vector3> onNoiseDetected;
-    public event Action<EnemyCorpse> onCorpseDetected;
+    public event Action<DownedBody> onCorpseDetected;
 
     [SerializeField] private float detectInterval = 0.2f;
     [SerializeField] private LayerMask targetMask;
@@ -18,7 +19,7 @@ public class PerceptionSystem : MonoBehaviour, INoiseDetector
     private readonly List<IPerceivable> previousTargets = new List<IPerceivable>();
     private readonly Collider[] colliders = new Collider[16];
 
-    private readonly HashSet<EnemyCorpse> detectedCorpses = new HashSet<EnemyCorpse>();
+    private readonly HashSet<DownedBody> detectedCorpses = new HashSet<DownedBody>();
     private readonly Collider[] corpseColliders = new Collider[16];
 
     private float viewAngle;
@@ -111,17 +112,23 @@ public class PerceptionSystem : MonoBehaviour, INoiseDetector
         if (isAttackMode) return;
 
         float radius = secondaryViewRadius;
-        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, corpseColliders, corpseMask);
+        int count = Physics.OverlapSphereNonAlloc(
+            transform.position,
+            radius,
+            corpseColliders,
+            corpseMask, QueryTriggerInteraction.Collide);
 
         for (int i = 0; i < count; ++i)
         {
-            if (!corpseColliders[i].TryGetComponent(out EnemyCorpse enemyCorpse)) continue;
-            if (detectedCorpses.Contains(enemyCorpse)) continue;
-            if (!IsInFieldOfView(enemyCorpse.Transform)) continue;
-            if (!HasLineOfSight(enemyCorpse.Transform, out float distance)) continue;
+            DownedBody downedBody = corpseColliders[i].GetComponentInParent<DownedBody>();
+            if (downedBody is null) continue;
+            if (detectedCorpses.Contains(downedBody)) continue;
+            if (!downedBody.CanBeDetectedBy(transform)) continue;
+            if (!IsInFieldOfView(downedBody.Transform)) continue;
+            if (!HasLineOfSight(downedBody.Transform, out float distance)) continue;
 
-            detectedCorpses.Add(enemyCorpse);
-            onCorpseDetected?.Invoke(enemyCorpse);
+            detectedCorpses.Add(downedBody);
+            onCorpseDetected?.Invoke(downedBody);
         }
     }
 

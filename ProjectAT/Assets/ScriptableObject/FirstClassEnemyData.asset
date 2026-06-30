@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b44a2ea512cb534e99db40add14cd0b, type: 3}
   m_Name: FirstClassEnemyData
   m_EditorClassIdentifier: 
-  corpsePrefab: {fileID: 1080569558893723315, guid: 993923cda2517c5409cc45657b773bba, type: 3}
+  corpsePrefab: {fileID: 9140967551861383957, guid: 993923cda2517c5409cc45657b773bba, type: 3}
   attackRange: 10
   rotateSpeed: 10
   aimAngleThreshold: 5

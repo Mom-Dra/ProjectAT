@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using Interactable;
 using UnityEngine.AI;
 using TMPro;
+using UnityEngine.Animations.Rigging;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(AwarenessModule))]
@@ -24,6 +26,8 @@ public class Enemy : MonoBehaviour, ISquadMember
     [SerializeField] private Renderer[] renderersToHide;
     [SerializeField] private Collider[] collidersToDisable;
 
+    [SerializeField] private Transform aimTarget;
+
     private EntityStatus entityStatus;
 
     private NavMeshAgent navMeshAgent;
@@ -33,6 +37,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     private FieldOfViewVisuals fieldOfViewVisuals;
     private EnemyAnimator enemyAnimator;
     private Weapon weapon;
+    private RigBuilder rigBuilder;
 
     private Squad squad;
     private IEnemyState currState;
@@ -114,6 +119,7 @@ public class Enemy : MonoBehaviour, ISquadMember
         enemyAnimator = GetComponent<EnemyAnimator>();
         weapon = GetComponentInChildren<Gun>();
         entityStatus = GetComponent<EntityStatus>();
+        rigBuilder = GetComponent<RigBuilder>();
 
         renderersToHide = GetComponentsInChildren<Renderer>(true);
         collidersToDisable = GetComponentsInChildren<Collider>(true);
@@ -121,6 +127,8 @@ public class Enemy : MonoBehaviour, ISquadMember
         perceptionSystem.Initialize(enemyData.ViewAngle, enemyData.SearchRadius, enemyData.SecondaryViewRadius);
 
         wait = new WaitForSeconds(positionReportInterval);
+
+        AimAtTarget(false);
     }
 
     private void OnEnable()
@@ -210,18 +218,18 @@ public class Enemy : MonoBehaviour, ISquadMember
         onTargetLost?.Invoke(this, target, lastPosition);
     }
 
-    private void CorpseDetected(EnemyCorpse enemyCorpse)
+    private void CorpseDetected(DownedBody downedBody)
     {
-        if (!IsAlive || enemyCorpse is null) return;
+        if (!IsAlive || downedBody is null) return;
         if (currentTarget is not null && currentTarget.IsValidTarget) return;
 
         if (squad is not null)
         {
-            squad.TryReportCorpseFound(this, enemyCorpse);
+            squad.TryReportCorpseFound(this, downedBody);
             return;
         }
 
-        Vector3 corpsePosition = enemyCorpse.Transform.position;
+        Vector3 corpsePosition = downedBody.Transform.position;
         currentOrderDestination = corpsePosition;
         lastKnownPosition = corpsePosition;
 
@@ -231,7 +239,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     private void Die()
     {
         if (!IsAlive) return;
-        IsAlive = true;
+        IsAlive = false;
 
         ChangeState(IEnemyState.DeadState);
     }
@@ -377,6 +385,15 @@ public class Enemy : MonoBehaviour, ISquadMember
     {
         // Debug.Log("Fire");
         weapon.Attack();
+    }
+
+    internal void AimAtTarget(bool isActive)
+    {
+        if (currentTarget is not null)
+            aimTarget.transform.position = currentTarget.Transform.position + Vector3.up;
+
+        foreach (RigLayer rigLayer in rigBuilder.layers)
+            rigLayer.active = isActive;
     }
 
     internal void EnableFieldOfView(bool isEnable)
