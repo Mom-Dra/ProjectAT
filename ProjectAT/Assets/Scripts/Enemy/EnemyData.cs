@@ -52,6 +52,18 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private float reactionTime = 0.6f;
 
+    [Header("Cover")]
+    [SerializeField]
+    private bool useCover = true;
+    [SerializeField]
+    private float coverSearchRadius = 8f;
+    [SerializeField]
+    private float coverSearchCooldown = 1f;
+    [SerializeField]
+    private float coverNavSampleRadius = 1.5f;
+    [SerializeField, Range(90f, 180f)]
+    private float coverOppositeSideAngleThreshold = 105f;
+
     public DownedBody CorpsePrefab => corpsePrefab;
 
     public float AttackRange => attackRange;
@@ -73,4 +85,10 @@ public class EnemyData : ScriptableObject
     public float MaxHideTime => maxHideTime;
 
     public float ReactionTime => reactionTime;
+
+    public bool UseCover => useCover;
+    public float CoverSearchRadius => coverSearchRadius;
+    public float CoverSearchCooldown => coverSearchCooldown;
+    public float CoverNavSampleRadius => coverNavSampleRadius;
+    public float CoverOppositeSideAngleThreshold => coverOppositeSideAngleThreshold;
 }

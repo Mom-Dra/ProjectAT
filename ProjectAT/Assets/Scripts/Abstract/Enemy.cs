@@ -38,21 +38,30 @@ public class Enemy : MonoBehaviour, ISquadMember
     private EnemyAnimator enemyAnimator;
     private Weapon weapon;
     private RigBuilder rigBuilder;
+    private CoverHandler coverHandler;
 
     private Squad squad;
     private IEnemyState currState;
 
     private IPerceivable currentTarget;
+    private CoverPoint reservedCoverPoint;
     private Vector3 lastKnownPosition;
     private Vector3 currentOrderDestination;
+    private Vector3 reservedCoverDestination;
     private Vector3 investigatePosition;
     private Vector3 investigateReturnPosition;
     private Vector3 investigateReturnDirection;
     private IEnemyState investigateReturnState;
     private Coroutine positionReportCoroutine;
     private WaitForSeconds wait;
+    private NavMeshPath coverPath;
+    private readonly Collider[] coverColliders = new Collider[16];
 
     private int wayPointIndex;
+    private float nextCoverSearchTime;
+    private float coverTimer;
+    private float coverHideDuration;
+    private bool isInCover;
 
     public EnemyData EnemyData => enemyData;
     public NavMeshAgent NavMeshAgent => navMeshAgent;
@@ -71,13 +80,18 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     // ISquadMember
     public IPerceivable CurrentTarget => currentTarget;
-    public bool IsInCombat => ReferenceEquals(currState, IEnemyState.AttackState);
+    public bool IsInCombat => ReferenceEquals(currState, IEnemyState.AttackState) || ReferenceEquals(currState, IEnemyState.CoverState);
     public bool IsSearching => ReferenceEquals(currState, IEnemyState.SearchState);
     public bool IsChasing => ReferenceEquals(currState, IEnemyState.ChaseState);
     public bool IsEngaging => IsInCombat || IsSearching || IsChasing;
 
     public bool IsAlive { get; private set; } = true;
     public Transform Transform => transform;
+    internal bool HasValidCurrentTarget => currentTarget is not null && currentTarget.IsValidTarget;
+    internal bool HasReservedCover => reservedCoverPoint is not null;
+    internal bool IsMovingToCover => reservedCoverPoint is not null && !isInCover;
+    internal bool IsInCover => reservedCoverPoint is not null && isInCover;
+    internal ICoverSubState CoverSubState { get; set; }
 
     // State 공유 변수
     internal bool IsAssignedToSquad => squad != null;
@@ -120,6 +134,7 @@ public class Enemy : MonoBehaviour, ISquadMember
         weapon = GetComponentInChildren<Gun>();
         entityStatus = GetComponent<EntityStatus>();
         rigBuilder = GetComponent<RigBuilder>();
+        coverHandler = GetComponent<CoverHandler>();
 
         renderersToHide = GetComponentsInChildren<Renderer>(true);
         collidersToDisable = GetComponentsInChildren<Collider>(true);
@@ -127,6 +142,7 @@ public class Enemy : MonoBehaviour, ISquadMember
         perceptionSystem.Initialize(enemyData.ViewAngle, enemyData.SearchRadius, enemyData.SecondaryViewRadius);
 
         wait = new WaitForSeconds(positionReportInterval);
+        coverPath = new NavMeshPath();
 
         AimAtTarget(false);
     }
@@ -156,6 +172,7 @@ public class Enemy : MonoBehaviour, ISquadMember
         if (alertnessModule is not null)
             alertnessModule.onAlertThresholdReached -= AlertThresholdReached;
 
+        ReleaseCover();
         StopPositionReport();
     }
 
@@ -209,6 +226,12 @@ public class Enemy : MonoBehaviour, ISquadMember
 
         Vector3 lastPosition = target.IsValidTarget ? target.Transform.position : lastKnownPosition;
         lastKnownPosition = lastPosition;
+
+        if (ReferenceEquals(currState, IEnemyState.CoverState))
+        {
+            return;
+        }
+
         currentTarget = null;
 
         currState?.TargetLost(this, target);
@@ -221,7 +244,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     private void CorpseDetected(DownedBody downedBody)
     {
         if (!IsAlive || downedBody is null) return;
-        if (currentTarget is not null && currentTarget.IsValidTarget) return;
+        if (HasValidCurrentTarget) return;
 
         if (squad is not null)
         {
@@ -248,6 +271,12 @@ public class Enemy : MonoBehaviour, ISquadMember
     {
         currentOrderDestination = squadOrder.Position;
         UseOrderedDestination = squadOrder.OrderKind == OrderKind.Patrol;
+
+        if (squadOrder.OrderKind == OrderKind.Attack && squadOrder.Target is not null && squadOrder.Target.IsValidTarget)
+        {
+            currentTarget = squadOrder.Target;
+            lastKnownPosition = squadOrder.Target.Transform.position;
+        }
 
         if (currState is null)
         {
@@ -342,6 +371,120 @@ public class Enemy : MonoBehaviour, ISquadMember
         navMeshAgent.ResetPath();
     }
 
+    internal void MoveTowardCurrentTarget()
+    {
+        if (!HasValidCurrentTarget) return;
+
+        Vector3 targetPosition = currentTarget.Transform.position;
+
+        if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, enemyData.SearchNavSampleRadius, NavMesh.AllAreas))
+            MoveTo(hit.position);
+        else
+            MoveTo(targetPosition);
+    }
+
+    internal bool TryReserveBestCover()
+    {
+        if (!enemyData.UseCover) return false;
+        if (reservedCoverPoint is not null) return true;
+        if (!HasValidCurrentTarget) return false;
+        if (Time.time < nextCoverSearchTime) return false;
+
+        nextCoverSearchTime = Time.time + enemyData.CoverSearchCooldown;
+
+        if (!TryFindBestCoverPoint(out CoverPoint coverPoint, out Vector3 destination)) return false;
+        if (!coverPoint.Reserve(gameObject)) return false;
+
+        reservedCoverPoint = coverPoint;
+        reservedCoverDestination = destination;
+        isInCover = false;
+
+        if (coverHandler is not null)
+            coverHandler.currentCover = null;
+
+        return true;
+    }
+
+    internal bool MoveToReservedCover()
+    {
+        if (reservedCoverPoint is null) return false;
+
+        if (reservedCoverPoint.CurrentInteractor != gameObject)
+        {
+            ReleaseCover();
+            return false;
+        }
+
+        if (coverHandler is not null)
+            coverHandler.currentCover = null;
+
+        SetCoverCrouch(false);
+        MoveTo(reservedCoverDestination);
+        return true;
+    }
+
+    internal bool TryEnterCoverIfArrived()
+    {
+        if (reservedCoverPoint is null || isInCover) return false;
+
+        if (reservedCoverPoint.CurrentInteractor != gameObject)
+        {
+            ReleaseCover();
+            return false;
+        }
+
+        if (!HasArrived()) return false;
+
+        StopMoving();
+        isInCover = true;
+        SetCoverCrouch(true);
+
+        if (coverHandler is not null)
+            coverHandler.currentCover = reservedCoverPoint.transform;
+
+        return true;
+    }
+
+    internal void ReleaseCover()
+    {
+        if (reservedCoverPoint is not null && reservedCoverPoint.CurrentInteractor == gameObject)
+            reservedCoverPoint.Release();
+
+        reservedCoverPoint = null;
+        reservedCoverDestination = Vector3.zero;
+        isInCover = false;
+
+        if (coverHandler is not null)
+            coverHandler.currentCover = null;
+
+        SetCoverCrouch(false);
+    }
+
+    internal void SetCoverCrouch(bool isCrouch)
+    {
+        if (enemyAnimator is not null)
+            enemyAnimator.SetCrouch(isCrouch);
+    }
+
+    internal void ResetCoverHideTimer()
+    {
+        coverTimer = 0f;
+        float min = Mathf.Min(enemyData.MinHideTime, enemyData.MaxHideTime);
+        float max = Mathf.Max(enemyData.MinHideTime, enemyData.MaxHideTime);
+        coverHideDuration = UnityEngine.Random.Range(min, max);
+    }
+
+    internal bool UpdateCoverHideTimer(float deltaTime)
+    {
+        coverTimer += deltaTime;
+        return coverTimer >= coverHideDuration;
+    }
+
+    internal bool IsWeaponReloading()
+    {
+        return weapon is not null && weapon.IsReloading;
+    }
+
     internal bool HasArrived()
     {
         if (navMeshAgent.pathPending) return false;
@@ -353,15 +496,105 @@ public class Enemy : MonoBehaviour, ISquadMember
     {
         // CombatModule 로 모듈화 할 것
 
-        if (currentTarget is null || !currentTarget.IsValidTarget) return false;
+        if (!HasValidCurrentTarget) return false;
 
         float distance = (currentTarget.Transform.position - transform.position).sqrMagnitude;
         return distance <= enemyData.AttackRange * enemyData.AttackRange;
     }
 
+    private bool TryFindBestCoverPoint(out CoverPoint bestCoverPoint, out Vector3 bestDestination)
+    {
+        bestCoverPoint = null;
+        bestDestination = default;
+
+        int coverMask = LayerMask.GetMask("CoverPoint");
+        if (coverMask == 0) return false;
+
+        Vector3 targetPosition = currentTarget.Transform.position;
+        float attackRangeSqr = enemyData.AttackRange * enemyData.AttackRange;
+        int count = Physics.OverlapSphereNonAlloc(transform.position, enemyData.CoverSearchRadius, coverColliders, coverMask, QueryTriggerInteraction.Collide);
+
+        float bestScore = float.MaxValue;
+
+        for (int i = 0; i < count; ++i)
+        {
+            CoverPoint coverPoint = coverColliders[i].GetComponentInParent<CoverPoint>();
+            if (coverPoint is null) continue;
+            if (coverPoint.CurrentInteractor is not null && coverPoint.CurrentInteractor != gameObject) continue;
+            if ((coverPoint.transform.position - targetPosition).sqrMagnitude > attackRangeSqr) continue;
+
+            bool blocksTarget = HasCoverObstacleBetween(coverPoint, targetPosition);
+            if (!blocksTarget && !IsOnOppositeSideOfCover(coverPoint, targetPosition)) continue;
+            if (!TryGetCoverDestination(coverPoint, out Vector3 destination)) continue;
+            if (!HasCompletePathTo(destination)) continue;
+
+            float score = (destination - transform.position).sqrMagnitude;
+            if (!blocksTarget)
+                score += enemyData.CoverSearchRadius * enemyData.CoverSearchRadius;
+
+            if (score >= bestScore) continue;
+
+            bestScore = score;
+            bestCoverPoint = coverPoint;
+            bestDestination = destination;
+        }
+
+        return bestCoverPoint is not null;
+    }
+
+    private bool TryGetCoverDestination(CoverPoint coverPoint, out Vector3 destination)
+    {
+        if (NavMesh.SamplePosition(coverPoint.transform.position, out NavMeshHit hit, enemyData.CoverNavSampleRadius, NavMesh.AllAreas))
+        {
+            destination = hit.position;
+            return true;
+        }
+
+        destination = default;
+        return false;
+    }
+
+    private bool HasCompletePathTo(Vector3 destination)
+    {
+        return navMeshAgent.isOnNavMesh
+            && navMeshAgent.CalculatePath(destination, coverPath)
+            && coverPath.status == NavMeshPathStatus.PathComplete;
+    }
+
+    private bool HasCoverObstacleBetween(CoverPoint coverPoint, Vector3 targetPosition)
+    {
+        if (perceptionSystem.ObstacleMask.value == 0) return false;
+
+        Vector3 from = targetPosition + Vector3.up * 0.5f;
+        Vector3 to = coverPoint.transform.position + Vector3.up * 0.5f;
+        Vector3 delta = to - from;
+        float distance = delta.magnitude;
+
+        if (distance < float.Epsilon) return false;
+
+        return Physics.Raycast(from, delta / distance, distance, perceptionSystem.ObstacleMask, QueryTriggerInteraction.Ignore);
+    }
+
+    private bool IsOnOppositeSideOfCover(CoverPoint coverPoint, Vector3 targetPosition)
+    {
+        CoverObject coverObject = coverPoint.GetComponentInParent<CoverObject>();
+        if (coverObject is null) return true;
+
+        Vector3 coverToPoint = coverPoint.transform.position - coverObject.transform.position;
+        Vector3 coverToTarget = targetPosition - coverObject.transform.position;
+        coverToPoint.y = 0f;
+        coverToTarget.y = 0f;
+
+        if (coverToPoint.sqrMagnitude < float.Epsilon || coverToTarget.sqrMagnitude < float.Epsilon)
+            return false;
+
+        float angle = Vector3.Angle(coverToPoint, coverToTarget);
+        return angle >= enemyData.CoverOppositeSideAngleThreshold;
+    }
+
     internal bool RotateTowardTarget()
     {
-        if (currentTarget is null || !currentTarget.IsValidTarget) return false;
+        if (!HasValidCurrentTarget) return false;
 
         Vector3 targetPos = CurrentTarget.Transform.position;
         Vector3 direction = targetPos - muzzleTransform.position;
@@ -440,7 +673,7 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     private IEnumerator PositionReportCoroutine()
     {
-        while (currentTarget is not null && currentTarget.IsValidTarget)
+        while (HasValidCurrentTarget)
         {
             lastKnownPosition = currentTarget.Transform.position;
 

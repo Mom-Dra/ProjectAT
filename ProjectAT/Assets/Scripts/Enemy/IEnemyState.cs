@@ -9,7 +9,7 @@ public interface IEnemyState
     static readonly IEnemyState AttackState = new EnemyAttackState();
     static readonly IEnemyState ChaseState = new EnemyChaseState();
     static readonly IEnemyState SearchState = new EnemySearchState();
-    // static readonly IEnemyState CoverState = new EnemyCoverState();
+    static readonly IEnemyState CoverState = new EnemyCoverState();
     static readonly IEnemyState InvestigateState = new EnemyInvestigateState();
 
     void Enter(Enemy enemy);
@@ -240,6 +240,20 @@ public class EnemyChaseState : IEnemyState
 
     public void Update(Enemy enemy)
     {
+        if (enemy.HasValidCurrentTarget)
+        {
+            if (enemy.IsTargetInAttackRange())
+            {
+                enemy.ChangeState(IEnemyState.AttackState);
+                return;
+            }
+
+            if (enemy.HasArrived())
+                enemy.MoveTowardCurrentTarget();
+
+            return;
+        }
+
         if (enemy.HasArrived())
         {
             enemy.ChangeState(IEnemyState.SearchState);
@@ -261,6 +275,12 @@ public class EnemyChaseState : IEnemyState
         switch (squadOrder.OrderKind)
         {
             case OrderKind.Attack:
+                if (enemy.HasValidCurrentTarget && enemy.IsTargetInAttackRange())
+                    enemy.ChangeState(IEnemyState.AttackState);
+                else
+                    enemy.MoveTo(enemy.CurrentOrderDestination);
+                break;
+
             case OrderKind.Search:
             case OrderKind.Patrol:
                 break;
@@ -285,25 +305,32 @@ public class EnemyAttackState : IEnemyState
 
     public void Update(Enemy enemy)
     {
-        if (enemy.CurrentTarget is null || !enemy.CurrentTarget.IsValidTarget)
+        if (!enemy.HasValidCurrentTarget)
         {
             enemy.ChangeState(IEnemyState.SearchState);
             return;
         }
 
-        if (enemy.IsTargetInAttackRange())
-        {
-            enemy.StopMoving();
-            enemy.AimAtTarget(true);
-
-            bool aimed = enemy.RotateTowardTarget();
-
-            if (aimed) enemy.Fire();
-        }
-        else
+        if (!enemy.IsTargetInAttackRange())
         {
             enemy.AimAtTarget(false);
+            enemy.MoveTowardCurrentTarget();
+            return;
         }
+
+        if (enemy.TryReserveBestCover())
+        {
+            enemy.AimAtTarget(false);
+            enemy.ChangeState(IEnemyState.CoverState);
+            return;
+        }
+
+        enemy.StopMoving();
+        enemy.AimAtTarget(true);
+
+        bool aimed = enemy.RotateTowardTarget();
+
+        if (aimed) enemy.Fire();
     }
 
     public void Exit(Enemy enemy)
@@ -360,9 +387,8 @@ public class EnemyAttackState : IEnemyState
         if (dest == Vector3.zero)
         {
             // Order 없음 → 타겟 위치로 직접 접근
-            var target = enemy.CurrentTarget;
-            if (target != null && target.IsValidTarget)
-                dest = target.Transform.position;
+            if (enemy.HasValidCurrentTarget)
+                dest = enemy.CurrentTarget.Transform.position;
             else return;
         }
 
@@ -424,7 +450,10 @@ public class EnemySearchState : IEnemyState
         switch (squadOrder.OrderKind)
         {
             case OrderKind.Attack:
-                enemy.ChangeState(IEnemyState.ChaseState);
+                if (enemy.HasValidCurrentTarget && enemy.IsTargetInAttackRange())
+                    enemy.ChangeState(IEnemyState.AttackState);
+                else
+                    enemy.ChangeState(IEnemyState.ChaseState);
                 break;
 
             case OrderKind.Search:
@@ -633,165 +662,200 @@ public class EnemyInvestigateState : IEnemyState
 }
 
 
-// public class EnemyCoverState : IEnemyState
-// {
-//     public void Enter(Enemy enemy)
-//     {
+public class EnemyCoverState : IEnemyState
+{
+    public void Enter(Enemy enemy)
+    {
+        enemy.EnableFieldOfView(false);
+        enemy.SetAttackMode(true);
+        enemy.AimAtTarget(false);
 
-//     }
+        if (!enemy.HasReservedCover && !enemy.TryReserveBestCover())
+        {
+            enemy.ChangeState(IEnemyState.AttackState);
+            return;
+        }
 
-//     public void Update(Enemy enemy)
-//     {
+        ChangeSubState(enemy, ICoverSubState.MoveState);
+    }
 
-//     }
+    public void Update(Enemy enemy)
+    {
+        if (!enemy.HasValidCurrentTarget)
+        {
+            enemy.ChangeState(IEnemyState.SearchState);
+            return;
+        }
 
-//     public void Exit(Enemy enemy)
-//     {
+        if (!enemy.IsTargetInAttackRange())
+        {
+            enemy.ChangeState(IEnemyState.AttackState);
+            enemy.MoveTowardCurrentTarget();
+            return;
+        }
 
-//     }
+        if (!enemy.HasReservedCover)
+        {
+            enemy.ChangeState(IEnemyState.AttackState);
+            return;
+        }
 
-//     internal void ChangeSubState(Enemy enemy, ICoverSubState coverSubState)
-//     {
+        if (enemy.CoverSubState is null)
+            ChangeSubState(enemy, ICoverSubState.MoveState);
 
-//     }
-// }
+        enemy.CoverSubState.Update(enemy, this);
+    }
 
-// public interface ICoverSubState
-// {
-//     static readonly ICoverSubState MoveState = new EnemyCoverMoveState();
-//     static readonly ICoverSubState HideState = new EnemyCoverHideState();
-//     static readonly ICoverSubState PeekState = new EnemyCoverPeekState();
-//     static readonly ICoverSubState AttackState = new EnemyCoverAttackState();
+    public void Exit(Enemy enemy)
+    {
+        enemy.CoverSubState?.Exit(enemy, this);
+        enemy.CoverSubState = null;
+        enemy.AimAtTarget(false);
+        enemy.ReleaseCover();
+    }
 
-//     void Enter(Enemy enemy, EnemyCoverState enemyCoverState);
-//     void Update(Enemy enemy, EnemyCoverState enemyCoverState);
-//     void Exit(Enemy enemy, EnemyCoverState enemyCoverState);
-// }
+    public void TargetLost(Enemy enemy, IPerceivable target)
+    {
+        // enemy.ChangeState(IEnemyState.SearchState);
+    }
 
-// public class EnemyCoverMoveState : ICoverSubState
-// {
-//     public void Enter(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
-//         enemy.SetStateText("CoverMove");
-//         enemy.SetDestinationOnAgent(enemy.ReservedCoverPoint.transform.position);
-//     }
+    public void OrderReceived(Enemy enemy, SquadOrder squadOrder)
+    {
+        switch (squadOrder.OrderKind)
+        {
+            case OrderKind.Attack:
+            case OrderKind.Search:
+            case OrderKind.Patrol:
+                break;
 
-//     public void Update(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
-//         if (enemy.IsAgentArrived())
-//         {
-//             enemyCoverState.ChangeSubState(enemy, ICoverSubState.HideState);
-//         }
-//     }
+            case OrderKind.Disengage:
+                enemy.ChangeState(IEnemyState.IdleState);
+                break;
+        }
+    }
 
-//     public void Exit(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
+    internal void ChangeSubState(Enemy enemy, ICoverSubState coverSubState)
+    {
+        if (ReferenceEquals(enemy.CoverSubState, coverSubState)) return;
 
-//     }
-// }
+        enemy.CoverSubState?.Exit(enemy, this);
+        enemy.CoverSubState = coverSubState;
+        enemy.CoverSubState.Enter(enemy, this);
+    }
+}
 
-// public class EnemyCoverHideState : ICoverSubState
-// {
-//     public void Enter(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
-//         enemy.SetStateText("CoverHide");
-//         enemy.ResetHideTimer();
-//         enemy.SetIsCrouch(true);
-//     }
+public interface ICoverSubState
+{
+    static readonly ICoverSubState MoveState = new EnemyCoverMoveState();
+    static readonly ICoverSubState HideState = new EnemyCoverHideState();
+    static readonly ICoverSubState PeekState = new EnemyCoverPeekState();
+    static readonly ICoverSubState AttackState = new EnemyCoverAttackState();
 
-//     public void Update(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
-//         enemy.UpdateHideTimer(Time.deltaTime);
+    void Enter(Enemy enemy, EnemyCoverState enemyCoverState);
+    void Update(Enemy enemy, EnemyCoverState enemyCoverState);
+    void Exit(Enemy enemy, EnemyCoverState enemyCoverState);
+}
 
-//         if (enemy.IsHideCompleted())
-//         {
-//             if (!enemy.IsTargetExist())
-//             {
-//                 enemy.ChangeState(IEnemyState.ChaseState);
-//             }
+public class EnemyCoverMoveState : ICoverSubState
+{
+    public void Enter(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
+        enemy.stateText.text = "CoverMove";
+        enemy.AimAtTarget(false);
 
-//             enemyCoverState.ChangeSubState(enemy, ICoverSubState.PeekState);
-//         }
-//     }
+        if (!enemy.MoveToReservedCover())
+            enemy.ChangeState(IEnemyState.AttackState);
+    }
 
-//     public void Exit(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
-//         enemy.SetIsCrouch(false);
-//     }
-// }
+    public void Update(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
+        if (enemy.TryEnterCoverIfArrived())
+        {
+            enemyCoverState.ChangeSubState(enemy, ICoverSubState.HideState);
+            return;
+        }
 
-// public class EnemyCoverPeekState : ICoverSubState
-// {
-//     public void Enter(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
-//         enemy.SetStateText("CoverPeek");
-//         enemy.ResetPeekTimer();
-//     }
+        if (!enemy.HasReservedCover)
+            enemy.ChangeState(IEnemyState.AttackState);
+    }
 
-//     public void Update(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
-//         enemy.UpdateHideTimer(Time.deltaTime);
+    public void Exit(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
 
-//         if (!enemy.IsTargetExist())
-//         {
-//             enemyCoverState.ChangeSubState(enemy, ICoverSubState.HideState);
-//             return;
-//         }
+    }
+}
 
-//         if (enemy.IsTargetInAttackRange())
-//         {
-//             enemyCoverState.ChangeSubState(enemy, ICoverSubState.AttackState);
-//         }
-//     }
+public class EnemyCoverHideState : ICoverSubState
+{
+    public void Enter(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
+        enemy.stateText.text = "CoverHide";
+        enemy.StopMoving();
+        enemy.AimAtTarget(false);
+        enemy.SetCoverCrouch(true);
+        enemy.ResetCoverHideTimer();
+    }
 
-//     public void Exit(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
+    public void Update(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
+        if (enemy.UpdateCoverHideTimer(Time.deltaTime))
+            enemyCoverState.ChangeSubState(enemy, ICoverSubState.PeekState);
+    }
 
-//     }
-// }
+    public void Exit(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
 
-// public class EnemyCoverAttackState : ICoverSubState
-// {
-//     public void Enter(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
-//         enemy.SetStateText("CoverAttack");
-//     }
+    }
+}
 
-//     public void Update(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
-//         if (!enemy.IsTargetExist())
-//         {
-//             enemyCoverState.ChangeSubState(enemy, ICoverSubState.HideState);
-//             return;
-//         }
+public class EnemyCoverPeekState : ICoverSubState
+{
+    public void Enter(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
+        enemy.stateText.text = "CoverPeek";
+        enemy.StopMoving();
+        enemy.SetCoverCrouch(true);
+        enemy.AimAtTarget(true);
+    }
 
-//         enemy.StartInformTargetPositionCoroutine();
-//         enemy.ResetTargetLostTimer();
+    public void Update(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
+        if (enemy.RotateTowardTarget())
+            enemyCoverState.ChangeSubState(enemy, ICoverSubState.AttackState);
+    }
 
-//         if (!enemy.IsTargetInAttackRange())
-//             return;
+    public void Exit(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
 
-//         if (enemy.IsReloading())
-//         {
-//             enemy.SetIdleAnimation();
-//             enemyCoverState.ChangeSubState(enemy, ICoverSubState.HideState);
-//             return;
-//         }
+    }
+}
 
-//         bool rotationComplete = enemy.RotateTowardTarget();
+public class EnemyCoverAttackState : ICoverSubState
+{
+    public void Enter(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
+        enemy.stateText.text = "CoverAttack";
+        enemy.StopMoving();
+        enemy.SetCoverCrouch(true);
+        enemy.AimAtTarget(true);
+    }
 
-//         if (!rotationComplete)
-//         {
-//             enemy.SetIdleAnimation();
-//             return;
-//         }
+    public void Update(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
+        if (enemy.IsWeaponReloading())
+        {
+            enemyCoverState.ChangeSubState(enemy, ICoverSubState.HideState);
+            return;
+        }
 
-//         enemy.Attack();
-//         enemy.SetAttackAnimation();
-//     }
+        bool aimed = enemy.RotateTowardTarget();
 
-//     public void Exit(Enemy enemy, EnemyCoverState enemyCoverState)
-//     {
+        if (aimed)
+            enemy.Fire();
+    }
 
-//     }
-// }
+    public void Exit(Enemy enemy, EnemyCoverState enemyCoverState)
+    {
+
+    }
+}
