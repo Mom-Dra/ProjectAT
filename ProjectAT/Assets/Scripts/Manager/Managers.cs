@@ -30,6 +30,7 @@ public class Managers : Singleton<Managers>
     private PoolManager poolManager;
     private SceneManager sceneManager;
     private EventManager eventManager;
+    private SoundManager soundManager;
 
     public InputManager InputManager => inputManager;
     public CursorManager CursorManager => cursorManager;
@@ -38,6 +39,7 @@ public class Managers : Singleton<Managers>
     public PoolManager PoolManager => poolManager;
     public SceneManager SceneManager => sceneManager;
     public EventManager EventManager => eventManager;
+    public SoundManager SoundManager => soundManager;
 
     protected override void Awake()
     {
@@ -50,6 +52,7 @@ public class Managers : Singleton<Managers>
         poolManager = new PoolManager(pooledPrefabs);
         sceneManager = new SceneManager();
         eventManager = new EventManager();
+        soundManager = new SoundManager();
 
 
         sceneManager.Initialize();
