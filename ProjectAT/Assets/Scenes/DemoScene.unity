@@ -50614,6 +50614,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7762445275386043354, guid: ede66c94f902b144bb4924d86e5eb59c, type: 3}
+      propertyPath: corpseMask.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -79483,10 +79487,6 @@ PrefabInstance:
     - target: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
       propertyPath: m_Name
       value: EnemyDownedBody
-      objectReference: {fileID: 0}
-    - target: {fileID: 6259296754884981823, guid: 993923cda2517c5409cc45657b773bba, type: 3}
-      propertyPath: m_Layer
-      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

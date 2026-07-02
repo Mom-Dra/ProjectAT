@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Bullet
+  - Corpse
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - CoverPoint
   - FieldItems
   - Interactable
-  - Corpse
+  - 
   - Building
   - 
   - 
