@@ -31,4 +31,15 @@ public static class Extensions
     {
         return (layerMask.value & (1 << gameObject.layer)) != 0;
     }
+
+    public static bool IsInLayer(this GameObject gameObject, LayerMask mask)
+    {
+        return (mask.value & (1 << gameObject.layer)) != 0;
+    }
+
+    public static bool TryGetComponentInChildren<T>(this GameObject gameObject, out T component) where T : Component
+    {
+        component = gameObject.GetComponentInChildren<T>();
+        return component != null;
+    }
 }
