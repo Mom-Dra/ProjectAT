@@ -16,7 +16,6 @@ public class GrenadeSkillData : ProjectileSkillData, IConsumableSkillData
     public float ExplosionRadius => explosionRadius;
     public float FuseTime => fuseTime;
     public float ExplosionNoiseRadius => explosionNoiseRadius;
-    
     public ItemData NeededItemData => requiredGrenadeItem;
     public int NeededItemAmount => requiredGrenadeItemAmount;
 }

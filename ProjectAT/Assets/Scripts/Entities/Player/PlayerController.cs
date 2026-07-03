@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerSkillModule mySkillModule;
     [SerializeField] private PlayerCoverModule myCoverModule;
     [SerializeField] private PlayerInteractionModule myInteractionModule;
+    [SerializeField] private PlayerSoundController mySoundController;
     [SerializeField] private EntityStatus myStatus;
     [SerializeField] private Camera myCamera;
 
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
     public PlayerSkillModule MySkillModule => mySkillModule;
     public PlayerCoverModule MyCoverModule => myCoverModule;
     public PlayerInteractionModule MyInteractionModule => myInteractionModule;
+    public PlayerSoundController MySoundController => mySoundController;
     public EntityStatus MyStatus => myStatus;
     #endregion
 
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour
         mySkillModule = GetComponent<PlayerSkillModule>();
         myCoverModule = GetComponent<PlayerCoverModule>();
         myInteractionModule = GetComponent<PlayerInteractionModule>();
+        mySoundController = GetComponent<PlayerSoundController>();
         myStatus = GetComponent<EntityStatus>();
     }
     private void InitiateStateMachine()

@@ -92,6 +92,7 @@ namespace EntitySkills{
         public override void OnCastingStart(SkillContext skillContext)
         {
             animator.WeaponMeshVisible(false);
+            context.MySoundController.PlayOneShot(skillData.CastingStartSound);
             animator.PlayThrowAnimation();
         }
 

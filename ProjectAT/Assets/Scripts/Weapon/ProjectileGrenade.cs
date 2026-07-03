@@ -3,7 +3,9 @@ using System.Collections;
 
 public class ProjectileGrenade : ThrowProjectileBase
 {
+    [Header("Grenade Settings")]
     [SerializeField] private ParticleSystem explosionEffect;
+    [SerializeField] private AudioClip explosionSound;
     [SerializeField] public int ExplodeDamage{get; private set;}
     [SerializeField] public float ExplosionRadius{get; private set;}
     [SerializeField] int groundLayer;
@@ -68,6 +70,11 @@ public class ProjectileGrenade : ThrowProjectileBase
         {
             ParticleSystem effect = Instantiate(explosionEffect, transform.position, Quaternion.identity);
             effect.Play();
+        }
+        if (explosionSound != null)
+        {
+            SoundManager soundManager = Managers.Instance?.SoundManager;
+            if(soundManager != null) soundManager.PlayOneShotAt(explosionSound, transform.position);
         }
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, effectedEntityLayer);

@@ -97,19 +97,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129391c5ab5636e48a718a2fb4ca174c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionEffect: {fileID: 786717176829389752, guid: 74ff058cf9a6b1e458aad4d9772b6cf6, type: 3}
   myRigid: {fileID: 3498173702606450174}
-  damageableLayers:
+  impactSound: {fileID: 8300000, guid: ea59d39fa74faef4691d27695d8fd0bb, type: 3}
+  effectedEntityLayer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 4294967295
+  initialOwnerCollisionIgnoreTime: 0.35
+  impactNoiseRadius: 6
+  explosionEffect: {fileID: 786717176829389752, guid: 74ff058cf9a6b1e458aad4d9772b6cf6, type: 3}
+  explosionSound: {fileID: 8300000, guid: c1f8c36ebdb20024ea8a59ec457d582c, type: 3}
   groundLayer: 0
   fuseTime: 20
-  impactNoiseRadius: 6
   explosionNoiseRadius: 18
-  noiseDetectorLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  initialOwnerCollisionIgnoreTime: 0.35
 --- !u!1001 &589522153539378658
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public abstract class ThrowProjectileBase : MonoBehaviour, IThrowableProjectile
 {
+    [Header("Base Projectile Settings")]
     [SerializeField] protected Rigidbody myRigid;
+    [SerializeField] private AudioClip impactSound;
     [SerializeField] protected LayerMask effectedEntityLayer = ~0;
     [SerializeField] protected float initialOwnerCollisionIgnoreTime = 0.35f;
     [SerializeField] protected float impactNoiseRadius = 6f;
@@ -74,6 +76,12 @@ public abstract class ThrowProjectileBase : MonoBehaviour, IThrowableProjectile
             if (!notifiedDetectors.Add(detector)) continue;
 
             detector.OnNoiseDetect(transform.position);
+        }
+
+        SoundManager soundManager = Managers.Instance?.SoundManager;
+        if(soundManager != null)
+        {
+            soundManager.PlayOneShotAt(impactSound, transform.position);
         }
     }
 }

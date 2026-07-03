@@ -64,6 +64,16 @@ public class PlayerSoundController : SoundControllerBase
             UpdateFootsteps();
         }
     }
+    #region SoundRequests API
+    public bool PlayOneShot(AudioClip clip)
+    {
+        SoundManager soundManager = Managers.Instance?.SoundManager;
+        if(soundManager == null || clip == null) return false;
+
+        soundManager.PlayOneShotAt(clip, transform.position);
+        return true;
+    }
+    #endregion
 
     #region Common Situation Sounds
     public void PlayCommandConfirmSound()
