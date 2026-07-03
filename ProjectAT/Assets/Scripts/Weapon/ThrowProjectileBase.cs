@@ -6,19 +6,37 @@ public abstract class ThrowProjectileBase : MonoBehaviour, IThrowableProjectile
 {
     [Header("Base Projectile Settings")]
     [SerializeField] protected Rigidbody myRigid;
-    [SerializeField] private AudioClip impactSound;
+    [SerializeField] protected ProjectileSoundController soundController;
     [SerializeField] protected LayerMask effectedEntityLayer = ~0;
+    [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected float initialOwnerCollisionIgnoreTime = 0.35f;
     [SerializeField] protected float impactNoiseRadius = 6f;
+    protected bool hasLanded;
 
     protected virtual void Awake()
     {
-        if(myRigid is null) myRigid = GetComponent<Rigidbody>();
+        if(myRigid == null) myRigid = GetComponent<Rigidbody>();
+        if(soundController == null) soundController = GetComponent<ProjectileSoundController>();
+    }
+
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        if(hasLanded || !collision.gameObject.IsSameLayer(groundLayer)) return;
+
+        hasLanded = true;
+        EmitNoise(impactNoiseRadius);
+
+        if (myRigid != null)
+        {
+            myRigid.linearVelocity = Vector3.zero;
+            myRigid.angularVelocity = Vector3.zero;
+        }
+
+        soundController.PlayImpact();
     }
 
     public virtual void Throw(Vector3 velocity)
     {
-        if (myRigid == null) myRigid = GetComponent<Rigidbody>();
         myRigid.linearVelocity = velocity;
     }
 
@@ -76,12 +94,6 @@ public abstract class ThrowProjectileBase : MonoBehaviour, IThrowableProjectile
             if (!notifiedDetectors.Add(detector)) continue;
 
             detector.OnNoiseDetect(transform.position);
-        }
-
-        SoundManager soundManager = Managers.Instance?.SoundManager;
-        if(soundManager != null)
-        {
-            soundManager.PlayOneShotAt(impactSound, transform.position);
         }
     }
 }

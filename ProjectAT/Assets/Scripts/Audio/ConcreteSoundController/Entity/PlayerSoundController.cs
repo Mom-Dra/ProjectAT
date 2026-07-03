@@ -8,6 +8,7 @@ public class PlayerSoundController : SoundControllerBase
 
     [Header("References")]
     [SerializeField] private PlayerMovementModule movementModule;
+    [SerializeField] private WeaponHolder weaponHolder;
     [SerializeField] private EntityStatus entityStatus;
 
     [Header("Random Sound Cues")]
@@ -45,16 +46,29 @@ public class PlayerSoundController : SoundControllerBase
     {
         if(movementModule == null) movementModule = GetComponentInParent<PlayerMovementModule>();
         if(entityStatus == null) entityStatus = GetComponentInParent<EntityStatus>();
+        if (weaponHolder == null) weaponHolder = GetComponentInChildren<WeaponHolder>();
     }
 
     private void OnEnable()
     {
         if(entityStatus != null) entityStatus.onHealthChanged += HandleHealthChanged;
+        if (weaponHolder != null)
+        {
+            weaponHolder.OnWeaponFired += HandleWeaponFired;
+            weaponHolder.OnWeaponReloadStart += HandleWeaponReloadedStart;
+            weaponHolder.OnWeaponReloaded += HandleWeaponReloadedEnd;
+        }   
     }
 
     private void OnDisable()
     {
         if(entityStatus != null) entityStatus.onHealthChanged -= HandleHealthChanged;
+        if (weaponHolder != null)
+        {
+            weaponHolder.OnWeaponFired -= HandleWeaponFired;
+            weaponHolder.OnWeaponReloadStart -= HandleWeaponReloadedStart;
+            weaponHolder.OnWeaponReloaded -= HandleWeaponReloadedEnd;
+        }
     }
 
     private void Update()
@@ -67,10 +81,10 @@ public class PlayerSoundController : SoundControllerBase
     #region SoundRequests API
     public bool PlayOneShot(AudioClip clip)
     {
-        SoundManager soundManager = Managers.Instance?.SoundManager;
+        SoundManager soundManager = SoundManager.Instance;
         if(soundManager == null || clip == null) return false;
 
-        soundManager.PlayOneShotAt(clip, transform.position);
+        soundManager.PlaySfxOneShotAt(clip, transform.position);
         return true;
     }
     #endregion
@@ -146,6 +160,32 @@ public class PlayerSoundController : SoundControllerBase
         if (healthRatio > lowHealthThreshold) return;
 
         PlayExertionSound();
+    }
+
+    public void PlayWeaponFireSound(Gun gun)
+    {
+        Debug.Log("Enter PlayerWeaponFire");
+        if (gun == null || gun.GunData == null) return;
+        Debug.Log("Fire Sound Play");
+        PlayOneShot(ActionChannel, gun.GunData.ShotClip);
+    }
+
+    private void HandleWeaponFired(Gun gun)
+    {
+        PlayWeaponFireSound(gun);
+    }
+
+    private void HandleWeaponReloadedStart(Gun gun)
+    {
+        if (gun == null || gun.GunData == null) return;
+
+        PlayOneShot(ActionChannel, gun.GunData.ReloadStartClip);
+    }
+    private void HandleWeaponReloadedEnd(Gun gun)
+    {
+        if (gun == null || gun.GunData == null) return;
+
+        PlayOneShot(ActionChannel, gun.GunData.ReloadEndClip);
     }
     #endregion
 

@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29f89cc7c8a6dbd4bb7f7c6b0bfb3029, type: 3}
   m_Name: M4A1
   m_EditorClassIdentifier: 
-  shotClip: {fileID: 0}
-  reloadClip: {fileID: 0}
   bulletPrefab: {fileID: 946230873439750309, guid: a45c701df17b62d439fc78c12adea761, type: 3}
   hitPrefab: {fileID: 1370874438154576190, guid: eb27692c6b742ee448e041d86e46402a, type: 3}
   damage: 25
@@ -24,3 +22,6 @@ MonoBehaviour:
   reloadTime: 1.8
   maxDistance: 20
   gunIcon: {fileID: 21300000, guid: d2bb5447ca4b0774ea0b80a1c104b9b7, type: 3}
+  shotClip: {fileID: 8300000, guid: b0a889f3d24ed8f43b86d6e6d09b96c1, type: 3}
+  reloadStartClip: {fileID: 8300000, guid: b6e32691c260fda409b0f0ede69f78db, type: 3}
+  reloadEndClip: {fileID: 8300000, guid: 346a0851d4dac5d40ad3ada0ba115e61, type: 3}

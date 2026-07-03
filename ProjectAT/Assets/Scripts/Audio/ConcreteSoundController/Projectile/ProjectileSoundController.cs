@@ -29,6 +29,6 @@ public class ProjectileSoundController : SoundControllerBase
     {
         if(explosionCue == null) return;
 
-        Managers.Instance.SoundManager.PlayOneShotAt(explosionCue, position);
+        SoundManager.Instance.PlaySfxOneShotAt(explosionCue, position);
     }
 }

@@ -12,9 +12,6 @@ public class Gun : Weapon
 
     private Coroutine reloadCoroutine;
     private float currentFireTime;
-
-    private LineRenderer lineRenderer;
-    private AudioSource audioSource;
     [SerializeField] private ParticleSystem muzzleParticleSystem;
 
     private int remainAmmo; // 현재 보유 총알(즉, totalAmmo - magAmmo)
@@ -36,8 +33,6 @@ public class Gun : Weapon
 
     private void Awake()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        audioSource = GetComponent<AudioSource>();
         muzzleParticleSystem = GetComponentInChildren<ParticleSystem>();
 
         //lineRenderer.positionCount = 2;

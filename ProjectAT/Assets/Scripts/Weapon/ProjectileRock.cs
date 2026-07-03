@@ -3,15 +3,12 @@ using UnityEngine;
 
 public class ProjectileRock : ThrowProjectileBase
 {
-    [SerializeField] private int groundLayer;
     [SerializeField] private float destroyDelay = 2f;
     private Coroutine destroyCoroutine;
-    private bool hasLanded;
 
     protected override void Awake()
     {
         base.Awake();
-        groundLayer = LayerMask.NameToLayer("Ground");
     }
     
     private void OnDisable()
@@ -19,21 +16,13 @@ public class ProjectileRock : ThrowProjectileBase
         if(destroyCoroutine != null) StopCoroutine(destroyCoroutine);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter(Collision collision)
     {
-        if (hasLanded) return;
-        if (collision.gameObject.layer != groundLayer) return;
-
-        hasLanded = true;
-        EmitNoise(impactNoiseRadius);
-
-        if (myRigid != null)
+        base.OnCollisionEnter(collision);
+        if (hasLanded)
         {
-            myRigid.linearVelocity = Vector3.zero;
-            myRigid.angularVelocity = Vector3.zero;
+            destroyCoroutine = StartCoroutine(DestroyCoroutine());
         }
-
-        destroyCoroutine = StartCoroutine(DestroyCoroutine());
     }
 
     private IEnumerator DestroyCoroutine()

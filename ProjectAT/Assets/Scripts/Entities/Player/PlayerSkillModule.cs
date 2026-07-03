@@ -176,9 +176,17 @@ public class PlayerSkillModule : MonoBehaviour
         return mySkills[(int)skillIndex].CanActivate();
     }
 
+    private bool CheckAnotherModuleCondition()
+    {
+        return !MyCombatModule.MyWeapon.IsReloading;
+    }
+
     public bool CanSelectTarget(in RaycastHit hit, out Collider castedCollider, out Vector3 point)
     {
         castedCollider = null;
+        point = Vector3.zero;
+
+        if (!CheckAnotherModuleCondition()) return false;
 
         if(skillDatas[(int)lastSkillInput] is IAoESkillData 
         && (((1 << hit.collider.gameObject.layer) & groundLayer.value) != 0))

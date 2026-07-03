@@ -147,6 +147,7 @@ public class PlayerController : MonoBehaviour
     {
         return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
     }
+    
     public void HandleRightClickInput()
     {
         if(EventSystem.current.IsPointerOverGameObject()) return;

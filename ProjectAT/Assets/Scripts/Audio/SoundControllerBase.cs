@@ -6,7 +6,7 @@ public class SoundControllerBase : MonoBehaviour
 
     protected AudioSource GetChannel(int index)
     {
-        if(CheckChannelIndex(index)) return null;
+        if(!CheckChannelIndex(index)) return null;
         return channels[index];
     }
 
