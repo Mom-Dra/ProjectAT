@@ -4,7 +4,7 @@ using Interactable;
 
 namespace PlayerStateMachine
 {
-    public class InteractingState : PlayerState, IRightClickHandler
+    public class InteractingState : PlayerState, IRightClickHandler, IInterruptiblePlayerState
     {
         private PlayerInteractionModule myInteractionModule;
         private PlayerAnimator myAnimationModule;
@@ -21,6 +21,7 @@ namespace PlayerStateMachine
         public override void OnEnter()
         {
             Debug.Log($"Enter InteractingState. : {myInteractionModule.CurrentInteractTarget}");
+            nextStateCash = PlayerStateType.Normal;
             currentInteractTime = 0f;
             isInteractingComplete = false;
 
@@ -32,6 +33,12 @@ namespace PlayerStateMachine
         public override void OnExit()
         {
             Debug.Log("Exit InteractingState.");
+
+            if (myInteractionModule.CurrentInteractTarget == null)
+            {
+                myAnimationModule.WeaponMeshVisible(true);
+                return;
+            }
 
             myInteractionModule.CurrentInteractTarget.OnInteractEnd(context);
             if(nextStateCash == PlayerStateType.Carry)
@@ -58,6 +65,11 @@ namespace PlayerStateMachine
 
                 context.ChangeState(nextStateCash);
             }
+        }
+
+        public void Interrupt()
+        {
+            nextStateCash = PlayerStateType.Normal;
         }
 
         public void OnRightClick(RaycastHit castedObject)

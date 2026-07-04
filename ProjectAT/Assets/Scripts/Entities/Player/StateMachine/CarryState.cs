@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PlayerStateMachine
 {
-    public class CarryState : PlayerState, IRightClickHandler, IDropObjectHandler
+    public class CarryState : PlayerState, IRightClickHandler, IDropObjectHandler, IInterruptiblePlayerState
     {
         private PlayerInteractionModule myInteractionModule;
         private PlayerAnimator myAnimatorModule;
@@ -33,6 +33,12 @@ namespace PlayerStateMachine
 
         public override void OnUpdate()
         {
+        }
+
+        public void Interrupt()
+        {
+            myInteractionModule.DropHoldedObject();
+            myAnimatorModule.WeaponMeshVisible(true);
         }
 
         public void OnRightClick(RaycastHit castedObject)

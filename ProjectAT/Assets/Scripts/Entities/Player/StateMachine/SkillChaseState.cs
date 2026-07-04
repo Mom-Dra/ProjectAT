@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PlayerStateMachine
 {
-    public class SkillChaseState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler
+    public class SkillChaseState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler, IInterruptiblePlayerState
     {
     #region  Needed Modules
         private PlayerSkillModule mySkillModule;
@@ -60,6 +60,17 @@ namespace PlayerStateMachine
                     context.PlayerMove(nowActivatedSkillContext.CastedPosition, false);
                 }  
             }
+        }
+
+        public void Interrupt()
+        {
+            if (mySkillModule.IsTargetting)
+            {
+                mySkillModule.CancelTargettingMode();
+            }
+
+            mySkillModule.CancelCurrentSkill();
+            nowActivatedSkillContext = null;
         }
 
         public void OnRightClick(RaycastHit castedObject)

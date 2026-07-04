@@ -10,6 +10,7 @@ using UnityEngine.Animations.Rigging;
 [RequireComponent(typeof(AwarenessModule))]
 [RequireComponent(typeof(EnemyAlertnessModule))]
 [RequireComponent(typeof(PerceptionSystem))]
+[RequireComponent(typeof(CrowdControlModule))]
 public class Enemy : MonoBehaviour, ISquadMember
 {
     public event Action<ISquadMember, IPerceivable> onTargetDetected;
@@ -37,11 +38,13 @@ public class Enemy : MonoBehaviour, ISquadMember
     private FieldOfViewVisuals fieldOfViewVisuals;
     private EnemyAnimator enemyAnimator;
     private Weapon weapon;
+    private CrowdControlModule crowdControlModule;
     private RigBuilder rigBuilder;
     private CoverHandler coverHandler;
 
     private Squad squad;
     private IEnemyState currState;
+    private IEnemyState stateBeforeStun;
 
     private IPerceivable currentTarget;
     private CoverPoint reservedCoverPoint;
@@ -91,6 +94,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     internal bool HasReservedCover => reservedCoverPoint is not null;
     internal bool IsMovingToCover => reservedCoverPoint is not null && !isInCover;
     internal bool IsInCover => reservedCoverPoint is not null && isInCover;
+    internal bool IsStunned => crowdControlModule != null && crowdControlModule.IsStunned;
     internal ICoverSubState CoverSubState { get; set; }
 
     // State 공유 변수
@@ -132,9 +136,15 @@ public class Enemy : MonoBehaviour, ISquadMember
         fieldOfViewVisuals = GetComponent<FieldOfViewVisuals>();
         enemyAnimator = GetComponent<EnemyAnimator>();
         weapon = GetComponentInChildren<Gun>();
+        crowdControlModule = GetComponent<CrowdControlModule>();
         entityStatus = GetComponent<EntityStatus>();
         rigBuilder = GetComponent<RigBuilder>();
         coverHandler = GetComponent<CoverHandler>();
+
+        if (crowdControlModule == null)
+        {
+            crowdControlModule = gameObject.AddComponent<CrowdControlModule>();
+        }
 
         renderersToHide = GetComponentsInChildren<Renderer>(true);
         collidersToDisable = GetComponentsInChildren<Collider>(true);
@@ -154,6 +164,8 @@ public class Enemy : MonoBehaviour, ISquadMember
         awarenessModule.onTargetConfirmed += TargetConfirmed;
         awarenessModule.onTargetLost += TargetLost;
         entityStatus.onDeath += Die;
+        crowdControlModule.OnStunStarted += HandleStunStarted;
+        crowdControlModule.OnStunEnded += HandleStunEnded;
         perceptionSystem.onCorpseDetected += CorpseDetected;
 
         if (alertnessModule is not null)
@@ -167,6 +179,12 @@ public class Enemy : MonoBehaviour, ISquadMember
         awarenessModule.onTargetConfirmed -= TargetConfirmed;
         awarenessModule.onTargetLost -= TargetLost;
         entityStatus.onDeath -= Die;
+        if (crowdControlModule != null)
+        {
+            crowdControlModule.OnStunStarted -= HandleStunStarted;
+            crowdControlModule.OnStunEnded -= HandleStunEnded;
+        }
+
         perceptionSystem.onCorpseDetected -= CorpseDetected;
 
         if (alertnessModule is not null)
@@ -178,12 +196,12 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     private void Start()
     {
-        ChangeState(!IsAssignedToSquad && HasPatrolWaypoints ? IEnemyState.PatrolState : IEnemyState.IdleState);
+        ChangeState(IsStunned ? IEnemyState.StunnedState : !IsAssignedToSquad && HasPatrolWaypoints ? IEnemyState.PatrolState : IEnemyState.IdleState);
     }
 
     private void Update()
     {
-        currState.Update(this);
+        currState?.Update(this);
 
         enemyAnimator.SetSpeed(navMeshAgent.velocity.magnitude);
     }
@@ -263,6 +281,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     {
         if (!IsAlive) return;
         IsAlive = false;
+        stateBeforeStun = null;
 
         ChangeState(IEnemyState.DeadState);
     }
@@ -347,6 +366,12 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     internal void ChangeState(IEnemyState nextState)
     {
+        if (nextState is null) return;
+        if (IsStunned && !ReferenceEquals(nextState, IEnemyState.StunnedState) && !ReferenceEquals(nextState, IEnemyState.DeadState))
+        {
+            return;
+        }
+
         if (ReferenceEquals(currState, nextState)) return;
 
         currState?.Exit(this);
@@ -356,6 +381,8 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     internal void MoveTo(Vector3 position)
     {
+        if (IsStunned) return;
+
         navMeshAgent.isStopped = false;
         navMeshAgent.SetDestination(position);
     }
@@ -373,6 +400,7 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     internal void MoveTowardCurrentTarget()
     {
+        if (IsStunned) return;
         if (!HasValidCurrentTarget) return;
 
         Vector3 targetPosition = currentTarget.Transform.position;
@@ -594,6 +622,7 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     internal bool RotateTowardTarget()
     {
+        if (IsStunned) return false;
         if (!HasValidCurrentTarget) return false;
 
         Vector3 targetPos = CurrentTarget.Transform.position;
@@ -616,12 +645,16 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     internal void Fire()
     {
+        if (IsStunned) return;
+
         // Debug.Log("Fire");
         weapon.Attack();
     }
 
     internal void AimAtTarget(bool isActive)
     {
+        if (IsStunned && isActive) return;
+
         if (currentTarget is not null)
             aimTarget.transform.position = currentTarget.Transform.position + Vector3.up;
 
@@ -636,7 +669,33 @@ public class Enemy : MonoBehaviour, ISquadMember
 
     internal void SetAttackMode(bool isAttackMode)
     {
+        if (IsStunned && isAttackMode) return;
+
         perceptionSystem.SetAttackMode(isAttackMode);
+    }
+
+    private void HandleStunStarted()
+    {
+        if (!IsAlive) return;
+
+        if (!ReferenceEquals(currState, IEnemyState.StunnedState) && !ReferenceEquals(currState, IEnemyState.DeadState))
+        {
+            stateBeforeStun = currState;
+        }
+
+        ChangeState(IEnemyState.StunnedState);
+    }
+
+    private void HandleStunEnded()
+    {
+        if (!IsAlive) return;
+
+        if (ReferenceEquals(currState, IEnemyState.StunnedState))
+        {
+            ChangeState(stateBeforeStun ?? IEnemyState.IdleState);
+        }
+
+        stateBeforeStun = null;
     }
 
     internal void SetInvestigateContext(Vector3 noisePosition)

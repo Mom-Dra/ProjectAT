@@ -8,6 +8,7 @@ namespace PlayerStateMachine
         None = -1,
         Normal,
         Dead,
+        Stunned,
         SkillChase,
         SkillCast,
         InteractChasing,

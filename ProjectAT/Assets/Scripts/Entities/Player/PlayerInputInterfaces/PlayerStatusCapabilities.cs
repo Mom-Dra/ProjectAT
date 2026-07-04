@@ -7,4 +7,5 @@ namespace PlayerStateCapabilities
     public interface ISkillInputHandler   { void OnSkillInput(SkillNumber skillNumber); }
     public interface IDropObjectHandler     { void OnDropObjectInput(); }
     public interface IReloadInputHandler   { void OnReloadInput(); }
+    public interface IInterruptiblePlayerState { void Interrupt(); }
 }

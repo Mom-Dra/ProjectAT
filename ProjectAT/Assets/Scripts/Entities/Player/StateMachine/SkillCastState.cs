@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PlayerStateMachine
 {
-    public class SkillCastState : PlayerState, IRightClickHandler
+    public class SkillCastState : PlayerState, IRightClickHandler, IInterruptiblePlayerState
     {
 
         private SkillContext skillContext;
@@ -22,7 +22,13 @@ namespace PlayerStateMachine
         }
 
         public override void OnEnter()
-        {            
+        {
+            if (skillContext == null || skillContext.SkillToExecute == null)
+            {
+                context.ChangeState(PlayerStateType.Normal);
+                return;
+            }
+
             castTimer = 0.0f;
             isRotationFinished = false;
             context.PlayerMove(context.transform.position, false);
@@ -94,7 +100,7 @@ namespace PlayerStateMachine
         // 다시 추적 상태로 돌아가는 로직
         private void ResumeChasing()
         {
-            skillContext.SkillToExecute.OnCastingEnd(skillContext);
+            EndCasting();
 
             SkillChaseState skillChaseState = context.GetState(PlayerStateType.SkillChase) as SkillChaseState; //굳이 필요한 로직인가?
             skillChaseState.SetSkillContext(skillContext);
@@ -102,11 +108,30 @@ namespace PlayerStateMachine
             context.ChangeState(PlayerStateType.SkillChase);
         }
 
-        private void CancelCasting()
+        private void CancelCasting(bool shouldChangeState = true)
         {
-            skillContext.SkillToExecute.OnCastingEnd(skillContext);
+            EndCasting();
             context.MySkillModule.CancelCurrentSkill();
-            context.ChangeState(PlayerStateType.Normal);
+
+            if (shouldChangeState)
+            {
+                context.ChangeState(PlayerStateType.Normal);
+            }
+        }
+
+        private void EndCasting()
+        {
+            if (skillContext == null || skillContext.SkillToExecute == null)
+            {
+                return;
+            }
+
+            skillContext.SkillToExecute.OnCastingEnd(skillContext);
+        }
+
+        public void Interrupt()
+        {
+            CancelCasting(false);
         }
 
         public void OnRightClick(RaycastHit castedObject)

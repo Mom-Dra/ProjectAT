@@ -59,6 +59,7 @@
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\EnableTrailAfterTime.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\InteractingState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\SkillCastState.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player\StateMachine\StunnedState.cs" />
     <Compile Include="Assets\Scripts\Abstract\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAttackAction.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Assets\Scripts\Abstract\Enemy.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverObject.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\DeadState.cs" />
+    <Compile Include="Assets\Scripts\Buff\StunBuffData.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\CustomControls\RadialProgressBar.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="Assets\Scripts\Entities\Player\PlayerPerceptionModule.cs" />
     <Compile Include="Assets\Scripts\Manager\IndicatorManager.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\NextPrefab.cs" />
+    <Compile Include="Assets\Scripts\Buff\CrowdControlModule.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\AutoDestroy.cs" />
     <Compile Include="Assets\Scripts\Pool\PooledObject.cs" />
     <Compile Include="Assets\Scripts\Entities\EntityStatus.cs" />

@@ -7,6 +7,7 @@ using System;
 
 public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey }
 
+[RequireComponent(typeof(CrowdControlModule))]
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerCoverModule myCoverModule;
     [SerializeField] private PlayerInteractionModule myInteractionModule;
     [SerializeField] private EntityStatus myStatus;
+    [SerializeField] private CrowdControlModule myCrowdControlModule;
     [SerializeField] private Camera myCamera;
 
     [Header("Enemy")]
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
     public InteractingState InteractingState { get; private set; }
     public CoverState CoverState { get; private set; }
     public CarryState CarryState { get; private set; }
+    public StunnedState StunnedState { get; private set; }
     #endregion
 
     #region Module Getters
@@ -46,6 +49,8 @@ public class PlayerController : MonoBehaviour
     public PlayerCoverModule MyCoverModule => myCoverModule;
     public PlayerInteractionModule MyInteractionModule => myInteractionModule;
     public EntityStatus MyStatus => myStatus;
+    public CrowdControlModule MyCrowdControlModule => myCrowdControlModule;
+    public bool IsStunned => myCrowdControlModule != null && myCrowdControlModule.IsStunned;
     #endregion
 
     #region 초기화
@@ -58,6 +63,12 @@ public class PlayerController : MonoBehaviour
         myCoverModule = GetComponent<PlayerCoverModule>();
         myInteractionModule = GetComponent<PlayerInteractionModule>();
         myStatus = GetComponent<EntityStatus>();
+        myCrowdControlModule = GetComponent<CrowdControlModule>();
+
+        if (myCrowdControlModule == null)
+        {
+            myCrowdControlModule = gameObject.AddComponent<CrowdControlModule>();
+        }
     }
     private void InitiateStateMachine()
     {
@@ -69,6 +80,7 @@ public class PlayerController : MonoBehaviour
         InteractingState = new InteractingState(this);
         CoverState = new CoverState(this);
         CarryState = new CarryState(this);
+        StunnedState = new StunnedState(this);
 
         CurrentState = NormalState;
         CurrentState.OnEnter();
@@ -109,6 +121,8 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         myStatus.onDeath += HandleDeath;
+        myCrowdControlModule.OnStunStarted += HandleStunStarted;
+        myCrowdControlModule.OnStunEnded += HandleStunEnded;
         LinkInputEventsAll();
         Managers.Instance.UIManager.InitPlayerStatusInfo(myStatus);
         //myStatus.onRevive += () => Debug.Log("Player Revived!"); // TODO : Revive 이벤트 활용
@@ -117,6 +131,12 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         myStatus.onDeath -= HandleDeath;
+        if (myCrowdControlModule != null)
+        {
+            myCrowdControlModule.OnStunStarted -= HandleStunStarted;
+            myCrowdControlModule.OnStunEnded -= HandleStunEnded;
+        }
+
         //Managers.Instance.UIManager.ClearPlayerStatusInfo(); //TODO : UI 제거 함수 구현해야함.
         UnLinkInputEventsAll();
         //myStatus.onRevive -= () => Debug.Log("Player Revived!");
@@ -136,6 +156,7 @@ public class PlayerController : MonoBehaviour
 
     public void HandlePlayerRightClickInput()
     {
+        if (IsStunned) return;
         if(EventSystem.current.IsPointerOverGameObject()) return;
         
         if(CurrentState is IRightClickHandler state)
@@ -151,6 +172,8 @@ public class PlayerController : MonoBehaviour
 
     public void HandleLeftClickInput()
     {
+        if (IsStunned) return;
+
         if((CurrentState is ILeftClickHandler state) && RaycastAtMouseLocation(out RaycastHit ray))
         {
             state.OnLeftClick(ray);
@@ -159,6 +182,8 @@ public class PlayerController : MonoBehaviour
 
     public void HandlePlayerSkillInput(SkillNumber index)
     {
+        if (IsStunned) return;
+
         if(CurrentState is ISkillInputHandler state)
         {
             state.OnSkillInput(index);
@@ -167,6 +192,8 @@ public class PlayerController : MonoBehaviour
 
     public void HandleDropObjectInput()
     {
+        if (IsStunned) return;
+
         if(CurrentState is IDropObjectHandler state)
         {
             state.OnDropObjectInput();
@@ -181,18 +208,24 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerMove(Vector3 pos, bool isRun)
     {
+        if (IsStunned) return;
+
         if (isRun) myMovementModule.PlayerRun(pos);
         else myMovementModule.PlayerWalk(pos);
     }
 
     public void PlayerMoveWithIndicator(Vector3 pos, bool isRun)
-    {        
+    {
+        if (IsStunned) return;
+
         PlayerMove(pos, isRun);
         IndicatorManager.Instance.ShowMoveIndicator(pos, IndicatorType.MoveIndicator, 1.0f);
     }
 
     public void HandleReloadInput()
     {
+        if (IsStunned) return;
+
         if(CurrentState is IReloadInputHandler state)
         {
             state.OnReloadInput();
@@ -203,6 +236,7 @@ public class PlayerController : MonoBehaviour
     #region 전투관련 함수
     public void SetTargetEnemy(Enemy castedEnemy)
     {
+        if (IsStunned) return;
         if (!castedEnemy) return;
         SelectedEnemy = castedEnemy;
         myPlayerAnimator.SetAiming(true, SelectedEnemy.transform);     
@@ -220,6 +254,11 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     public bool TryExecuteAttack()
     {
+        if (IsStunned)
+        {
+            return false;
+        }
+
         if (SelectedEnemy == null) 
         {
             return false;
@@ -241,6 +280,8 @@ public class PlayerController : MonoBehaviour
 
     public void ChaseEnemy()
     {
+        if (IsStunned) return;
+
         myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
     }
 
@@ -260,7 +301,23 @@ public class PlayerController : MonoBehaviour
 
     private void CancelAllPlayerAction()
     {
+        InterruptCurrentAction();
+    }
+
+    public void InterruptCurrentAction()
+    {
+        if (CurrentState is IInterruptiblePlayerState interruptibleState)
+        {
+            interruptibleState.Interrupt();
+        }
+
         myMovementModule.PlayerMoveStop();
+
+        if (mySkillModule.IsTargetting)
+        {
+            mySkillModule.CancelTargettingMode();
+        }
+
         mySkillModule.CancelCurrentSkill();
         myCombatModule.RequestCancelReload();
         CancelEnemySelect();
@@ -271,11 +328,35 @@ public class PlayerController : MonoBehaviour
         CancelAllPlayerAction();
         ChangeState(PlayerStateType.Dead);
     }
+
+    private void HandleStunStarted()
+    {
+        if (CurrentState == DeadState || (myStatus != null && myStatus.IsDead))
+        {
+            return;
+        }
+
+        InterruptCurrentAction();
+        ChangeState(PlayerStateType.Stunned);
+    }
+
+    private void HandleStunEnded()
+    {
+        if (CurrentState == StunnedState && (myStatus == null || !myStatus.IsDead))
+        {
+            ChangeState(PlayerStateType.Normal);
+        }
+    }
     #endregion
 
     #region StateMachine관련 함수
     public void ChangeState(PlayerStateType newState)
     {
+        if (IsStunned && newState != PlayerStateType.Stunned && newState != PlayerStateType.Dead)
+        {
+            return;
+        }
+
         CurrentState?.OnExit();
         CurrentState = GetState(newState);
         CurrentState.OnEnter();
@@ -289,6 +370,7 @@ public class PlayerController : MonoBehaviour
             PlayerStateType.SkillChase => SkillChaseState,
             PlayerStateType.SkillCast => SkillCastingState,
             PlayerStateType.Dead => DeadState,
+            PlayerStateType.Stunned => StunnedState,
             PlayerStateType.InteractChasing => InteractChaseState,
             PlayerStateType.Interacting => InteractingState,
             PlayerStateType.Cover => CoverState,

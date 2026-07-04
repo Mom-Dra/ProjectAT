@@ -5,6 +5,7 @@ public interface IEnemyState
 {
     static readonly IEnemyState IdleState = new EnemyIdleState();
     static readonly IEnemyState DeadState = new EnemyDeadState();
+    static readonly IEnemyState StunnedState = new EnemyStunnedState();
     static readonly IEnemyState PatrolState = new EnemyPatrolState();
     static readonly IEnemyState AttackState = new EnemyAttackState();
     static readonly IEnemyState ChaseState = new EnemyChaseState();
@@ -94,6 +95,32 @@ public class EnemyDeadState : IEnemyState
     public void Exit(Enemy enemy)
     {
 
+    }
+}
+
+public class EnemyStunnedState : IEnemyState
+{
+    public void Enter(Enemy enemy)
+    {
+        if (enemy.stateText != null)
+        {
+            enemy.stateText.text = "Stunned";
+        }
+
+        enemy.StopPositionReport();
+        enemy.EnableFieldOfView(false);
+        enemy.SetAttackMode(false);
+        enemy.AimAtTarget(false);
+        enemy.ReleaseCover();
+        enemy.StopMoving();
+    }
+
+    public void Update(Enemy enemy)
+    {
+    }
+
+    public void Exit(Enemy enemy)
+    {
     }
 }
 

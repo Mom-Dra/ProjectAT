@@ -5,7 +5,7 @@ using PlayerStateCapabilities;
 
 namespace PlayerStateMachine
 {
-    public class InteractChaseState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler
+    public class InteractChaseState : PlayerState, ILeftClickHandler, IRightClickHandler, ISkillInputHandler, IInterruptiblePlayerState
     {
         private const float StopDistanceThreshold = 0.1f; // 상호작용 위치에 도달했다고 판단하는 거리 임계값.
         private PlayerInteractionModule myInteractionModule;
@@ -71,6 +71,12 @@ namespace PlayerStateMachine
             {
                 context.PlayerMove(requiredPos, false);
             }
+        }
+
+        public void Interrupt()
+        {
+            context.MyMovementModule.PlayerMoveStop();
+            myInteractionModule.ClearInteractTarget(true);
         }
 
         public void OnLeftClick(RaycastHit castedObject)

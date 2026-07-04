@@ -24,14 +24,14 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public PlayerCombatModule MyCombatModule { get; private set; }
     [SerializeField] public PlayerAnimator MyAnimModule { get; private set; }
     [SerializeField] public EntityStatus MyStatus { get; private set; }
-    [SerializeField] public Inventory MyInventory {get; private set;}
+    [SerializeField] public Inventory MyInventory { get; private set; }
 
     private SkillChaseState skillChaseState;
     private SkillCastState skillCastState;
 
     [Header("Skills")]
     private Skill[] mySkills = new Skill[5]; //갯수 조정 필요
-    private SkillNumber currentActivateSkillNumber;
+    private SkillNumber currentActivateSkillNumber = SkillNumber.None;
     private Dictionary<Skill, float> skillCooldownTimers = new Dictionary<Skill, float>();
     public WeaponHolder MyWeapon => MyCombatModule.MyWeapon;
 
@@ -39,12 +39,12 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] private SkillData[] skillDatas;     //Addressables 패키지를 이용하여 에셋을 읽어오는 방법 고려
 
     [Header("Params")]
-    private SkillNumber lastSkillInput;
-    public bool IsTargetting {get{ return lastSkillInput != SkillNumber.None; }}
+    private SkillNumber lastSkillInput = SkillNumber.None;
+    public bool IsTargetting { get { return lastSkillInput != SkillNumber.None; } }
     [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
 
-    public event Action<SkillNumber,float> OnSkillCooldownStart;
+    public event Action<SkillNumber, float> OnSkillCooldownStart;
     public event Action<SkillNumber, int> OnSkillItemCountChange;
 
     private void Awake()
@@ -72,13 +72,13 @@ public class PlayerSkillModule : MonoBehaviour
         skillCooldownTimers.Add(mySkills[(int)SkillNumber.Grenade], Time.time);
         skillCooldownTimers.Add(mySkills[(int)SkillNumber.UseBandage], Time.time);
         skillCooldownTimers.Add(mySkills[(int)SkillNumber.DesignatedFire], Time.time);
-        
+
         Managers.Instance.UIManager.InitPlayerSkillInfo(this, skillDatas);
 
-        for(int i = 0 ; i < mySkills.Length ; i++)
+        for (int i = 0; i < mySkills.Length; i++)
         {
             OnSkillCooldownStart?.Invoke((SkillNumber)i, mySkills[i].SkillMaxCoolTime);
-            if(mySkills[i] is ConsumableSkill consumableSkill)
+            if (mySkills[i] is ConsumableSkill consumableSkill)
             {
                 OnSkillItemCountChange?.Invoke((SkillNumber)i, MyInventory.GetItemCount(consumableSkill.NeededItemData));
             }
@@ -102,7 +102,7 @@ public class PlayerSkillModule : MonoBehaviour
             //Debug.Log($"Cannot Activate Skill:{skillIndex}");
             return;
         }
-        if(lastSkillInput != SkillNumber.None || lastSkillInput == skillIndex)
+        if (lastSkillInput != SkillNumber.None || lastSkillInput == skillIndex)
         {
             CancelTargettingMode();
             return;
@@ -125,9 +125,9 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void UpdateSkillIndicator(Ray mouseToScreenPosRay)
     {
-        if(mySkills[(int)lastSkillInput].IndicatorType == IndicatorType.GroundSkillIndicator)
+        if (mySkills[(int)lastSkillInput].IndicatorType == IndicatorType.GroundSkillIndicator)
         {
-            if(Physics.Raycast(mouseToScreenPosRay, out RaycastHit hit, 100f, groundLayer))
+            if (Physics.Raycast(mouseToScreenPosRay, out RaycastHit hit, 100f, groundLayer))
             {
                 IndicatorManager.Instance.UpdateAoeIndicator(transform.position, hit.point, Vector3.zero, MyStatus.ThrowRange);
             }
@@ -136,6 +136,8 @@ public class PlayerSkillModule : MonoBehaviour
 
     public void CancelTargettingMode()
     {
+        if (lastSkillInput == SkillNumber.None) return;
+
         IndicatorManager.Instance.HideIndicator(mySkills[(int)lastSkillInput].IndicatorType);
         lastSkillInput = SkillNumber.None;
     }
@@ -144,7 +146,7 @@ public class PlayerSkillModule : MonoBehaviour
     {
         // //ModuleState = SkillModuleState.Casting;
         // ModuleState = SkillModuleState.Chasing;
-        
+
         // currentActivateSkillNumber = lastSkillInput;
         // MyCombatModule.SetAiming(false);
         // CancelTargettingMode();
@@ -159,7 +161,7 @@ public class PlayerSkillModule : MonoBehaviour
         MyAnimModule.CancelAnimation();
     }
 
-    public bool CanActivateSkill (SkillNumber skillIndex)
+    public bool CanActivateSkill(SkillNumber skillIndex)
     {
         return mySkills[(int)skillIndex].CanActivate();
     }
@@ -178,7 +180,7 @@ public class PlayerSkillModule : MonoBehaviour
     public bool CanCastingSkill(SkillContext context)
     {
         if (context == null || context.SkillToExecute == null) return false;
-        if(context.TargetObject != null && !context.TargetObject.activeInHierarchy) return false; //타겟이 비활성화된 상태면 시전 불가능
+        if (context.TargetObject != null && !context.TargetObject.activeInHierarchy) return false; //타겟이 비활성화된 상태면 시전 불가능
 
 
         Vector3 destination = (context.TargetObject != null) ? context.TargetObject.transform.position : context.CastedPosition;
@@ -189,7 +191,7 @@ public class PlayerSkillModule : MonoBehaviour
             return context.SkillToExecute.ExtraCastingCondition(context);
         }
 
-        return false;    
+        return false;
     }
 
     public bool IsCooldownReady(Skill skill)
@@ -226,7 +228,7 @@ public class PlayerSkillModule : MonoBehaviour
 
     private void CancelSkillContext()
     {
-        skillChaseState.SetSkillContext(null);
-        skillCastState.SetSkillContext(null);
+        skillChaseState?.SetSkillContext(null);
+        skillCastState?.SetSkillContext(null);
     }
 }

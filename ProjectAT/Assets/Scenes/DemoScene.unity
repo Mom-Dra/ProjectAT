@@ -23275,6 +23275,7 @@ MonoBehaviour:
   moveSpeedBuffs:
   - {fileID: 11400000, guid: e4db261408f16634aafa7010476fbefa, type: 2}
   - {fileID: 11400000, guid: 814aa4862b0883d4f851807d9363b548, type: 2}
+  - {fileID: 11400000, guid: 43f9071f437202e48bb062bf7775965a, type: 2}
 --- !u!1 &663994903
 GameObject:
   m_ObjectHideFlags: 0
