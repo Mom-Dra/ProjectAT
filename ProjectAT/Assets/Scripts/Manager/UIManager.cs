@@ -47,9 +47,24 @@ public class UIManager
             return;
         }
 
+        if (playerHUD is null)
+        {
+            Debug.LogError("PlayerHUD is null!");
+            return;
+        }
+
         playerHUD.SetPlayerPortrait(playerStatus.InitStatusRef.PortatitSprite);
         SetPlayerHealthUI((float)playerStatus.CurrentHp / playerStatus.MaxHp);
         playerStatus.onHealthChanged += SetPlayerHealthUI;
+
+        if (playerStatus.TryGetComponent(out BuffModule buffModule))
+        {
+            playerHUD.BindBuffModule(buffModule);
+        }
+        else
+        {
+            playerHUD.BindBuffModule(null);
+        }
     }
 
     public void SetPlayerHealthUI(float healthRatio)

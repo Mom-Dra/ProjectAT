@@ -319,9 +319,9 @@ GameObject:
   - component: {fileID: 7379660419816490058}
   - component: {fileID: 4480365549570769902}
   - component: {fileID: 6914519252962164837}
-  - component: {fileID: 2197981689903844591}
   - component: {fileID: 3503328345243926976}
   - component: {fileID: 754147340102552977}
+  - component: {fileID: 2197981689903844591}
   m_Layer: 8
   m_Name: NewPlayerCharacter
   m_TagString: Player
@@ -590,19 +590,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myStatus: {fileID: 0}
   holdPoint: {fileID: 8537165280003072780}
---- !u!114 &2197981689903844591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1570168789558711731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e4bcb9ffb52d7e42806f6d448a23840, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  availableBuffs: []
 --- !u!114 &3503328345243926976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +615,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 710b233a40edd874a94edb4235b89c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2197981689903844591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570168789558711731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4bcb9ffb52d7e42806f6d448a23840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableBuffs: []
 --- !u!1 &2066797227536388764
 GameObject:
   m_ObjectHideFlags: 0

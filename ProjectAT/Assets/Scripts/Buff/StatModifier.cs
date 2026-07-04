@@ -24,6 +24,9 @@ public class StatModifier
 public class Stat
 {
     public float BaseValue { get; private set; }
+    public float MinValue { get; private set; }
+    public float MaxValue { get; private set; }
+
     private List<StatModifier> modifiers = new List<StatModifier>();
     private float value;
     private bool isDirty = true;
@@ -42,9 +45,11 @@ public class Stat
         }
     }
 
-    public Stat(float baseValue)
+    public Stat(float baseValue, float minValue = float.NegativeInfinity, float maxValue = float.PositiveInfinity)
     {
         BaseValue = baseValue;
+        MinValue = minValue;
+        MaxValue = Mathf.Max(minValue, maxValue);
     }
 
     public void AddModifier(StatModifier modifier)
@@ -78,6 +83,7 @@ public class Stat
             }
         }
 
-        return finalValue * (1 + sumPercentAdd);
+        float calculatedValue = finalValue * (1 + sumPercentAdd);
+        return Mathf.Clamp(calculatedValue, MinValue, MaxValue);
     }
 }

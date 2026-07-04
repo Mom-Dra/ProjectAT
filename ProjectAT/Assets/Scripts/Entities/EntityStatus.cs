@@ -41,12 +41,18 @@ public class EntityStatus : MonoBehaviour, IDamageable
         InitStatus();
     }
 
+    private void Update()
+    {
+        Debug.Log("Update");
+        Debug.Log($"{gameObject.name} walkSpeedStat: {walkSpeedStat.Value}");
+    }
+
     private void InitStatus()
     {
-        maxHpStat = new Stat(initStatus.MaxHp);
-        walkSpeedStat = new Stat(initStatus.WalkSpeed);
-        runSpeedStat = new Stat(initStatus.RunSpeed);
-        armorStat = new Stat(initStatus.Armor);
+        maxHpStat = new Stat(initStatus.MaxHp, 1f);
+        walkSpeedStat = new Stat(initStatus.WalkSpeed, 0.1f);
+        runSpeedStat = new Stat(initStatus.RunSpeed, 0.1f);
+        armorStat = new Stat(initStatus.Armor, 0f);
 
         CurrentHp = initStatus.MaxHp;
         ThrowRange = initStatus.ThrowRange;

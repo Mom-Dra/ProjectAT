@@ -8,6 +8,7 @@
             <ui:VisualElement name="WeaponIcon" style="flex-grow: 0; bottom: 15%; left: 25%; width: 50%; height: 35%; flex-shrink: 0; background-image: url(&quot;project://database/Assets/Plugins/Easy%20performant%20outline/Demo/Textures/Trash%20bin.png?fileID=21300000&amp;guid=0febdc610d2211c47b6780eeec713608&amp;type=3#Trash bin&quot;); top: auto; position: absolute;" />
             <ui:Label text="30 / 150" name="AmmoText" style="position: absolute; bottom: 3px; right: auto; -unity-font-style: bold; font-size: 25px; color: rgb(255, 255, 255); left: 25%;" />
         </ui:VisualElement>
+        <ui:VisualElement name="BuffList" style="position: absolute; left: 0%; bottom: 102%; height: 52px; flex-direction: row; align-items: center;" />
     </ui:VisualElement>
     <ui:VisualElement name="HUD_MidBottom" style="flex-grow: 1; bottom: 1%; position: absolute; left: 25%; right: 25%; flex-direction: row; justify-content: space-between; align-items: stretch; height: 15%; width: 50%;">
         <ui:VisualElement name="SkillInfo_0" style="flex-grow: 1; align-items: center;">

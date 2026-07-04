@@ -1,61 +1,225 @@
+using System;
 using System.Collections.Generic;
-using Unity.Behavior;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BuffModule : MonoBehaviour
 {
-    private List<BuffInstance> activeBuffs = new List<BuffInstance>();
-    private Dictionary<string, BuffData> buffDictionary = new Dictionary<string, BuffData>(); // 이 Dictionary는 어딘가의 싱글톤 같은걸로 두는게 나을지도. 아니면 팩토리 라던가.
     [Header("Available Buffs")]
     [SerializeField] private BuffData[] availableBuffs;
+
+    private readonly List<BuffInstance> activeBuffs = new List<BuffInstance>();
+    private readonly Dictionary<string, BuffData> buffDictionary = new Dictionary<string, BuffData>();
+
+    public IReadOnlyList<BuffInstance> ActiveBuffs => activeBuffs;
+
+    public event Action<BuffInstance> OnBuffAdded;
+    public event Action<BuffInstance> OnBuffRemoved;
+    public event Action<BuffInstance> OnBuffRefreshed;
+    public event Action OnBuffsChanged;
 
     private void Awake()
     {
         InitiateBuffs();
     }
 
-    public void AddBuff(BuffData buffData) //버프의 중복 검사는 어떻게 처리할 생각?
+    private void Update()
     {
+        UpdateBuff();
+    }
+
+    public bool AddBuff(BuffData buffData)
+    {
+        if (!CanUseBuffData(buffData))
+        {
+            return false;
+        }
+
+        BuffInstance activeBuff = FindActiveBuff(buffData.BuffName);
+
+        if (activeBuff != null)
+        {
+            activeBuff.Refresh();
+            OnBuffRefreshed?.Invoke(activeBuff);
+            OnBuffsChanged?.Invoke();
+            return true;
+        }
+
         BuffInstance newBuff = new BuffInstance(buffData);
         activeBuffs.Add(newBuff);
         buffData.OnApply(gameObject, newBuff);
+
+        OnBuffAdded?.Invoke(newBuff);
+        OnBuffsChanged?.Invoke();
+        return true;
     }
 
-    public void AddBuff(string buffName)
+    public bool AddBuff(string buffName)
     {
         BuffData buffData = GetBuffData(buffName);
-        if (buffData != null)
+        return buffData != null && AddBuff(buffData);
+    }
+
+    public bool Remove(BuffData buffData)
+    {
+        if (!CanUseBuffData(buffData))
         {
-            AddBuff(buffData);
+            return false;
+        }
+
+        return Remove(buffData.BuffName);
+    }
+
+    public bool Remove(string buffName)
+    {
+        int index = FindActiveBuffIndex(buffName);
+
+        if (index < 0)
+        {
+            return false;
+        }
+
+        RemoveAt(index);
+        return true;
+    }
+
+    public void RemoveBuff(string buffName)
+    {
+        Remove(buffName);
+    }
+
+    private void UpdateBuff()
+    {
+        for (int i = activeBuffs.Count - 1; i >= 0; --i)
+        {
+            BuffInstance buffInstance = activeBuffs[i];
+
+            UpdateBuffTick(buffInstance);
+
+            if (buffInstance.IsPermanent)
+            {
+                continue;
+            }
+
+            buffInstance.RemainingTime -= Time.deltaTime;
+
+            if (buffInstance.RemainingTime <= 0f)
+            {
+                RemoveAt(i);
+            }
         }
     }
 
-    public void RemoveBuff(string buffName) //제미나이생성 Remove함수 by DualDura
+    private void UpdateBuffTick(BuffInstance buffInstance)
     {
-        BuffInstance buffInstance = activeBuffs.Find(buff => buff.BuffData.buffName == buffName);
-
-        if (buffInstance != null)
+        if (buffInstance.TickInterval <= 0f)
         {
-            buffInstance.BuffData.OnRemove(gameObject, buffInstance);
-            activeBuffs.Remove(buffInstance);
+            buffInstance.BuffData.OnUpdate(gameObject, buffInstance);
+            return;
         }
+
+        buffInstance.NextTickTime -= Time.deltaTime;
+
+        while (buffInstance.NextTickTime <= 0f)
+        {
+            buffInstance.BuffData.OnUpdate(gameObject, buffInstance);
+            buffInstance.NextTickTime += buffInstance.TickInterval;
+        }
+    }
+
+    private void RemoveAt(int index)
+    {
+        BuffInstance buffInstance = activeBuffs[index];
+
+        buffInstance.BuffData.OnRemove(gameObject, buffInstance);
+        activeBuffs.RemoveAt(index);
+
+        OnBuffRemoved?.Invoke(buffInstance);
+        OnBuffsChanged?.Invoke();
     }
 
     private void InitiateBuffs()
     {
-        for(int i = 0; i < availableBuffs.Length; i++)
+        buffDictionary.Clear();
+
+        if (availableBuffs == null)
         {
-            buffDictionary.Add(availableBuffs[i].buffName, availableBuffs[i]);
+            return;
+        }
+
+        for (int i = 0; i < availableBuffs.Length; ++i)
+        {
+            BuffData buffData = availableBuffs[i];
+
+            if (!CanUseBuffData(buffData))
+            {
+                continue;
+            }
+
+            if (buffDictionary.ContainsKey(buffData.BuffName))
+            {
+                Debug.LogWarning($"Duplicate buff name registered: {buffData.BuffName}", this);
+                continue;
+            }
+
+            buffDictionary.Add(buffData.BuffName, buffData);
         }
     }
-    private BuffData GetBuffData(string buffName) //싱글톤 같은 곳으로 옮겨야할지도?
+
+    private BuffInstance FindActiveBuff(string buffName)
     {
+        int index = FindActiveBuffIndex(buffName);
+        return index >= 0 ? activeBuffs[index] : null;
+    }
+
+    private int FindActiveBuffIndex(string buffName)
+    {
+        if (string.IsNullOrWhiteSpace(buffName))
+        {
+            return -1;
+        }
+
+        for (int i = 0; i < activeBuffs.Count; i++)
+        {
+            if (activeBuffs[i].BuffName == buffName)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private BuffData GetBuffData(string buffName)
+    {
+        if (string.IsNullOrWhiteSpace(buffName))
+        {
+            Debug.LogWarning("Buff name is empty.", this);
+            return null;
+        }
+
         if (buffDictionary.TryGetValue(buffName, out BuffData buffData))
         {
             return buffData;
         }
-        Debug.LogWarning($"Buff with name {buffName} not found!");
+
+        Debug.LogWarning($"Buff with name {buffName} not found!", this);
         return null;
+    }
+
+    private bool CanUseBuffData(BuffData buffData)
+    {
+        if (buffData == null)
+        {
+            Debug.LogWarning("BuffData is null.", this);
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(buffData.BuffName))
+        {
+            Debug.LogWarning($"BuffData {buffData.name} has an empty BuffName.", this);
+            return false;
+        }
+
+        return true;
     }
 }

@@ -12,6 +12,23 @@ using UnityEngine.Assertions;
 
 public class Test2 : MonoBehaviour
 {
+    [SerializeField] private BuffData[] moveSpeedBuffs;
+
+    private void Start()
+    {
+        ApplyMoveSppedBuff(gameObject);
+    }
+
+    private void ApplyMoveSppedBuff(GameObject target)
+    {
+        if (target.TryGetComponent(out BuffModule buffModule))
+        {
+            foreach (BuffData buffData in moveSpeedBuffs)
+                buffModule.AddBuff(buffData);
+        }
+    }
+
+
     private CanvasGroup canvasGroup;
     private Sequence fadeSequence;
 
@@ -35,22 +52,6 @@ public class Test2 : MonoBehaviour
     private void Foo()
     {
         Managers.Instance.SceneManager.LoadSceneAsync(SceneType.End);
-    }
-
-    private void Start()
-    {
-        // DOTween.Init();
-        // transform.DOMove(new Vector3(5f, 5f, 0f), 2f);
-
-        // transform.DOScale(new Vector3(2f, 2f, 2f), 1f).SetEase(Ease.InBounce);
-
-
-        // Managers.Instance.EventManager.Subscribe<int>(EventType.Last, Foo);
-
-
-        // PlayFadeInOut(5f, () => Debug.Log("KKKKKKey!"));
-
-
     }
 
     // public void PlayFadeInOut(float duration, Action onScreenCovered)
