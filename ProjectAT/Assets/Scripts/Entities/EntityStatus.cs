@@ -7,10 +7,14 @@ public class EntityStatus : MonoBehaviour, IDamageable
     public event Action onDeath;
     public event Action onRevive;
     public event Action<float> onHealthChanged;
+    public event Action onLowHealthWarning;
+    public event Action onLowHealthWarningEnd;
 
     //References
+    [Header("References")]
     [SerializeField] private EntityInitialStatus initStatus;
-    private CoverHandler coverHandler;
+    [Header("Status Setting")]
+    [SerializeField] private float lowHealthThreshold = 0.35f;
 
     private Stat maxHpStat;
     private Stat walkSpeedStat;
@@ -27,14 +31,13 @@ public class EntityStatus : MonoBehaviour, IDamageable
     public float MaxViewingDistance { get; private set; }
 
     public float Ratio => (float)CurrentHp / MaxHp;
+    public bool IsLowHealth => Ratio <= lowHealthThreshold;
     public EntityInitialStatus InitStatusRef => initStatus;
-    public Action<float> OnHealthChanged => onHealthChanged;
 
     private void Awake()
     {
-        coverHandler = GetComponent<CoverHandler>();
+        
     }
-
 
     private void OnEnable()
     {
@@ -69,22 +72,8 @@ public class EntityStatus : MonoBehaviour, IDamageable
     {
         if (IsDead) return;
 
-        Debug.Log($"{transform.name} TakeDamage: {damage}");
-
-        float finalDamage = damage;
-
-        // if (attacker is not null)
-        // {
-        //     // A. 엄폐 보너스 계산 (공격자의 위치 활용)
-        //     if (coverHandler is not null)
-        //     {
-        //         float coverBonus = coverHandler.GetCoverBonus(attacker.transform);
-        //         finalDamage *= 1f - coverBonus;
-        //     }
-        // }
-
-        CurrentHp -= Mathf.RoundToInt(finalDamage);
-        onHealthChanged?.Invoke(Mathf.Clamp01(Ratio));
+        float finalDamage = damage; //NOTE : 나중에 방어력 계산식 넣어야함.
+        HpChange(-Mathf.RoundToInt(finalDamage));
 
         if (CurrentHp <= 0)
         {
@@ -94,21 +83,36 @@ public class EntityStatus : MonoBehaviour, IDamageable
 
     public void Heal(int healAmount)
     {
-        CurrentHp += healAmount;
-        CurrentHp = Mathf.Min(CurrentHp, MaxHp);
-
-        onHealthChanged?.Invoke(Mathf.Clamp01(Ratio));
-
-        Debug.Log($"{transform.name} Healed: {healAmount}, CurrentHp: {CurrentHp}");
+        HpChange(healAmount);
     }
 
-    public void Revive(int reviveHp = 1)
+    private void HpChange(int changeAmount)
     {
-        IsDead = false;
-        CurrentHp = Mathf.Min(reviveHp, MaxHp);
-        onHealthChanged?.Invoke(Mathf.Clamp01((float)CurrentHp / MaxHp));
-        Debug.Log($"{transform.name} Revived! CurrentHp: {CurrentHp}");
-        onRevive?.Invoke();
+        int newHp = Mathf.Clamp(CurrentHp + changeAmount, 0, MaxHp);
+        float newRatio = (float)newHp / MaxHp;
+
+        HandleLowHealthWarning(newRatio);
+
+        CurrentHp = newHp;
+        
+        onHealthChanged?.Invoke(Mathf.Clamp01(newRatio));
+    }
+
+    private void HandleLowHealthWarning(float newHealthRatio)
+    {
+        bool isNowLowHealth = newHealthRatio <= lowHealthThreshold;
+
+        if(IsLowHealth != isNowLowHealth)
+        {
+            if(isNowLowHealth)
+            {
+                onLowHealthWarning?.Invoke();
+            }
+            else
+            {
+                onLowHealthWarningEnd?.Invoke();
+            }
+        }
     }
 
     [ContextMenu("Die")]

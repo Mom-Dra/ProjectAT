@@ -5,6 +5,7 @@ public class PlayerSoundController : SoundControllerBase
     private const int FootstepChannel = 0;
     private const int VoiceChannel = 1;
     private const int ActionChannel = 2;
+    private const int exertionChannel = 3;
 
     [Header("References")]
     [SerializeField] private PlayerMovementModule movementModule;
@@ -13,7 +14,8 @@ public class PlayerSoundController : SoundControllerBase
 
     [Header("Random Sound Cues")]
     [SerializeField] private RandomSoundCue footstepCue;
-    [SerializeField] private RandomSoundCue exertionCue;
+    [SerializeField] private RandomSoundCue hitCue;
+    [SerializeField] private AudioClip exertionCue;
 
     [Header("Foot Step Settings")]
     [SerializeField] private bool autoPlayFootsteps = true;
@@ -26,14 +28,14 @@ public class PlayerSoundController : SoundControllerBase
     [SerializeField] private float fallbackRunSpeed = 6f;   
 
     [Header("Durations")]
-    [SerializeField] private float exertionDuration = 4f;
+    [SerializeField] private float hitSoundInterval = 0.5f;
 
     [Header("Low Health")]
     [SerializeField] private bool playExertionOnLowHealth = true;
     [SerializeField, Range(0f, 1f)] private float lowHealthThreshold = 0.35f; //NOTE : 이거는 빈사를 구분짓는 기준이 될 수 있으므로 entityStatus쪽으로 가는게?
 
     private float footstepTimer;
-    private float currentExertionTime;
+    private float currentHitTime;
 
     private float ownerEntityWalkSpeed => entityStatus != null ? entityStatus.WalkSpeed : fallbackWalkSpeed;
     private float ownerEntityRunSpeed => entityStatus != null ? entityStatus.RunSpeed : fallbackRunSpeed;
@@ -47,7 +49,13 @@ public class PlayerSoundController : SoundControllerBase
 
     private void OnEnable()
     {
-        if(entityStatus != null) entityStatus.onHealthChanged += HandleHealthChanged;
+        if(entityStatus != null) 
+        {
+            entityStatus.onHealthChanged += HandleHealthChanged;
+            entityStatus.onLowHealthWarning += HandleLowHealthWarning;
+            entityStatus.onLowHealthWarningEnd += HandleLowHealthWarningEnd;
+        }
+
         if (weaponHolder != null)
         {
             weaponHolder.OnWeaponFired += HandleWeaponFired;
@@ -58,7 +66,12 @@ public class PlayerSoundController : SoundControllerBase
 
     private void OnDisable()
     {
-        if(entityStatus != null) entityStatus.onHealthChanged -= HandleHealthChanged;
+        if(entityStatus != null) 
+        {
+            entityStatus.onHealthChanged -= HandleHealthChanged;
+            entityStatus.onLowHealthWarning -= HandleLowHealthWarning;
+            entityStatus.onLowHealthWarningEnd -= HandleLowHealthWarningEnd;
+        }
         if (weaponHolder != null)
         {
             weaponHolder.OnWeaponFired -= HandleWeaponFired;
@@ -74,6 +87,7 @@ public class PlayerSoundController : SoundControllerBase
             UpdateFootsteps();
         }
     }
+
     #region SoundRequests API
     public bool PlayOneShot(AudioClip clip)
     {
@@ -86,17 +100,6 @@ public class PlayerSoundController : SoundControllerBase
     #endregion
 
     #region Common Situation Sounds
-    // public void PlayMoveCommandConfirmSound()
-    // {
-    //     if(Time.time - currentCommandConfirmTime < commandConfirmDuration) return;
-    //     currentCommandConfirmTime = Time.time;
-
-    //     PlayOneShot(VoiceChannel, commandConfirmCue);
-    // }
-    // public void PlayInteractCommandConfirmSound()
-    // {
-    //     PlayMoveCommandConfirmSound();   //NOTE : 임시로 같은 사운드 재생. 기획상 다른 사운드가 필요하면 분리 필요(26.07.04)
-    // }
 
     public void PlayFootstepSound()
     {
@@ -142,20 +145,16 @@ public class PlayerSoundController : SoundControllerBase
     #endregion
     
     #region Combat Situation Sounds
-    public void PlayExertionSound()
+    public void PlayHitSound()
     {
-        if(Time.time - currentExertionTime < exertionDuration) return;
-        currentExertionTime = Time.time;
-
-        PlayOneShot(VoiceChannel, exertionCue);
+        if(Time.time - currentHitTime < hitSoundInterval) return;
+        PlayOneShot(VoiceChannel, hitCue);
+        currentHitTime = Time.time;
     }
-
+    
     private void HandleHealthChanged(float healthRatio)
     {
-        if (!playExertionOnLowHealth) return;
-        if (healthRatio > lowHealthThreshold) return;
-
-        PlayExertionSound();
+        PlayHitSound();
     }
 
     public void PlayWeaponFireSound(Gun gun)
@@ -182,6 +181,18 @@ public class PlayerSoundController : SoundControllerBase
         if (gun == null || gun.GunData == null) return;
 
         PlayOneShot(ActionChannel, gun.GunData.ReloadEndClip);
+    }
+
+    private void HandleLowHealthWarning()
+    {
+        if(playExertionOnLowHealth)
+        {
+            Play(exertionChannel, exertionCue);
+        }
+    }
+    private void HandleLowHealthWarningEnd()
+    {
+        Stop(exertionChannel);
     }
     #endregion
 

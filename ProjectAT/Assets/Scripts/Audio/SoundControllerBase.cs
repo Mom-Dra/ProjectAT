@@ -41,4 +41,23 @@ public class SoundControllerBase : MonoBehaviour
         source.PlayOneShot(clip, randomCue.Volume);
     }
 
+    protected void Play(int channelIndex, AudioClip requestedClip, float volume =1f, float pitch = 1f, bool loop = false)
+    {
+        AudioSource source = GetChannel(channelIndex);
+        if(source == null || requestedClip == null) return;
+
+        source.clip = requestedClip;
+        source.volume = volume;
+        source.pitch = pitch;
+        source.loop = loop;
+        source.Play();
+    }
+
+    protected void Stop(int channelIndex)
+    {
+        AudioSource source = GetChannel(channelIndex);
+        if(source == null) return;
+
+        source.Stop();
+    }
 }
