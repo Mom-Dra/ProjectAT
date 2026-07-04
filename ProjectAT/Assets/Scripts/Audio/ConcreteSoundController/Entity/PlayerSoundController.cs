@@ -13,8 +13,6 @@ public class PlayerSoundController : SoundControllerBase
 
     [Header("Random Sound Cues")]
     [SerializeField] private RandomSoundCue footstepCue;
-    [SerializeField] private RandomSoundCue pullingGrenadePinCue;
-    [SerializeField] private RandomSoundCue commandConfirmCue;
     [SerializeField] private RandomSoundCue exertionCue;
 
     [Header("Foot Step Settings")]
@@ -28,7 +26,6 @@ public class PlayerSoundController : SoundControllerBase
     [SerializeField] private float fallbackRunSpeed = 6f;   
 
     [Header("Durations")]
-    [SerializeField] private float commandConfirmDuration = 0.2f;
     [SerializeField] private float exertionDuration = 4f;
 
     [Header("Low Health")]
@@ -36,7 +33,6 @@ public class PlayerSoundController : SoundControllerBase
     [SerializeField, Range(0f, 1f)] private float lowHealthThreshold = 0.35f; //NOTE : 이거는 빈사를 구분짓는 기준이 될 수 있으므로 entityStatus쪽으로 가는게?
 
     private float footstepTimer;
-    private float currentCommandConfirmTime;
     private float currentExertionTime;
 
     private float ownerEntityWalkSpeed => entityStatus != null ? entityStatus.WalkSpeed : fallbackWalkSpeed;
@@ -90,13 +86,17 @@ public class PlayerSoundController : SoundControllerBase
     #endregion
 
     #region Common Situation Sounds
-    public void PlayCommandConfirmSound()
-    {
-        if(Time.time - currentCommandConfirmTime < commandConfirmDuration) return;
-        currentCommandConfirmTime = Time.time;
+    // public void PlayMoveCommandConfirmSound()
+    // {
+    //     if(Time.time - currentCommandConfirmTime < commandConfirmDuration) return;
+    //     currentCommandConfirmTime = Time.time;
 
-        PlayOneShot(VoiceChannel, commandConfirmCue);
-    }
+    //     PlayOneShot(VoiceChannel, commandConfirmCue);
+    // }
+    // public void PlayInteractCommandConfirmSound()
+    // {
+    //     PlayMoveCommandConfirmSound();   //NOTE : 임시로 같은 사운드 재생. 기획상 다른 사운드가 필요하면 분리 필요(26.07.04)
+    // }
 
     public void PlayFootstepSound()
     {
@@ -113,6 +113,7 @@ public class PlayerSoundController : SoundControllerBase
         }
 
         float velocity = movementModule.GetVelocity();
+
         if(velocity < minFootstepVelocity || (playOnlyWhenRunning && !IsRunning(velocity)))
         {
             footstepTimer = 0f;
@@ -141,11 +142,6 @@ public class PlayerSoundController : SoundControllerBase
     #endregion
     
     #region Combat Situation Sounds
-    public void PlayPullingGrenadePinSound()
-    {
-        PlayOneShot(ActionChannel, pullingGrenadePinCue);
-    }
-
     public void PlayExertionSound()
     {
         if(Time.time - currentExertionTime < exertionDuration) return;

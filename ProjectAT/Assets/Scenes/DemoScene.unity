@@ -21589,7 +21589,7 @@ GameObject:
   - component: {fileID: 594387094}
   - component: {fileID: 594387095}
   m_Layer: 8
-  m_Name: SoundChannel_1
+  m_Name: FootstepChannel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33454,7 +33454,7 @@ GameObject:
   - component: {fileID: 915755069}
   - component: {fileID: 915755070}
   m_Layer: 8
-  m_Name: SoundChannel_2
+  m_Name: VoiceChannel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55898,7 +55898,7 @@ GameObject:
   - component: {fileID: 1521731569}
   - component: {fileID: 1521731568}
   m_Layer: 8
-  m_Name: SoundChannel_3
+  m_Name: ActionChannel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73414,15 +73414,11 @@ MonoBehaviour:
   weaponHolder: {fileID: 0}
   entityStatus: {fileID: 0}
   footstepCue:
-    clips: []
-    volume: 1
-    pitchRange: {x: 1, y: 1}
-  pullingGrenadePinCue:
-    clips: []
-    volume: 1
-    pitchRange: {x: 1, y: 1}
-  commandConfirmCue:
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 452c60123aa648c48aa6ed6fce03f690, type: 3}
+    - {fileID: 8300000, guid: 2531b536704aa2343a950b6c48d33650, type: 3}
+    - {fileID: 8300000, guid: 3a33fd475f8a855408b9add2eed55f54, type: 3}
+    - {fileID: 8300000, guid: 48a8e46ef6954d54da2040ee03d661fb, type: 3}
     volume: 1
     pitchRange: {x: 1, y: 1}
   exertionCue:
@@ -73430,13 +73426,12 @@ MonoBehaviour:
     volume: 1
     pitchRange: {x: 1, y: 1}
   autoPlayFootsteps: 1
-  playOnlyWhenRunning: 1
+  playOnlyWhenRunning: 0
   minFootstepVelocity: 0.1
   walkStepInterval: 0.48
   runStepInterval: 0.32
   fallbackWalkSpeed: 3.5
   fallbackRunSpeed: 6
-  commandConfirmDuration: 0.2
   exertionDuration: 4
   playExertionOnLowHealth: 1
   lowHealthThreshold: 0.35
