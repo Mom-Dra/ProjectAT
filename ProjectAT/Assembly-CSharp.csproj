@@ -203,6 +203,7 @@
     <Compile Include="Assets\Scripts\Utils\Indicator\IndicatorBase.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillData\SkillData.cs" />
     <Compile Include="Assets\Scripts\Abstract\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Audio\ConcreteSoundController\Entity\EnemySoundController.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverObject.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\DeadState.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />

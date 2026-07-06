@@ -7,7 +7,7 @@ namespace Interactable
 {
     public abstract class InteractableObject : MonoBehaviour, IInteractable, IHoverableFeedback, ITargetableFeedback
     {
-        [Header("========== Interactable Object Settings ==========")]
+        [Header("[Interactable Object]")]
         [Header("References")]
         [SerializeField] protected Outlinable outlinable;
 

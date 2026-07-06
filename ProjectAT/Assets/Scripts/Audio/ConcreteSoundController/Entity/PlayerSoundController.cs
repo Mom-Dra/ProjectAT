@@ -32,7 +32,6 @@ public class PlayerSoundController : SoundControllerBase
 
     [Header("Low Health")]
     [SerializeField] private bool playExertionOnLowHealth = true;
-    [SerializeField, Range(0f, 1f)] private float lowHealthThreshold = 0.35f; //NOTE : 이거는 빈사를 구분짓는 기준이 될 수 있으므로 entityStatus쪽으로 가는게?
 
     private float footstepTimer;
     private float currentHitTime;

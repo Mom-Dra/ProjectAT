@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class Door : StaticInteractableObject
 {
-    [Header("========== Door ==========")]
+    [Header("[Door]")]
     [Header("References")]
     [SerializeField] private DoorSoundController soundController;
 
