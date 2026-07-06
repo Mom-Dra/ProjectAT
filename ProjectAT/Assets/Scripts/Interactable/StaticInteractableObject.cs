@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public abstract class StaticInteractableObject : InteractableObject
 {
-    [Header("StaticInteractable Settings")]
+    [Header("========== StaticInteractable Settings ==========")]
     [SerializeField] protected float navMeshSearchRadius = 1.0f;
 
     protected Vector3[] interactPositionCandidates;

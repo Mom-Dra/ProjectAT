@@ -52,6 +52,7 @@
     <Compile Include="Assets\Scripts\Skills\ConcreteSkills\ThrowGrenade.cs" />
     <Compile Include="Assets\Scripts\Interactable\InteractableObject.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerMovementModule.cs" />
+    <Compile Include="Assets\Scripts\Audio\ConcreteSoundController\InteractableObject\DoorSoundController.cs" />
     <Compile Include="Assets\Scripts\Weapon\GunData.cs" />
     <Compile Include="Assets\Scripts\Utils\Rendering\MouseDitherable.cs" />
     <Compile Include="Assets\Scripts\Weapon\IGunState.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\WeaponSetting.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillData\ProjectileSkillData.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Audio\ConcreteSoundController\Projectile\ProjectileSoundController.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\IFormation.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\TargetMemory.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyIdentity.cs" />
@@ -94,7 +96,7 @@
     <Compile Include="Assets\Scripts\Manager\Managers.cs" />
     <Compile Include="Assets\Scripts\Abstract\IFadeable.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeLauncher.cs" />
-    <Compile Include="Assets\Scripts\Skills\DesignatedFire.cs" />
+    <Compile Include="Assets\Scripts\Abstract\IBushHideable.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerCoverModule.cs" />
     <Compile Include="Assets\Scripts\Mission\Player.cs" />
     <Compile Include="Assets\Scripts\Weapon\Weapon.cs" />
@@ -119,7 +121,6 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\IdleAction.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverPulse.cs" />
     <Compile Include="Assets\Scripts\Skills\ConcreteSkills\TargetSkill.cs" />
-    <Compile Include="Assets\Scripts\Weapon\ProjectileBase.cs" />
     <Compile Include="Assets\Scripts\Abstract\FeedbackInterfaces.cs" />
     <Compile Include="Assets\Scripts\Weapon\WeaponHolder.cs" />
     <Compile Include="Assets\Scripts\Manager\CursorManager.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Assets\Scripts\Utils\Indicator\ThrowingIndicator.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCameraData.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerUnit.cs" />
+    <Compile Include="Assets\Scripts\Audio\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\SquadConfig.cs" />
     <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="Assets\Scripts\Enemy\Squad\ISquadState.cs" />
     <Compile Include="Assets\Scripts\Skills\ConcreteSkills\ThrowSkill.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\CustomControls\CooldownOverlay.cs" />
+    <Compile Include="Assets\Scripts\Audio\SoundCue.cs" />
     <Compile Include="Assets\Scripts\View\SightOfView.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\WeaponAction.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillData\WeaponSkillData.cs" />
@@ -233,11 +236,13 @@
     <Compile Include="Assets\Scripts\Enemy\Behavior\RotateToTargetAction.cs" />
     <Compile Include="Assets\Scripts\Utils\Indicator\MovePositionIndicator.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\IPlayerState.cs" />
+    <Compile Include="Assets\Scripts\Weapon\ThrowProjectileBase.cs" />
     <Compile Include="Assets\Scripts\Abstract\IHealable.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Health.cs" />
     <Compile Include="Assets\Scripts\Enemy\DetectedTarget.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerPerceptionModule.cs" />
     <Compile Include="Assets\Scripts\Manager\IndicatorManager.cs" />
+    <Compile Include="Assets\Scripts\Audio\SoundControllerBase.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\NextPrefab.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\AutoDestroy.cs" />
     <Compile Include="Assets\Scripts\Pool\PooledObject.cs" />
@@ -249,6 +254,7 @@
     <Compile Include="Assets\Scripts\Skills\SkillContext.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\Squad.cs" />
     <Compile Include="Assets\Scripts\View\Controller.cs" />
+    <Compile Include="Assets\Scripts\Audio\ConcreteSoundController\Entity\PlayerSoundController.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\SkillExecuteState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\InteractChaseState.cs" />
     <Compile Include="Assets\Scripts\Entities\DeadBody\DownedBody.cs" />

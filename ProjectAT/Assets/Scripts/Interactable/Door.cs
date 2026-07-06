@@ -6,47 +6,69 @@ using UnityEngine.AI;
 
 public class Door : StaticInteractableObject
 {
+    [Header("========== Door ==========")]
+    [Header("References")]
+    [SerializeField] private DoorSoundController soundController;
+
     [Header("Door Wings")]
-    [SerializeField]
-    private Transform leftDoor;
+    [SerializeField] private Transform leftDoor;
+    [SerializeField] private Transform rightDoor;
+    [SerializeField] private NavMeshObstacle leftDoorMeshObsctalce;
+    [SerializeField] private NavMeshObstacle rightDoorMeshObstacle;
 
-    [SerializeField]
-    private Transform rightDoor;
-
-    [Header("Settings")]
-    [SerializeField]
-    private float openAngle = 90f;
-
-    [SerializeField]
-    private float openTime = 1f;
+    [Header("Door Settings")]
+    [SerializeField] private float openAngle = 90f;
+    [SerializeField] private float openTime = 1f;
     [SerializeField] private float offsetDistance = 0.3f; 
-
     private bool isOpen = false;
     private Coroutine runningCoroutine;
-    
 
+    protected override void Awake()
+    {
+        base.Awake();
+        if(soundController == null) soundController = GetComponentInChildren<DoorSoundController>();
+        if(leftDoorMeshObsctalce == null) 
+        {
+            leftDoorMeshObsctalce = leftDoor.GetComponent<NavMeshObstacle>();
+        }
+        if(rightDoorMeshObstacle == null) 
+        {
+            rightDoorMeshObstacle = rightDoor.GetComponent<NavMeshObstacle>();
+        }
+    }
     public override void OnInteractStart(PlayerController player) { }
 
     public override void OnExecute(PlayerController player)
     {
-        if (runningCoroutine is not null) StopCoroutine(runningCoroutine);
+        if (runningCoroutine is not null) 
+        {
+            StopCoroutine(runningCoroutine);
+            runningCoroutine = null;
+            SetDoorNavMeshObstacleState(true);
+        }
 
         isOpen = !isOpen;
         runningCoroutine = StartCoroutine(ProcessDoorMotion(isOpen));
+        soundController.PlayDoorMotionStartSound(isOpen);
     }
 
     private IEnumerator ProcessDoorMotion(bool targetOpen)
     {
-        float targetLeftY = targetOpen ? -openAngle : 0f;
-        float targetRightY = targetOpen ? openAngle : 0f;
+        Vector3 lookDir = CurrentInteractor.transform.forward;
+        Vector3 playerToBuilding = transform.position - CurrentInteractor.transform.position;
+        float dot = Vector3.Dot(lookDir.normalized, playerToBuilding.normalized);
 
+        float targetY = (dot < 0f ? -1f : 1f) * (targetOpen ? openAngle : 0f);
+        
         Quaternion startLeftRotation = leftDoor.localRotation;
         Quaternion startRightRotation = rightDoor.localRotation;
 
-        Quaternion endLeftRotation = Quaternion.Euler(0, targetLeftY, 0);
-        Quaternion endRightRotation = Quaternion.Euler(0, targetRightY, 0);
+        Quaternion endLeftRotation = Quaternion.Euler(0, -targetY, 0);
+        Quaternion endRightRotation = Quaternion.Euler(0, targetY, 0);
 
         float elapsed = 0f;
+        
+        SetDoorNavMeshObstacleState(false);
 
         while (elapsed < openTime)
         {
@@ -59,11 +81,18 @@ public class Door : StaticInteractableObject
 
             yield return null;
         }
+        
+        SetDoorNavMeshObstacleState(true);
 
         leftDoor.localRotation = endLeftRotation;
         rightDoor.localRotation = endRightRotation;
-
         runningCoroutine = null;
+    }
+
+    private void SetDoorNavMeshObstacleState(bool enabled)
+    {
+        if (leftDoorMeshObsctalce != null) leftDoorMeshObsctalce.enabled = enabled;
+        if (rightDoorMeshObstacle != null) rightDoorMeshObstacle.enabled = enabled;
     }
 
     protected override void InitiateInteractPositions()
