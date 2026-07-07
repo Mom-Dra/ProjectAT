@@ -1050,7 +1050,7 @@ MonoBehaviour:
   outlinable: {fileID: 0}
   interactDuration: 0.5
   playerAnimationTrigger: LiftUp
-  nextState: 7
+  nextState: 8
   canStopInteract: 0
   bushMask:
     serializedVersion: 2
