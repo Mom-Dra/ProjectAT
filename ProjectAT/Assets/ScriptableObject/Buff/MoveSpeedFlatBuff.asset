@@ -15,7 +15,7 @@ MonoBehaviour:
   <buffName>k__BackingField: MoveSpeedFlatBuff
   <Duration>k__BackingField: 10
   <TickInterval>k__BackingField: 1
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 7ea6f788d373d634297ec3919d9ccbe0, type: 3}
   TargetStatType: 0
   Amount: 5
   ModifierType: 0

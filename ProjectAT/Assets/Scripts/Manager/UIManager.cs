@@ -7,7 +7,6 @@ public class UIManager
 {
     private GameObject healthUIPrefab;
     private PlayerHUD playerHUD;
-    private PlayerSkillModule playerSkillModule;
 
     public UIManager(GameObject healthUIPrefab, PlayerHUD playerHUD)
     {
@@ -104,16 +103,15 @@ public class UIManager
     #region  플레이어 HUD - Skills
     public void InitPlayerSkillInfo(PlayerSkillModule playerSkillModule, SkillData[] skillDatas)
     {
-        this.playerSkillModule = playerSkillModule;
         playerHUD.SetPlayerSkillInfo(skillDatas);
         playerHUD.BindPlayerSkillEvent(playerSkillModule);
         playerSkillModule.OnSkillCooldownStart += StartSkillCooldown;
         playerSkillModule.OnSkillItemCountChange += SetSkillItemCount;
     }
 
-    private void StartSkillCooldown(SkillNumber skillNumber, float cooldownPercent)
+    private void StartSkillCooldown(SkillNumber skillNumber, float cooldownDuraion)
     {
-        playerHUD.StartSkillCooldown(skillNumber, cooldownPercent);
+        playerHUD.StartSkillCooldown(skillNumber, cooldownDuraion);
     }
 
     public void SetSkillItemCount(SkillNumber skillNumber, int itemCount)

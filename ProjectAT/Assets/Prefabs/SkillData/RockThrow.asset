@@ -12,18 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47bbbecff67df2846b467720e7be80ef, type: 3}
   m_Name: RockThrow
   m_EditorClassIdentifier: 
-  Name: RockThrow
-  BaseDamage: 300
-  CastingTime: 1
-  MaxCoolTime: 2
-  TargetLayer:
+  skillId: 1
+  skillName: ThrowRock
+  baseDamage: 0
+  castingTime: 1.4
+  maxCoolTime: 3
+  targetLayer:
     serializedVersion: 2
-    m_Bits: 15351
-  SkillType: 1
-  IndicatorType: 1
-  CursorSkin: {fileID: 0}
-  SkillIcon: {fileID: 21300000, guid: 51d6855e342a91e4ba5876741e4565f6, type: 3}
-  AnimationTriggerName: 
-  ThrowingObjectPrefab: {fileID: 6315830395957330255, guid: f88ccc5b2e7baef408587745bdab598b, type: 3}
-  ExplosionRadius: 0
-  FuseTime: 0
+    m_Bits: 128
+  indicatorType: 1
+  cursorSkin: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: 51d6855e342a91e4ba5876741e4565f6, type: 3}
+  animationTriggerName: 
+  throwingObjectPrefab: {fileID: 6315830395957330255, guid: f88ccc5b2e7baef408587745bdab598b, type: 3}
+  landedNoiseRange: 3

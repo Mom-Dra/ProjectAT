@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SkillTwo",
+                    "type": "Button",
+                    "id": "70bab247-1c77-4f67-8a08-a5a0c6c9e787",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "GrenadeThrow",
                     "type": "Button",
                     "id": "1dd91a9c-8ff2-4716-bc75-44d6d4223f31",
@@ -286,6 +295,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d4e5f13-b5ad-4a28-b905-533fec045728",
+                    "path": "<Keyboard>/w",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "SkillTwo",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

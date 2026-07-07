@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
         // 디버그용 아이템 추가
         foreach(var item in debugItemList)
         {
-            AddItem(item, 2); // 각 아이템 3개씩 추가
+            AddItem(item, 2); // 각 아이템 2개씩 추가
         }
     }
     
@@ -49,9 +49,8 @@ public class Inventory : MonoBehaviour
     public bool TryUseItem(ItemData item, int amount = 1)
     {
         // 1. 아이템이 있는지, 개수가 충분한지 확인
-        if (itemContainer.ContainsKey(item) && itemContainer[item] >= amount)
+        if (GetItemCount(item) >= amount)
         {
-            // 2. 개수 차감
             itemContainer[item] -= amount;
             Debug.Log($"{item.ItemName} 사용함. 남은 개수: {itemContainer[item]}");
 

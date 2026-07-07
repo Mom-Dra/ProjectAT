@@ -24,6 +24,8 @@ public class GunData : ScriptableObject
 
     [SerializeField]
     private float timeBetFire = 0.12f; // �Ѿ� �߻� ����
+    [SerializeField] 
+    private float fullAutoFireRate = 0.1f;
     [SerializeField]
     private float reloadTime = 1.8f; // ������ �ҿ� �ð�
 
@@ -44,6 +46,7 @@ public class GunData : ScriptableObject
     public int MagCapacity => magCapacity;
 
     public float TimeBetFire => timeBetFire;
+    public float FullAutoFireRate => fullAutoFireRate;
     public float ReloadTime => reloadTime;
 
     public float MaxDistance => maxDistance;

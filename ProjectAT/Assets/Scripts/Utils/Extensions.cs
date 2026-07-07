@@ -21,4 +21,25 @@ public static class Extensions
     {
         return Util.FindChildRecursive<Transform>(transform, name);
     }
+
+    public static int GetLayerMask(this GameObject gameObject)
+    {
+        return 1 << gameObject.layer;
+    }
+
+    public static bool IsSameLayer(this GameObject gameObject, LayerMask layerMask)
+    {
+        return (layerMask.value & (1 << gameObject.layer)) != 0;
+    }
+
+    public static bool IsInLayer(this GameObject gameObject, LayerMask mask)
+    {
+        return (mask.value & (1 << gameObject.layer)) != 0;
+    }
+
+    public static bool TryGetComponentInChildren<T>(this GameObject gameObject, out T component) where T : Component
+    {
+        component = gameObject.GetComponentInChildren<T>();
+        return component != null;
+    }
 }

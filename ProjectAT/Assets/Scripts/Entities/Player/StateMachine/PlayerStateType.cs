@@ -11,6 +11,7 @@ namespace PlayerStateMachine
         Stunned,
         SkillChase,
         SkillCast,
+        SkillExecute,
         InteractChasing,
         Interacting,
         Carry,

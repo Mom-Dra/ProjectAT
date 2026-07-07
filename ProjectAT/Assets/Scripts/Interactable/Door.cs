@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 using EPOOutline;
 using Interactable;
-using UnityEngine.AI; 
+using UnityEngine.AI;
 
-public class Door : InteractableObject
+public class Door : StaticInteractableObject
 {
     [Header("Door Wings")]
     [SerializeField]
@@ -20,16 +20,11 @@ public class Door : InteractableObject
     [SerializeField]
     private float openTime = 1f;
     [SerializeField] private float offsetDistance = 0.3f; 
-    [SerializeField] private const float navMeshSearchRadius = 1.0f;
 
-    private Outlinable outlinable;
     private bool isOpen = false;
     private Coroutine runningCoroutine;
+    
 
-    private void Awake()
-    {
-        outlinable = GetComponent<Outlinable>();
-    }
     public override void OnInteractStart(PlayerController player) { }
 
     public override void OnExecute(PlayerController player)
@@ -71,42 +66,29 @@ public class Door : InteractableObject
         runningCoroutine = null;
     }
 
-    public override Vector3 GetInteractPosition(Transform playerTransform)
+    protected override void InitiateInteractPositions()
     {
         Vector3 centerPos = GetDoorCenterPos();
 
-        Vector3 dirToPlayer = (playerTransform.position - centerPos).normalized;
-        float dot = Vector3.Dot(transform.forward, dirToPlayer);
-        Vector3 interactionSide = dot > 0 ? transform.forward : -transform.forward;
+        Vector3 frontPos = centerPos + (transform.forward * offsetDistance);
+        Vector3 backPos = centerPos + (-transform.forward * offsetDistance);
 
-        Vector3 calculatedPos = centerPos + (interactionSide * offsetDistance);
-
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(calculatedPos, out hit, navMeshSearchRadius, NavMesh.AllAreas))
-        {
-            return hit.position; 
-        }
-
-        Debug.LogWarning($"Door 상호작용 위치({calculatedPos}) 근처에 NavMesh가 없습니다!");
-        return calculatedPos;
-    }
-
-    public override Vector3 GetInteractLookDir(Transform playerTransform)
-    {
-        Vector3 centerPos = GetDoorCenterPos();
-        Vector3 lookDir = (centerPos - playerTransform.position);
-
-        lookDir.y = 0;
-
-        return lookDir.normalized;
+        interactPositionCandidates = new Vector3[] { frontPos, backPos };
     }
 
     private Vector3 GetDoorCenterPos()
     {
-        if (leftDoor == null || rightDoor == null) 
-            return transform.position;
+        if (leftDoor == null || rightDoor == null)  return transform.position;
+        else return (leftDoor.position + rightDoor.position) * 0.5f;
+    }
 
-        return (leftDoor.position + rightDoor.position) * 0.5f;
+    protected override Vector3 GetInteractLookDir(Vector3 sampledPosition)
+    {
+        Vector3 centerPos = GetDoorCenterPos();
+        Vector3 lookDir = centerPos - sampledPosition;
+        lookDir.y = 0f;
+
+        return lookDir.sqrMagnitude > 0.0001f ? lookDir.normalized : Vector3.zero;
     }
 
     private void OnDrawGizmosSelected()

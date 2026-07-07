@@ -1,18 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using SkillDataOptionInterfaces;
+using Unity.AppUI.UI;
+using System.Collections.Generic;
 
 public class PlayerHUD : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private UIDocument _uiDocument;
-    private RadialProgressBar _healthBar;
-    private VisualElement _playerPortrait;
+    private RadialProgressBar _healthBar; // ProgressBar 타입 사용
+    private VisualElement _playerPortrait; // 플레이어 초상화 UI 요소
 
     [Header("Weapon Info UI Elements")]
-    private VisualElement _playerWeaponIcon;
-    private Label _playerAmmoText;
+    private VisualElement _playerWeaponIcon; // 플레이어 무기 정보 UI 요소
+    private Label _playerAmmoText; // 플레이어 탄약 정보 UI 요소
 
     [Header("Skill Info UI Elements")]
     private readonly VisualElement[] skillInfos = new VisualElement[5];
@@ -52,6 +55,7 @@ public class PlayerHUD : MonoBehaviour
         _uiDocument = GetComponent<UIDocument>();
         VisualElement root = _uiDocument.rootVisualElement;
 
+        // UI Builder에서 지은 이름 "HealthBar"로 찾기
         _healthBar = root.Q<RadialProgressBar>("HealthBar"); CheckUIElement(_healthBar, "HealthBar");
         _playerPortrait = root.Q<VisualElement>("Portrait"); CheckUIElement(_playerPortrait, "Portrait");
 
@@ -87,6 +91,7 @@ public class PlayerHUD : MonoBehaviour
 
     public void SetPlayerPortrait(Sprite portrait)
     {
+        // 플레이어 초상화 설정 로직 (예: Image 컴포넌트에 Sprite 할당)
         if (_playerPortrait != null)
         {
             Debug.Log("SetPlayerPortrait");
@@ -98,6 +103,7 @@ public class PlayerHUD : MonoBehaviour
     {
         if (_healthBar != null)
         {
+            // ProgressBar의 값 설정
             _healthBar.Progress = healthRatio * 100f;
         }
         else
@@ -125,6 +131,7 @@ public class PlayerHUD : MonoBehaviour
 
     public void SetPlayerSkillInfo(SkillData[] skillDatas)
     {
+        // 플레이어 스킬 정보 설정 로직 (예: 각 스킬 아이콘 업데이트)
         if (skillDatas == null)
         {
             Debug.LogError("Skill data is null or insufficient!");
@@ -139,7 +146,7 @@ public class PlayerHUD : MonoBehaviour
                 continue;
             }
 
-            if (skillDatas[i] is not ConsumableSkillData)
+            if (skillDatas[i] is not IConsumableSkillData)
             {
                 skillItemLabels[i].style.display = DisplayStyle.None;
             }
@@ -169,27 +176,34 @@ public class PlayerHUD : MonoBehaviour
 
     public void StartSkillCooldown(SkillNumber index, float cooldownDuration)
     {
+        if (cooldownDuration < 0f)
+        {
+            DisableSkillInfo(index);
+            return;
+        }
         StartCoroutine(CooldownCoroutine(index, cooldownDuration));
     }
 
     private IEnumerator CooldownCoroutine(SkillNumber index, float duration)
     {
         float elapsed = 0f;
+
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            SetSkillCooldown(index, elapsed / duration);
+            SetSkillClockWipe(index, elapsed / duration);
+
             yield return null;
         }
 
-        SetSkillCooldown(index, 1f);
+        SetSkillClockWipe(index, 1f);
     }
 
-    private void SetSkillCooldown(SkillNumber index, float cooldownProgress)
+    private void SetSkillClockWipe(SkillNumber index, float cooldownProgress)
     {
         if (skillCooldownOverlays[(int)index] != null)
         {
-            skillCooldownOverlays[(int)index].FillAmount = 1f - cooldownProgress;
+            skillCooldownOverlays[(int)index].FillAmount = 1f - cooldownProgress; // 투명도를 조절
         }
     }
 
@@ -197,16 +211,20 @@ public class PlayerHUD : MonoBehaviour
     {
         if (skillItemLabels[(int)index] != null)
         {
-            if (itemCount < 0)
-            {
-                skillInfos[(int)index].SetEnabled(false);
-            }
-            else
-            {
-                skillInfos[(int)index].SetEnabled(true);
-            }
-
             skillItemLabels[(int)index].text = itemCount.ToString();
+        }
+    }
+
+    public void DisableSkillInfo(SkillNumber index)
+    {
+        if (skillInfos[(int)index] != null)
+        {
+            SetSkillClockWipe(index, 0f);
+        }
+
+        if (skillItemLabels[(int)index] != null)
+        {
+            skillItemLabels[(int)index].visible = false;
         }
     }
 

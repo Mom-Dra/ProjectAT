@@ -3,9 +3,7 @@ using UnityEngine.EventSystems;
 using PlayerStateMachine;
 using PlayerStateCapabilities;
 using System;
-
-
-public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey }
+using System.Collections;
 
 [RequireComponent(typeof(CrowdControlModule))]
 [RequireComponent(typeof(StatusEffectScreenUI))]
@@ -23,8 +21,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera myCamera;
 
     [Header("Enemy")]
-    public Enemy SelectedEnemy;
-    public GameObject SelectedObject;
+    public Enemy SelectedEnemy { get; private set; }
+    public Collider SelectedEnemyCollider { get; private set; }
+
+    private Coroutine chaseCoroutine;
+    private WaitForSeconds nextChaseWait = new WaitForSeconds(0.2f);
+    public bool IsChasingEnemy => chaseCoroutine != null;
+
 
     [Header("Layers")]
     [SerializeField] private LayerMask rightClickInteractableLayer;
@@ -34,6 +37,8 @@ public class PlayerController : MonoBehaviour
     public NormalState NormalState { get; private set; }
     public SkillChaseState SkillChaseState { get; private set; }
     public SkillCastState SkillCastingState { get; private set; }
+    public SkillExecuteState SkillExecuteState { get; private set; }
+
     public DeadState DeadState { get; private set; }
     public InteractChaseState InteractChaseState { get; private set; }
     public InteractingState InteractingState { get; private set; }
@@ -72,6 +77,7 @@ public class PlayerController : MonoBehaviour
         NormalState = new NormalState(this);
         SkillChaseState = new SkillChaseState(this);
         SkillCastingState = new SkillCastState(this);
+        SkillExecuteState = new SkillExecuteState(this);
         DeadState = new DeadState(this);
         InteractChaseState = new InteractChaseState(this);
         InteractingState = new InteractingState(this);
@@ -91,7 +97,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Managers.Instance.InputManager.onSkillInputed += HandlePlayerSkillInput;
-        Managers.Instance.InputManager.onMouseRightClicked += HandlePlayerRightClickInput;
+        Managers.Instance.InputManager.onMouseRightClicked += HandleRightClickInput;
         Managers.Instance.InputManager.onMouseLeftClicked += HandleLeftClickInput;
         Managers.Instance.InputManager.OnInteractableObjectDropInput += HandleDropObjectInput;
         Managers.Instance.InputManager.OnReloadEvent += HandleReloadInput;
@@ -100,7 +106,7 @@ public class PlayerController : MonoBehaviour
     private void UnLinkInputEventsAll()
     {
         Managers.Instance.InputManager.onSkillInputed -= HandlePlayerSkillInput;
-        Managers.Instance.InputManager.onMouseRightClicked -= HandlePlayerRightClickInput;
+        Managers.Instance.InputManager.onMouseRightClicked -= HandleRightClickInput;
         Managers.Instance.InputManager.onMouseLeftClicked -= HandleLeftClickInput;
         Managers.Instance.InputManager.OnInteractableObjectDropInput -= HandleDropObjectInput;
         Managers.Instance.InputManager.OnReloadEvent -= HandleReloadInput;
@@ -151,20 +157,21 @@ public class PlayerController : MonoBehaviour
     #endregion
     #region 입력 관련 함수
 
-    public void HandlePlayerRightClickInput()
+    public bool RaycastAtMouseLocation(out RaycastHit ray)
+    {
+        return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
+    }
+
+    public void HandleRightClickInput()
     {
         if (IsStunned) return;
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        if (CurrentState is IRightClickHandler state)
+        if (CurrentState is IRightClickHandler state && RaycastAtMouseLocation(out RaycastHit ray))
         {
-            state.OnRightClick(RaycastAtMouseLocation(out RaycastHit ray) ? ray : new RaycastHit());
+            StopNormalAttackChase();
+            state.OnRightClick(ray);
         }
-    }
-
-    public bool RaycastAtMouseLocation(out RaycastHit ray)
-    {
-        return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
     }
 
     public void HandleLeftClickInput()
@@ -216,7 +223,7 @@ public class PlayerController : MonoBehaviour
         if (IsStunned) return;
 
         PlayerMove(pos, isRun);
-        IndicatorManager.Instance.ShowMoveIndicator(pos, IndicatorType.MoveIndicator, 1.0f);
+        IndicatorManager.Instance.ShowMoveIndicator(pos);
     }
 
     public void HandleReloadInput()
@@ -235,51 +242,112 @@ public class PlayerController : MonoBehaviour
     {
         if (IsStunned) return;
         if (!castedEnemy) return;
+        if (!myCombatModule.HasNormalAttackAmmo())
+        {
+            CancelEnemySelect();
+            return;
+        }
+        if (!castedEnemy.TryGetComponent<Collider>(out _))
+        {
+            return;
+        }
+
         SelectedEnemy = castedEnemy;
-        myPlayerAnimator.SetAiming(true, SelectedEnemy.transform);
+        SelectedEnemyCollider = castedEnemy.GetComponent<Collider>();
+        myPlayerAnimator.SetAiming(false, SelectedEnemy.transform);
     }
 
     public void CancelEnemySelect()
     {
         SelectedEnemy = null;
+        SelectedEnemyCollider = null;
         myPlayerAnimator.SetAiming(false, null);
     }
 
-    /// <summary>
-    /// 공격 시도 함수. 사거리 내에 적이 있으면 공격 로직 수행 후 true 반환, 사거리 밖이면 false 반환 (즉, 공격 실패)
-    /// </summary>
-    /// <returns></returns>
-    public bool TryExecuteAttack()
+    public void UpdateNormalAttack(bool canChase)
     {
         if (IsStunned)
         {
-            return false;
+            StopNormalAttackChase();
+            return;
         }
 
         if (SelectedEnemy == null)
         {
-            return false;
+            StopNormalAttackChase();
+            AimingEnemy(false);
+            return;
         }
 
-        if (myCombatModule.IsEnemyInWeaponSight(SelectedEnemy))
+        if (chaseCoroutine != null)
+        {
+            return;
+        }
+
+        if (!myCombatModule.HasNormalAttackAmmo())
+        {
+            StopNormalAttackChase();
+            CancelEnemySelect();
+            return;
+        }
+
+        if (!(myCombatModule.IsEnemyInWeaponRange(SelectedEnemy) && myCombatModule.IsTargetVisible(SelectedEnemyCollider)))
+        {
+            AimingEnemy(false);
+
+            if (canChase)
+            {
+                chaseCoroutine = StartCoroutine(ChaseEnemyCoroutine());
+            }
+
+            return;
+        }
+
+        if (!myCombatModule.IsAiming)
         {
             myMovementModule.PlayerMoveStop();
-
-            if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
-            {
-                NormalAttackEnemy();
-            }
-            return true;
+            AimingEnemy(true, SelectedEnemy.transform);
+            return;
         }
 
-        return false;
+        if (!myCombatModule.CheckAimingTargetEnough())
+        {
+            myMovementModule.PlayerMoveStop();
+            myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position);
+            return;
+        }
+
+        myMovementModule.PlayerMoveStop();
+
+        if (myMovementModule.PlayerRotateToward(SelectedEnemy.transform.position))
+        {
+            NormalAttackEnemy();
+        }
     }
 
-    public void ChaseEnemy()
+    private IEnumerator ChaseEnemyCoroutine()
     {
-        if (IsStunned) return;
+        while (!IsStunned
+        && SelectedEnemy != null
+        && SelectedEnemyCollider != null
+        && !(myCombatModule.IsEnemyInWeaponRange(SelectedEnemy) && myCombatModule.IsTargetVisible(SelectedEnemyCollider)))
+        {
+            myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
+            yield return nextChaseWait;
+        }
 
-        myMovementModule.PlayerWalk(SelectedEnemy.transform.position);
+        chaseCoroutine = null;
+    }
+
+    private void StopNormalAttackChase()
+    {
+        if (chaseCoroutine == null)
+        {
+            return;
+        }
+
+        StopCoroutine(chaseCoroutine);
+        chaseCoroutine = null;
     }
 
     public void AimingEnemy(bool isAiming, Transform targetTf = default)
@@ -290,7 +358,7 @@ public class PlayerController : MonoBehaviour
 
     private void NormalAttackEnemy()
     {
-        if (myCombatModule.CheckWeaponFireReady() && myCombatModule.CheckAimingTargetEnough())
+        if (myCombatModule.CheckWeaponFireReady())
         {
             myCombatModule.NormalAttackEnemy(SelectedEnemy);
         }
@@ -303,12 +371,14 @@ public class PlayerController : MonoBehaviour
 
     public void InterruptCurrentAction()
     {
+        myMovementModule.PlayerMoveStop();
+
         if (CurrentState is IInterruptiblePlayerState interruptibleState)
         {
             interruptibleState.Interrupt();
         }
 
-        myMovementModule.PlayerMoveStop();
+        StopNormalAttackChase();
 
         if (mySkillModule.IsTargetting)
         {
@@ -317,6 +387,7 @@ public class PlayerController : MonoBehaviour
 
         mySkillModule.CancelCurrentSkill();
         myCombatModule.RequestCancelReload();
+        AimingEnemy(false);
         CancelEnemySelect();
     }
 
@@ -344,6 +415,7 @@ public class PlayerController : MonoBehaviour
             ChangeState(PlayerStateType.Normal);
         }
     }
+
     #endregion
 
     #region StateMachine관련 함수
@@ -366,6 +438,7 @@ public class PlayerController : MonoBehaviour
             PlayerStateType.Normal => NormalState,
             PlayerStateType.SkillChase => SkillChaseState,
             PlayerStateType.SkillCast => SkillCastingState,
+            PlayerStateType.SkillExecute => SkillExecuteState,
             PlayerStateType.Dead => DeadState,
             PlayerStateType.Stunned => StunnedState,
             PlayerStateType.InteractChasing => InteractChaseState,

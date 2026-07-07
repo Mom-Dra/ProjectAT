@@ -138,6 +138,16 @@ public class Enemy : MonoBehaviour, ISquadMember
         enemyAnimator = GetComponent<EnemyAnimator>();
         weapon = GetComponentInChildren<Gun>();
         crowdControlModule = GetComponent<CrowdControlModule>();
+        if (crowdControlModule == null)
+        {
+            crowdControlModule = gameObject.AddComponent<CrowdControlModule>();
+        }
+
+        if (GetComponent<StatusEffectScreenUI>() == null)
+        {
+            gameObject.AddComponent<StatusEffectScreenUI>();
+        }
+
         entityStatus = GetComponent<EntityStatus>();
         rigBuilder = GetComponent<RigBuilder>();
         coverHandler = GetComponent<CoverHandler>();

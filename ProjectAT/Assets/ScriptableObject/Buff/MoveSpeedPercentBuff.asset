@@ -15,7 +15,7 @@ MonoBehaviour:
   <buffName>k__BackingField: MoveSpeedPercentBuff
   <Duration>k__BackingField: 5
   <TickInterval>k__BackingField: 1
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: dd6aa0b2aa041264c8afd5b080d1556e, type: 3}
   TargetStatType: 0
   Amount: 0.5
   ModifierType: 1

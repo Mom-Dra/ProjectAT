@@ -1,9 +1,11 @@
 using MomDra.Weapon;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using System.Collections;
 
 public class PlayerAnimator : MonoBehaviour
 {
+    [Header("References")]
     private Animator animator;
     private EntityStatus entityStatus;
     [SerializeField] private WeaponHolder weaponHolder;
@@ -11,22 +13,19 @@ public class PlayerAnimator : MonoBehaviour
     #region  Animation Hashes
     private static readonly int SpeedHash = Animator.StringToHash("Speed_f");
     private static readonly int IsCrouchHash = Animator.StringToHash("Crouch_b");
-    private static readonly int WeaponTypeHash = Animator.StringToHash("WeaponType_int");
     private static readonly int ShootHash = Animator.StringToHash("Shoot_b");
     private static readonly int RealoadHash= Animator.StringToHash("Reload_b");
-    private static readonly int FullAutoHash = Animator.StringToHash("FullAuto_b");
-
-    private static readonly int HeadHorizontalHash = Animator.StringToHash("Head_Horizontal_f");
-    private static readonly int HeadVerticalHash = Animator.StringToHash("Head_Vertical_f");
     private static readonly int IsDeadHash = Animator.StringToHash("Death_b");
-    
     private static readonly int CancelTriggerHash = Animator.StringToHash("Cancel_t");
     private static readonly int ThrowTriggerHash = Animator.StringToHash("Throw_t");
     #endregion
 
+    [Header("Params")]
     [SerializeField] private float animationFPS = 30f;
+    [SerializeField] private float suppressiveFireAimDistance = 10f;
+    [SerializeField] private float suppressiveFireSweepSpeed = 8f;
+    private Coroutine animationCoroutine;
 
-    private Coroutine headLookCoroutine;
     [SerializeField] private Transform AimMarkerTransform;
     [SerializeField] private Transform AimedTargetLocation;
     [SerializeField] private RigBuilder aimRigBuilder;
@@ -47,6 +46,8 @@ public class PlayerAnimator : MonoBehaviour
         weaponHolder.OnWeaponReloaded += StopReloadAnimation;
         weaponHolder.OnWeaponReloadStart += PlayReloadAnimation;
 
+        animationCoroutine = null;
+
     }
 
     private void OnDisable()
@@ -55,6 +56,8 @@ public class PlayerAnimator : MonoBehaviour
         entityStatus.onRevive -= EntityRevived;
         weaponHolder.OnWeaponReloadStart -= PlayReloadAnimation;
         weaponHolder.OnWeaponReloaded -= StopReloadAnimation;
+
+        DestroyAnimationCoroutine();
     }
 
     private void Start()
@@ -64,12 +67,21 @@ public class PlayerAnimator : MonoBehaviour
 
     private void LateUpdate()
     {
-        UpdateAimMarkerPosition();
+        if(animationCoroutine == null) UpdateAimMarkerPosition();
     }
 
     private void UpdateAimMarkerPosition()
     {
         AimMarkerTransform.position =  Vector3.up + (AimedTargetLocation != null ? AimedTargetLocation.position : transform.position + transform.forward * 10f);
+    }
+
+    private void DestroyAnimationCoroutine()
+    {
+        if(animationCoroutine != null)
+        {
+            StopCoroutine(animationCoroutine);
+            animationCoroutine = null;
+        }
     }
 
     private void EntityDead()
@@ -127,5 +139,48 @@ public class PlayerAnimator : MonoBehaviour
     public void StopReloadAnimation(Gun gun)
     {
         animator.SetBool(RealoadHash, false);
+    }
+
+    public void StartSuppressiveFireAnimation(float maxAngle)
+    {
+        SetAiming(true, null);
+
+        if(animationCoroutine != null)
+        {
+            StopCoroutine(animationCoroutine);
+        }
+        
+        animationCoroutine = StartCoroutine(SuppreSiveFireAnimationCoroutine(maxAngle));
+    }
+    private IEnumerator SuppreSiveFireAnimationCoroutine(float maxAngle)
+    {
+        Vector3 baseDirection = transform.forward;
+        baseDirection.y = 0f;
+
+        if (baseDirection.sqrMagnitude < 0.001f)
+            baseDirection = Vector3.forward;
+        else
+            baseDirection.Normalize();
+
+        while (true)
+        {
+            float angle = Mathf.Sin(Time.time * suppressiveFireSweepSpeed) * maxAngle;
+            Vector3 aimDirection = Quaternion.AngleAxis(angle, Vector3.up) * baseDirection;
+
+            AimMarkerTransform.position =
+                transform.position +
+                aimDirection * suppressiveFireAimDistance +
+                Vector3.up;
+
+            yield return null;
+
+            weaponHolder.FireWeaponOnlyVFX(AimMarkerTransform.position, Vector3.zero, true); // Suppressive Fire는 풀오토 발사 연출
+        }
+    }
+
+    public void StopSuppressiveFireAnimation()
+    {
+        SetAiming(false, null);
+        DestroyAnimationCoroutine();
     }
 }

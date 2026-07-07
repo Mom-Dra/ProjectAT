@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3230027335069522473}
   - component: {fileID: 5593990163996302289}
   - component: {fileID: 2609783423112632777}
+  - component: {fileID: -5017791201659217201}
   m_Layer: 0
   m_Name: missile_04
   m_TagString: Untagged
@@ -108,6 +109,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.48036647, y: 0.48036492, z: 1.7717849}
   m_Center: {x: -0.000000044703484, y: 0.000000044703484, z: -0.000000059604645}
+--- !u!114 &-5017791201659217201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462204753440172959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &944988112469738630
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +133,7 @@ GameObject:
   - component: {fileID: 7175037602946985903}
   - component: {fileID: 7839128836873172030}
   - component: {fileID: 750303520538138374}
+  - component: {fileID: 5507356314708548617}
   m_Layer: 0
   m_Name: missile_06
   m_TagString: Untagged
@@ -216,6 +230,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.48036623, y: 0.4803648, z: 1.7717849}
   m_Center: {x: 0.000000029802322, y: 0, z: -0.000000059604645}
+--- !u!114 &5507356314708548617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944988112469738630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1763264437420127432
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,6 +254,7 @@ GameObject:
   - component: {fileID: 937243094230291452}
   - component: {fileID: 102080371677350327}
   - component: {fileID: 3869424362796636420}
+  - component: {fileID: -4407368363749227588}
   m_Layer: 0
   m_Name: missile_02
   m_TagString: Untagged
@@ -324,6 +351,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.48036647, y: 0.48036492, z: 1.7717849}
   m_Center: {x: -0.000000074505806, y: 0.000000044703484, z: -0.000000059604645}
+--- !u!114 &-4407368363749227588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763264437420127432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2833204369743405176
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,6 +375,7 @@ GameObject:
   - component: {fileID: 3165006689616382453}
   - component: {fileID: 7540629430296238911}
   - component: {fileID: 1208723674027299154}
+  - component: {fileID: -2608365145029880256}
   m_Layer: 0
   m_Name: missile_03
   m_TagString: Untagged
@@ -432,6 +472,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.48036647, y: 0.4803648, z: 1.7717849}
   m_Center: {x: -0.000000044703484, y: 0, z: -0.000000059604645}
+--- !u!114 &-2608365145029880256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833204369743405176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3356171678394306969
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +498,8 @@ GameObject:
   - component: {fileID: 7123521257028677043}
   - component: {fileID: 2014281452900236233}
   - component: {fileID: -8101586545266029612}
+  - component: {fileID: 7326937114332883356}
+  - component: {fileID: 5265855697138382695}
   m_Layer: 0
   m_Name: attack_heli_c
   m_TagString: Untagged
@@ -588,6 +642,180 @@ MonoBehaviour:
   coverPointPrefab: {fileID: 2141485185188453903, guid: 1f4e459ebd45e95418d299dbf8c6c91f, type: 3}
   offset: 1
   generatedPoint: []
+--- !u!114 &7326937114332883356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3356171678394306969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe91dc294731a9428c0941ea7579110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  complexMaskingMode: 0
+  drawingMode: 8
+  outlineLayer: 0
+  outlineTargets:
+  - CutoutMask: 8
+    renderer: {fileID: 6323496620402079922}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 2253712337666404000}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 102080371677350327}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 7540629430296238911}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 5593990163996302289}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 8558887106667494469}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 7839128836873172030}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 8935892009669319766}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 4044279835335463413}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 2660116299253277923}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 703665847353371225}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  renderStyle: 1
+  outlineParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+  backParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+  frontParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+--- !u!114 &5265855697138382695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3356171678394306969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3704854973691350253
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,6 +828,7 @@ GameObject:
   - component: {fileID: 8362883061146621597}
   - component: {fileID: 8935892009669319766}
   - component: {fileID: 7085765790785339747}
+  - component: {fileID: 3561306400208366531}
   m_Layer: 0
   m_Name: missile_07
   m_TagString: Untagged
@@ -696,6 +925,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.48036635, y: 0.48036492, z: 1.7717849}
   m_Center: {x: 0.000000044703484, y: 0.000000044703484, z: -0.000000059604645}
+--- !u!114 &3561306400208366531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3704854973691350253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4104044475781707081
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +949,7 @@ GameObject:
   - component: {fileID: 1335674450546691827}
   - component: {fileID: 4044279835335463413}
   - component: {fileID: 2280965842261963788}
+  - component: {fileID: -6701801273508581304}
   m_Layer: 0
   m_Name: missile_08
   m_TagString: Untagged
@@ -804,6 +1046,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.48036623, y: 0.48036492, z: 1.7717849}
   m_Center: {x: 0.000000029802322, y: 0.000000044703484, z: -0.000000059604645}
+--- !u!114 &-6701801273508581304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4104044475781707081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5514594566009717409
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,6 +1070,7 @@ GameObject:
   - component: {fileID: 4230786773080310234}
   - component: {fileID: 8558887106667494469}
   - component: {fileID: 1354985781135243625}
+  - component: {fileID: 2985390832393416235}
   m_Layer: 0
   m_Name: missile_05
   m_TagString: Untagged
@@ -912,6 +1167,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.48036635, y: 0.4803648, z: 1.7717849}
   m_Center: {x: 0.000000044703484, y: 0, z: -0.000000059604645}
+--- !u!114 &2985390832393416235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5514594566009717409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8078660064678900632
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,6 +1191,7 @@ GameObject:
   - component: {fileID: 5304816361844021703}
   - component: {fileID: 703665847353371225}
   - component: {fileID: 116922745678107189}
+  - component: {fileID: -7474615850867908997}
   m_Layer: 0
   m_Name: rotor_tail
   m_TagString: Untagged
@@ -1021,6 +1289,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300020, guid: b81e75283305d504a86e0d3c88db61d5, type: 3}
+--- !u!114 &-7474615850867908997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8078660064678900632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8468262056685487660
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,6 +1313,7 @@ GameObject:
   - component: {fileID: 1299462857860723678}
   - component: {fileID: 2660116299253277923}
   - component: {fileID: 8924743429492663260}
+  - component: {fileID: 9107995442742807147}
   m_Layer: 0
   m_Name: rotor_main
   m_TagString: Untagged
@@ -1130,6 +1411,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300018, guid: b81e75283305d504a86e0d3c88db61d5, type: 3}
+--- !u!114 &9107995442742807147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8468262056685487660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8904346643719346313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,6 +1435,7 @@ GameObject:
   - component: {fileID: 4107910663264156738}
   - component: {fileID: 2253712337666404000}
   - component: {fileID: 6550484640261727329}
+  - component: {fileID: -4617364056237262519}
   m_Layer: 0
   m_Name: missile_01
   m_TagString: Untagged
@@ -1238,3 +1532,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.48036647, y: 0.4803648, z: 1.7717849}
   m_Center: {x: -0.000000074505806, y: 0, z: -0.000000059604645}
+--- !u!114 &-4617364056237262519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904346643719346313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

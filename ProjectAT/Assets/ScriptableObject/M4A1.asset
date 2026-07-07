@@ -17,9 +17,10 @@ MonoBehaviour:
   bulletPrefab: {fileID: 946230873439750309, guid: a45c701df17b62d439fc78c12adea761, type: 3}
   hitPrefab: {fileID: 1370874438154576190, guid: eb27692c6b742ee448e041d86e46402a, type: 3}
   damage: 25
-  startRemainAmmo: 30
+  startRemainAmmo: 150
   magCapacity: 30
   timeBetFire: 1
+  fullAutoFireRate: 0.1
   reloadTime: 1.8
-  maxDistance: 100
+  maxDistance: 20
   gunIcon: {fileID: 21300000, guid: d2bb5447ca4b0774ea0b80a1c104b9b7, type: 3}

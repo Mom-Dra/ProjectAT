@@ -8,6 +8,8 @@ public class PlayerMovementModule : MonoBehaviour
 
     public float deltaRotation = 20f;
 
+    public NavMeshAgent Agent => myAgent;
+
     private void Awake()
     {
         myAgent = GetComponent<NavMeshAgent>();
@@ -70,6 +72,18 @@ public class PlayerMovementModule : MonoBehaviour
             return false;
         }
     }
+
+    public void PlayerRotateImmediately(Vector3 targetPos)
+    {
+        Vector3 direction = (targetPos - transform.position).normalized;
+        direction.y = 0;
+
+        if (direction.sqrMagnitude > 0.0001f)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = lookRotation;
+        }
+    }
     
     public void PlayerMoveStop()
     {
@@ -82,5 +96,20 @@ public class PlayerMovementModule : MonoBehaviour
     public float GetVelocity()
     {
         return myAgent.velocity.magnitude;
+    }
+
+    public bool CanReachPosition(Vector3 targetPos)
+    {
+        if(myAgent == null || !myAgent.enabled || !myAgent.isOnNavMesh)
+        {
+            return false;
+        }
+        
+        NavMeshPath path = new NavMeshPath();
+        if(!myAgent.CalculatePath(targetPos, path))
+        {
+            return false;
+        }
+        return path.status == NavMeshPathStatus.PathComplete;
     }
 }

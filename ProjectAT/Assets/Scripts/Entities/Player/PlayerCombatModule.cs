@@ -1,4 +1,3 @@
-using Unity.Behavior;
 using UnityEngine;
 
 public class PlayerCombatModule : MonoBehaviour
@@ -11,14 +10,18 @@ public class PlayerCombatModule : MonoBehaviour
 
     [Header("Params")]
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private float arcHeight = 2.0f;
-    [SerializeField] private LayerMask ObstacleLayer;
     [SerializeField] private float AimingCoolTime = 0.5f;
     [SerializeField] private float currentAimingTime = 0f;
+    
+    #region Properties
     public bool IsAiming {get; private set;}
-
+    public float ThrowRange => myStatus.ThrowRange;
     public WeaponHolder MyWeapon => myWeapon;
-    public Vector3 ThrowPoint => throwPoint.position;
+    public Transform ThrowPoint => throwPoint;
+    public Transform EyePoint => eyePoint;
+    #endregion
 
     private void Awake()
     {
@@ -31,7 +34,6 @@ public class PlayerCombatModule : MonoBehaviour
         myStatus = GetComponent<EntityStatus>();
     }
 
-
     private void Start()
     {
         Managers.Instance.UIManager.InitPlayerGunInfo(myWeapon);
@@ -39,16 +41,22 @@ public class PlayerCombatModule : MonoBehaviour
 
     private void Update()
     {
-        if(IsAiming)
+        if (IsAiming)
         {
-            currentAimingTime = Mathf.Min(Time.deltaTime + currentAimingTime + 0.1f, AimingCoolTime); //시간을 항상 계산하지말고, IsAiming이 true가 될떄 그 순간을 기록하고, fire를 호출할때 Time.time - currentAiming 을 체크하는 방식 고려하기.
+            currentAimingTime = Mathf.Min(currentAimingTime + Time.deltaTime, AimingCoolTime);
         }
     }
 
-    public bool IsEnemyInWeaponSight(Enemy enemy)
+    public bool IsEnemyInWeaponRange(Enemy enemy, float rangeOffset = 0f)
     {
-        return CheckPositionInRange(enemy.transform.position, myWeapon.Range)
-            && CheckEnemyVisibility(enemy, eyePoint);
+
+        return enemy != null && myWeapon != null
+        && CheckPositionInRange(enemy.transform.position, myWeapon.Range + rangeOffset);
+    }
+
+    public bool IsTargetVisible(Collider targetCollider)
+    {
+        return targetCollider != null && CheckTargetVisibility(targetCollider, eyePoint);
     }
 
     private bool CheckPositionInRange(Vector3 pos, float range)
@@ -56,51 +64,82 @@ public class PlayerCombatModule : MonoBehaviour
         return (pos - transform.position).sqrMagnitude <= range * range;
     }
 
-    private bool CheckEnemyVisibility(Enemy targetEnemy, Transform baseTf)
+    private bool CheckTargetVisibility(Collider targetCollider, Transform baseTf)
     {
-        Vector3 directionToEnemy = targetEnemy.transform.position - baseTf.position;
-        directionToEnemy.y = 0.0f;
-
-        Ray ray = new Ray(baseTf.position, directionToEnemy);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, myStatus.MaxViewingDistance, enemyLayer))
+        if (targetCollider == null || baseTf == null)
         {
-            if (hitInfo.collider.gameObject == targetEnemy.gameObject)
-            {
-                return true;
-            }
+            Debug.LogWarning($"{nameof(CheckTargetVisibility)}: targetCollider or baseTf is null.");
+            return false;
         }
-        return false;
+
+        return IsTargetVisibleFrom(targetCollider, targetCollider.bounds.center, enemyLayer, baseTf.position);
     }
 
-    private bool CheckTargetVisibility(GameObject target, Transform baseTf)
+    public bool IsTargetInWeaponSight(Collider targetCollider, LayerMask targetLayer)
     {
-        Vector3 directionToTarget = target.transform.position - baseTf.position;
-        directionToTarget.y = baseTf.position.y;
+        if (targetCollider == null || myWeapon == null) return false;
 
-        Ray ray = new Ray(baseTf.position, directionToTarget);
-        if (Physics.Raycast(ray, myStatus.MaxViewingDistance, ObstacleLayer))
+        return CheckPositionInRange(targetCollider.transform.position, myWeapon.Range)
+            && IsTargetVisible(targetCollider, targetLayer);
+    }
+
+    public bool IsTargetVisible(Collider targetCollider, LayerMask targetLayer)
+    {
+        if (targetCollider == null) return false;
+
+        return IsTargetVisibleFrom(targetCollider, targetCollider.bounds.center, targetLayer, eyePoint.position);
+    }
+
+    public bool IsTargetVisible(Collider targetCollider, Vector3 targetPoint, LayerMask targetLayer)
+    {
+        if (targetCollider == null) return false;
+
+        return IsTargetVisibleFrom(targetCollider, targetPoint, targetLayer, eyePoint.position);
+    }
+
+    private bool IsTargetVisibleFrom(Collider targetCollider, Vector3 targetPoint, LayerMask targetLayer, Vector3 origin)
+    {
+        Vector3 directionToTarget = targetPoint - origin;
+        float distance = directionToTarget.magnitude;
+
+        if (distance <= Mathf.Epsilon) return true;
+        if (distance > myStatus.MaxViewingDistance) return false;
+
+        int visibilityMask = targetLayer.value | obstacleLayer.value;
+
+        if (!Physics.Raycast(origin, directionToTarget / distance, out RaycastHit hitInfo, distance, visibilityMask, QueryTriggerInteraction.Ignore))
         {
             return false;
         }
-        return true;
+
+        return IsHitTarget(hitInfo, targetCollider.gameObject);
     }
 
-    public bool IsTargetInWeaponSight(GameObject target)
+    private bool IsHitTarget(RaycastHit hitInfo, GameObject target)
     {
-        bool condition = CheckPositionInRange(target.transform.position, myWeapon.Range);
-        bool condition2 = CheckTargetVisibility(target, eyePoint);
+        if (hitInfo.collider == null || target == null) return false;
 
-        return condition && condition2;
+        Transform hitTransform = hitInfo.collider.transform;
+        Transform targetTransform = target.transform;
+
+        if (hitTransform == targetTransform || hitTransform.IsChildOf(targetTransform)) return true;
+        return false;
     }
+
 
     public bool CheckAimingTargetEnough()
     {
-        return Time.time - currentAimingTime >= AimingCoolTime;
+        return currentAimingTime >= AimingCoolTime;
     }
 
     public bool CheckWeaponFireReady()
     {
         return myWeapon.CanFire();
+    }
+
+    public bool HasNormalAttackAmmo()
+    {
+        return myWeapon != null && myWeapon.HasAnyAmmo();
     }
     
     private void OnDrawGizmosSelected()
@@ -112,26 +151,31 @@ public class PlayerCombatModule : MonoBehaviour
         Gizmos.DrawLine(eyePoint.position, eyePoint.position + eyePoint.forward * myWeapon.Range);
     }
 
-
     public void NormalAttackEnemy(Enemy target)
+    {
+        NormalAttackTarget(target.gameObject);
+    }
+
+    public void NormalAttackTarget(GameObject target)
     {
         if (target.TryGetComponent(out IDamageable damageable)) 
         {
-            myWeapon.FireWeapon();
-            //1damageable.TakeDamage(myWeapon.Damage); //NOTE : FireWeapon에서 이미 데미지를 주는중임. 이 코드 삭제 생각해보기
+            myWeapon.FireWeaponOnlyVFX(target.transform.position, Vector3.up * 1.5f, false);
+            damageable.TakeDamage(myWeapon.Damage);
         }
     }
 
-    public void SetAiming(bool IsAiming)
+    public void SetAiming(bool isAiming)
     {
-        if(this.IsAiming != IsAiming){
-            this.IsAiming = IsAiming;
-            currentAimingTime = IsAiming ? Time.time : 0f;
-        }
+        if (IsAiming == isAiming) return;
+
+        IsAiming = isAiming;
+        currentAimingTime = 0f;
     }
 
-    public bool CanThrowSomethingToPosition(GameObject projectileObject, Vector3 position)
+    public bool CanThrowSomethingToPosition(Collider projectileObjectCollider, Vector3 position)
     {
+        if(projectileObjectCollider == null) return false;
         if (Vector3.SqrMagnitude(position - throwPoint.position) > myStatus.ThrowRange * myStatus.ThrowRange) 
         {
             return false;
@@ -145,10 +189,9 @@ public class PlayerCombatModule : MonoBehaviour
         }
 
         float radius = 0.1f;
-        if (projectileObject != null)
+        if (projectileObjectCollider != null)
         {
-            Collider col = projectileObject.GetComponentInChildren<Collider>();
-            if (col != null) radius = Mathf.Max(col.bounds.extents.x, col.bounds.extents.z);
+            radius = Mathf.Max(projectileObjectCollider.bounds.extents.x, projectileObjectCollider.bounds.extents.z);
         }
 
         int segmentCount = 20; 
@@ -161,9 +204,8 @@ public class PlayerCombatModule : MonoBehaviour
             Vector3 nextPoint = origin + (initialVelocity * t) + (0.5f * Physics.gravity * t * t);
             Vector3 direction = nextPoint - previousPoint;
 
-            if (Physics.SphereCast(previousPoint, radius, direction.normalized, out RaycastHit hit, direction.magnitude, ObstacleLayer))
+            if (Physics.SphereCast(previousPoint, radius, direction.normalized, out RaycastHit _, direction.magnitude, obstacleLayer))
             {
-                Debug.Log($"Chase State : Trajectory blocked by {hit.collider.gameObject.name} at {hit.point}");
                 return false;
             }
 
@@ -173,21 +215,17 @@ public class PlayerCombatModule : MonoBehaviour
         return true;
     }
 
-    public void ThrowSomthingToTarget(GameObject throwingObject, Vector3 targetPos)
+    public void ThrowSomthingToTarget(ThrowProjectileBase throwingObject, Vector3 targetPos)
     {
-        throwingObject.transform.position = throwPoint.position;
+        if(throwingObject == null) return;
+
+        throwingObject.gameObject.transform.position = throwPoint.position;
         Vector3 origin = throwPoint.position;
 
         if (PhysicsMathUtility.CalculateTrajectory(origin, targetPos, arcHeight, out Vector3 velocity, out float time))
         {
-            ProjectileBase grenade = throwingObject.GetComponent<ProjectileBase>();
-            if (grenade == null) {
-                Debug.LogWarning($"{gameObject.name} : The object to throw does not have a ProjectileBase component.");
-                return; 
-            }
-
-            grenade.IgnoreCollisionWith(gameObject);
-            grenade.Throw(velocity);
+            throwingObject.IgnoreCollisionWith(gameObject);
+            throwingObject.Throw(velocity);
         }
     }
 

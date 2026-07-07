@@ -1,5 +1,6 @@
 using PlayerStateMachine;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// 플레이어와 상호작용할 수 있는 모든 오브젝트(문, 시체, 상자, 컴퓨터 등)가 반드시 구현해야 하는 규약
@@ -56,17 +57,10 @@ public interface IInteractable
     void OnInteractEnd(PlayerController player); 
 
     /// <summary>
-    /// 상호작용을 위해 플레이어가 도착해야 할 정확한 월드 좌표를 반환합니다.
-    /// 플레이어의 현재 위치에 따라 앞/뒤 좌표가 달라질 수 있도록 Transform을 받습니다.
-    /// 상호작용 위치가 특별히 정해져 있으면 그 오브젝트는 특정 Transform이나 위치를 반환해야할 것입니다.
+    /// 상호작용을 위해 플레이어가 도착해야 할 정확한 월드 좌표 및 Look Direction의 반환을 시도합니다. 
+    /// 상호작용 위치가 특별히 정해져 있으면 그 오브젝트는 해당 위치의 Vector를 반환해야합니다. (예: 문 앞, 컴퓨터 앞 등)
     /// </summary>
-    Vector3 GetInteractPosition(Transform playerTransform);
-
-    /// <summary>
-    /// 상호작용 지점에 도착한 후, 플레이어가 바라봐야 할 방향 벡터를 반환합니다.
-    /// 상호작용 위치가 특별히 정해져 있으면 그 오브젝트는 특정 위치의 Transform의 방향을 반환해야할 것이며 normalized 되야함.
-    /// </summary>
-    Vector3 GetInteractLookDir(Transform playerTransform);
+    bool TryGetInteractLocation(Transform playerTransform, out Vector3 sampledPosition, out Vector3 sampledLookDir, NavMeshAgent agent);
 
     /// <summary>
     /// 상호작용을 시도하려 할 때 이미 다른 오브젝트와 상호작용 중인지 판단하고, 상호작용 중이지 않으면 해당 오브젝트를 등록한 후 다른 오브젝트와 상호작용 못하도록 잠그는 메서드

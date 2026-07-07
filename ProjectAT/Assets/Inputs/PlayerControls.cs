@@ -137,6 +137,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SkillTwo"",
+                    ""type"": ""Button"",
+                    ""id"": ""70bab247-1c77-4f67-8a08-a5a0c6c9e787"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""GrenadeThrow"",
                     ""type"": ""Button"",
                     ""id"": ""1dd91a9c-8ff2-4716-bc75-44d6d4223f31"",
@@ -374,6 +383,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d4e5f13-b5ad-4a28-b905-533fec045728"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""SkillTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -393,6 +413,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_RightClicked = m_Player.FindAction("RightClicked", throwIfNotFound: true);
         m_Player_DesignatedFire = m_Player.FindAction("DesignatedFire", throwIfNotFound: true);
         m_Player_SkillOne = m_Player.FindAction("SkillOne", throwIfNotFound: true);
+        m_Player_SkillTwo = m_Player.FindAction("SkillTwo", throwIfNotFound: true);
         m_Player_GrenadeThrow = m_Player.FindAction("GrenadeThrow", throwIfNotFound: true);
         m_Player_UseBandage = m_Player.FindAction("UseBandage", throwIfNotFound: true);
         m_Player_MouseWheelButton = m_Player.FindAction("MouseWheelButton", throwIfNotFound: true);
@@ -486,6 +507,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RightClicked;
     private readonly InputAction m_Player_DesignatedFire;
     private readonly InputAction m_Player_SkillOne;
+    private readonly InputAction m_Player_SkillTwo;
     private readonly InputAction m_Player_GrenadeThrow;
     private readonly InputAction m_Player_UseBandage;
     private readonly InputAction m_Player_MouseWheelButton;
@@ -525,6 +547,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/SkillOne".
         /// </summary>
         public InputAction @SkillOne => m_Wrapper.m_Player_SkillOne;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SkillTwo".
+        /// </summary>
+        public InputAction @SkillTwo => m_Wrapper.m_Player_SkillTwo;
         /// <summary>
         /// Provides access to the underlying input action "Player/GrenadeThrow".
         /// </summary>
@@ -598,6 +624,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SkillOne.started += instance.OnSkillOne;
             @SkillOne.performed += instance.OnSkillOne;
             @SkillOne.canceled += instance.OnSkillOne;
+            @SkillTwo.started += instance.OnSkillTwo;
+            @SkillTwo.performed += instance.OnSkillTwo;
+            @SkillTwo.canceled += instance.OnSkillTwo;
             @GrenadeThrow.started += instance.OnGrenadeThrow;
             @GrenadeThrow.performed += instance.OnGrenadeThrow;
             @GrenadeThrow.canceled += instance.OnGrenadeThrow;
@@ -648,6 +677,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SkillOne.started -= instance.OnSkillOne;
             @SkillOne.performed -= instance.OnSkillOne;
             @SkillOne.canceled -= instance.OnSkillOne;
+            @SkillTwo.started -= instance.OnSkillTwo;
+            @SkillTwo.performed -= instance.OnSkillTwo;
+            @SkillTwo.canceled -= instance.OnSkillTwo;
             @GrenadeThrow.started -= instance.OnGrenadeThrow;
             @GrenadeThrow.performed -= instance.OnGrenadeThrow;
             @GrenadeThrow.canceled -= instance.OnGrenadeThrow;
@@ -760,6 +792,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSkillOne(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkillTwo" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkillTwo(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "GrenadeThrow" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

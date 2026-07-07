@@ -24,30 +24,17 @@ namespace PlayerStateMachine
         
         public override void OnUpdate()
         {
-            if (context.SelectedEnemy != null)
-            {
-                if (!context.TryExecuteAttack())
-                {
-                    context.AimingEnemy(false);
-                    context.ChaseEnemy();
-                }
-            }
-            else
-            {
-                context.AimingEnemy(false);
-            }
+            context.UpdateNormalAttack(true);
         }
         
-        public override void OnExit()
-        {
-        }
+        public override void OnExit() {}
 
         public void OnLeftClick(RaycastHit castedObject)
         {
-            if (mySkillModule.IsTargetting && mySkillModule.CanSelectTarget(castedObject, out GameObject target, out Vector3 point))
+            if (mySkillModule.IsTargetting && mySkillModule.CanSelectTarget(castedObject, out Collider castedCollider, out Vector3 point))
             {
                 mySkillModule.ActivateSelectedSkill();
-                mySkillModule.SetUpSkillContext(target, point);
+                mySkillModule.SetUpSkillContext(castedCollider, point);
                 context.ChangeState(PlayerStateType.SkillChase);
             }
         }
@@ -62,11 +49,8 @@ namespace PlayerStateMachine
 
             context.CancelEnemySelect();
 
-            //인터렉터블 오브젝트 처리부분. 해당 로직들이 자주 쓰이면 PlayerController로 빼는거 고려.
-            InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();            
-            if (interactable != null && !interactable.IsInUse) 
+            if(myInteractionModule.TrySetInteractTarget(castedObject))
             {
-                myInteractionModule.SetInteractTarget(interactable);
                 context.ChangeState(PlayerStateType.InteractChasing);
                 return;
             }

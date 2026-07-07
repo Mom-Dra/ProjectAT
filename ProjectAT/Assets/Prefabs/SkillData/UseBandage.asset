@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d67d11d839b01c4c992653af4bb149d, type: 3}
   m_Name: UseBandage
   m_EditorClassIdentifier: 
-  Name: Use Bandage
-  BaseDamage: 50
-  CastingTime: 2
-  MaxCoolTime: 5
-  TargetLayer:
+  skillId: 3
+  skillName: UseBandage
+  baseDamage: 70
+  castingTime: 3
+  maxCoolTime: 5
+  targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  SkillType: 0
-  IndicatorType: 2
-  CursorSkin: {fileID: 2800000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
-  SkillIcon: {fileID: 21300000, guid: eb79b5bc03af50b4cbf8fde7e1d70566, type: 3}
-  AnimationTriggerName: 
-  NeededItemData: {fileID: 11400000, guid: fa09adfcf317c7d44b1a3cc91ff71903, type: 2}
-  NeededItemAmount: 1
+  indicatorType: 2
+  cursorSkin: {fileID: 2800000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
+  skillIcon: {fileID: 21300000, guid: eb79b5bc03af50b4cbf8fde7e1d70566, type: 3}
+  animationTriggerName: 
+  neededItemData: {fileID: 11400000, guid: fa09adfcf317c7d44b1a3cc91ff71903, type: 2}
+  neededItemAmount: 1

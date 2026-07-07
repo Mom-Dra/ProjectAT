@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6599740696996145878}
   - component: {fileID: 8075705498685393725}
   - component: {fileID: 3496522856602393264}
+  - component: {fileID: 2428007378111970025}
   m_Layer: 0
   m_Name: turret
   m_TagString: Untagged
@@ -112,6 +113,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 16d71d1768bc32447876d5fd7531bb7b, type: 3}
+--- !u!114 &2428007378111970025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220035893839262477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &537775066728979775
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +196,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  interactDuration: 1
+  playerAnimationTrigger: Interact
+  nextState: 0
+  canStopInteract: 1
 --- !u!65 &392840585897720054
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -232,6 +250,7 @@ GameObject:
   - component: {fileID: 4506064045786288973}
   - component: {fileID: 6204742494011573263}
   - component: {fileID: 9196464763797412335}
+  - component: {fileID: 7388509559987980484}
   m_Layer: 0
   m_Name: lid02
   m_TagString: Untagged
@@ -328,6 +347,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0613348, y: 0.10523343, z: 1.0613348}
   m_Center: {x: 0, y: 0.00000031664968, z: -0.44047502}
+--- !u!114 &7388509559987980484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2425890090745838527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2827476032037597420
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,6 +430,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  interactDuration: 1
+  playerAnimationTrigger: Interact
+  nextState: 0
+  canStopInteract: 1
 --- !u!65 &3536485421604327404
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -507,6 +543,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  interactDuration: 1
+  playerAnimationTrigger: Interact
+  nextState: 0
+  canStopInteract: 1
 --- !u!65 &7913794531402884570
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -556,6 +597,7 @@ GameObject:
   - component: {fileID: 254715714175362710}
   - component: {fileID: 1036415023885672954}
   - component: {fileID: 8928790168591572750}
+  - component: {fileID: 8373008894606863490}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Untagged
@@ -653,6 +695,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 16d71d1768bc32447876d5fd7531bb7b, type: 3}
+--- !u!114 &8373008894606863490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6583382614578031740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6774320914746626497
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,6 +722,8 @@ GameObject:
   - component: {fileID: 6208828106804831981}
   - component: {fileID: 3851085991715117986}
   - component: {fileID: 1890755751606257341}
+  - component: {fileID: -3115857464186693866}
+  - component: {fileID: -8075657750114562131}
   m_Layer: 0
   m_Name: tank_01_b
   m_TagString: Untagged
@@ -821,6 +877,114 @@ MonoBehaviour:
   coverPointPrefab: {fileID: 0}
   offset: 1
   generatedPoint: []
+--- !u!114 &-3115857464186693866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774320914746626497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe91dc294731a9428c0941ea7579110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  complexMaskingMode: 0
+  drawingMode: 8
+  outlineLayer: 0
+  outlineTargets:
+  - CutoutMask: 8
+    renderer: {fileID: 4146226322295227340}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 8075705498685393725}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 1036415023885672954}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 7391744171753511890}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  - CutoutMask: 8
+    renderer: {fileID: 6204742494011573263}
+    SubmeshIndex: 0
+    BoundsMode: 0
+    Bounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+    CutoutThreshold: 0.5
+    CullMode: 2
+    cutoutTextureName: 
+    cutoutTextureIndex: 0
+  renderStyle: 1
+  outlineParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+  backParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+  frontParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+--- !u!114 &-8075657750114562131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774320914746626497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6786300571102576748
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,6 +997,7 @@ GameObject:
   - component: {fileID: 6971392164502059687}
   - component: {fileID: 7391744171753511890}
   - component: {fileID: 128647448800477951}
+  - component: {fileID: 4839707138837274028}
   m_Layer: 0
   m_Name: lid01
   m_TagString: Untagged
@@ -929,6 +1094,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0613348, y: 0.10523348, z: 1.0613353}
   m_Center: {x: 0.000000059604645, y: -0.000000040978158, z: -0.44047523}
+--- !u!114 &4839707138837274028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6786300571102576748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034bc47afcbf5e141a58d5c20b7808e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7975756625742358727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +1177,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3372787e5e1298a4f86d0a53a4cb0499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  interactDuration: 1
+  playerAnimationTrigger: Interact
+  nextState: 0
+  canStopInteract: 1
 --- !u!65 &1493696580467973271
 BoxCollider:
   m_ObjectHideFlags: 0
