@@ -22,6 +22,7 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public PlayerMovementModule MyMovementModule { get; private set; }
     [SerializeField] public PlayerCombatModule MyCombatModule { get; private set; }
     [SerializeField] public PlayerAnimator MyAnimModule { get; private set; }
+    [SerializeField] public PlayerSoundController MySoundController { get; private set;}
     [SerializeField] public EntityStatus MyStatus { get; private set; }
     [SerializeField] public Inventory MyInventory { get; private set; }
 
@@ -56,6 +57,7 @@ public class PlayerSkillModule : MonoBehaviour
         MyAnimModule = GetComponent<PlayerAnimator>();
         MyStatus = GetComponent<EntityStatus>();
         MyInventory = GetComponent<Inventory>();
+        MySoundController = GetComponent<PlayerSoundController>();
 
         groundLayer = LayerMask.GetMask("Ground");
     }
@@ -175,9 +177,17 @@ public class PlayerSkillModule : MonoBehaviour
         return mySkills[(int)skillIndex].CanActivate();
     }
 
+    private bool CheckAnotherModuleCondition()
+    {
+        return !MyCombatModule.MyWeapon.IsReloading;
+    }
+
     public bool CanSelectTarget(in RaycastHit hit, out Collider castedCollider, out Vector3 point)
     {
         castedCollider = null;
+        point = Vector3.zero;
+
+        if (!CheckAnotherModuleCondition()) return false;
 
         if (skillDatas[(int)lastSkillInput] is IAoESkillData
         && (((1 << hit.collider.gameObject.layer) & groundLayer.value) != 0))

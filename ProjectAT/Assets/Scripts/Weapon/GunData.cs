@@ -3,17 +3,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Gun Data", menuName = "Scriptable Objects/GunData")]
 public class GunData : ScriptableObject
 {
-    [SerializeField]
-    private AudioClip shotClip; // �߻� �Ҹ�
-    [SerializeField]
-    private AudioClip reloadClip; // ������ �Ҹ�
-
+    [Header("Gun Prefabs")]
     [SerializeField]
     private GameObject bulletPrefab;
 
     [SerializeField]
     private GameObject hitPrefab;
 
+    [Header("Gun Stats")]
     [SerializeField]
     private int damage = 25; // ���ݷ�
 
@@ -31,11 +28,22 @@ public class GunData : ScriptableObject
 
     [SerializeField]
     private float maxDistance = 100f;
+    [Header("Visuals")]
     [SerializeField]
     private Sprite gunIcon;
 
+    [Header("Audio Clips")]
+    [SerializeField]
+    private AudioClip shotClip;
+    [SerializeField]
+    private AudioClip reloadStartClip;
+    [SerializeField] 
+    private AudioClip reloadEndClip;
+
+
     public AudioClip ShotClip => shotClip;
-    public AudioClip ReloadClip => reloadClip;
+    public AudioClip ReloadStartClip => reloadStartClip;
+    public AudioClip ReloadEndClip => reloadEndClip;
 
     public GameObject BulletPrefab => bulletPrefab;
     public GameObject HitPrefab => hitPrefab;

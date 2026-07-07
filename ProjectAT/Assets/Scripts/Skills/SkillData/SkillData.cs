@@ -29,6 +29,9 @@ public class SkillData : ScriptableObject
     [SerializeField] private Sprite skillIcon;
     [SerializeField] private string animationTriggerName; //안쓰이면 삭제 할 것.
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip castingStartSound;
+
 
     #region Getters
     public SkillId SkillId => skillId;
@@ -41,5 +44,6 @@ public class SkillData : ScriptableObject
     public Texture2D CursorSkin => cursorSkin;
     public Sprite SkillIcon => skillIcon;
     public string AnimationTriggerName => animationTriggerName; 
+    public AudioClip CastingStartSound => castingStartSound;
     #endregion
 }

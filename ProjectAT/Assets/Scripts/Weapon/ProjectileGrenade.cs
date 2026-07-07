@@ -3,23 +3,21 @@ using System.Collections;
 
 public class ProjectileGrenade : ThrowProjectileBase
 {
+    [Header("Grenade Settings")]
     [SerializeField] private ParticleSystem explosionEffect;
     [SerializeField] public int ExplodeDamage{get; private set;}
     [SerializeField] public float ExplosionRadius{get; private set;}
-    [SerializeField] int groundLayer;
     [SerializeField] private float fuseTime = 3f;
     [SerializeField] private float explosionNoiseRadius = 18f;
 
     //시간초 UI 넣는건?
 
     private Coroutine explosionCoroutine;
-    private bool hasLanded;
     private bool hasExploded;
 
     protected override void Awake()
     {
         base.Awake();
-        groundLayer = LayerMask.NameToLayer("Ground");
     }
 
     protected void OnDisable()
@@ -35,20 +33,13 @@ public class ProjectileGrenade : ThrowProjectileBase
         this.explosionNoiseRadius = explosionNoiseRadius;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter(Collision collision)
     {
-        if(hasLanded || collision.gameObject.layer != groundLayer) return;
-
-        hasLanded = true;
-        EmitNoise(impactNoiseRadius);
-
-        if (myRigid != null)
+        base.OnCollisionEnter(collision);
+        if (hasLanded)
         {
-            myRigid.linearVelocity = Vector3.zero;
-            myRigid.angularVelocity = Vector3.zero;
+            explosionCoroutine = StartCoroutine(FuseCountdown());
         }
-
-        explosionCoroutine = StartCoroutine(FuseCountdown());
     }
 
     private IEnumerator FuseCountdown()
@@ -61,14 +52,6 @@ public class ProjectileGrenade : ThrowProjectileBase
     {
         if (hasExploded) return;
         hasExploded = true;
-
-        EmitNoise(explosionNoiseRadius);
-
-        if (explosionEffect != null)
-        {
-            ParticleSystem effect = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            effect.Play();
-        }
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, effectedEntityLayer);
         foreach (Collider hitCollider in hitColliders)
@@ -85,6 +68,16 @@ public class ProjectileGrenade : ThrowProjectileBase
                 damageable.TakeDamage(ExplodeDamage);
             }
         }
+        
+        if (explosionEffect != null)
+        {
+            ParticleSystem effect = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            effect.Play();
+        }
+
+        EmitNoise(explosionNoiseRadius);
+        soundController.PlayExplosionAt(transform.position);
+
         Destroy(gameObject);
     }
 

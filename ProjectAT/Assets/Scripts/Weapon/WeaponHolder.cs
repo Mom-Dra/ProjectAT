@@ -36,6 +36,7 @@ public class WeaponHolder : MonoBehaviour
     public float SemiAutoFireRate => nowWeapon.GunData.TimeBetFire;
     public float FullAutoFireRate => nowWeapon.GunData.FullAutoFireRate;
     public Gun NowWeapon => nowWeapon;
+    public bool IsReloading => nowWeapon != null && nowWeapon.IsReloading;
     #endregion
 
     public Action<Gun> OnWeaponFired; //NOTE : Gun을 진짜 넘겨줘야하는지 검토 필요.

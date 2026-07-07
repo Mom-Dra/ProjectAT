@@ -24,6 +24,7 @@ MonoBehaviour:
   cursorSkin: {fileID: 0}
   skillIcon: {fileID: 21300000, guid: c65dcc322ce2ad14fabef6a1efd1519b, type: 3}
   animationTriggerName: 
+  castingStartSound: {fileID: 8300000, guid: 439fcea395dc8b9419555f602291a9b3, type: 3}
   throwingObjectPrefab: {fileID: 5801574965826310662, guid: d6d05aa84ea333d4cb0f95c900695142, type: 3}
   landedNoiseRange: 3
   requiredGrenadeItem: {fileID: 11400000, guid: f02561f720be1074baeacdf870eacda1, type: 2}

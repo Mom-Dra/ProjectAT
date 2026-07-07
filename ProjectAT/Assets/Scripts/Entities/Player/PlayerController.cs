@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerSkillModule mySkillModule;
     [SerializeField] private PlayerCoverModule myCoverModule;
     [SerializeField] private PlayerInteractionModule myInteractionModule;
+    [SerializeField] private PlayerSoundController mySoundController;
     [SerializeField] private EntityStatus myStatus;
     [SerializeField] private CrowdControlModule myCrowdControlModule;
     [SerializeField] private Camera myCamera;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
     public PlayerSkillModule MySkillModule => mySkillModule;
     public PlayerCoverModule MyCoverModule => myCoverModule;
     public PlayerInteractionModule MyInteractionModule => myInteractionModule;
+    public PlayerSoundController MySoundController => mySoundController;
     public EntityStatus MyStatus => myStatus;
     public CrowdControlModule MyCrowdControlModule => myCrowdControlModule;
     public bool IsStunned => myCrowdControlModule != null && myCrowdControlModule.IsStunned;
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour
         mySkillModule = GetComponent<PlayerSkillModule>();
         myCoverModule = GetComponent<PlayerCoverModule>();
         myInteractionModule = GetComponent<PlayerInteractionModule>();
+        mySoundController = GetComponent<PlayerSoundController>();
         myStatus = GetComponent<EntityStatus>();
         myCrowdControlModule = GetComponent<CrowdControlModule>();
     }
@@ -162,6 +165,7 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
     }
 
+    
     public void HandleRightClickInput()
     {
         if (IsStunned) return;

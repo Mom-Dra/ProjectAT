@@ -50,8 +50,6 @@ public class Managers : Singleton<Managers>
         poolManager = new PoolManager(pooledPrefabs);
         sceneManager = new SceneManager();
         eventManager = new EventManager();
-
-
         sceneManager.Initialize();
 
         //uIManager.ShowHealthUI(target.GetComponent<EntityStatus>());
