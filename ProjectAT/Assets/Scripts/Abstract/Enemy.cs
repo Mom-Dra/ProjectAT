@@ -11,6 +11,7 @@ using UnityEngine.Animations.Rigging;
 [RequireComponent(typeof(EnemyAlertnessModule))]
 [RequireComponent(typeof(PerceptionSystem))]
 [RequireComponent(typeof(CrowdControlModule))]
+[RequireComponent(typeof(StatusEffectScreenUI))]
 public class Enemy : MonoBehaviour, ISquadMember
 {
     public event Action<ISquadMember, IPerceivable> onTargetDetected;
@@ -140,11 +141,6 @@ public class Enemy : MonoBehaviour, ISquadMember
         entityStatus = GetComponent<EntityStatus>();
         rigBuilder = GetComponent<RigBuilder>();
         coverHandler = GetComponent<CoverHandler>();
-
-        if (crowdControlModule == null)
-        {
-            crowdControlModule = gameObject.AddComponent<CrowdControlModule>();
-        }
 
         renderersToHide = GetComponentsInChildren<Renderer>(true);
         collidersToDisable = GetComponentsInChildren<Collider>(true);

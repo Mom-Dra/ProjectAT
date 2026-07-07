@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\Enemy\State\EnemyInvestigateState.cs" />
     <Compile Include="Assets\Scripts\Manager\Managers.cs" />
     <Compile Include="Assets\Scripts\Abstract\IFadeable.cs" />
+    <Compile Include="Assets\Scripts\UI\StatusEffectScreenUI.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\GrenadeLauncher.cs" />
     <Compile Include="Assets\Scripts\Abstract\IBushHideable.cs" />
     <Compile Include="Assets\Scripts\Skills\DesignatedFire.cs" />

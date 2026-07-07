@@ -8,6 +8,7 @@ using System;
 public enum PlayerInputType : ushort { LeftClick, RightClick, DesignatedFireKey }
 
 [RequireComponent(typeof(CrowdControlModule))]
+[RequireComponent(typeof(StatusEffectScreenUI))]
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     #region StateMachine States
     public PlayerState CurrentState { get; private set; }
-    public NormalState NormalState{ get; private set; }
+    public NormalState NormalState { get; private set; }
     public SkillChaseState SkillChaseState { get; private set; }
     public SkillCastState SkillCastingState { get; private set; }
     public DeadState DeadState { get; private set; }
@@ -64,12 +65,8 @@ public class PlayerController : MonoBehaviour
         myInteractionModule = GetComponent<PlayerInteractionModule>();
         myStatus = GetComponent<EntityStatus>();
         myCrowdControlModule = GetComponent<CrowdControlModule>();
-
-        if (myCrowdControlModule == null)
-        {
-            myCrowdControlModule = gameObject.AddComponent<CrowdControlModule>();
-        }
     }
+
     private void InitiateStateMachine()
     {
         NormalState = new NormalState(this);
@@ -145,9 +142,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         myCoverModule.HandleCoverRaycast(Managers.Instance.InputManager.MousePosition);
-        
+
         CurrentState.OnUpdate();
-        if(mySkillModule.IsTargetting) UpdateSkillIndicator();
+        if (mySkillModule.IsTargetting) UpdateSkillIndicator();
         myPlayerAnimator.SetSpeed(myMovementModule.GetVelocity()); //애니메이션을 위한 이동속도 조절.
     }
 
@@ -157,9 +154,9 @@ public class PlayerController : MonoBehaviour
     public void HandlePlayerRightClickInput()
     {
         if (IsStunned) return;
-        if(EventSystem.current.IsPointerOverGameObject()) return;
-        
-        if(CurrentState is IRightClickHandler state)
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        if (CurrentState is IRightClickHandler state)
         {
             state.OnRightClick(RaycastAtMouseLocation(out RaycastHit ray) ? ray : new RaycastHit());
         }
@@ -174,7 +171,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsStunned) return;
 
-        if((CurrentState is ILeftClickHandler state) && RaycastAtMouseLocation(out RaycastHit ray))
+        if ((CurrentState is ILeftClickHandler state) && RaycastAtMouseLocation(out RaycastHit ray))
         {
             state.OnLeftClick(ray);
         }
@@ -184,7 +181,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsStunned) return;
 
-        if(CurrentState is ISkillInputHandler state)
+        if (CurrentState is ISkillInputHandler state)
         {
             state.OnSkillInput(index);
         }
@@ -194,7 +191,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsStunned) return;
 
-        if(CurrentState is IDropObjectHandler state)
+        if (CurrentState is IDropObjectHandler state)
         {
             state.OnDropObjectInput();
         }
@@ -226,7 +223,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsStunned) return;
 
-        if(CurrentState is IReloadInputHandler state)
+        if (CurrentState is IReloadInputHandler state)
         {
             state.OnReloadInput();
         }
@@ -239,7 +236,7 @@ public class PlayerController : MonoBehaviour
         if (IsStunned) return;
         if (!castedEnemy) return;
         SelectedEnemy = castedEnemy;
-        myPlayerAnimator.SetAiming(true, SelectedEnemy.transform);     
+        myPlayerAnimator.SetAiming(true, SelectedEnemy.transform);
     }
 
     public void CancelEnemySelect()
@@ -259,7 +256,7 @@ public class PlayerController : MonoBehaviour
             return false;
         }
 
-        if (SelectedEnemy == null) 
+        if (SelectedEnemy == null)
         {
             return false;
         }
