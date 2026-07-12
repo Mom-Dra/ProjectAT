@@ -30,5 +30,5 @@ MonoBehaviour:
   requiredGrenadeItem: {fileID: 11400000, guid: f02561f720be1074baeacdf870eacda1, type: 2}
   requiredGrenadeItemAmount: 1
   explosionRadius: 5
-  fuseTime: 3
+  fuseTime: 1
   explosionNoiseRadius: 15

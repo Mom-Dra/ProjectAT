@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatusEffectScreenUI : MonoBehaviour
+public class StatusEffectScreenUI : MonoBehaviour //Field UI 클래스를 상속받는건?
 {
     private static RectTransform overlayRoot;
 

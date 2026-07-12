@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1443350348304045981}
   - component: {fileID: 4905554559305863249}
   - component: {fileID: 613217839548517241}
+  - component: {fileID: 5265217290638043213}
   m_Layer: 2
   m_Name: NormalGrenadeProjectile
   m_TagString: Untagged
@@ -100,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRigid: {fileID: 3498173702606450174}
-  soundController: {fileID: 0}
+  soundController: {fileID: 4905554559305863249}
   effectedEntityLayer:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -234,6 +235,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5265217290638043213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5801574965826310662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a479cae9c1b496542bf29c685300037a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewPrefab: {fileID: 1660772525681813367, guid: 3f12e88d4aa4f284799d8d30490d61cf, type: 3}
+  targetAnchor: {fileID: 0}
+  worldOffset: {x: 0, y: 1, z: 0}
+  screenOffset: {x: 0, y: 0}
+  hideWhenBehindCamera: 1
+  grenade: {fileID: 0}
 --- !u!1001 &589522153539378658
 PrefabInstance:
   m_ObjectHideFlags: 0

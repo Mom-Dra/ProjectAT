@@ -9,11 +9,12 @@ public class ProjectileGrenade : ThrowProjectileBase
     [SerializeField] public float ExplosionRadius{get; private set;}
     [SerializeField] private float fuseTime = 3f;
     [SerializeField] private float explosionNoiseRadius = 18f;
-
-    //시간초 UI 넣는건?
-
     private Coroutine explosionCoroutine;
+    private float remainingFuseTime = -1f;
     private bool hasExploded;
+
+    public bool IsFuseRunning => remainingFuseTime >= 0f && !hasExploded;
+    public float RemainingFuseTime => IsFuseRunning ? remainingFuseTime : fuseTime;
 
     protected override void Awake()
     {
@@ -38,13 +39,19 @@ public class ProjectileGrenade : ThrowProjectileBase
         base.OnCollisionEnter(collision);
         if (hasLanded)
         {
+            remainingFuseTime = fuseTime;
             explosionCoroutine = StartCoroutine(FuseCountdown());
         }
     }
 
     private IEnumerator FuseCountdown()
     {
-        yield return new WaitForSeconds(fuseTime);
+        while (remainingFuseTime > 0f)
+        {
+            remainingFuseTime -= Time.deltaTime;
+            yield return null;
+        }
+
         Explode();
     }
 
