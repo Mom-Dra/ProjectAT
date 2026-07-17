@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
         myCrowdControlModule.OnStunStarted += HandleStunStarted;
         myCrowdControlModule.OnStunEnded += HandleStunEnded;
         LinkInputEventsAll();
-        Managers.Instance.UIManager.InitPlayerStatusInfo(myStatus);
+        InGameManager.Instance.UIManager.InitPlayerStatusInfo(myStatus);
         //myStatus.onRevive += () => Debug.Log("Player Revived!"); // TODO : Revive 이벤트 활용
     }
 
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
             myCrowdControlModule.OnStunEnded -= HandleStunEnded;
         }
 
-        //Managers.Instance.UIManager.ClearPlayerStatusInfo(); //TODO : UI 제거 함수 구현해야함.
+        //InGameContext.Instance.UIManager.ClearPlayerStatusInfo(); //TODO : UI 제거 함수 구현해야함.
         UnLinkInputEventsAll();
         //myStatus.onRevive -= () => Debug.Log("Player Revived!");
     }
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(myCamera.ScreenPointToRay(Managers.Instance.InputManager.MousePosition), out ray, 100f, rightClickInteractableLayer);
     }
 
-    
+
     public void HandleRightClickInput()
     {
         if (IsStunned) return;

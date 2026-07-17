@@ -1,14 +1,11 @@
-using Biostart.Enemy;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Pool;
 
-public class UIManager
+public class InGameUIManager
 {
-    private GameObject healthUIPrefab;
+    private readonly GameObject healthUIPrefab;
     private PlayerHUD playerHUD;
 
-    public UIManager(GameObject healthUIPrefab, PlayerHUD playerHUD)
+    public InGameUIManager(GameObject healthUIPrefab, PlayerHUD playerHUD)
     {
         if (healthUIPrefab is null)
             Debug.LogError("healthUIPrefab is null");
@@ -33,11 +30,12 @@ public class UIManager
 
     public void HideHealthUI(HealthUI healthUI)
     {
+        if (healthUI is null) return;
+
         healthUI.UnBind();
         Managers.Instance.PoolManager.ReturnObject(healthUI.transform.gameObject, healthUIPrefab);
     }
 
-    #region  플레이어 HUD - Status
     public void InitPlayerStatusInfo(EntityStatus playerStatus)
     {
         if (playerStatus is null)
@@ -68,16 +66,26 @@ public class UIManager
 
     public void SetPlayerHealthUI(float healthRatio)
     {
+        if (playerHUD is null)
+            return;
+
         playerHUD.SetPlayerHealthUI(healthRatio);
     }
 
     public void InitPlayerGunInfo(WeaponHolder myGunHolder)
     {
+        if (playerHUD is null)
+        {
+            Debug.LogError("PlayerHUD is null!");
+            return;
+        }
+
         if (myGunHolder.NowWeapon is null)
         {
             Debug.LogError("Player GunData is null!");
             return;
         }
+
         playerHUD.SetPlayerWeaponInfo(myGunHolder.NowWeapon);
         myGunHolder.OnWeaponFired += UpdatePlayerAmmoUI;
         myGunHolder.OnWeaponReloadStart += UpdatePlayerAmmoUI;
@@ -86,23 +94,34 @@ public class UIManager
 
     public void UpdatePlayerAmmoUI(Gun gun)
     {
+        if (playerHUD is null)
+            return;
+
         if (gun is null)
         {
             Debug.LogError("GunData is null!");
             return;
         }
+
         playerHUD.SetPlayerAmmoText(gun.MagAmmo, gun.RemainAmmo);
     }
 
     public void SetPlayerAmmoUI(int currentAmmo, int maxAmmo)
     {
+        if (playerHUD is null)
+            return;
+
         playerHUD.SetPlayerAmmoText(currentAmmo, maxAmmo);
     }
-    #endregion
 
-    #region  플레이어 HUD - Skills
     public void InitPlayerSkillInfo(PlayerSkillModule playerSkillModule, SkillData[] skillDatas)
     {
+        if (playerHUD is null)
+        {
+            Debug.LogError("PlayerHUD is null!");
+            return;
+        }
+
         playerHUD.SetPlayerSkillInfo(skillDatas);
         playerHUD.BindPlayerSkillEvent(playerSkillModule);
         playerSkillModule.OnSkillCooldownStart += StartSkillCooldown;
@@ -111,14 +130,17 @@ public class UIManager
 
     private void StartSkillCooldown(SkillNumber skillNumber, float cooldownDuraion)
     {
+        if (playerHUD is null)
+            return;
+
         playerHUD.StartSkillCooldown(skillNumber, cooldownDuraion);
     }
 
     public void SetSkillItemCount(SkillNumber skillNumber, int itemCount)
     {
+        if (playerHUD is null)
+            return;
+
         playerHUD.SetSkillItemText(skillNumber, itemCount);
     }
-
-
-    # endregion
 }

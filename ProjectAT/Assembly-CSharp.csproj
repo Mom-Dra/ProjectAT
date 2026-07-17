@@ -58,6 +58,7 @@
     <Compile Include="Assets\Scripts\Weapon\IGunState.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\EnableTrailAfterTime.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\InteractingState.cs" />
+    <Compile Include="Assets\Scripts\Manager\NotPermenantManager\InGameUIManager.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\SkillCastState.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\StunnedState.cs" />
     <Compile Include="Assets\Scripts\Abstract\IDamageable.cs" />
@@ -83,7 +84,6 @@
     <Compile Include="Assets\Scripts\UI\HealthUI.cs" />
     <Compile Include="Assets\Scripts\Start.cs" />
     <Compile Include="Assets\Scripts\Weapon\ProjectileGrenade.cs" />
-    <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\Skills\ConcreteSkills\SuppressiveFire.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCamera.cs" />
     <Compile Include="Assets\Scripts\Utils\Rendering\BuildingDithering\BuildingRoofMouseDetector.cs" />
@@ -139,6 +139,7 @@
     <Compile Include="Assets\Scripts\Enemy\StimulusType.cs" />
     <Compile Include="Assets\Scripts\Interactable\StaticInteractableObject.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillData\GrenadeSkillData.cs" />
+    <Compile Include="Assets\Scripts\UI\FieldUI\FieldUIPrefab\CountdownView.cs" />
     <Compile Include="Assets\Scripts\Utils\ReturnParticleSystemToPool.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\CameraShake.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Assets\Scripts\Buff\StatBuffData.cs" />
     <Compile Include="Assets\Scripts\Shader\DitherFadeController.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerInput.cs" />
+    <Compile Include="Assets\Scripts\UI\FieldUI\FieldUI.cs" />
     <Compile Include="Assets\Scripts\Abstract\IThrowableProjectile.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerAnimator.cs" />
     <Compile Include="Assets\Scripts\Interactable\Door.cs" />
@@ -261,9 +263,11 @@
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\NormalState.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillContext.cs" />
     <Compile Include="Assets\Scripts\Enemy\Squad\Squad.cs" />
+    <Compile Include="Assets\Scripts\UI\FieldUI\GrenadeCountDownUI.cs" />
     <Compile Include="Assets\Scripts\View\Controller.cs" />
     <Compile Include="Assets\Scripts\Audio\ConcreteSoundController\Entity\PlayerSoundController.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\SkillExecuteState.cs" />
+    <Compile Include="Assets\Scripts\Manager\NotPermenantManager\InGameManager.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\StateMachine\InteractChaseState.cs" />
     <Compile Include="Assets\Scripts\Entities\DeadBody\DownedBody.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverGenerator.cs" />

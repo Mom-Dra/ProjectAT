@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using UnityEngine;
 
 public class MissionManager : MonoBehaviour
@@ -10,11 +9,6 @@ public class MissionManager : MonoBehaviour
     private HashSet<MissionData> completedMissions = new HashSet<MissionData>();
 
     private bool[] isDeadPlayers = new bool[(int)PlayerNumber.Last];
-
-    private void Awake()
-    {
-
-    }
 
     private void OnEnable()
     {

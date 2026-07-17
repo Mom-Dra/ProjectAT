@@ -14,9 +14,9 @@ public class PlayerCombatModule : MonoBehaviour
     [SerializeField] private float arcHeight = 2.0f;
     [SerializeField] private float AimingCoolTime = 0.5f;
     [SerializeField] private float currentAimingTime = 0f;
-    
+
     #region Properties
-    public bool IsAiming {get; private set;}
+    public bool IsAiming { get; private set; }
     public float ThrowRange => myStatus.ThrowRange;
     public WeaponHolder MyWeapon => myWeapon;
     public Transform ThrowPoint => throwPoint;
@@ -36,7 +36,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     private void Start()
     {
-        Managers.Instance.UIManager.InitPlayerGunInfo(myWeapon);
+        InGameManager.Instance.UIManager.InitPlayerGunInfo(myWeapon);
     }
 
     private void Update()
@@ -49,9 +49,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool IsEnemyInWeaponRange(Enemy enemy, float rangeOffset = 0f)
     {
-
-        return enemy != null && myWeapon != null
-        && CheckPositionInRange(enemy.transform.position, myWeapon.Range + rangeOffset);
+        return enemy != null && myWeapon != null && CheckPositionInRange(enemy.transform.position, myWeapon.Range + rangeOffset);
     }
 
     public bool IsTargetVisible(Collider targetCollider)
@@ -126,7 +124,6 @@ public class PlayerCombatModule : MonoBehaviour
         return false;
     }
 
-
     public bool CheckAimingTargetEnough()
     {
         return currentAimingTime >= AimingCoolTime;
@@ -141,7 +138,7 @@ public class PlayerCombatModule : MonoBehaviour
     {
         return myWeapon != null && myWeapon.HasAnyAmmo();
     }
-    
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -158,7 +155,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     public void NormalAttackTarget(GameObject target)
     {
-        if (target.TryGetComponent(out IDamageable damageable)) 
+        if (target.TryGetComponent(out IDamageable damageable))
         {
             myWeapon.FireWeaponOnlyVFX(target.transform.position, Vector3.up * 1.5f, false);
             damageable.TakeDamage(myWeapon.Damage);
@@ -175,8 +172,8 @@ public class PlayerCombatModule : MonoBehaviour
 
     public bool CanThrowSomethingToPosition(Collider projectileObjectCollider, Vector3 position)
     {
-        if(projectileObjectCollider == null) return false;
-        if (Vector3.SqrMagnitude(position - throwPoint.position) > myStatus.ThrowRange * myStatus.ThrowRange) 
+        if (projectileObjectCollider == null) return false;
+        if (Vector3.SqrMagnitude(position - throwPoint.position) > myStatus.ThrowRange * myStatus.ThrowRange)
         {
             return false;
         }
@@ -194,7 +191,7 @@ public class PlayerCombatModule : MonoBehaviour
             radius = Mathf.Max(projectileObjectCollider.bounds.extents.x, projectileObjectCollider.bounds.extents.z);
         }
 
-        int segmentCount = 20; 
+        int segmentCount = 20;
         float deltaTime = totalTime / segmentCount;
         Vector3 previousPoint = origin;
 
@@ -217,7 +214,7 @@ public class PlayerCombatModule : MonoBehaviour
 
     public void ThrowSomthingToTarget(ThrowProjectileBase throwingObject, Vector3 targetPos)
     {
-        if(throwingObject == null) return;
+        if (throwingObject == null) return;
 
         throwingObject.gameObject.transform.position = throwPoint.position;
         Vector3 origin = throwPoint.position;

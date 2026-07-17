@@ -9,7 +9,7 @@ public class ProjectileSoundController : SoundControllerBase
 
     [Header("Options")]
     [SerializeField] private bool playImpactOnlyOnce = true;
-    
+
     private bool impactPlayed;
 
     private void OnEnable()
@@ -19,7 +19,7 @@ public class ProjectileSoundController : SoundControllerBase
 
     public void PlayImpact()
     {
-        if(playImpactOnlyOnce && impactPlayed) return;
+        if (playImpactOnlyOnce && impactPlayed) return;
 
         impactPlayed = true;
         PlayOneShot(ImpactChannel, impactCue);
@@ -27,8 +27,8 @@ public class ProjectileSoundController : SoundControllerBase
 
     public void PlayExplosionAt(Vector3 position)
     {
-        if(explosionCue == null) return;
+        if (explosionCue == null) return;
 
-        SoundManager.Instance.PlaySfxOneShotAt(explosionCue, position);
+        Managers.Instance.SoundManager.PlaySfxOneShotAt(explosionCue, position);
     }
 }

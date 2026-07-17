@@ -6,7 +6,7 @@ public class PlayerInteractionModule : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerMovementModule myMovementModule;
-    
+
     [Header("Settings")]
     [SerializeField] private float interactLocationCheckInterval = 0.2f;
     private float currentInteractLocationCheckTime = 0f;
@@ -17,7 +17,7 @@ public class PlayerInteractionModule : MonoBehaviour
 
     [SerializeField] private Transform holdPoint;
     public Transform HoldPoint { get => holdPoint; set => holdPoint = value; }
-    public InteractableObject CurrentInteractTarget {get => currInteractObject; set => currInteractObject = value; }
+    public InteractableObject CurrentInteractTarget { get => currInteractObject; set => currInteractObject = value; }
     public Vector3 CurrentInteractPosition => currentInteractPosition;
     public Vector3 CurrentInteractLookDir => currentInteractLookDir;
 
@@ -29,7 +29,7 @@ public class PlayerInteractionModule : MonoBehaviour
 
     private void OnEnable()
     {
-        GetComponent<EntityStatus>().onDeath += DropHoldedObject;   
+        GetComponent<EntityStatus>().onDeath += DropHoldedObject;
     }
 
     private void OnDisable()
@@ -39,9 +39,9 @@ public class PlayerInteractionModule : MonoBehaviour
 
     public void DropHoldedObject()
     {
-        if(currInteractObject != null)
+        if (currInteractObject != null)
         {
-            if(CurrentInteractTarget is ICarriable carriable)
+            if (CurrentInteractTarget is ICarriable carriable)
             {
                 carriable.StopCarrying();
             }
@@ -67,24 +67,24 @@ public class PlayerInteractionModule : MonoBehaviour
 
     public void SelectInteractTarget(InteractableObject target)
     {
-        Managers.Instance.InteractionManager.SelectInteractableTarget(target);
+        InGameManager.Instance.InteractionManager.SelectInteractableTarget(target);
     }
 
     public void UnSelectInteractTarget()
     {
-        Managers.Instance.InteractionManager.ClearSelectedTarget();
+        InGameManager.Instance.InteractionManager.ClearSelectedTarget();
     }
 
     public bool TrySetInteractTarget(RaycastHit castedObject)
     {
-        
+
         InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();
         if (!(interactable != null && !interactable.IsInUse))
         {
             return false;
         }
 
-        if(TryUpdateInteractLocation(interactable))
+        if (TryUpdateInteractLocation(interactable))
         {
             SetInteractTarget(interactable);
             return true;
@@ -118,7 +118,7 @@ public class PlayerInteractionModule : MonoBehaviour
     public bool CheckCurrentInteractTargetReachable()
     {
         if (currInteractObject == null) return false;
-        if(Time.time - currentInteractLocationCheckTime < interactLocationCheckInterval) return true;
+        if (Time.time - currentInteractLocationCheckTime < interactLocationCheckInterval) return true;
         currentInteractLocationCheckTime = Time.time;
 
         if (myMovementModule.CanReachPosition(currentInteractPosition))
@@ -131,13 +131,13 @@ public class PlayerInteractionModule : MonoBehaviour
 
     public bool CheckCurrentInteractObjectAvailable()
     {
-        return currInteractObject != null 
+        return currInteractObject != null
         && (!(currInteractObject.IsInUse && currInteractObject.CurrentInteractor != gameObject));
     }
 
     private bool TryUpdateInteractLocation(InteractableObject interactable)
     {
-        if(interactable.TryGetInteractLocation(transform, out Vector3 sampledPosition, out Vector3 sampledLookDir, myMovementModule.Agent))
+        if (interactable.TryGetInteractLocation(transform, out Vector3 sampledPosition, out Vector3 sampledLookDir, myMovementModule.Agent))
         {
             SetInteractLocation(sampledPosition, sampledLookDir);
             return true;

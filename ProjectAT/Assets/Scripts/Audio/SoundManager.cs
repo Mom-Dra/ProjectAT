@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class SoundManager : Singleton<SoundManager>
+public class SoundManager : MonoBehaviour
 {
     [Header("Audio Mixer Groups")]
     [SerializeField] private AudioMixerGroup sfxMixerGroup;
     [SerializeField] private AudioMixerGroup bgmMixerGroup;
-    
+
     [Header("Audio Sources Setting")]
     private AudioSource[] oneShotSources;
     [SerializeField] private int sfxSourceCount = 8;
@@ -18,9 +18,8 @@ public class SoundManager : Singleton<SoundManager>
     [Header("Temp Setting")]
     [SerializeField] private AudioClip bgmClip; //NOTE : 이거는 임시로 넣은거라 맵 정보를 나타내는 오브젝트에서 가져와야함.
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         channelCount = sfxSourceCount + bgmSourceCount;
         oneShotSources = new AudioSource[channelCount];
 
@@ -46,7 +45,7 @@ public class SoundManager : Singleton<SoundManager>
 
     private void GenerateAudioSources(GameObject root, int startChannel, int endChannel, AudioMixerGroup mixerGroup, string mixerName = "OneShot_")
     {
-        for(int i = startChannel; i < endChannel; i++)
+        for (int i = startChannel; i < endChannel; i++)
         {
             GameObject channel = new GameObject($"{mixerName}{i}");
             channel.transform.SetParent(root.transform);
@@ -62,7 +61,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void PlaySfxOneShotAt(AudioClip requestedSoundClip, Vector3 position, float volume = 1f, float pitch = 1f)
     {
-        if(requestedSoundClip == null) return;
+        if (requestedSoundClip == null) return;
 
         AudioSource source = oneShotSources[nextSfxSourceIndex];
         nextSfxSourceIndex = (nextSfxSourceIndex + 1) % sfxSourceCount;
@@ -74,20 +73,20 @@ public class SoundManager : Singleton<SoundManager>
 
     public void PlaySfxOneShotAt(RandomSoundCue randomCue, Vector3 position)
     {
-        if(randomCue == null) return;
+        if (randomCue == null) return;
 
         PlaySfxOneShotAt(randomCue.GetRandomClip(), position, randomCue.Volume, randomCue.Pitch);
     }
 
     public void PlayBgm(AudioClip requestedSoundClip, float volume = 1f, float pitch = 1f)
     {
-        if(requestedSoundClip == null) return;
+        if (requestedSoundClip == null) return;
 
         AudioSource source = oneShotSources[bgmIndex];
         source.clip = requestedSoundClip;
         source.loop = true;
         source.pitch = pitch;
-        
+
         source.Play();
     }
 

@@ -25,7 +25,7 @@ public class PlayerSoundController : SoundControllerBase
     [SerializeField] private float runStepInterval = 0.32f;
 
     [SerializeField] private float fallbackWalkSpeed = 3.5f; //NOTE : 이거 두개는 뭐임?
-    [SerializeField] private float fallbackRunSpeed = 6f;   
+    [SerializeField] private float fallbackRunSpeed = 6f;
 
     [Header("Durations")]
     [SerializeField] private float hitSoundInterval = 0.5f;
@@ -41,14 +41,14 @@ public class PlayerSoundController : SoundControllerBase
 
     private void Awake()
     {
-        if(movementModule == null) movementModule = GetComponentInParent<PlayerMovementModule>();
-        if(entityStatus == null) entityStatus = GetComponentInParent<EntityStatus>();
+        if (movementModule == null) movementModule = GetComponentInParent<PlayerMovementModule>();
+        if (entityStatus == null) entityStatus = GetComponentInParent<EntityStatus>();
         if (weaponHolder == null) weaponHolder = GetComponentInChildren<WeaponHolder>();
     }
 
     private void OnEnable()
     {
-        if(entityStatus != null) 
+        if (entityStatus != null)
         {
             entityStatus.onHealthChanged += HandleHealthChanged;
             entityStatus.onLowHealthWarning += HandleLowHealthWarning;
@@ -60,12 +60,12 @@ public class PlayerSoundController : SoundControllerBase
             weaponHolder.OnWeaponFired += HandleWeaponFired;
             weaponHolder.OnWeaponReloadStart += HandleWeaponReloadedStart;
             weaponHolder.OnWeaponReloaded += HandleWeaponReloadedEnd;
-        }   
+        }
     }
 
     private void OnDisable()
     {
-        if(entityStatus != null) 
+        if (entityStatus != null)
         {
             entityStatus.onHealthChanged -= HandleHealthChanged;
             entityStatus.onLowHealthWarning -= HandleLowHealthWarning;
@@ -90,10 +90,10 @@ public class PlayerSoundController : SoundControllerBase
     #region SoundRequests API
     public bool PlayOneShot(AudioClip clip)
     {
-        SoundManager soundManager = SoundManager.Instance;
-        if(soundManager == null || clip == null) return false;
+        if (clip == null) return false;
 
-        soundManager.PlaySfxOneShotAt(clip, transform.position);
+        Managers.Instance.SoundManager.PlaySfxOneShotAt(clip, transform.position);
+
         return true;
     }
     #endregion
@@ -107,7 +107,7 @@ public class PlayerSoundController : SoundControllerBase
 
     private void UpdateFootsteps()
     {
-        if(movementModule == null) return;
+        if (movementModule == null) return;
         if (!movementModule.IsAgentMoving())
         {
             footstepTimer = 0f;
@@ -116,7 +116,7 @@ public class PlayerSoundController : SoundControllerBase
 
         float velocity = movementModule.GetVelocity();
 
-        if(velocity < minFootstepVelocity || (playOnlyWhenRunning && !IsRunning(velocity)))
+        if (velocity < minFootstepVelocity || (playOnlyWhenRunning && !IsRunning(velocity)))
         {
             footstepTimer = 0f;
             return;
@@ -124,7 +124,7 @@ public class PlayerSoundController : SoundControllerBase
 
 
         footstepTimer -= Time.deltaTime;
-        if(footstepTimer > 0f) return;
+        if (footstepTimer > 0f) return;
 
         PlayFootstepSound();
         footstepTimer = GetFootstepInterval(velocity);
@@ -142,15 +142,15 @@ public class PlayerSoundController : SoundControllerBase
         return currentVelocity >= runThreshold;
     }
     #endregion
-    
+
     #region Combat Situation Sounds
     public void PlayHitSound()
     {
-        if(Time.time - currentHitTime < hitSoundInterval) return;
+        if (Time.time - currentHitTime < hitSoundInterval) return;
         PlayOneShot(VoiceChannel, hitCue);
         currentHitTime = Time.time;
     }
-    
+
     private void HandleHealthChanged(float healthRatio)
     {
         PlayHitSound();
@@ -184,7 +184,7 @@ public class PlayerSoundController : SoundControllerBase
 
     private void HandleLowHealthWarning()
     {
-        if(playExertionOnLowHealth)
+        if (playExertionOnLowHealth)
         {
             Play(exertionChannel, exertionCue);
         }

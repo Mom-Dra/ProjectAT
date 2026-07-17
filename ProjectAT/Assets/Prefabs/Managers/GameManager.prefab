@@ -47,9 +47,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputReader: {fileID: 11400000, guid: 2caca629a4fe8434d942c640d9084998, type: 2}
-  interactionLayerMask:
-    serializedVersion: 2
-    m_Bits: 8320
   cursorSettings: {fileID: 11400000, guid: 8acb837a152503f4db0458ed0ab03436, type: 2}
   pooledPrefabs:
   - Prefab: {fileID: 8906335231756821871, guid: 14a6cea42d2488b4986f7022362952f7, type: 3}
@@ -61,8 +58,6 @@ MonoBehaviour:
   - Prefab: {fileID: 946230873439750309, guid: a45c701df17b62d439fc78c12adea761, type: 3}
     PrewarmCount: 20
     PoolParentTransform: {fileID: 0}
-  healthUIPrefab: {fileID: 8906335231756821871, guid: 14a6cea42d2488b4986f7022362952f7, type: 3}
-  target: {fileID: 0}
 --- !u!114 &4137690778930250142
 MonoBehaviour:
   m_ObjectHideFlags: 0

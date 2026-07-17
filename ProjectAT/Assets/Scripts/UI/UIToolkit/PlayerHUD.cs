@@ -32,12 +32,13 @@ public class PlayerHUD : MonoBehaviour
 
     private void Awake()
     {
-        Managers.Instance.UIManager.SetPlayerHUD(this);
+        InitUIElements();
     }
 
     private void OnEnable()
     {
         InitUIElements();
+        InGameManager.Instance?.UIManager?.SetPlayerHUD(this);
     }
 
     private void OnDisable()

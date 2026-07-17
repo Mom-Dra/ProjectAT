@@ -3337,8 +3337,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 755490944018596935, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1751593315}
   m_SourcePrefab: {fileID: 100100000, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
+--- !u!1 &1751593314 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 755490944018596935, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
+  m_PrefabInstance: {fileID: 1751593313}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1751593315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751593314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8ebad8ab7a4cd4ca0cd84ffc3da44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxMixerGroup: {fileID: 24300002, guid: bbcab2c8221680445bd2ecaa1e382725, type: 2}
+  bgmMixerGroup: {fileID: 24300002, guid: fe4f940f1a93f3b43b43a599eb71eb41, type: 2}
+  sfxSourceCount: 8
+  bgmSourceCount: 1
+  bgmClip: {fileID: 8300000, guid: d63eab84e420290489281dbbdec01cff, type: 3}
 --- !u!1 &1760713733
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-
 using EPOOutline;
 using Interactable;
 using UnityEngine;
@@ -13,20 +12,25 @@ public class InteractionUIManager
     private IHoverableFeedback currHoverTarget;
     private ITargetableFeedback currSelectedTarget;
 
+    private readonly InputManager inputManager;
     private LayerMask interactionLayerMask;
 
-    public InteractionUIManager(LayerMask interactionLayerMask)
+    public InteractionUIManager(InputManager inputManager, LayerMask interactionLayerMask, Camera mainCamera)
     {
+        this.inputManager = inputManager;
         this.interactionLayerMask = interactionLayerMask;
-    }
-    public void Start()
-    {
-        mainCamera = Camera.main;
+        this.mainCamera = mainCamera;
     }
 
     public void Update()
     {
-        HandleInteractionRaycast(Managers.Instance.InputManager.MousePosition);
+        if (inputManager is null) return;
+
+        if (mainCamera == null) mainCamera = Camera.main;
+
+        if (mainCamera == null) return;
+
+        HandleInteractionRaycast(inputManager.MousePosition);
     }
 
     private void HandleInteractionRaycast(Vector2 mousePos)
@@ -67,7 +71,7 @@ public class InteractionUIManager
 
     public void SelectInteractableTarget(InteractableObject target)
     {
-        if(target.TryGetComponent(out ITargetableFeedback selectable))
+        if (target.TryGetComponent(out ITargetableFeedback selectable))
         {
             SelectTarget(selectable);
         }
@@ -97,7 +101,7 @@ public class InteractionUIManager
     // {
     //     if (currEntityStatus is null) return;
     //     else Debug.Log($"current EntityStatus is {currEntityStatus.gameObject.name}");
-    //     Managers.Instance.UIManager.HideHealthUI(currHealthUI);
+    //     InGameContext.Instance.UIManager.HideHealthUI(currHealthUI);
 
     //     currEntityStatus = null;
     //     currHealthUI = null;
@@ -148,7 +152,7 @@ public class InteractionUIManager
     //                 ClearEntityStatus();
     //                 currEntityStatus = entityStatus;
 
-    //                 currHealthUI = Managers.Instance.UIManager.ShowHealthUI(uIAnchor.TargetAnchor, entityStatus);
+    //                 currHealthUI = InGameContext.Instance.UIManager.ShowHealthUI(uIAnchor.TargetAnchor, entityStatus);
     //             }
     //         }
     //     }

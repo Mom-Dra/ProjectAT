@@ -22,7 +22,7 @@ public class PlayerSkillModule : MonoBehaviour
     [SerializeField] public PlayerMovementModule MyMovementModule { get; private set; }
     [SerializeField] public PlayerCombatModule MyCombatModule { get; private set; }
     [SerializeField] public PlayerAnimator MyAnimModule { get; private set; }
-    [SerializeField] public PlayerSoundController MySoundController { get; private set;}
+    [SerializeField] public PlayerSoundController MySoundController { get; private set; }
     [SerializeField] public EntityStatus MyStatus { get; private set; }
     [SerializeField] public Inventory MyInventory { get; private set; }
 
@@ -82,7 +82,7 @@ public class PlayerSkillModule : MonoBehaviour
             skillCooldownTimers.Add(mySkills[i], Time.time);
         }
 
-        Managers.Instance.UIManager.InitPlayerSkillInfo(this, skillDatas);
+        InGameManager.Instance.UIManager.InitPlayerSkillInfo(this, skillDatas);
 
         for (int i = (int)SkillNumber.MainSkillOne; i < mySkills.Length; i++)
         {

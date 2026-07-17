@@ -80,6 +80,6 @@ public class HealthUI : MonoBehaviour
 
     private void TargetDied()
     {
-        //Managers.Instance.UIManager.HideHealthUI(this);
+        //InGameContext.Instance.UIManager.HideHealthUI(this);
     }
 }
