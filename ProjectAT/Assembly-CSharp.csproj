@@ -167,6 +167,7 @@
     <Compile Include="Assets\Scripts\Enemy\WeaponBase.cs" />
     <Compile Include="Assets\Scripts\Buff\BuffInstance.cs" />
     <Compile Include="Assets\Scripts\Entities\Player\PlayerSkillModule.cs" />
+    <Compile Include="Assets\Scripts\Stage\StageData.cs" />
     <Compile Include="Assets\Inputs\PlayerControls.cs" />
     <Compile Include="Assets\Scripts\Abstract\LivingEntity.cs" />
     <Compile Include="Assets\Scripts\Buff\StatBuffData.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Assets\Scripts\Entities\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAnimator.cs" />
     <Compile Include="Assets\Scripts\Enemy\PlayerNetworkMovement.cs" />
+    <Compile Include="Assets\Scripts\UI\MissionSelectUI.cs" />
     <Compile Include="Assets\Scripts\Manager\MissionManager.cs" />
     <Compile Include="Assets\Scripts\Items\ItemData.cs" />
     <Compile Include="Assets\Scripts\Mission\KillTargetData.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="Assets\Scripts\Buff\StunBuffData.cs" />
     <Compile Include="Assets\Datas\Models\Effect\Weapon Standart Projectile\Script\Weapon\LaserWeapon.cs" />
     <Compile Include="Assets\Scripts\UI\UIToolkit\CustomControls\RadialProgressBar.cs" />
+    <Compile Include="Assets\Scripts\UI\StageItemUI.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillData\DurationAreaWeaponSkillData.cs" />
     <Compile Include="Assets\Inputs\InputReader.cs" />
@@ -269,6 +272,7 @@
     <Compile Include="Assets\Scripts\Skills\ConcreteSkills\UseBandage.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkObjectPool.cs" />
     <Compile Include="Assets\Scripts\Utils\ColorDebug.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuUIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
