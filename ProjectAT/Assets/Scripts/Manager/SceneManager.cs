@@ -46,6 +46,11 @@ public class SceneManager
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)sceneType);
     }
 
+    public void LoadScene(int sceneNumber)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneNumber);
+    }
+
     public void LoadSceneAsync(SceneType sceneType)
     {
         Managers.Instance.StartCoroutine(LoadSceneRoutine(sceneType));
