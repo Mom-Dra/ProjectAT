@@ -8,18 +8,18 @@ public class MissionManager : MonoBehaviour
     private List<MissionData> activeMissions = new List<MissionData>();
     private HashSet<MissionData> completedMissions = new HashSet<MissionData>();
 
-    private bool[] isDeadPlayers = new bool[(int)PlayerNumber.Last];
+    private bool[] isDeadPlayers = new bool[(int)PlayerId.Last];
 
     private void OnEnable()
     {
         Managers.Instance.EventManager.Subscribe<EnemyIdentity>(EventType.TargetDied, TargetDied);
-        Managers.Instance.EventManager.Subscribe<PlayerNumber>(EventType.PlayerDied, PlayerDied);
+        Managers.Instance.EventManager.Subscribe<PlayerId>(EventType.PlayerDied, PlayerDied);
     }
 
     private void OnDisable()
     {
         Managers.Instance.EventManager.UnSubscribe<EnemyIdentity>(EventType.TargetDied, TargetDied);
-        Managers.Instance.EventManager.UnSubscribe<PlayerNumber>(EventType.PlayerDied, PlayerDied);
+        Managers.Instance.EventManager.UnSubscribe<PlayerId>(EventType.PlayerDied, PlayerDied);
     }
 
     private void TargetDied(EnemyIdentity enemyIdentity)
@@ -39,7 +39,7 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    private void PlayerDied(PlayerNumber playerType)
+    private void PlayerDied(PlayerId playerType)
     {
         isDeadPlayers[(int)playerType] = true;
 
@@ -51,7 +51,7 @@ public class MissionManager : MonoBehaviour
         FailMission();
     }
 
-    private void PlayerRevived(PlayerNumber playerType)
+    private void PlayerRevived(PlayerId playerType)
     {
         isDeadPlayers[(int)playerType] = false;
     }

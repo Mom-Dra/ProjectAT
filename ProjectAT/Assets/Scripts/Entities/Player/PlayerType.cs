@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum PlayerNumber
+public enum PlayerId
 {
     Player1,
     Last

@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerUnit : MonoBehaviour
 {
     [SerializeField]
-    private PlayerNumber playerType;
+    private PlayerId playerId;
 
     private EntityStatus entityStatus;
 
@@ -25,6 +25,6 @@ public class PlayerUnit : MonoBehaviour
 
     private void PlayerDied()
     {
-        Managers.Instance.EventManager.Publish(EventType.PlayerDied, playerType);
+        Managers.Instance.EventManager.Publish(EventType.PlayerDied, playerId);
     }
 }
