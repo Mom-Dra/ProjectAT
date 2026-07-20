@@ -73,7 +73,7 @@ public class ProjectileGrenade : ThrowProjectileBase
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, effectedEntityLayer);
         foreach (Collider hitCollider in hitColliders)
         {
-            Physics.Raycast(transform.position, (hitCollider.transform.position - transform.position).normalized, out RaycastHit hitInfo, ExplosionRadius);
+            Physics.Raycast(transform.position, (hitCollider.bounds.center - transform.position).normalized, out RaycastHit hitInfo, ExplosionRadius);
             if(hitInfo.collider != hitCollider)
             {
                 continue;
