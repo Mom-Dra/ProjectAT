@@ -24616,6 +24616,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewPlayerCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 2653452513816385498, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: 'skillDatas.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 6a901655e654df841acf54416e76d8b4, type: 2}
     - target: {fileID: 5706563846340363522, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 54.27
@@ -24656,6 +24660,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6028611876402576336, guid: b12f62b2041add147ae99b8982e2d8ab, type: 3}
+      propertyPath: 'debugItemList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f02561f720be1074baeacdf870eacda1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

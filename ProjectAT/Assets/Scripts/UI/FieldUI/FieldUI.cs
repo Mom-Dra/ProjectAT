@@ -16,7 +16,7 @@ namespace ProjectAT.FieldUI
         [SerializeField] protected Vector2 screenOffset = Vector2.zero;
         [SerializeField] private bool hideWhenBehindCamera = true;
 
-        private RectTransform viewInstance;
+        private RectTransform viewInstance; //자신을 어느 Canvas나 오브젝트에 표시할지
         private Camera mainCam;
         private bool ownsViewInstance;
 

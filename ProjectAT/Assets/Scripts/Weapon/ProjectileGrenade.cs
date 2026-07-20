@@ -68,6 +68,8 @@ public class ProjectileGrenade : ThrowProjectileBase
         if (hasExploded) return;
         hasExploded = true;
 
+        Physics.SyncTransforms();
+
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, effectedEntityLayer);
         foreach (Collider hitCollider in hitColliders)
         {

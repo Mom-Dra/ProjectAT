@@ -29,8 +29,8 @@ MonoBehaviour:
   landedNoiseRange: 3
   requiredGrenadeItem: {fileID: 11400000, guid: b1efd9404f4eac2479b21593c115d71c, type: 2}
   requiredGrenadeItemAmount: 1
-  explosionRadius: 5
+  explosionRadius: 10
   fuseTime: 1
-  explosionNoiseRadius: 15
+  explosionNoiseRadius: 5
   buffsToApplyOnExplosion:
   - {fileID: 11400000, guid: 249fcbe5286b24a408fd6da32983f0b5, type: 2}
