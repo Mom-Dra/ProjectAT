@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace SkillOptionInterfaces
 {
     public interface IInventoryCostSkill

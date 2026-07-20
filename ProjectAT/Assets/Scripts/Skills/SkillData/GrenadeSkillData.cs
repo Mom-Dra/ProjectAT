@@ -11,6 +11,7 @@ public class GrenadeSkillData : ProjectileSkillData, IConsumableSkillData
     [SerializeField] protected float explosionRadius;
     [SerializeField] protected float fuseTime;
     [SerializeField] protected float explosionNoiseRadius;
+    [SerializeField] protected BuffData[] buffsToApplyOnExplosion;
 
     public override float AoERadius => explosionRadius;
     public float ExplosionRadius => explosionRadius;
@@ -18,4 +19,5 @@ public class GrenadeSkillData : ProjectileSkillData, IConsumableSkillData
     public float ExplosionNoiseRadius => explosionNoiseRadius;
     public ItemData NeededItemData => requiredGrenadeItem;
     public int NeededItemAmount => requiredGrenadeItemAmount;
+    public BuffData[] BuffsToApplyOnExplosion => buffsToApplyOnExplosion;
 }

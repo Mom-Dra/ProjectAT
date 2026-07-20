@@ -21,7 +21,7 @@ public class PlayerAnimator : MonoBehaviour
     #endregion
 
     [Header("Params")]
-    [SerializeField] private float animationFPS = 30f;
+    //[SerializeField] private float animationFPS = 30f;
     [SerializeField] private float suppressiveFireAimDistance = 10f;
     [SerializeField] private float suppressiveFireSweepSpeed = 8f;
     private Coroutine animationCoroutine;
@@ -42,7 +42,6 @@ public class PlayerAnimator : MonoBehaviour
     private void OnEnable()
     {
         entityStatus.onDeath += EntityDead;
-        entityStatus.onRevive += EntityRevived;
         weaponHolder.OnWeaponReloaded += StopReloadAnimation;
         weaponHolder.OnWeaponReloadStart += PlayReloadAnimation;
 
@@ -53,7 +52,6 @@ public class PlayerAnimator : MonoBehaviour
     private void OnDisable()
     {
         entityStatus.onDeath -= EntityDead;
-        entityStatus.onRevive -= EntityRevived;
         weaponHolder.OnWeaponReloadStart -= PlayReloadAnimation;
         weaponHolder.OnWeaponReloaded -= StopReloadAnimation;
 
@@ -89,10 +87,10 @@ public class PlayerAnimator : MonoBehaviour
         SetIsDead(true);
     }
 
-    private void EntityRevived()
-    {
-        SetIsDead(false);
-    }
+    // private void EntityRevived()
+    // {
+    //     SetIsDead(false);
+    // }
 
     private void SetIsDead(bool isDead)
     {

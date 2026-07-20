@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillId: 2
   skillName: ThrowGrenade
-  baseDamage: 300
+  baseDamage: 100
   castingTime: 1.4
   maxCoolTime: 5
   targetLayer:
@@ -32,3 +32,4 @@ MonoBehaviour:
   explosionRadius: 5
   fuseTime: 1
   explosionNoiseRadius: 15
+  buffsToApplyOnExplosion: []

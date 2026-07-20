@@ -64,6 +64,8 @@ namespace EntitySkills
                     grenadeSkillData.FuseTime,
                     grenadeSkillData.ExplosionNoiseRadius
                 );
+
+                grenade.SetUpBuffData(grenadeSkillData.BuffsToApplyOnExplosion);
             }
         }
     }

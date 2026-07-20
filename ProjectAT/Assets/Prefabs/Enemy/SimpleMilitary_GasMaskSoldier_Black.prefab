@@ -217,6 +217,8 @@ GameObject:
   - component: {fileID: 1814738183316163472}
   - component: {fileID: 8932496217895623001}
   - component: {fileID: 4969974018569580837}
+  - component: {fileID: 3197312662540451574}
+  - component: {fileID: 8945974562231481978}
   m_Layer: 7
   m_Name: SimpleMilitary_GasMaskSoldier_Black
   m_TagString: Untagged
@@ -247,6 +249,7 @@ Transform:
   - {fileID: 8819698948927791328}
   - {fileID: 1655204336469484110}
   - {fileID: 6171585569170401384}
+  - {fileID: 3752080163541187347}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &9501830
@@ -643,6 +646,31 @@ MonoBehaviour:
   suspiciousSoundInterval: 2
   combatWarCryInterval: 10
   combatWarCryIntervalJitter: {x: -2, y: 5}
+--- !u!114 &3197312662540451574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ae19ebf8d9468796c0f3f022d6c877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8945974562231481978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4bcb9ffb52d7e42806f6d448a23840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableBuffs: []
 --- !u!1 &100074
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,6 +1571,59 @@ MonoBehaviour:
       x: 1
       y: 1
       z: 1
+--- !u!1 &1655325478885106957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3752080163541187347}
+  - component: {fileID: 6137940802156248774}
+  m_Layer: 7
+  m_Name: OverlayUIController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3752080163541187347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655325478885106957}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 400050}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6137940802156248774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655325478885106957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14cb926dbe312a409f5afa76decc365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buffModule: {fileID: 0}
+  targetAnchor: {fileID: 0}
+  worldOffset: {x: 0, y: 2.4, z: 0}
+  baseScreenOffset: {x: 0, y: 0}
+  radialFillImageViewPrefab: {fileID: 8706786547260682966, guid: e299dc2b0144f96418b92b2587f8d726, type: 3}
+  poolSize: 6
+  fallbackIcon: {fileID: 0}
+  iconSize: {x: 36, y: 36}
+  spacing: 4
 --- !u!1 &1796529349558448541
 GameObject:
   m_ObjectHideFlags: 0

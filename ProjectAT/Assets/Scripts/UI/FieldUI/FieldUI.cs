@@ -18,6 +18,9 @@ namespace ProjectAT.FieldUI
 
         private RectTransform viewInstance;
         private Camera mainCam;
+        private bool ownsViewInstance;
+
+        public static RectTransform OverlayRoot => GetOverlayRoot();
 
         protected RectTransform ViewInstance => viewInstance;
         protected Camera MainCam => mainCam;
@@ -40,11 +43,13 @@ namespace ProjectAT.FieldUI
 
         protected virtual void OnDestroy()
         {
-            if (viewInstance != null)
+            if (ownsViewInstance && viewInstance != null)
             {
                 Destroy(viewInstance.gameObject);
-                viewInstance = null;
             }
+
+            viewInstance = null;
+            ownsViewInstance = false;
         }
 
         protected virtual void LateUpdate()
@@ -67,9 +72,20 @@ namespace ProjectAT.FieldUI
             }
         }
 
+        public void ConfigureFollowTarget(Transform target, Vector3 worldOffset, Vector2 screenOffset)
+        {
+            targetAnchor = target != null ? target : transform;
+            this.worldOffset = worldOffset;
+            this.screenOffset = screenOffset;
+        }
+
+        public void SetScreenOffset(Vector2 screenOffset)
+        {
+            this.screenOffset = screenOffset;
+        }
+
         protected abstract bool ShouldShow();
 
-        // 생성된 View 프리팹에서 필요한 컴포넌트를 연결한다.
         protected abstract void BindView(RectTransform view);
 
         protected abstract void RefreshContent();
@@ -87,13 +103,21 @@ namespace ProjectAT.FieldUI
         {
             if (viewPrefab == null)
             {
-                Debug.LogError($"[{GetType().Name}] View Prefab이 지정되지 않았습니다.", this);
-                return false;
+                viewInstance = transform as RectTransform;
+                ownsViewInstance = false;
+
+                if (viewInstance == null)
+                {
+                    Debug.LogError($"[{GetType().Name}] View Prefab is not assigned and this object has no RectTransform.", this);
+                    return false;
+                }
+
+                return true;
             }
 
-            viewInstance = Instantiate(viewPrefab, GetOverlayRoot(), false);
-
+            viewInstance = Instantiate(viewPrefab, OverlayRoot, false);
             viewInstance.name = $"{gameObject.name}_{GetType().Name}";
+            ownsViewInstance = true;
             return true;
         }
 
@@ -131,7 +155,6 @@ namespace ProjectAT.FieldUI
                 return overlayRoot;
             }
 
-            // 필드 UI 오버레이를 위한 Canvas 생성 로직
             GameObject canvasObject = new GameObject("FieldOverlayCanvas", typeof(Canvas), typeof(CanvasScaler));
 
             Canvas canvas = canvasObject.GetComponent<Canvas>();
