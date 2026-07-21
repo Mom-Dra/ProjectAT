@@ -5,13 +5,13 @@ using Interactable;
 using UnityEngine.AI;
 using TMPro;
 using UnityEngine.Animations.Rigging;
+using ProjectAT.FieldUI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(AwarenessModule))]
 [RequireComponent(typeof(EnemyAlertnessModule))]
 [RequireComponent(typeof(PerceptionSystem))]
 [RequireComponent(typeof(CrowdControlModule))]
-[RequireComponent(typeof(StatusEffectScreenUI))]
 public class Enemy : MonoBehaviour, ISquadMember
 {
     public event Action<ISquadMember, IPerceivable> onTargetDetected;
@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour, ISquadMember
     private CrowdControlModule crowdControlModule;
     private RigBuilder rigBuilder;
     private CoverHandler coverHandler;
+    private StatusViewController statusViewController;
 
     private Squad squad;
     private IEnemyState currState;
@@ -143,9 +144,15 @@ public class Enemy : MonoBehaviour, ISquadMember
             crowdControlModule = gameObject.AddComponent<CrowdControlModule>();
         }
 
-        if (GetComponent<StatusEffectScreenUI>() == null)
+        if (statusViewController == null)
         {
-            gameObject.AddComponent<StatusEffectScreenUI>();
+            statusViewController = GetComponentInChildren<StatusViewController>();
+            if(statusViewController == null)
+            {
+                GameObject statusViewControllerGO = new GameObject("OverlayUIController");
+                statusViewControllerGO.transform.SetParent(transform);
+                statusViewController = statusViewControllerGO.AddComponent<StatusViewController>();
+            }
         }
 
         entityStatus = GetComponent<EntityStatus>();

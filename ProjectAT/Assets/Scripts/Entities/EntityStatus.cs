@@ -5,7 +5,6 @@ using UnityEngine;
 public class EntityStatus : MonoBehaviour, IDamageable
 {
     public event Action onDeath;
-    public event Action onRevive;
     public event Action<float> onHealthChanged;
     public event Action onLowHealthWarning;
     public event Action onLowHealthWarningEnd;

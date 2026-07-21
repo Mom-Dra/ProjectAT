@@ -3,12 +3,14 @@ using UnityEngine.UI;
 
 namespace ProjectAT.FieldUI
 {
+    public enum FieldUIFollowMode : ushort {None, ScreenSpaceOverlay, }
     public abstract class FieldUI : MonoBehaviour
     {
         private static RectTransform overlayRoot;
 
         [Header("Field UI View")]
         [SerializeField] private RectTransform viewPrefab;
+        [SerializeField] private FieldUIFollowMode followMode = FieldUIFollowMode.ScreenSpaceOverlay;
 
         [Header("Field UI Target")]
         [SerializeField] protected Transform targetAnchor;
@@ -16,8 +18,11 @@ namespace ProjectAT.FieldUI
         [SerializeField] protected Vector2 screenOffset = Vector2.zero;
         [SerializeField] private bool hideWhenBehindCamera = true;
 
-        private RectTransform viewInstance;
+        private RectTransform viewInstance; //자신을 어느 Canvas나 오브젝트에 표시할지
         private Camera mainCam;
+        private bool ownsViewInstance;
+
+        public static RectTransform OverlayRoot => GetOverlayRoot();
 
         protected RectTransform ViewInstance => viewInstance;
         protected Camera MainCam => mainCam;
@@ -40,16 +45,24 @@ namespace ProjectAT.FieldUI
 
         protected virtual void OnDestroy()
         {
-            if (viewInstance != null)
+            if (ownsViewInstance && viewInstance != null)
             {
                 Destroy(viewInstance.gameObject);
-                viewInstance = null;
             }
+
+            viewInstance = null;
+            ownsViewInstance = false;
         }
 
         protected virtual void LateUpdate()
         {
-            if (!ShouldShow() || !FollowTarget())
+            if (!ShouldShow())
+            {
+                SetVisible(false);
+                return;
+            }
+
+            if (followMode == FieldUIFollowMode.ScreenSpaceOverlay && !FollowTarget())
             {
                 SetVisible(false);
                 return;
@@ -67,9 +80,25 @@ namespace ProjectAT.FieldUI
             }
         }
 
+        public void ConfigureFollowTarget(Transform target, Vector3 worldOffset, Vector2 screenOffset)
+        {
+            targetAnchor = target != null ? target : transform;
+            this.worldOffset = worldOffset;
+            this.screenOffset = screenOffset;
+        }
+
+        public void SetScreenOffset(Vector2 screenOffset)
+        {
+            this.screenOffset = screenOffset;
+        }
+
+        public void SetFollowMode(FieldUIFollowMode mode)
+        {
+            followMode = mode;
+        }
+
         protected abstract bool ShouldShow();
 
-        // 생성된 View 프리팹에서 필요한 컴포넌트를 연결한다.
         protected abstract void BindView(RectTransform view);
 
         protected abstract void RefreshContent();
@@ -87,13 +116,21 @@ namespace ProjectAT.FieldUI
         {
             if (viewPrefab == null)
             {
-                Debug.LogError($"[{GetType().Name}] View Prefab이 지정되지 않았습니다.", this);
-                return false;
+                viewInstance = transform as RectTransform;
+                ownsViewInstance = false;
+
+                if (viewInstance == null)
+                {
+                    Debug.LogError($"[{GetType().Name}] View Prefab is not assigned and this object has no RectTransform.", this);
+                    return false;
+                }
+
+                return true;
             }
 
-            viewInstance = Instantiate(viewPrefab, GetOverlayRoot(), false);
-
+            viewInstance = Instantiate(viewPrefab, OverlayRoot, false);
             viewInstance.name = $"{gameObject.name}_{GetType().Name}";
+            ownsViewInstance = true;
             return true;
         }
 
@@ -131,7 +168,6 @@ namespace ProjectAT.FieldUI
                 return overlayRoot;
             }
 
-            // 필드 UI 오버레이를 위한 Canvas 생성 로직
             GameObject canvasObject = new GameObject("FieldOverlayCanvas", typeof(Canvas), typeof(CanvasScaler));
 
             Canvas canvas = canvasObject.GetComponent<Canvas>();

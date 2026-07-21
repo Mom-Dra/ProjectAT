@@ -4,12 +4,12 @@ using PlayerStateMachine;
 using PlayerStateCapabilities;
 using System;
 using System.Collections;
+using ProjectAT.FieldUI;
 
 [RequireComponent(typeof(CrowdControlModule))]
-[RequireComponent(typeof(StatusEffectScreenUI))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Module References")]
     [SerializeField] private PlayerMovementModule myMovementModule;
     [SerializeField] private PlayerAnimator myPlayerAnimator;
     [SerializeField] private PlayerCombatModule myCombatModule;
@@ -19,9 +19,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerSoundController mySoundController;
     [SerializeField] private EntityStatus myStatus;
     [SerializeField] private CrowdControlModule myCrowdControlModule;
+
+    [Header("References")]
     [SerializeField] private Camera myCamera;
 
-    [Header("Enemy")]
+    [Header("Targeted Enemy")]
     public Enemy SelectedEnemy { get; private set; }
     public Collider SelectedEnemyCollider { get; private set; }
 

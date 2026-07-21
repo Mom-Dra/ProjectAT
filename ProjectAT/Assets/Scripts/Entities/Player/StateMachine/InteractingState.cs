@@ -10,7 +10,6 @@ namespace PlayerStateMachine
         private PlayerAnimator myAnimationModule;
         private PlayerStateType nextStateCash = PlayerStateType.Normal;
         private float currentInteractTime = 0.1f;
-        private bool isInteractingComplete = false;
 
         public InteractingState(PlayerController context) : base(context) 
         { 
@@ -23,7 +22,6 @@ namespace PlayerStateMachine
             Debug.Log($"Enter InteractingState. : {myInteractionModule.CurrentInteractTarget}");
             nextStateCash = PlayerStateType.Normal;
             currentInteractTime = 0f;
-            isInteractingComplete = false;
 
             context.PlayerMove(context.transform.position, false);
             myAnimationModule.WeaponMeshVisible(false);
@@ -64,8 +62,6 @@ namespace PlayerStateMachine
 
             if (currentInteractTime >= myInteractionModule.CurrentInteractTarget.InteractDuration)
             {
-                isInteractingComplete = true;
-
                 nextStateCash = myInteractionModule.CurrentInteractTarget.NextState;
                 myInteractionModule.CurrentInteractTarget.OnExecute(context);
 

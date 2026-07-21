@@ -86,11 +86,24 @@ public class PlayerSkillModule : MonoBehaviour
 
         for (int i = (int)SkillNumber.MainSkillOne; i < mySkills.Length; i++)
         {
-            OnSkillCooldownStart?.Invoke((SkillNumber)i, mySkills[i].SkillMaxCoolTime);
+            SkillNumber skillNumber = (SkillNumber)i;
+            float cooldownDuration = mySkills[i].SkillMaxCoolTime;
+
             if (mySkills[i] is IInventoryCostSkill inventoryCostSkill)
             {
-                OnSkillItemCountChange?.Invoke((SkillNumber)i, MyInventory.GetItemCount(inventoryCostSkill.NeededItemData));
+                int itemCount =
+                    MyInventory.GetItemCount(inventoryCostSkill.NeededItemData);
+
+                OnSkillItemCountChange?.Invoke(skillNumber, itemCount);
+
+                // 0개가 아니라 스킬이 요구하는 개수보다 적은지 검사
+                if (itemCount < inventoryCostSkill.NeededItemAmount)
+                {
+                    cooldownDuration = -1f;
+                }
             }
+
+            OnSkillCooldownStart?.Invoke(skillNumber, cooldownDuration);
         }
     }
 

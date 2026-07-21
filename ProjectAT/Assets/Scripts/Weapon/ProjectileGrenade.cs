@@ -1,14 +1,17 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ProjectileGrenade : ThrowProjectileBase
 {
     [Header("Grenade Settings")]
     [SerializeField] private ParticleSystem explosionEffect;
-    [SerializeField] public int ExplodeDamage{get; private set;}
-    [SerializeField] public float ExplosionRadius{get; private set;}
-    [SerializeField] private float fuseTime = 3f;
-    [SerializeField] private float explosionNoiseRadius = 18f;
+    public int ExplodeDamage{get; private set;}
+    public float ExplosionRadius{get; private set;}
+    private float fuseTime = 3f;
+    private float explosionNoiseRadius = 18f;
+    private List<BuffData> buffsToApplyOnExplosion;
+
     private Coroutine explosionCoroutine;
     private float remainingFuseTime = -1f;
     private bool hasExploded;
@@ -32,6 +35,11 @@ public class ProjectileGrenade : ThrowProjectileBase
         ExplosionRadius = radius;
         this.fuseTime = fuseTime;
         this.explosionNoiseRadius = explosionNoiseRadius;
+    }
+
+    public void SetUpBuffData(BuffData[] buffs)
+    {
+        buffsToApplyOnExplosion = new List<BuffData>(buffs);
     }
 
     protected override void OnCollisionEnter(Collision collision)
@@ -60,10 +68,12 @@ public class ProjectileGrenade : ThrowProjectileBase
         if (hasExploded) return;
         hasExploded = true;
 
+        Physics.SyncTransforms();
+
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, effectedEntityLayer);
         foreach (Collider hitCollider in hitColliders)
         {
-            Physics.Raycast(transform.position, (hitCollider.transform.position - transform.position).normalized, out RaycastHit hitInfo, ExplosionRadius);
+            Physics.Raycast(transform.position, (hitCollider.bounds.center - transform.position).normalized, out RaycastHit hitInfo, ExplosionRadius);
             if(hitInfo.collider != hitCollider)
             {
                 continue;
@@ -73,6 +83,12 @@ public class ProjectileGrenade : ThrowProjectileBase
             if (damageable != null)
             {
                 damageable.TakeDamage(ExplodeDamage);
+            }
+
+            BuffModule buffModule = hitCollider.GetComponent<BuffModule>();
+            if (buffModule != null)
+            {
+                ApplyBuffsOnExplosion(buffModule);
             }
         }
         
@@ -86,6 +102,19 @@ public class ProjectileGrenade : ThrowProjectileBase
         soundController.PlayExplosionAt(transform.position);
 
         Destroy(gameObject);
+    }
+
+    protected void ApplyBuffsOnExplosion(BuffModule targetModule)
+    {
+        if (buffsToApplyOnExplosion == null || buffsToApplyOnExplosion.Count == 0)
+        {
+            return;
+        }
+
+        foreach (BuffData buffData in buffsToApplyOnExplosion)
+        {
+            targetModule.AddBuff(buffData);
+        }
     }
 
 #if UNITY_EDITOR

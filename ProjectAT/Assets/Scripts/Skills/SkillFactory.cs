@@ -21,12 +21,10 @@ public static class SkillFactory
         {
             SkillId.ThrowRock => CreateThrowRock(context, data),
             SkillId.ThrowGrenade => CreateThrowGrenade(context, data),
+            SkillId.ThrowFlashBang => CreateThrowGrenade(context, data),
             SkillId.UseBandage => CreateUseBandage(context, data),
             SkillId.DesignatedFire => CreateDesignatedFire(context, data),
             SkillId.SuppressiveFire => CreateSuppressiveFire(context, data),
-
-            // 나중에 구현
-            // SkillId.SuppressiveFire => new SuppressiveFire(context, data),
             // SkillId.MultiShot => new MultiShot(context, data),
 
             SkillId.Dummy => new DummySkill(context, data),
