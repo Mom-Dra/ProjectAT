@@ -13,6 +13,12 @@ public class PooledObject : MonoBehaviour
             return;
         }
 
-        Managers.Instance.PoolManager.ReturnObject(gameObject, prefab);
+        if (InGameManager.Instance == null || InGameManager.Instance.PoolManager == null)
+        {
+            Debug.LogWarning("InGameManager or PoolManager is null");
+            return;
+        }
+
+        InGameManager.Instance.PoolManager.ReturnObject(gameObject, prefab);
     }
 }

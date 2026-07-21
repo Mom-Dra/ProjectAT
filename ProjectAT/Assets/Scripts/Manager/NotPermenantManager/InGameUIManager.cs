@@ -21,7 +21,7 @@ public class InGameUIManager
 
     public HealthUI ShowHealthUI(Transform targetAnchor, EntityStatus entityStatus)
     {
-        GameObject healthUIObject = Managers.Instance.PoolManager.GetObject(healthUIPrefab);
+        GameObject healthUIObject = InGameManager.Instance.PoolManager.GetObject(healthUIPrefab);
         HealthUI healthUI = healthUIObject.GetComponentInChildren<HealthUI>();
         healthUI.Bind(targetAnchor, entityStatus);
 
@@ -33,7 +33,7 @@ public class InGameUIManager
         if (healthUI is null) return;
 
         healthUI.UnBind();
-        Managers.Instance.PoolManager.ReturnObject(healthUI.transform.gameObject, healthUIPrefab);
+        InGameManager.Instance.PoolManager.ReturnObject(healthUI.transform.gameObject, healthUIPrefab);
     }
 
     public void InitPlayerStatusInfo(EntityStatus playerStatus)

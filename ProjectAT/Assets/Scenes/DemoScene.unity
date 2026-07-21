@@ -13810,6 +13810,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8320
   healthUIPrefab: {fileID: 8906335231756821871, guid: 14a6cea42d2488b4986f7022362952f7, type: 3}
+  pooledPrefabs:
+  - Prefab: {fileID: 8906335231756821871, guid: 14a6cea42d2488b4986f7022362952f7, type: 3}
+    PrewarmCount: 2
+    PoolParentTransform: {fileID: 1341229867}
+  - Prefab: {fileID: 1370874438154576190, guid: eb27692c6b742ee448e041d86e46402a, type: 3}
+    PrewarmCount: 20
+    PoolParentTransform: {fileID: 237933334}
+  - Prefab: {fileID: 946230873439750309, guid: a45c701df17b62d439fc78c12adea761, type: 3}
+    PrewarmCount: 20
+    PoolParentTransform: {fileID: 237933334}
   playerHUD: {fileID: 0}
   mainCamera: {fileID: 0}
 --- !u!114 &407070292
@@ -60681,18 +60691,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7586599461081094033, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
-      propertyPath: pooledPrefabs.Array.data[0].PoolParentTransform
-      value: 
-      objectReference: {fileID: 1341229867}
-    - target: {fileID: 7586599461081094033, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
-      propertyPath: pooledPrefabs.Array.data[1].PoolParentTransform
-      value: 
-      objectReference: {fileID: 237933334}
-    - target: {fileID: 7586599461081094033, guid: 47569a326a6d16b498d3ca35228471d7, type: 3}
-      propertyPath: pooledPrefabs.Array.data[2].PoolParentTransform
-      value: 
-      objectReference: {fileID: 237933334}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

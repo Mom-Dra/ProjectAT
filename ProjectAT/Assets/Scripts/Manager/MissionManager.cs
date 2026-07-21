@@ -12,14 +12,14 @@ public class MissionManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Managers.Instance.EventManager.Subscribe<EnemyIdentity>(EventType.TargetDied, TargetDied);
-        Managers.Instance.EventManager.Subscribe<PlayerId>(EventType.PlayerDied, PlayerDied);
+        InGameManager.Instance.EventManager.Subscribe<EnemyIdentity>(EventType.TargetDied, TargetDied);
+        InGameManager.Instance.EventManager.Subscribe<PlayerId>(EventType.PlayerDied, PlayerDied);
     }
 
     private void OnDisable()
     {
-        Managers.Instance.EventManager.UnSubscribe<EnemyIdentity>(EventType.TargetDied, TargetDied);
-        Managers.Instance.EventManager.UnSubscribe<PlayerId>(EventType.PlayerDied, PlayerDied);
+        InGameManager.Instance.EventManager.UnSubscribe<EnemyIdentity>(EventType.TargetDied, TargetDied);
+        InGameManager.Instance.EventManager.UnSubscribe<PlayerId>(EventType.PlayerDied, PlayerDied);
     }
 
     private void TargetDied(EnemyIdentity enemyIdentity)

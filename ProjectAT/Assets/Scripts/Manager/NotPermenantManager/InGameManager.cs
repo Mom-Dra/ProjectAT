@@ -6,6 +6,7 @@ public class InGameManager : MonoBehaviour
 
     [SerializeField] private LayerMask interactionLayerMask;
     [SerializeField] private GameObject healthUIPrefab;
+    [SerializeField] private PoolConfigObject[] pooledPrefabs;
     [SerializeField] private PlayerHUD playerHUD;
     [SerializeField] private Camera mainCamera;
 
@@ -27,6 +28,8 @@ public class InGameManager : MonoBehaviour
 
     public InteractionUIManager InteractionManager { get; private set; }
     public InGameUIManager UIManager { get; private set; }
+    public PoolManager PoolManager { get; private set; }
+    public EventManager EventManager { get; private set; }
 
     private void Awake()
     {
@@ -58,6 +61,8 @@ public class InGameManager : MonoBehaviour
 
         if (playerHUD == null) playerHUD = FindFirstObjectByType<PlayerHUD>();
 
+        PoolManager = new PoolManager(pooledPrefabs);
+        EventManager = new EventManager();
         UIManager = new InGameUIManager(healthUIPrefab, playerHUD);
         InteractionManager = new InteractionUIManager(Managers.Instance.InputManager, interactionLayerMask, mainCamera);
 

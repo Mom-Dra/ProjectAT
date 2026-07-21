@@ -25,6 +25,6 @@ public class PlayerUnit : MonoBehaviour
 
     private void PlayerDied()
     {
-        Managers.Instance.EventManager.Publish(EventType.PlayerDied, playerId);
+        InGameManager.Instance.EventManager.Publish(EventType.PlayerDied, playerId);
     }
 }

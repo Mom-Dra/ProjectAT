@@ -26,7 +26,7 @@ public class EnemyMissionTarget : MonoBehaviour
 
     private void TargetDied()
     {
-        // Managers.Instance.EventManager.TriggerTarget(targetID);
-        Managers.Instance.EventManager.Publish(EventType.TargetDied, enemyIdentity);
+        // InGameManager.Instance.EventManager.TriggerTarget(targetID);
+        InGameManager.Instance.EventManager.Publish(EventType.TargetDied, enemyIdentity);
     }
 }

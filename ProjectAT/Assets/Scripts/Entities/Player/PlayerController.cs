@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
             myCrowdControlModule.OnStunEnded -= HandleStunEnded;
         }
 
-        //InGameContext.Instance.UIManager.ClearPlayerStatusInfo(); //TODO : UI 제거 함수 구현해야함.
+        //InGameManager.Instance.UIManager.ClearPlayerStatusInfo(); //TODO : UI 제거 함수 구현해야함.
         UnLinkInputEventsAll();
         //myStatus.onRevive -= () => Debug.Log("Player Revived!");
     }

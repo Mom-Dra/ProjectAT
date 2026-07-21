@@ -101,7 +101,7 @@ public class InteractionUIManager
     // {
     //     if (currEntityStatus is null) return;
     //     else Debug.Log($"current EntityStatus is {currEntityStatus.gameObject.name}");
-    //     InGameContext.Instance.UIManager.HideHealthUI(currHealthUI);
+    //     InGameManager.Instance.UIManager.HideHealthUI(currHealthUI);
 
     //     currEntityStatus = null;
     //     currHealthUI = null;
@@ -152,7 +152,7 @@ public class InteractionUIManager
     //                 ClearEntityStatus();
     //                 currEntityStatus = entityStatus;
 
-    //                 currHealthUI = InGameContext.Instance.UIManager.ShowHealthUI(uIAnchor.TargetAnchor, entityStatus);
+    //                 currHealthUI = InGameManager.Instance.UIManager.ShowHealthUI(uIAnchor.TargetAnchor, entityStatus);
     //             }
     //         }
     //     }
