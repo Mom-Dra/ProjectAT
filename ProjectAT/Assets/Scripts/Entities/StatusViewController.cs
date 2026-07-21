@@ -7,10 +7,12 @@ public class StatusViewController : MonoBehaviour
     [Header("Module References")]
     [SerializeField] private BuffModule buffModule;
 
-    [Header("Target")]
+    [Header("Canvas Settings")]
+    [SerializeField] private Canvas statusCanvas;
+    [SerializeField] private RectTransform viewRoot;
     [SerializeField] private Transform targetAnchor;
-    [SerializeField] private Vector3 worldOffset = new Vector3(0f, 2.4f, 0f);
-    [SerializeField] private Vector2 baseScreenOffset = Vector2.zero;
+    [SerializeField] private Vector3 worldOffset = new Vector3(0f, 3f, 0f);
+    [SerializeField] private bool faceCamera = true;
 
     [Header("Status View Pool")]
     [SerializeField] private RadialFillImageView radialFillImageViewPrefab;
@@ -62,17 +64,32 @@ public class StatusViewController : MonoBehaviour
         DestroyPool();
     }
 
+    private void LateUpdate()
+    {
+        if (statusCanvas == null || targetAnchor == null)
+            return;
+
+        statusCanvas.transform.position = targetAnchor.position + worldOffset;
+
+        if (faceCamera && Camera.main != null)
+            statusCanvas.transform.rotation = Camera.main.transform.rotation;
+    }
+
     private void ResolveReferences()
     {
         if (buffModule == null)
-        {
             buffModule = GetComponentInParent<BuffModule>();
-        }
+
+        if (statusCanvas == null) statusCanvas = GetComponentInChildren<Canvas>(true);
+        statusCanvas.renderMode = RenderMode.WorldSpace;
+        statusCanvas.worldCamera = Camera.main;
+        statusCanvas.enabled = false;
+
+        if (viewRoot == null && statusCanvas != null)
+            viewRoot = statusCanvas.transform as RectTransform;
 
         if (targetAnchor == null)
-        {
             targetAnchor = transform;
-        }
     }
 
     private void HandleBuffAdded(BuffInstance buff)
@@ -169,11 +186,17 @@ public class StatusViewController : MonoBehaviour
             return;
         }
 
+        if (viewRoot == null)
+        {
+            Debug.LogError($"[{nameof(StatusViewController)}] View Root is not assigned.", this);
+            return;
+        }
+
         for (int i = viewPool.Count; i < poolSize; i++)
         {
-            RadialFillImageView view = Instantiate(radialFillImageViewPrefab, FieldUI.OverlayRoot, false);
+            RadialFillImageView view = Instantiate(radialFillImageViewPrefab, viewRoot, false);
             view.name = $"{gameObject.name}_StatusView_{i}";
-            view.ConfigureFollowTarget(targetAnchor, worldOffset, baseScreenOffset);
+            view.SetFollowMode(FieldUIFollowMode.None);
             view.Unbind();
             view.gameObject.SetActive(false);
 
@@ -181,6 +204,7 @@ public class StatusViewController : MonoBehaviour
             if (rectTransform != null)
             {
                 rectTransform.sizeDelta = iconSize;
+                rectTransform.anchoredPosition = Vector2.zero;
             }
 
             viewPool.Add(view);
@@ -217,11 +241,10 @@ public class StatusViewController : MonoBehaviour
     private void LayoutActiveViews()
     {
         int count = orderedBuffs.Count;
+        SetCanvasVisible(count > 0);
 
         if (count <= 0)
-        {
             return;
-        }
 
         float totalWidth = count * iconSize.x + (count - 1) * spacing;
         float startX = -totalWidth * 0.5f + iconSize.x * 0.5f;
@@ -229,19 +252,18 @@ public class StatusViewController : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             if (!activeViews.TryGetValue(orderedBuffs[i], out RadialFillImageView view))
-            {
                 continue;
-            }
 
             RectTransform rectTransform = view.transform as RectTransform;
-            if (rectTransform != null)
-            {
-                rectTransform.sizeDelta = iconSize;
-                rectTransform.SetSiblingIndex(i);
-            }
-
-            Vector2 layoutOffset = new Vector2(startX + i * (iconSize.x + spacing), 0f);
-            view.ConfigureFollowTarget(targetAnchor, worldOffset, baseScreenOffset + layoutOffset);
+            rectTransform.sizeDelta = iconSize;
+            rectTransform.anchoredPosition = new Vector2(startX + i * (iconSize.x + spacing), 0f);
+            rectTransform.SetSiblingIndex(i);
         }
+    }
+
+    private void SetCanvasVisible(bool visible)
+    {
+        if (statusCanvas != null)
+            statusCanvas.enabled = visible;
     }
 }

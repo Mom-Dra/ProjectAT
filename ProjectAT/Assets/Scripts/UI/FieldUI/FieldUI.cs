@@ -3,12 +3,14 @@ using UnityEngine.UI;
 
 namespace ProjectAT.FieldUI
 {
+    public enum FieldUIFollowMode : ushort {None, ScreenSpaceOverlay, }
     public abstract class FieldUI : MonoBehaviour
     {
         private static RectTransform overlayRoot;
 
         [Header("Field UI View")]
         [SerializeField] private RectTransform viewPrefab;
+        [SerializeField] private FieldUIFollowMode followMode = FieldUIFollowMode.ScreenSpaceOverlay;
 
         [Header("Field UI Target")]
         [SerializeField] protected Transform targetAnchor;
@@ -54,7 +56,13 @@ namespace ProjectAT.FieldUI
 
         protected virtual void LateUpdate()
         {
-            if (!ShouldShow() || !FollowTarget())
+            if (!ShouldShow())
+            {
+                SetVisible(false);
+                return;
+            }
+
+            if (followMode == FieldUIFollowMode.ScreenSpaceOverlay && !FollowTarget())
             {
                 SetVisible(false);
                 return;
@@ -82,6 +90,11 @@ namespace ProjectAT.FieldUI
         public void SetScreenOffset(Vector2 screenOffset)
         {
             this.screenOffset = screenOffset;
+        }
+
+        public void SetFollowMode(FieldUIFollowMode mode)
+        {
+            followMode = mode;
         }
 
         protected abstract bool ShouldShow();

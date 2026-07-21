@@ -68,6 +68,12 @@ namespace ProjectAT.FieldUI
             SetFillAmount(boundBuff.RemainingRatio);
         }
 
+        protected override void ResolveReferences()
+        {
+            base.ResolveReferences();
+            SetFollowMode(FieldUIFollowMode.None);
+        }
+
         private void SetIcon(Sprite icon, Sprite fallbackIcon)
         {
             Sprite visibleIcon = icon != null ? icon : fallbackIcon;
