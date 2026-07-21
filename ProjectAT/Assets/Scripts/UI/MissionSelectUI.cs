@@ -13,7 +13,6 @@ public class MissionSelectUI : MonoBehaviour
 
     private StageData selectedStage;
 
-
     private void Awake()
     {
         startButton.onClick.AddListener(StartButtonClicked);
@@ -36,6 +35,8 @@ public class MissionSelectUI : MonoBehaviour
 
     private void StageItemClicked(StageData stageData)
     {
+        thumbNaail.gameObject.SetActive(true);
+
         selectedStage = stageData;
         thumbNaail.sprite = stageData.thumbnail;
     }

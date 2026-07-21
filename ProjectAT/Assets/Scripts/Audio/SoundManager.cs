@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        PlayBgm(bgmClip);
+        // PlayBgm(bgmClip);
     }
 
     private void GenerateSfxSources(GameObject root, int startChannel, int endChannel)
@@ -86,6 +86,7 @@ public class SoundManager : MonoBehaviour
         source.clip = requestedSoundClip;
         source.loop = true;
         source.pitch = pitch;
+        source.volume = volume;
 
         source.Play();
     }

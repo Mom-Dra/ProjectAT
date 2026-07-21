@@ -7,4 +7,6 @@ public class StageData : ScriptableObject
     public string stageName;
     public Sprite thumbnail;
     public string sceneName;
+
+    public AudioClip bgm;
 }

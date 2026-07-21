@@ -82,7 +82,6 @@
     <Compile Include="Assets\Scripts\Entities\CoverHandler.cs" />
     <Compile Include="Assets\Scripts\Cover\CoverPoint.cs" />
     <Compile Include="Assets\Scripts\UI\HealthUI.cs" />
-    <Compile Include="Assets\Scripts\Start.cs" />
     <Compile Include="Assets\Scripts\Weapon\ProjectileGrenade.cs" />
     <Compile Include="Assets\Scripts\Skills\ConcreteSkills\SuppressiveFire.cs" />
     <Compile Include="Assets\Scripts\Enemy\SecurityCamera.cs" />
@@ -150,6 +149,7 @@
     <Compile Include="Assets\Scripts\Enemy\Squad\SquadConfig.cs" />
     <Compile Include="Assets\Datas\Models\Effect\VFX_Klaus\Scripts\RotateToMouse.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Scene\StartScene.cs" />
     <Compile Include="Assets\Scripts\Test2.cs" />
     <Compile Include="Assets\Scripts\Enemy\Behavior\Enemy_State.cs" />
     <Compile Include="Assets\Scripts\Skills\ConcreteSkills\ThrowRock.cs" />
