@@ -38,7 +38,7 @@ public class Door : StaticInteractableObject
     }
     public override void OnInteractStart(PlayerController player) { }
 
-    public override void OnExecute(PlayerController player)
+    protected override bool TryExecuteInteraction(PlayerController player)
     {
         if (runningCoroutine is not null) 
         {
@@ -50,6 +50,8 @@ public class Door : StaticInteractableObject
         isOpen = !isOpen;
         runningCoroutine = StartCoroutine(ProcessDoorMotion(isOpen));
         soundController.PlayDoorMotionStartSound(isOpen);
+
+        return true;
     }
 
     private IEnumerator ProcessDoorMotion(bool targetOpen)

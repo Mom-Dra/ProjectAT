@@ -1,32 +1,38 @@
 using UnityEngine;
 
-[RequireComponent(typeof(EntityStatus))]
-public class EnemyMissionTarget : MonoBehaviour
+
+namespace ProjectAT.Mission
 {
-    [Header("Mission Settings")]
-    [SerializeField]
-    private EnemyIdentity enemyIdentity;
-
-    private EntityStatus entityStatus;
-
-    private void Awake()
+    [RequireComponent(typeof(EntityStatus))]
+    public class EnemyMissionTarget : MissionProgressSource
     {
-        entityStatus = GetComponent<EntityStatus>();
-    }
+        private EntityStatus entityStatus;
+        public override MissionObjectiveType ObjectiveType => MissionObjectiveType.Kill;
 
-    private void OnEnable()
-    {
-        entityStatus.onDeath += TargetDied;
-    }
+        private void Awake()
+        {
+            entityStatus = GetComponent<EntityStatus>();
+        }
 
-    private void OnDisable()
-    {
-        entityStatus.onDeath -= TargetDied;
-    }
+        private void OnEnable()
+        {
+            if(entityStatus != null)
+            {
+                entityStatus.onDeath += HandleTargetDied;
+            }
+        }
 
-    private void TargetDied()
-    {
-        // InGameManager.Instance.EventManager.TriggerTarget(targetID);
-        InGameManager.Instance.EventManager.Publish(EventType.TargetDied, enemyIdentity);
+        private void OnDisable()
+        {
+            if(entityStatus != null)
+            {
+                entityStatus.onDeath -= HandleTargetDied;
+            }
+        }
+
+        private void HandleTargetDied()
+        {
+            ReportProgress(); //현재 사망 이벤트에는 공격자 정보가 필요 없으므로 actor는 null로 전달
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using PlayerStateMachine;
 using EPOOutline;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace Interactable
         [SerializeField] private string playerAnimationTrigger = "Interact";
         [SerializeField] protected PlayerStateType nextState = PlayerStateType.Normal;
         [SerializeField] private bool canStopInteract = true;
+
+        public event Action<PlayerController> InteractionCompleted;
         
         #region Properties
         public GameObject CurrentInteractor {get; protected set;}
@@ -68,7 +71,19 @@ namespace Interactable
         }
 
         public abstract void OnInteractStart(PlayerController player);
-        public abstract void OnExecute(PlayerController player);
+        public void OnExecute(PlayerController player) // 상호작용 동작을 실행시키는 래퍼 함수. TryExecuteInteraction을 호출하고 성공하면 InteractionCompleted 이벤트를 발생시킨다.
+        {
+            if (TryExecuteInteraction(player))
+            {
+                InteractionCompleted?.Invoke(player);
+            }
+        }
+
+        /// <summary>
+        /// 실제 상호작용 동작을 실행하는 클래스. 성공한 경우 true를 반환한다.
+        /// </summary>
+        protected abstract bool TryExecuteInteraction(PlayerController player);
+        
         public virtual void OnInteractEnd(PlayerController player) {}
         
         public virtual bool TryLock(PlayerController interactor)
@@ -83,6 +98,7 @@ namespace Interactable
         {
             CurrentInteractor = null;
         }
+
         #endregion
 
         #region InteractionFeedback Functions

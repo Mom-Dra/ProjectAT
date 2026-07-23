@@ -9,6 +9,7 @@ public enum EventType
 {
     TargetDied,
     PlayerDied,
+    MissionProgressed,
     Last
 }
 

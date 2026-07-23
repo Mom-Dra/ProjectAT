@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ceb9745fd32cd47b096d788fb67198, type: 3}
-  m_Name: KillMission
+  m_Script: {fileID: 11500000, guid: 33e0d41769041644cab31af0422c43d6, type: 3}
+  m_Name: NormalEnemyKill
   m_EditorClassIdentifier: 
-  missionName: Kill Captain
-  description: Captain
-  enemyIdentity: {fileID: 11400000, guid: 135ae1ad40c42d7448dddcff13cf87a9, type: 2}
+  displayName: NormalEnemyKill

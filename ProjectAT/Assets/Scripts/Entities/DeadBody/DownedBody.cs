@@ -162,7 +162,7 @@ namespace Interactable
             //원래였으면 시체가 들어올려지는 애니메이션이 있어야하지만 없으므로 아무것도 하지 않음.
         }
 
-        public override void OnExecute(PlayerController player)
+        protected override bool TryExecuteInteraction(PlayerController player)
         {
             if (transform.parent == null)
             {
@@ -172,6 +172,7 @@ namespace Interactable
             {
                 StopCarrying();
             }
+            return true;
         }
 
         public override void OnInteractEnd(PlayerController player)

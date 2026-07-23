@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 4969974018569580837}
   - component: {fileID: 3197312662540451574}
   - component: {fileID: 8945974562231481978}
+  - component: {fileID: 215209072933523371}
   m_Layer: 7
   m_Name: SimpleMilitary_GasMaskSoldier_Black
   m_TagString: Untagged
@@ -671,6 +672,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableBuffs: []
+--- !u!114 &215209072933523371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42b7c3bda01d854e9356da4b8de2c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveKey: {fileID: 11400000, guid: 4f5bf3fd75eb8c24e94199bbe851d697, type: 2}
+  progressAmount: 1
+  reportOnce: 1
 --- !u!1 &100074
 GameObject:
   m_ObjectHideFlags: 0

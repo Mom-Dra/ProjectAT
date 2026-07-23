@@ -71,9 +71,10 @@ public class CoverPoint : InteractableObject
     }
 
     public override void OnInteractStart(PlayerController player) { }
-    public override void OnExecute(PlayerController player)
+    protected override bool TryExecuteInteraction(PlayerController player)
     {
         HidePulse();
+        return true;
     }
 
     public override void OnHoverEnter()
