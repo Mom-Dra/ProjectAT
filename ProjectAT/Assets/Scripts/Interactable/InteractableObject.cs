@@ -8,7 +8,6 @@ namespace Interactable
 {
     public abstract class InteractableObject : MonoBehaviour, IInteractable, IHoverableFeedback, ITargetableFeedback
     {
-        [Header("[Interactable Object]")]
         [Header("References")]
         [SerializeField] protected Outlinable outlinable;
 
@@ -17,8 +16,7 @@ namespace Interactable
         [SerializeField] private string playerAnimationTrigger = "Interact";
         [SerializeField] protected PlayerStateType nextState = PlayerStateType.Normal;
         [SerializeField] private bool canStopInteract = true;
-
-        public event Action<PlayerController> InteractionCompleted;
+        public event Action OnInteractCompleted;
         
         #region Properties
         public GameObject CurrentInteractor {get; protected set;}
@@ -75,7 +73,7 @@ namespace Interactable
         {
             if (TryExecuteInteraction(player))
             {
-                InteractionCompleted?.Invoke(player);
+                OnInteractCompleted?.Invoke();
             }
         }
 
@@ -98,7 +96,6 @@ namespace Interactable
         {
             CurrentInteractor = null;
         }
-
         #endregion
 
         #region InteractionFeedback Functions

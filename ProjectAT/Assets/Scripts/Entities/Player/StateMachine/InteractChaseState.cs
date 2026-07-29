@@ -36,7 +36,7 @@ namespace PlayerStateMachine
         {
             InteractableObject target = myInteractionModule.CurrentInteractTarget;
 
-            // 안전 장치 1: 추적 중에 대상이 파괴되었거나 null이 된 경우
+            // 안전 장치 : 추적 중에 대상이 파괴되었거나 null이 된 경우
             if (!myInteractionModule.CheckCurrentInteractObjectAvailable())
             {
                 context.PlayerMove(context.transform.position, false); // 이동 멈춤

@@ -7,7 +7,6 @@ using UnityEngine;
 
 public enum EventType
 {
-    TargetDied,
     PlayerDied,
     MissionProgressed,
     Last

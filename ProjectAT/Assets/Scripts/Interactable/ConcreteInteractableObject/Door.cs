@@ -40,6 +40,12 @@ public class Door : StaticInteractableObject
 
     protected override bool TryExecuteInteraction(PlayerController player)
     {
+        ToggleDoor();
+        return true;
+    }
+
+    public void ToggleDoor()
+    {
         if (runningCoroutine is not null) 
         {
             StopCoroutine(runningCoroutine);
@@ -50,17 +56,11 @@ public class Door : StaticInteractableObject
         isOpen = !isOpen;
         runningCoroutine = StartCoroutine(ProcessDoorMotion(isOpen));
         soundController.PlayDoorMotionStartSound(isOpen);
-
-        return true;
     }
 
     private IEnumerator ProcessDoorMotion(bool targetOpen)
     {
-        Vector3 lookDir = CurrentInteractor.transform.forward;
-        Vector3 playerToBuilding = transform.position - CurrentInteractor.transform.position;
-        float dot = Vector3.Dot(lookDir.normalized, playerToBuilding.normalized);
-
-        float targetY = (dot < 0f ? -1f : 1f) * (targetOpen ? openAngle : 0f);
+        float targetY = CalculateDoorAngle(targetOpen);
         
         Quaternion startLeftRotation = leftDoor.localRotation;
         Quaternion startRightRotation = rightDoor.localRotation;
@@ -89,6 +89,17 @@ public class Door : StaticInteractableObject
         leftDoor.localRotation = endLeftRotation;
         rightDoor.localRotation = endRightRotation;
         runningCoroutine = null;
+    }
+
+    private float CalculateDoorAngle(bool targetOpen)
+    {
+        if(CurrentInteractor == null) return openAngle;
+
+        Vector3 lookDir = CurrentInteractor.transform.forward;
+        Vector3 playerToBuilding = transform.position - CurrentInteractor.transform.position;
+        float dot = Vector3.Dot(lookDir.normalized, playerToBuilding.normalized);
+
+        return (dot < 0f ? -1f : 1f) * (targetOpen ? openAngle : 0f);
     }
 
     private void SetDoorNavMeshObstacleState(bool enabled)

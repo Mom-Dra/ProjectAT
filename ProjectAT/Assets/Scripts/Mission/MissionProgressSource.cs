@@ -20,9 +20,7 @@ namespace ProjectAT.Mission
         /// <summary>
         /// 특정 조건에 의해 미션 진행이 될 경우, InGameManager의 EventManager를 경유해 MissionManager에 진행현황을 보고함.
         /// </summary>
-        /// <param name="actor">해당 미션 조건을 수행한 플레이어 actor</param>
-        /// <returns></returns>
-        protected bool ReportProgress(PlayerController actor = null)
+        protected bool ReportProgress()
         {
             if(reportOnce && hasReported) { return false; }
             if(objectiveKey == null)
@@ -38,7 +36,7 @@ namespace ProjectAT.Mission
                 return false;
             }
 
-            MissionProgressSignal signal = new MissionProgressSignal(objectiveKey, ObjectiveType, Mathf.Max(1, progressAmount), gameObject, actor);
+            MissionProgressSignal signal = new MissionProgressSignal(objectiveKey, ObjectiveType, Mathf.Max(1, progressAmount), gameObject);
             if (reportOnce)
             {
                 hasReported = true;

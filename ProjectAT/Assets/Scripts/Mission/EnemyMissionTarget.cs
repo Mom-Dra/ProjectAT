@@ -32,7 +32,7 @@ namespace ProjectAT.Mission
 
         private void HandleTargetDied()
         {
-            ReportProgress(); //현재 사망 이벤트에는 공격자 정보가 필요 없으므로 actor는 null로 전달
+            ReportProgress();
         }
     }
 }

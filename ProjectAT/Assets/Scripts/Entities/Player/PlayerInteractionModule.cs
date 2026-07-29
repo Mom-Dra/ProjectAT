@@ -77,7 +77,6 @@ public class PlayerInteractionModule : MonoBehaviour
 
     public bool TrySetInteractTarget(RaycastHit castedObject)
     {
-
         InteractableObject interactable = castedObject.collider.GetComponentInParent<InteractableObject>();
         if (!(interactable != null && !interactable.IsInUse))
         {
@@ -86,7 +85,6 @@ public class PlayerInteractionModule : MonoBehaviour
 
         if (TryUpdateInteractLocation(interactable))
         {
-            SetInteractTarget(interactable);
             return true;
         }
         else
@@ -139,6 +137,7 @@ public class PlayerInteractionModule : MonoBehaviour
     {
         if (interactable.TryGetInteractLocation(transform, out Vector3 sampledPosition, out Vector3 sampledLookDir, myMovementModule.Agent))
         {
+            SetInteractTarget(interactable);
             SetInteractLocation(sampledPosition, sampledLookDir);
             return true;
         }

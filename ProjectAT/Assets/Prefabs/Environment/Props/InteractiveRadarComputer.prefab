@@ -12,11 +12,12 @@ GameObject:
   - component: {fileID: 731266400783119385}
   - component: {fileID: 3819148314385194555}
   - component: {fileID: 694137872010567850}
-  - component: {fileID: 5160724555416360120}
-  - component: {fileID: 6862321056076993903}
   - component: {fileID: 4690379179746627597}
   - component: {fileID: 7489695640188240764}
   - component: {fileID: 8274823321836755722}
+  - component: {fileID: 6324067962399282049}
+  - component: {fileID: 5160724555416360120}
+  - component: {fileID: 6960168577265227621}
   m_Layer: 13
   m_Name: InteractiveRadarComputer
   m_TagString: Untagged
@@ -114,41 +115,6 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 0
   m_AffectedAgents: f2652faea98c17ec
---- !u!114 &5160724555416360120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 261310597723635162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd11cc5732f1abd4196da85fcff24068, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveKey: {fileID: 11400000, guid: 67332c0bd486c8f4a948a0a22beaed50, type: 2}
-  progressAmount: 1
-  reportOnce: 1
-  interactable: {fileID: 6862321056076993903}
---- !u!114 &6862321056076993903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 261310597723635162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d093021f140ec004b948694f3f714b51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlinable: {fileID: 4690379179746627597}
-  interactDuration: 1
-  playerAnimationTrigger: Interact
-  nextState: 0
-  canStopInteract: 1
-  navMeshSearchRadius: 1
-  interactionPoint: {fileID: 5008466189040178846}
 --- !u!114 &4690379179746627597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +211,57 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.9811726, y: 2.7194724, z: 4.088763}
   m_Center: {x: 0.0016046762, y: 1.3597069, z: -0.038790584}
+--- !u!114 &6324067962399282049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261310597723635162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6220eb4c52f49942838720c36e81e7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlinable: {fileID: 4690379179746627597}
+  interactDuration: 1
+  playerAnimationTrigger: Interact
+  nextState: 0
+  canStopInteract: 1
+  navMeshSearchRadius: 1
+  interactionPoint: {fileID: 5008466189040178846}
+--- !u!114 &5160724555416360120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261310597723635162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd11cc5732f1abd4196da85fcff24068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveKey: {fileID: 11400000, guid: 67332c0bd486c8f4a948a0a22beaed50, type: 2}
+  progressAmount: 1
+  reportOnce: 1
+  sourceObject: {fileID: 6324067962399282049}
+--- !u!114 &6960168577265227621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261310597723635162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd2e7464702ae14b9ea57f2ef139db8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableObject: {fileID: 6324067962399282049}
+  onInteractCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1882858229659456820
 GameObject:
   m_ObjectHideFlags: 0

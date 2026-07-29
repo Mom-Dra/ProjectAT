@@ -1,22 +1,16 @@
-using ProjectAT.Mission;
 using UnityEngine;
-using UnityEngine.AI;
 using Interactable;
+using UnityEngine.AI;
 
-[DisallowMultipleComponent]
-[RequireComponent(typeof(InterationMissionProgressSource))]
-public sealed class MissionComputer : StaticInteractableObject
+public sealed class InteractableComputer : StaticInteractableObject
 {
-    [Header("Mission Computer")]
+    [Header("Interactable Computer Settings")]
     [SerializeField] private Transform interactionPoint;
 
     private bool isCompleted;
-
     public bool IsCompleted => isCompleted;
 
-    public override void OnInteractStart(PlayerController player)
-    {
-    }
+    public override void OnInteractStart(PlayerController player) { }
 
     protected override void InitiateInteractPositions()
     {
@@ -51,11 +45,7 @@ public sealed class MissionComputer : StaticInteractableObject
             return false;
         }
 
-        return base.TryGetInteractLocation(
-            playerTransform,
-            out sampledPosition,
-            out sampledLookDir,
-            agent);
+        return base.TryGetInteractLocation(playerTransform, out sampledPosition, out sampledLookDir, agent);
     }
 
     public override bool TryLock(PlayerController interactor)
