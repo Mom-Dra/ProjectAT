@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd6e5821e293a224fb87201faf98f1a3, type: 3}
-  m_Name: StageDemoMission
+  m_Name: StageDemoMission_1
   m_EditorClassIdentifier: 
   missionName: PrimaryMission
   description: "\uD544\uB4DC \uC704\uC758 \uBAA8\uB4E0 \uC801\uAD70\uC744 \uCC98\uCE58\uD558\uACE0,

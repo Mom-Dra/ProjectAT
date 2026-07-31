@@ -7,5 +7,6 @@ namespace ProjectAT.Mission
         Interact, 
         Kill, 
         Deliver,
+        AreaReached,
     }    
 }
