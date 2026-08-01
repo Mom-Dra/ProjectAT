@@ -48,4 +48,23 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <TabbedView />
+    <ui:VisualElement name="MissionTracker" class="mission-tracker" picking-mode="Ignore" style="display: none;">
+        <ui:VisualElement name="MissionPanel" class="mission-panel" picking-mode="Ignore">
+            <ui:VisualElement name="MissionContent" class="mission-content" picking-mode="Ignore">
+                <ui:Label text="Mission" class="mission-kicker" picking-mode="Ignore" />
+                <ui:Label name="MissionName" text="Mission Name" class="mission-name" picking-mode="Ignore" />
+                <ui:Label name="MissionDescription" text="Mission Description" class="mission-description" picking-mode="Ignore" />
+                <ui:VisualElement name="MissionObjectives" class="mission-objectives" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:VisualElement name="MissionSweep" class="mission-sweep" picking-mode="Ignore" style="display: none;" />
+            <ui:VisualElement name="MissionCompleteOverlay" class="mission-complete-overlay" picking-mode="Ignore" style="display: none;">
+                <ui:Label text="MISSION COMPLETE" class="mission-complete-text" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:VisualElement name="MissionAllClear" class="mission-all-clear" picking-mode="Ignore" style="display: none;">
+                <ui:VisualElement name="AllClearIcon" class="mission-all-clear-icon" picking-mode="Ignore" />
+                <ui:Label name="AllClearFallbackIcon" text="✓" class="mission-all-clear-fallback" picking-mode="Ignore" style="display: none;" />
+                <ui:Label text="Mission All Clear" class="mission-all-clear-text" picking-mode="Ignore" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

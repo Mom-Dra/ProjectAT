@@ -1,4 +1,5 @@
 using UnityEngine;
+using ProjectAT.Mission;
 
 public class InGameManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class InGameManager : MonoBehaviour
         {
             if (instance == null)
             {
-                instance = FindFirstObjectByType<InGameManager>();
+                instance = FindAnyObjectByType<InGameManager>();
                 instance?.Initialize();
             }
 
@@ -30,6 +31,7 @@ public class InGameManager : MonoBehaviour
     public InGameUIManager UIManager { get; private set; }
     public PoolManager PoolManager { get; private set; }
     public EventManager EventManager { get; private set; }
+    public MissionManager MissionManager {get; private set;}
 
     private void Awake()
     {
@@ -56,15 +58,15 @@ public class InGameManager : MonoBehaviour
     private void Initialize()
     {
         if (initialized) return;
-
         if (mainCamera == null) mainCamera = Camera.main;
-
-        if (playerHUD == null) playerHUD = FindFirstObjectByType<PlayerHUD>();
+        if (playerHUD == null) playerHUD = FindAnyObjectByType<PlayerHUD>();
 
         PoolManager = new PoolManager(pooledPrefabs);
         EventManager = new EventManager();
         UIManager = new InGameUIManager(healthUIPrefab, playerHUD);
         InteractionManager = new InteractionUIManager(Managers.Instance.InputManager, interactionLayerMask, mainCamera);
+        
+        MissionManager = GetComponent<MissionManager>();
 
         initialized = true;
     }

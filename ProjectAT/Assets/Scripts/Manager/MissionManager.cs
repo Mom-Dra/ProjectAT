@@ -35,7 +35,8 @@ namespace ProjectAT.Mission
     #region Events
         public event Action<MissionData, MissionObjectiveDefinition, int> ObjectiveProgressed;
         public event Action<MissionData> MissionCompleted;
-        public event Action<MissionData> MissionActivated; 
+        public event Action<MissionData> MissionActivated;
+        public event Action AllMissionsCompleted;
     #endregion
     #region  properties
         public MissionData CurrentMission
@@ -49,6 +50,7 @@ namespace ProjectAT.Mission
         public int CurrentMissionIndex => currentMissionIndex;
         public bool IsMissionActiave => flowState == MissionFlowState.Active;
         public bool IsTransitioning => flowState == MissionFlowState.Transitioning;
+        public bool AreAllMissionsCompleted => (flowState == MissionFlowState.Finished) && missionStates.Count > 0 && (completedMissions.Count == missionStates.Count);
     #endregion
 
         private void Awake()
@@ -241,7 +243,7 @@ namespace ProjectAT.Mission
 
             Debug.Log("Stage cleared!");
 
-            Managers.Instance.SceneManager.LoadSceneAsync(SceneType.End);
+            AllMissionsCompleted?.Invoke(); // 모든 미션 완료 이벤트 발생
         }
 
         public bool TryGetObjectiveProgress(MissionData mission, MissionObjectiveKey objectiveKey, MissionObjectiveType objectiveType, out int currentProgress, out int requiredProgress)
