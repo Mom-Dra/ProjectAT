@@ -32,13 +32,13 @@ namespace ProjectAT.Mission
         private MissionFlowState flowState = MissionFlowState.NotStarted;
         private readonly bool[] isDeadPlayers = new bool[(int)PlayerId.Last];
 
-    #region Events
+        #region Events
         public event Action<MissionData, MissionObjectiveDefinition, int> ObjectiveProgressed;
         public event Action<MissionData> MissionCompleted;
         public event Action<MissionData> MissionActivated;
         public event Action AllMissionsCompleted;
-    #endregion
-    #region  properties
+        #endregion =========================
+        #region  properties
         public MissionData CurrentMission
         {
             get
@@ -51,7 +51,7 @@ namespace ProjectAT.Mission
         public bool IsMissionActiave => flowState == MissionFlowState.Active;
         public bool IsTransitioning => flowState == MissionFlowState.Transitioning;
         public bool AreAllMissionsCompleted => (flowState == MissionFlowState.Finished) && missionStates.Count > 0 && (completedMissions.Count == missionStates.Count);
-    #endregion
+        #endregion ================
 
         private void Awake()
         {

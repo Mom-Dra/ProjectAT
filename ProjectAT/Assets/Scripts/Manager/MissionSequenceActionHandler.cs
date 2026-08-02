@@ -10,6 +10,33 @@ namespace ProjectAT.Mission
     /// </summary>
     public sealed class MissionSequenceActionHandler : MonoBehaviour
     {
+        #region MissionActionEntry Class
+        [Serializable]
+        private sealed class MissionActionEntry
+        {
+            [SerializeField] private MissionData mission;
+
+            [Header("Mission Activated")]
+            [SerializeField] private UnityEvent onActivated = new UnityEvent();
+
+            [Header("Mission Completed")]
+            [SerializeField] private bool waitForCompletionSignal;
+            [SerializeField] private UnityEvent onCompleted = new UnityEvent();
+
+            public MissionData Mission => mission;
+            public bool WaitForCompletionSignal => waitForCompletionSignal;
+
+            public void InvokeActivated()
+            {
+                onActivated?.Invoke();
+            }
+
+            public void InvokeCompleted()
+            {
+                onCompleted?.Invoke();
+            }
+        }
+        #endregion =========================
         [Header("Mission Actions")]
         [SerializeField]
         private List<MissionActionEntry> missionActions = new List<MissionActionEntry>();
@@ -142,33 +169,5 @@ namespace ProjectAT.Mission
         {
             onStageFailed?.Invoke();
         }
-
-        #region MissionActionEntry Class
-        [Serializable]
-        private sealed class MissionActionEntry
-        {
-            [SerializeField] private MissionData mission;
-
-            [Header("Mission Activated")]
-            [SerializeField] private UnityEvent onActivated = new UnityEvent();
-
-            [Header("Mission Completed")]
-            [SerializeField] private bool waitForCompletionSignal;
-            [SerializeField] private UnityEvent onCompleted = new UnityEvent();
-
-            public MissionData Mission => mission;
-            public bool WaitForCompletionSignal => waitForCompletionSignal;
-
-            public void InvokeActivated()
-            {
-                onActivated?.Invoke();
-            }
-
-            public void InvokeCompleted()
-            {
-                onCompleted?.Invoke();
-            }
-        }
-    #endregion
     }
 }

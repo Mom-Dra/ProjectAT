@@ -1,5 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Style src="project://database/Assets/Scripts/UI/UIToolkit/Uss/MissionTracker.uss?fileID=7433441132597879392&amp;guid=9a8620c23785baf499350184a46f9cdd&amp;type=3#MissionTracker" />
     <ui:VisualElement name="HUD_LeftBottom" style="flex-grow: 1; position: absolute; left: 1%; bottom: 1%; height: 30%; width: 24%; flex-direction: row;">
         <ui:VisualElement name="Panel" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0.59); border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; flex-direction: column; left: 0%; bottom: 0%; height: 100%; flex-shrink: 0; width: 50%; position: absolute; align-items: center;">
             <ui:VisualElement name="PlayerInfo" style="flex-grow: 1; flex-direction: row; align-self: auto; align-items: auto; justify-content: flex-start; width: 70%; height: 50%; align-content: flex-start; position: absolute; transform-origin: center; bottom: auto; left: 15%; top: 3%;">
@@ -49,33 +48,4 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <TabbedView />
-    <ui:VisualElement name="MissionTracker" class="mission-tracker mission-tracker--visible" picking-mode="Ignore">
-        <ui:VisualElement name="MissionPanel" class="mission-panel" picking-mode="Ignore">
-            <ui:VisualElement name="MissionContent" class="mission-content" picking-mode="Ignore">
-                <ui:Label text="Mission" class="mission-kicker" picking-mode="Ignore" />
-                <ui:Label name="MissionDescription" text="Mission Description" class="mission-description" picking-mode="Ignore" />
-                <ui:VisualElement name="MissionObjectives" class="mission-objectives" picking-mode="Ignore">
-                    <ui:VisualElement class="mission-objective" picking-mode="Ignore">
-                        <ui:Label text="✓" class="mission-objective__marker" picking-mode="Ignore" />
-                        <ui:Label text="Eliminate enemy forces" class="mission-objective__text" picking-mode="Ignore" />
-                        <ui:Label text="0 / 6" class="mission-objective__progress" picking-mode="Ignore" />
-                    </ui:VisualElement>
-                    <ui:VisualElement class="mission-objective" picking-mode="Ignore">
-                        <ui:Label text="✓" class="mission-objective__marker" picking-mode="Ignore" />
-                        <ui:Label text="Interact with the computer" class="mission-objective__text" picking-mode="Ignore" />
-                        <ui:Label text="0 / 1" class="mission-objective__progress" picking-mode="Ignore" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="MissionSweep" class="mission-sweep" picking-mode="Ignore" style="display: none;" />
-            <ui:VisualElement name="MissionCompleteOverlay" class="mission-complete-overlay" picking-mode="Ignore" style="display: none;">
-                <ui:Label text="MISSION COMPLETE" class="mission-complete-text" picking-mode="Ignore" />
-            </ui:VisualElement>
-            <ui:VisualElement name="MissionAllClear" class="mission-all-clear" picking-mode="Ignore" style="display: none;">
-                <ui:VisualElement name="AllClearIcon" class="mission-all-clear-icon" picking-mode="Ignore" />
-                <ui:Label name="AllClearFallbackIcon" text="✓" class="mission-all-clear-fallback" picking-mode="Ignore" style="display: none;" />
-                <ui:Label text="Mission All Clear" class="mission-all-clear-text" picking-mode="Ignore" />
-            </ui:VisualElement>
-        </ui:VisualElement>
-    </ui:VisualElement>
 </ui:UXML>

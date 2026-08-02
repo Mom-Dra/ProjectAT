@@ -7,6 +7,20 @@ using UnityEngine.UIElements;
 [DisallowMultipleComponent]
 public class MissionTrackerUI : MonoBehaviour
 {
+    #region ObjectiveRow Class
+    private sealed class ObjectiveRow
+    {
+        public VisualElement Root { get;}
+        public Label ProgressLabel { get; }
+        public bool IsComplete { get; set; } //해당 오브젝트가 완료되었는지 여부. 완료 시 체크 표시를 보여주기 위해 사용.
+
+        public ObjectiveRow(VisualElement root, Label progressLabel)
+        {
+            Root = root;
+            ProgressLabel = progressLabel;
+        }
+    }
+    #endregion =========================
     #region Constants Values
     private const string TrackerVisibleClass = "mission-tracker--visible";
     private const string TrackerExitClass = "mission-tracker--exit";
@@ -16,7 +30,7 @@ public class MissionTrackerUI : MonoBehaviour
     private const string CompleteOverlayVisibleClass = "mission-complete-overlay--visible";
     private const string AllClearVisibleClass = "mission-all-clear--visible";
     private const float SweepDuration = 0.55f;
-    #endregion
+    #endregion =========================
 
     [Header("UI Toolkit References")]
     [SerializeField] private UIDocument uiDocument;
@@ -47,7 +61,7 @@ public class MissionTrackerUI : MonoBehaviour
 
     private Label missionDescriptionLabel;
     private Label allClearFallbackIcon;
-    #endregion
+    #endregion =========================
 
     private readonly Dictionary<MissionObjectiveDefinition, ObjectiveRow> objectiveRows = new Dictionary<MissionObjectiveDefinition, ObjectiveRow>();
 
@@ -167,6 +181,9 @@ public class MissionTrackerUI : MonoBehaviour
         missionManager = null;
     }
 
+    /// <summary>
+    /// MissionManager의 현재 상태와 MissionTrackerUI의 상태를 동기화합니다.
+    /// </summary>
     private void SynchronizeWithManager()
     {
         if(missionManager == null)
@@ -232,6 +249,10 @@ public class MissionTrackerUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 하나의 미션을 완료했을때 실행되는 연출용 코루틴임. 즉, Sweep 연출을 하고 다음 미션을 불러옴 
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator PlayMissionCompletion()
     {
         completionRunning = true;
@@ -304,6 +325,10 @@ public class MissionTrackerUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 완료 연출 이후 다음 화면으로 넘어갈 준비가 되었는지 반환함. 이미 AllClear인지, 대기중인 다음 미션이 있는지도 체크함.
+    /// </summary>
+    /// <returns>다음 미션을 표시할 준비가 됨 여부</returns>
     private bool TryResolvePendingState()
     {
         if(pendingAllClear || pendingMission != null) return true;
@@ -403,6 +428,10 @@ public class MissionTrackerUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 미션내역을 없애고, AllClear 상태를 UI에 표시함.
+    /// </summary>
+    /// <param name="playFeedback"></param>
     private void ShowAllClear(bool playFeedback)
     {
         displayedMission = null;
@@ -503,18 +532,5 @@ public class MissionTrackerUI : MonoBehaviour
     {
         if(audioSource == null || clip == null) return;
         audioSource.PlayOneShot(clip);
-    }
-
-    private sealed class ObjectiveRow
-    {
-        public VisualElement Root { get;}
-        public Label ProgressLabel { get; }
-        public bool IsComplete { get; set; }
-
-        public ObjectiveRow(VisualElement root, Label progressLabel)
-        {
-            Root = root;
-            ProgressLabel = progressLabel;
-        }
     }
 }
