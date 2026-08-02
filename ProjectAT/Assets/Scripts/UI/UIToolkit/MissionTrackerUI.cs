@@ -20,7 +20,6 @@ public class MissionTrackerUI : MonoBehaviour
 
     [Header("UI Toolkit References")]
     [SerializeField] private UIDocument uiDocument;
-    [SerializeField] private StyleSheet missionStyleSheet;
     
     [Header("All Clear Icon")]
     [SerializeField] private Sprite allClearIcon;
@@ -57,7 +56,6 @@ public class MissionTrackerUI : MonoBehaviour
 
     private bool pendingAllClear;
     private bool completionRunning;
-    private bool styleSheetAdded;
     private bool warnedMissingIcon;
 
     private Coroutine completionCoroutine;
@@ -103,12 +101,6 @@ public class MissionTrackerUI : MonoBehaviour
         }
 
         VisualElement root = uiDocument.rootVisualElement;
-
-        if(missionStyleSheet != null && !styleSheetAdded)
-        {
-            root.styleSheets.Add(missionStyleSheet);
-            styleSheetAdded = true;
-        }
 
         tracker = root.Q<VisualElement>("MissionTracker");
         panel = root.Q<VisualElement>("MissionPanel");

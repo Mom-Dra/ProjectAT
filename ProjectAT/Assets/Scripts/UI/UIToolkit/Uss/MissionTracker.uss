@@ -69,14 +69,6 @@
     margin-bottom: 3px;
 }
 
-.mission-name {
-    color: rgb(240, 253, 255);
-    font-size: 23px;
-    -unity-font-style: bold;
-    white-space: normal;
-    margin-bottom: 8px;
-}
-
 .mission-description {
     color: rgba(220, 238, 242, 0.85);
     font-size: 15px;
