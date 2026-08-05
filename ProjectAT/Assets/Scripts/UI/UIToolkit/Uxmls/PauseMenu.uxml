@@ -1,0 +1,70 @@
+<ui:UXML
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+
+    <Style src="project://database/Assets/Scripts/UI/UIToolkit/Uss/PauseMenu.uss" />
+
+    <ui:VisualElement
+        name="PauseOverlay"
+        class="pause-overlay"
+        style="display: none;">
+
+        <ui:VisualElement class="pause-navigation">
+
+            <ui:VisualElement
+                picking-mode="Ignore"
+                class="pause-title-container">
+
+                <ui:Label
+                    text="Pause"
+                    picking-mode="Ignore"
+                    class="pause-title" />
+
+                <ui:VisualElement
+                    picking-mode="Ignore"
+                    class="pause-title-underline" />
+
+            </ui:VisualElement>
+
+            <ui:VisualElement class="pause-button-list">
+
+                <ui:Button
+                    name="ResumeButton"
+                    text="계속하기"
+                    class="pause-button" />
+
+                <ui:Button
+                    name="SaveButton"
+                    text="저장"
+                    class="pause-button" />
+
+                <ui:Button
+                    name="LoadButton"
+                    text="불러오기"
+                    class="pause-button" />
+
+                <ui:Button
+                    name="OptionsButton"
+                    text="옵션"
+                    class="pause-button" />
+
+                <ui:Button
+                    name="TitleButton"
+                    text="타이틀화면"
+                    class="pause-button" />
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!--
+        저장, 불러오기, 옵션 UI가 나중에 표시될 오른쪽 영역.
+        이번 구현에서는 비워 둔다.
+        -->
+        <ui:VisualElement
+            name="PauseDetailPane"
+            picking-mode="Ignore"
+            class="pause-detail-pane" />
+
+    </ui:VisualElement>
+</ui:UXML>

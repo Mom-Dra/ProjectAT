@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace ProjectAT.Mission
 {
     /// <summary>
-    /// MissionManager의 미션 진행 이벤트를 받아서, 미션별로 등록된 Action을 실행하는 핸들러.
+    /// MissionManager의 미션 진행 이벤트를 받아서, 미션별로 등록된 Action을 실행하는 핸들러. UI를 제외한 맵위에 있는 오브젝트들에게 신호를 보내기 위해 설계
     /// </summary>
     public sealed class MissionSequenceActionHandler : MonoBehaviour
     {

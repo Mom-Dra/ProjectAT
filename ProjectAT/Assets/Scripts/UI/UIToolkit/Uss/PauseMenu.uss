@@ -1,0 +1,132 @@
+.pause-overlay {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    flex-direction: row;
+
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.pause-navigation {
+    position: absolute;
+
+    left: 8%;
+    top: 12%;
+
+    width: 340px;
+
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.pause-title-container {
+    width: 260px;
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-bottom: 24px;
+}
+
+.pause-title {
+    color: rgb(255, 255, 255);
+
+    font-size: 56px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 2px;
+
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.pause-title-underline {
+    width: 205px;
+    height: 4px;
+
+    background-color: rgb(255, 255, 255);
+}
+
+.pause-button-list {
+    width: 330px;
+
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.pause-button {
+    width: 320px;
+    height: 58px;
+
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 10px;
+
+    padding-left: 12px;
+    padding-right: 8px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    color: rgba(255, 255, 255, 0.88);
+    background-color: rgba(0, 0, 0, 0);
+
+    background-image: none;
+
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    font-size: 38px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+
+    transition-property: color, translate;
+    transition-duration: 0.08s, 0.08s;
+}
+
+.pause-button:hover {
+    color: rgb(255, 255, 255);
+    translate: 6px 0;
+}
+
+.pause-button:focus {
+    color: rgb(255, 255, 255);
+
+    border-left-width: 3px;
+    border-left-color: rgb(255, 255, 255);
+}
+
+.pause-button:active {
+    color: rgba(255, 255, 255, 0.65);
+    translate: 3px 0;
+}
+
+.pause-button:disabled {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.pause-detail-pane {
+    position: absolute;
+
+    left: 40%;
+    right: 6%;
+    top: 10%;
+    bottom: 10%;
+}

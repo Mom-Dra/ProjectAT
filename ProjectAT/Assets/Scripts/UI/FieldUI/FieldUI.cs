@@ -168,9 +168,20 @@ namespace ProjectAT.FieldUI
                 return overlayRoot;
             }
 
+            Canvas canvas = InGameManager.Instance?.UIManager.FieldOverlayCanvas;
+
+            if(canvas != null)
+            {
+                overlayRoot = canvas.GetComponent<RectTransform>();
+                if (overlayRoot != null)
+                {
+                    return overlayRoot;
+                }
+            }
+
             GameObject canvasObject = new GameObject("FieldOverlayCanvas", typeof(Canvas), typeof(CanvasScaler));
 
-            Canvas canvas = canvasObject.GetComponent<Canvas>();
+            canvas = canvasObject.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = 90;
 

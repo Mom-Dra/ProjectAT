@@ -30,12 +30,8 @@ public class PlayerSkillModule : MonoBehaviour
     private SkillCastState skillCastState;
     private SkillExecuteState skillExecuteState;
 
-
-    [Header("Skills")]
-    private Skill[] mySkills = new Skill[5]; //갯수 조정 필요
+    private Skill[] mySkills = new Skill[5];
     private SkillNumber currentActivateSkillNumber = SkillNumber.None;
-    private Dictionary<Skill, float> skillCooldownTimers = new Dictionary<Skill, float>();
-    public WeaponHolder MyWeapon => MyCombatModule.MyWeapon;
 
     [Header("SkillDatas")]
     [SerializeField] private SkillData[] skillDatas;     //Addressables 패키지를 이용하여 에셋을 읽어오는 방법 고려
@@ -46,8 +42,13 @@ public class PlayerSkillModule : MonoBehaviour
     [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
 
-    public event Action<SkillNumber, float> OnSkillCooldownStart;
-    public event Action<SkillNumber, int> OnSkillItemCountChange;
+    public event Action<Skill, SkillNumber> OnSkillExecuted;
+    public event Action SkillsInitialized;
+
+    public WeaponHolder MyWeapon => MyCombatModule.MyWeapon;
+    public IReadOnlyList<Skill> SkillInstances => mySkills;
+    public bool AreSkillsInitialized { get; private set; }
+
 
     private void Awake()
     {
@@ -71,40 +72,27 @@ public class PlayerSkillModule : MonoBehaviour
 
     private void InitiateSkills()
     {
+        if (AreSkillsInitialized)
+        {
+            return;
+        }
+
         for (int i = (int)SkillNumber.MainSkillOne; i < mySkills.Length; i++)
         {
             mySkills[i] = SkillFactory.Create(this, skillDatas[i]);
+
             if (mySkills[i] == null)
             {
-                Debug.LogError($"Failed to create skill for SkillNumber {(SkillNumber)i} with SkillData {skillDatas[i]?.name}. Check if the SkillData is correct and if the SkillFactory has a creation method for this skill.");
+                Debug.LogError($"Failed to create skill for SkillNumber {(SkillNumber)i} with SkillData {skillDatas[i]?.name}.");
                 mySkills[i] = new DummySkill(this, skillDatas[i]);
             }
-            skillCooldownTimers.Add(mySkills[i], Time.time);
+
+            // 기존 동작처럼 게임 시작 시 초기 쿨다운을 적용합니다.
+            mySkills[i].CurrentSkillUseTime = Time.time;
         }
 
-        InGameManager.Instance.UIManager.InitPlayerSkillInfo(this, skillDatas);
-
-        for (int i = (int)SkillNumber.MainSkillOne; i < mySkills.Length; i++)
-        {
-            SkillNumber skillNumber = (SkillNumber)i;
-            float cooldownDuration = mySkills[i].SkillMaxCoolTime;
-
-            if (mySkills[i] is IInventoryCostSkill inventoryCostSkill)
-            {
-                int itemCount =
-                    MyInventory.GetItemCount(inventoryCostSkill.NeededItemData);
-
-                OnSkillItemCountChange?.Invoke(skillNumber, itemCount);
-
-                // 0개가 아니라 스킬이 요구하는 개수보다 적은지 검사
-                if (itemCount < inventoryCostSkill.NeededItemAmount)
-                {
-                    cooldownDuration = -1f;
-                }
-            }
-
-            OnSkillCooldownStart?.Invoke(skillNumber, cooldownDuration);
-        }
+        AreSkillsInitialized = true;
+        SkillsInitialized?.Invoke();
     }
 
     private void InitiateSkillState()
@@ -236,26 +224,17 @@ public class PlayerSkillModule : MonoBehaviour
 
     public bool IsCooldownReady(Skill skill)
     {
-        return Time.time - skillCooldownTimers[skill] >= skill.SkillMaxCoolTime;
+        return Time.time - skill.CurrentSkillUseTime >= skill.SkillMaxCoolTime;
     }
 
     public void SetSkillCooldownTimer(Skill skill)
     {
-        skillCooldownTimers[skill] = Time.time;
-        float cooldownDuration = skill.SkillMaxCoolTime;
-
-        if (mySkills[(int)currentActivateSkillNumber] is IInventoryCostSkill inventorySkill)
+        if (skill == null)
         {
-            int itemCount = MyInventory.GetItemCount(inventorySkill.NeededItemData);
-            if (itemCount <= 0)
-            {
-                itemCount = 0;
-                cooldownDuration = -1f; //SkillDisabled
-            }
-            OnSkillItemCountChange?.Invoke(currentActivateSkillNumber, itemCount);
+            return;
         }
 
-        OnSkillCooldownStart?.Invoke(currentActivateSkillNumber, cooldownDuration);
+        skill.CurrentSkillUseTime = Time.time;
     }
 
     public void SetUpSkillContext(in Collider targetCollider, in Vector3 point)
@@ -266,6 +245,7 @@ public class PlayerSkillModule : MonoBehaviour
         SkillContext skillContext = new SkillContext
         {
             SkillToExecute = skill,
+            SkillNumber = currentActivateSkillNumber,
             TargetCollider = targetCollider,
             CastedPosition = point,
             FinalDamage = skillData.BaseDamage, //데미지 계산 로직 필요 -> skillData.CalCulateFinalDamage()로 바꾸는 것.
@@ -285,5 +265,16 @@ public class PlayerSkillModule : MonoBehaviour
     private void CancelSkillContext()
     {
         SetSkillContext(null);
+    }
+
+    public void NotifySkillExecuted(Skill skill, SkillNumber skillNumber)
+    {
+        if (skill == null)
+        {
+            return;
+        }
+
+        SetSkillCooldownTimer(skill);
+        OnSkillExecuted?.Invoke(skill, skillNumber);
     }
 }

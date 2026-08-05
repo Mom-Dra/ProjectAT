@@ -21,7 +21,6 @@ namespace ProjectAT.Mission
         [SerializeField] private MissionSequenceActionHandler actionHandler;
         private EventManager eventManager;
 
-
         [FormerlySerializedAs("activeMissions")]
         [SerializeField] private List<MissionData> missionSequence = new List<MissionData>();
 
@@ -135,7 +134,7 @@ namespace ProjectAT.Mission
         private void HandleMissionProgressed(MissionProgressSignal signal)
         {
             if((flowState != MissionFlowState.Active)
-                ||(signal.ObjectiveKey == null || signal.Amount <= 0)
+                ||signal.ObjectiveKey == null || signal.Amount <= 0
                 ) return;
 
             MissionRuntimeState state = GetCurrentMissionState();

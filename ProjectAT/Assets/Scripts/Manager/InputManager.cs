@@ -8,6 +8,7 @@ public class InputManager
     public event Action onMouseLeftClicked;
     public event Action OnInteractableObjectDropInput;
     public event Action OnReloadEvent;
+    public event Action OnPauseInputEvent;
 
     private InputReader inputReader;
 
@@ -15,6 +16,7 @@ public class InputManager
     public Vector2 MouseDelta => inputReader.MouseDelta;
     public Vector2 MouseWheelDelta => inputReader.MouseWheelDelta;
     public bool IsWheelClickHolding => inputReader.IsWheelClickHolding;
+    
 
     public InputManager(InputReader inputReader)
     {
@@ -25,8 +27,20 @@ public class InputManager
         inputReader.MouseLeftClickEvent += LeftClicked;
         inputReader.OnInteractableObjectDropEvent += OnInteractableObjectDrop;
         inputReader.OnReloadEvent += OnReload;
+        inputReader.OnPauseInputEvent += PauseInput;
     }
 
+    ~InputManager()
+    {
+        inputReader.SkillInputEvent -= SkillInputed;
+        inputReader.MouseRightClickEvent -= RightClicked;
+        inputReader.MouseLeftClickEvent -= LeftClicked;
+        inputReader.OnInteractableObjectDropEvent -= OnInteractableObjectDrop;
+        inputReader.OnReloadEvent -= OnReload;
+        inputReader.OnPauseInputEvent -= PauseInput;
+    }
+
+    #region Player Input Action Callbacks
     private void RightClicked()
     {
         onMouseRightClicked?.Invoke();
@@ -51,4 +65,17 @@ public class InputManager
     {
         OnReloadEvent?.Invoke();
     }
+    #endregion ===================================
+    
+    #region Menu Input Action Callbacks
+    public void SetGameplayInputEnabled(bool enabled)
+    {
+        inputReader.SetGameplayInputEnabled(enabled);
+    }
+
+    private void PauseInput()
+    {
+        OnPauseInputEvent?.Invoke();
+    }
+    #endregion ===================================
 }

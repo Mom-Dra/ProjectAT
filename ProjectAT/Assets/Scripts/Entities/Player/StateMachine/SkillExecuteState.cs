@@ -71,7 +71,7 @@ namespace PlayerStateMachine
 
             if (success && skill != null)
             {
-                context.MySkillModule.SetSkillCooldownTimer(skill);
+                context.MySkillModule.NotifySkillExecuted(skill, skillContext.SkillNumber);
             }
 
             context.MySkillModule.CancelCurrentSkill();

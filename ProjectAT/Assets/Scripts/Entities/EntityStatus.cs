@@ -35,7 +35,7 @@ public class EntityStatus : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        
+        InitStatus();
     }
 
     private void OnEnable()

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class InteractionUIManager
 {
-    private Outlinable currOutlinable;
-    private EntityStatus currEntityStatus;
-    private HealthUI currHealthUI;
     private Camera mainCamera;
 
     private IHoverableFeedback currHoverTarget;

@@ -11,8 +11,11 @@ public enum SkillType : ushort
 public abstract class Skill
 {
     protected PlayerSkillModule context;
-    [SerializeField] protected SkillData skillData;
+    protected SkillData skillData;
     //protected GameObject target;
+    public float CurrentSkillUseTime { get; set;}
+    
+    public SkillData SkillData => skillData;
     public LayerMask TargetLayer => skillData.TargetLayer;
     public IndicatorType IndicatorType => skillData.IndicatorType;
     public float SkillMaxCoolTime => skillData.MaxCoolTime;

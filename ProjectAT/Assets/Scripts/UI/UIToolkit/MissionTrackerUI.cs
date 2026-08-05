@@ -89,7 +89,7 @@ public class MissionTrackerUI : MonoBehaviour
     private void OnDisable()
     {
         UnbindMissionManager();
-        if(completionCoroutine    != null)
+        if(completionCoroutine != null)
         {
             StopCoroutine(completionCoroutine);
             completionCoroutine = null;
@@ -209,7 +209,7 @@ public class MissionTrackerUI : MonoBehaviour
         HideTracker();
     }
 
-    private void HandleMissionActivated(MissionData mission)
+    public void HandleMissionActivated(MissionData mission)
     {
         if(mission == null) return;
         if (completionRunning)
@@ -222,14 +222,14 @@ public class MissionTrackerUI : MonoBehaviour
         ShowMission(mission, true);
     }
 
-    private void HandleObjectiveProgressed(MissionData mission, MissionObjectiveDefinition objective, int currentProgress)
+    public void HandleObjectiveProgressed(MissionData mission, MissionObjectiveDefinition objective, int currentProgress)
     {
         if(mission == null || mission != displayedMission || objective == null) return;
         if(!objectiveRows.TryGetValue(objective, out ObjectiveRow row)) return;
         UpdateObjectiveRow(row, currentProgress, objective.RequiredAmount);
     }
 
-    private void HandleMissionCompleted(MissionData mission)
+    public void HandleMissionCompleted(MissionData mission)
     {
         if(mission == null || mission != displayedMission || completionRunning) return;
         pendingMission = null;
@@ -238,7 +238,7 @@ public class MissionTrackerUI : MonoBehaviour
         completionCoroutine = StartCoroutine(PlayMissionCompletion());
     }
 
-    private void HandleAllMissionsCompleted()
+    public void HandleAllMissionsCompleted()
     {
         pendingMission = null;
         pendingAllClear = true;

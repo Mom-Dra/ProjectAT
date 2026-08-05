@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using ProjectAT.Mission;
 
@@ -5,14 +6,13 @@ public class InGameManager : MonoBehaviour
 {
     private static InGameManager instance;
 
+
     [SerializeField] private LayerMask interactionLayerMask;
     [SerializeField] private GameObject healthUIPrefab;
     [SerializeField] private PoolConfigObject[] pooledPrefabs;
-    [SerializeField] private PlayerHUD playerHUD;
     [SerializeField] private Camera mainCamera;
 
     private bool initialized;
-
     public static InGameManager Instance
     {
         get
@@ -32,6 +32,28 @@ public class InGameManager : MonoBehaviour
     public PoolManager PoolManager { get; private set; }
     public EventManager EventManager { get; private set; }
     public MissionManager MissionManager {get; private set;}
+
+     #region Character Selection System ===
+    [SerializeField] private PlayerController selectedPlayer;
+    public event Action<PlayerController> SelectedPlayerChanged; // 캐릭터 선택 시스템을 위해 일단 이벤트 파놓음. 따로 다른 매니저에 보내야할지도.
+    public PlayerController SelectedPlayer => selectedPlayer;
+
+    /// <summary>
+    /// 선택된 플레이어를 변경합니다.
+    /// </summary>
+    /// <param name="player"></param>
+    public void SetSelectedPlayer(PlayerController player)
+    {
+        if (selectedPlayer == player)
+        {
+            return;
+        }
+
+        selectedPlayer = player;
+        SelectedPlayerChanged?.Invoke(selectedPlayer); // 연결되는 함수가 적으면 그냥 직접 호출하게 하는 방식도 나쁘진 않을지도
+    }
+    #endregion ============================
+
 
     private void Awake()
     {
@@ -59,14 +81,17 @@ public class InGameManager : MonoBehaviour
     {
         if (initialized) return;
         if (mainCamera == null) mainCamera = Camera.main;
-        if (playerHUD == null) playerHUD = FindAnyObjectByType<PlayerHUD>();
+        if( selectedPlayer == null)
+        {
+            selectedPlayer = FindAnyObjectByType<PlayerController>();
+        }
 
         PoolManager = new PoolManager(pooledPrefabs);
         EventManager = new EventManager();
-        UIManager = new InGameUIManager(healthUIPrefab, playerHUD);
         InteractionManager = new InteractionUIManager(Managers.Instance.InputManager, interactionLayerMask, mainCamera);
         
         MissionManager = GetComponent<MissionManager>();
+        UIManager = GetComponent<InGameUIManager>();
 
         initialized = true;
     }

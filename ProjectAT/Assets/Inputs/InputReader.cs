@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using static PlayerControls;
 
 [CreateAssetMenu(fileName = "New Input Reader", menuName = "Input/Input Reader")]
-public class InputReader : ScriptableObject, IPlayerActions
+public class InputReader : ScriptableObject, IPlayerActions, IMenuActions
 {
     public event Action<SkillNumber> SkillInputEvent;
     public event Action MouseRightClickEvent;
@@ -15,6 +15,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     public event Action onMouseWheelClicked;
     public event Action OnInteractableObjectDropEvent;
     public event Action OnReloadEvent;
+    public event Action OnPauseInputEvent;
 
     private PlayerControls controls;
     public Vector2 MousePosition { get; private set; }
@@ -29,15 +30,21 @@ public class InputReader : ScriptableObject, IPlayerActions
         {
             controls = new PlayerControls();
             controls.Player.SetCallbacks(this);
+            controls.Menu.SetCallbacks(this);
         }
         controls.Player.Enable();
+        controls.Menu.Enable();
     }
 
     private void OnDisable()
     {
+        if(controls == null) return;
+
         controls.Player.Disable();
+        controls.Menu.Disable();
     }
 
+    #region Player Input Action Callbacks
     public void OnRightClicked(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -143,4 +150,34 @@ public class InputReader : ScriptableObject, IPlayerActions
             SkillInputEvent?.Invoke(SkillNumber.MainSkillTwo);
         }
     }
+    #endregion =================================
+    #region Menu Input Action Callbacks
+    /// <summary>
+    /// Pause 메뉴가 열렸을 때 게임 플레이 입력만 차단한다. Menu 액션 맵은 계속 활성화되어 ESC를 다시 사용할 수 있다.
+    /// </summary>
+    public void SetGameplayInputEnabled(bool enabled)
+    {
+        if (controls == null)
+        {
+            return;
+        }
+
+        if (enabled)
+        {
+            controls.Player.Enable();
+        }
+        else
+        {
+            controls.Player.Disable();
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnPauseInputEvent?.Invoke();
+        }
+    }
+    #endregion ================================
 }

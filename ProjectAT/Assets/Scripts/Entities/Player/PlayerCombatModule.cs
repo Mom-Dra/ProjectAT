@@ -33,12 +33,7 @@ public class PlayerCombatModule : MonoBehaviour
         myWeapon = GetComponentInChildren<WeaponHolder>();
         myStatus = GetComponent<EntityStatus>();
     }
-
-    private void Start()
-    {
-        InGameManager.Instance.UIManager.InitPlayerGunInfo(myWeapon);
-    }
-
+    
     private void Update()
     {
         if (IsAiming)

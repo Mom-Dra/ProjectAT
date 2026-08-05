@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Inventory : MonoBehaviour
 {
     private Dictionary<ItemData, int> itemContainer = new Dictionary<ItemData, int>();    // Key: 아이템 데이터, Value: 소지 개수
     [SerializeField] private ItemData[] debugItemList;
+
+    public event Action<ItemData, int> OnItemCountChanged; //아이템 개수 변경 시 이벤트. 변경된 아이템과 업데이트된 소지 갯수를 전달
 
     private void Start()
     {
@@ -18,52 +21,50 @@ public class Inventory : MonoBehaviour
     // 아이템 획득 메서드
     public void AddItem(ItemData item, int amount = 1)
     {
-        if (itemContainer.ContainsKey(item))
+        if (item == null || amount <= 0)
         {
-            amount = Mathf.Min(amount, item.MaxStack - itemContainer[item]);
-            itemContainer[item] += amount;
+            return;
         }
-        else
+
+        int previousCount = itemContainer.TryGetValue(item, out int storedCount) ? storedCount : 0;
+        int newCount = Mathf.Min(previousCount + amount, item.MaxStack);
+
+        if (newCount == previousCount)
         {
-            amount = Mathf.Min(amount, item.MaxStack);
-            itemContainer.Add(item, amount);
+            return;
         }
-        
-        Debug.Log($"{item.ItemName} 획득! 현재 개수: {itemContainer[item]}");
-        // 여기에 UI 업데이트 코드를 추가하면 됩니다.
+
+        itemContainer[item] = newCount;
+
+        Debug.Log($"{item.ItemName} 획득! 현재 개수: {newCount}");
+        OnItemCountChanged?.Invoke(item, newCount);
     }
 
     // 아이템 개수 확인 (스킬 사용 조건 체크용)
     public int GetItemCount(ItemData item)
     {
-        if (itemContainer.ContainsKey(item))
-        {
-            return itemContainer[item];
-        }
-
-        Debug.Log($"{item.ItemName} 아이템이 인벤토리에 없습니다.");
-        return 0; // 없으면 0개
+        if (item == null) return 0;
+        return itemContainer.TryGetValue(item, out int count) ? count : 0;
     }
 
     // 아이템 사용 (소모)
     public bool TryUseItem(ItemData item, int amount = 1)
     {
-        // 1. 아이템이 있는지, 개수가 충분한지 확인
-        if (GetItemCount(item) >= amount)
-        {
-            itemContainer[item] -= amount;
-            Debug.Log($"{item.ItemName} 사용함. 남은 개수: {itemContainer[item]}");
+        if (item == null || amount <= 0) return false;
+        int currentCount = GetItemCount(item);
 
-            // 3. 0개가 되면 목록에서 지울지, 0으로 남길지는 선택 (여기선 0으로 남김)
-            if(itemContainer[item] <= 0)
-            {
-                // itemContainer.Remove(item); // 아예 지우고 싶다면 주석 해제
-            }
-            
-            return true; // 사용 성공
+        if (currentCount < amount)
+        {
+            Debug.Log("아이템이 부족합니다!");
+            return false;
         }
 
-        Debug.Log("아이템이 부족합니다!");
-        return false; // 사용 실패
+        int newCount = currentCount - amount;
+        itemContainer[item] = newCount;
+
+        Debug.Log($"{item.ItemName} 사용함. 남은 개수: {newCount}");
+        OnItemCountChanged?.Invoke(item, newCount);
+
+        return true;
     }
 }
