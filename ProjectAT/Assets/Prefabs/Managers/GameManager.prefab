@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7326636684249348986}
   - component: {fileID: 7586599461081094033}
-  - component: {fileID: 4137690778930250142}
   - component: {fileID: 8477500199416692078}
+  - component: {fileID: 6913394200394204049}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -48,22 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputReader: {fileID: 11400000, guid: 2caca629a4fe8434d942c640d9084998, type: 2}
   cursorSettings: {fileID: 11400000, guid: 8acb837a152503f4db0458ed0ab03436, type: 2}
---- !u!114 &4137690778930250142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 755490944018596935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98146da6997e8564e93aed43c68cbb96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveIndicatorPrefab: {fileID: 7977531431303113237, guid: 6a4dd4f9b305ff640964010989a8a332, type: 3}
-  throwingIndicatorPrefab: {fileID: 807812522776249577, guid: de41452c2f5ce58488bc9110b7b85ff2, type: 3}
-  sectorAoEIndicatorPrefab: {fileID: 3658863523201903427, guid: 906b8117b146daa47b3c4ac6cae30312, type: 3}
-  targettingSkillCursor: {fileID: 21300000, guid: ddf442ba79facc14c89c298e85c8c222, type: 3}
 --- !u!114 &8477500199416692078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,3 +63,21 @@ MonoBehaviour:
   targetCamera: {fileID: 0}
   maxDistance: 200
   triggerInteraction: 2
+--- !u!114 &6913394200394204049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755490944018596935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8ebad8ab7a4cd4ca0cd84ffc3da44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxMixerGroup: {fileID: 24300002, guid: bbcab2c8221680445bd2ecaa1e382725, type: 2}
+  bgmMixerGroup: {fileID: 24300002, guid: fe4f940f1a93f3b43b43a599eb71eb41, type: 2}
+  uiMixerGroup: {fileID: 24300002, guid: 0be5dc0f32d6e9b45ab18768ffba4c02, type: 2}
+  sfxSourceCount: 8
+  bgmSourceCount: 1
+  bgmClip: {fileID: 8300000, guid: d63eab84e420290489281dbbdec01cff, type: 3}

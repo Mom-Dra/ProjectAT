@@ -3,11 +3,14 @@ using UnityEngine.UIElements;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(UIDocument))]
+[RequireComponent(typeof(OptionMenuUI))]
 public class PauseMenuUI : MonoBehaviour
 {
     private UIDocument uiDocument;
+    private OptionMenuUI optionMenuUI;
 
     private VisualElement pauseOverlay;
+    private VisualElement pauseView;
     private Button resumeButton;
     private Button saveButton;
     private Button loadButton;
@@ -27,14 +30,15 @@ public class PauseMenuUI : MonoBehaviour
     private void Awake()
     {
         uiDocument = GetComponent<UIDocument>();
+        optionMenuUI = GetComponent<OptionMenuUI>();
         uiReady = CacheUIElements();
 
         if (uiReady)
         {
             SetMenuVisible(false);
+            SetPauseViewVisible(true);
             SetButtonsEnabled(true);
         }
-
     }
 
     private void OnEnable()
@@ -46,18 +50,16 @@ public class PauseMenuUI : MonoBehaviour
 
         if (!uiReady)
         {
-            Debug.LogWarning("PauseMenuUI: UI elements not ready. Cannot register callbacks.");
+            Debug.LogWarning("PauseMenuUI: UI elements are not ready. Cannot register callbacks.", this);
             return;
         }
 
         RegisterButtonCallbacks();
 
-        //managers = FindFirstObjectByType<Managers>(); // Don't DestryOnLoad 된 매니저이면 그냥 부른게 낫지 않나?
         managers = Managers.Instance;
-
-        if(managers == null || managers.InputManager == null)
+        if (managers == null || managers.InputManager == null)
         {
-            Debug.LogError($"{name}: Managers 또는 InputManager를 찾지 못했습니다. Start 씬부터 실행했는지 확인하세요.", this);
+            Debug.LogError($"{name}: Managers or InputManager was not found. Check scene initialization order.", this);
             return;
         }
 
@@ -65,17 +67,18 @@ public class PauseMenuUI : MonoBehaviour
         inputManager.OnPauseInputEvent += TogglePauseMenu;
 
         SetMenuVisible(false);
+        SetPauseViewVisible(true);
         SetButtonsEnabled(true);
     }
 
     private void OnDisable()
     {
-        if(inputManager != null)
+        if (inputManager != null)
         {
             inputManager.OnPauseInputEvent -= TogglePauseMenu;
         }
 
-        UnregisteButtonCallbacks();
+        UnregisterButtonCallbacks();
         ReleasePauseState();
 
         inputManager = null;
@@ -85,33 +88,38 @@ public class PauseMenuUI : MonoBehaviour
 
     private bool CacheUIElements()
     {
-        if(uiDocument == null)
+        if (uiDocument == null)
         {
             uiDocument = GetComponent<UIDocument>();
         }
 
+        if (optionMenuUI == null)
+        {
+            optionMenuUI = GetComponent<OptionMenuUI>();
+        }
+
         if (uiDocument == null)
         {
-            Debug.LogError($"{name}: UIDocument가 없습니다.", this);
+            Debug.LogError($"{name}: UIDocument is missing.", this);
             return false;
         }
 
         VisualElement root = uiDocument.rootVisualElement;
-
         pauseOverlay = root.Q<VisualElement>("PauseOverlay");
+        pauseView = root.Q<VisualElement>("PauseView");
         resumeButton = root.Q<Button>("ResumeButton");
         saveButton = root.Q<Button>("SaveButton");
         loadButton = root.Q<Button>("LoadButton");
         optionsButton = root.Q<Button>("OptionsButton");
         titleButton = root.Q<Button>("TitleButton");
 
-        bool foundAll = pauseOverlay != null && resumeButton != null 
-                    && saveButton != null && loadButton != null 
-                    && optionsButton != null && titleButton != null;
+        bool foundAll = pauseOverlay != null && pauseView != null
+            && resumeButton != null && saveButton != null && loadButton != null
+            && optionsButton != null && titleButton != null && optionMenuUI != null;
 
         if (!foundAll)
         {
-            Debug.LogError($"{name}: PauseMenu UXML에서 필요한 UI 요소를 찾지 못했습니다.", this);
+            Debug.LogError($"{name}: Required PauseMenu UI elements or OptionMenuUI were not found.", this);
         }
 
         return foundAll;
@@ -119,28 +127,36 @@ public class PauseMenuUI : MonoBehaviour
 
     private void RegisterButtonCallbacks()
     {
-        if (callbacksRegistered) return;
+        if (callbacksRegistered)
+        {
+            return;
+        }
 
         resumeButton.clicked += ClosePauseMenu;
         saveButton.clicked += LogSaveButton;
         loadButton.clicked += LogLoadButton;
-        optionsButton.clicked += LogOptionsButton;
+        optionsButton.clicked += OpenOptions;
         titleButton.clicked += GoToTitleScene;
+        optionMenuUI.SaveCompleted += ReturnToPauseView;
 
-        callbacksRegistered  = true;
+        callbacksRegistered = true;
     }
 
-    private void UnregisteButtonCallbacks()
+    private void UnregisterButtonCallbacks()
     {
-        if (!callbacksRegistered) return;
+        if (!callbacksRegistered)
+        {
+            return;
+        }
 
         resumeButton.clicked -= ClosePauseMenu;
         saveButton.clicked -= LogSaveButton;
         loadButton.clicked -= LogLoadButton;
-        optionsButton.clicked -= LogOptionsButton;
+        optionsButton.clicked -= OpenOptions;
         titleButton.clicked -= GoToTitleScene;
+        optionMenuUI.SaveCompleted -= ReturnToPauseView;
 
-        callbacksRegistered  = false;
+        callbacksRegistered = false;
     }
 
     private void SetButtonsEnabled(bool enabled)
@@ -154,13 +170,37 @@ public class PauseMenuUI : MonoBehaviour
 
     private void SetMenuVisible(bool visible)
     {
-        if(pauseOverlay == null) return;
+        if (pauseOverlay == null)
+        {
+            return;
+        }
+
         pauseOverlay.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+    }
+
+    private void SetPauseViewVisible(bool visible)
+    {
+        if (pauseView == null)
+        {
+            return;
+        }
+
+        pauseView.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
     }
 
     private void TogglePauseMenu()
     {
-        if (isSceneTransitioning) return;
+        if (isSceneTransitioning)
+        {
+            return;
+        }
+
+        if (isPauseMenuOpen && optionMenuUI.IsCapturingKey)
+        {
+            optionMenuUI.CancelKeyCapture();
+            return;
+        }
+
         if (isPauseMenuOpen)
         {
             ClosePauseMenu();
@@ -173,53 +213,95 @@ public class PauseMenuUI : MonoBehaviour
 
     private void OpenPauseMenu()
     {
-        if(isPauseMenuOpen || inputManager == null) return;
-        previousTimeScale = Time.timeScale > 0f ? Time.timeScale : 1f;
+        if (isPauseMenuOpen || inputManager == null)
+        {
+            return;
+        }
 
+        previousTimeScale = Time.timeScale > 0f ? Time.timeScale : 1f;
         isPauseMenuOpen = true;
         inputManager.SetGameplayInputEnabled(false);
 
         Time.timeScale = 0f;
+        optionMenuUI.CloseWithoutSaving();
+        SetPauseViewVisible(true);
         SetMenuVisible(true);
+        SetButtonsEnabled(true);
         resumeButton.Focus();
     }
 
     private void ClosePauseMenu()
     {
-        if(!isPauseMenuOpen || isSceneTransitioning) return;
+        if (!isPauseMenuOpen || isSceneTransitioning)
+        {
+            return;
+        }
+
         ReleasePauseState();
     }
 
     private void ReleasePauseState()
     {
-        if(!isPauseMenuOpen) return;
+        if (!isPauseMenuOpen)
+        {
+            return;
+        }
+
+        optionMenuUI?.CloseWithoutSaving();
+        SetPauseViewVisible(true);
         Time.timeScale = previousTimeScale;
-        
-        if(inputManager != null) inputManager.SetGameplayInputEnabled(true);
+
+        if (inputManager != null)
+        {
+            inputManager.SetGameplayInputEnabled(true);
+        }
 
         isPauseMenuOpen = false;
         SetMenuVisible(false);
     }
 
+    private void OpenOptions()
+    {
+        if (!isPauseMenuOpen || optionMenuUI == null)
+        {
+            return;
+        }
+
+        SetButtonsEnabled(false);
+        SetPauseViewVisible(false);
+        optionMenuUI.Open();
+    }
+
+    private void ReturnToPauseView()
+    {
+        if (!isPauseMenuOpen)
+        {
+            return;
+        }
+
+        SetPauseViewVisible(true);
+        SetButtonsEnabled(true);
+        optionsButton.Focus();
+    }
+
     private void GoToTitleScene()
     {
-        if(!isPauseMenuOpen || isSceneTransitioning) return;
-        if(managers == null || managers.SceneManager == null)
+        if (!isPauseMenuOpen || isSceneTransitioning)
         {
-            Debug.LogError($"{name} : SceneManager를 찾지 못했음.", this);
+            return;
+        }
+
+        if (managers == null || managers.SceneManager == null)
+        {
+            Debug.LogError($"{name}: SceneManager was not found.", this);
             return;
         }
 
         isSceneTransitioning = true;
         SetButtonsEnabled(false);
-
         managers.SceneManager.LoadSceneAsync(SceneType.Start);
     }
 
-    #region  temporary button callbacks
-    /// <summary>
-    /// 이 구간에 있는 함수들은 임시로 PauseMenu 버튼에 연결된 콜백들입니다. 실제 게임에서는 Save, Load, Options UI가 구현되면 이 함수들을 대체해야 합니다.
-    /// </summary>
     private void LogSaveButton()
     {
         Debug.LogWarning("[PauseMenu] Save UI is not implemented yet.");
@@ -229,11 +311,4 @@ public class PauseMenuUI : MonoBehaviour
     {
         Debug.LogWarning("[PauseMenu] Load UI is not implemented yet.");
     }
-
-    private void LogOptionsButton()
-    {
-        Debug.LogWarning("[PauseMenu] Options UI is not implemented yet.");
-    }
-    #endregion ==========================
-
 }
