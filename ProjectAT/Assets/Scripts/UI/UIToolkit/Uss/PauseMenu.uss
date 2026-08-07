@@ -80,8 +80,9 @@
 
     color: rgba(255, 255, 255, 0.88);
     background-color: rgba(0, 0, 0, 0);
-
-    background-image: none;
+    background-image: url("project://database/Assets/Images/Button.png?fileID=-1756357365&guid=60f492db5a33b224ba6756a4d4c1ee69&type=3");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 
     border-left-width: 0;
     border-right-width: 0;
@@ -97,21 +98,18 @@
     -unity-font-style: bold;
     -unity-text-align: middle-left;
 
-    transition-property: color, translate;
+    transition-property: color;
     transition-duration: 0.08s, 0.08s;
 }
 
 .pause-button:hover {
     color: rgb(255, 255, 255);
-    translate: 6px 0;
-
-    border-left-width: 3px;
-    border-left-color: rgb(255, 255, 255);
+    background-image: url("project://database/Assets/Images/ButtonSelected_lowpoly.png?fileID=-1039272655&guid=81363a34c0e84894b9b9a374d73a4f6d&type=3");
 }
 
 .pause-button:active {
     color: rgba(255, 255, 255, 0.65);
-    translate: 3px 0;
+    background-image: url("project://database/Assets/Images/ButtonSelected_lowpoly.png?fileID=-1039272655&guid=81363a34c0e84894b9b9a374d73a4f6d&type=3");
 }
 
 .pause-button:disabled {
