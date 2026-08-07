@@ -104,10 +104,6 @@
 .pause-button:hover {
     color: rgb(255, 255, 255);
     translate: 6px 0;
-}
-
-.pause-button:focus {
-    color: rgb(255, 255, 255);
 
     border-left-width: 3px;
     border-left-color: rgb(255, 255, 255);

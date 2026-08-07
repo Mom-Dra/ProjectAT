@@ -7,8 +7,7 @@
 
     <ui:VisualElement
         name="PauseOverlay"
-        class="pause-overlay"
-        style="display: none;">
+        class="pause-overlay">
 
         <ui:VisualElement class="pause-navigation">
 
@@ -31,27 +30,27 @@
 
                 <ui:Button
                     name="ResumeButton"
-                    text="계속하기"
+                    text="Continue"
                     class="pause-button" />
 
                 <ui:Button
                     name="SaveButton"
-                    text="저장"
+                    text="Save"
                     class="pause-button" />
 
                 <ui:Button
                     name="LoadButton"
-                    text="불러오기"
+                    text="Load"
                     class="pause-button" />
 
                 <ui:Button
                     name="OptionsButton"
-                    text="옵션"
+                    text="Option"
                     class="pause-button" />
 
                 <ui:Button
                     name="TitleButton"
-                    text="타이틀화면"
+                    text="Go to Title"
                     class="pause-button" />
 
             </ui:VisualElement>
