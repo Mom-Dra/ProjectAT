@@ -43,12 +43,6 @@ public class EntityStatus : MonoBehaviour, IDamageable
         InitStatus();
     }
 
-    private void Update()
-    {
-        Debug.Log("Update");
-        Debug.Log($"{gameObject.name} walkSpeedStat: {walkSpeedStat.Value}");
-    }
-
     private void InitStatus()
     {
         maxHpStat = new Stat(initStatus.MaxHp, 1f);

@@ -65,6 +65,7 @@ public class InGameManager : MonoBehaviour
 
         instance = this;
         Initialize();
+
     }
 
     private void Update()

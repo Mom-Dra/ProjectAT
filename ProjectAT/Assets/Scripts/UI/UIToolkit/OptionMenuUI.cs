@@ -54,6 +54,12 @@ public class OptionMenuUI : MonoBehaviour
     private Label sfxValueLabel;
     private Label uiValueLabel;
 
+    private DropdownField resolutionDropdown;
+    private Toggle vSyncToggle;
+    private Label vSyncCheckmark;
+    private DropdownField frameLimitDropdown;
+    private DropdownField antiAliasingDropdown;
+
     private readonly Button[] skillKeyButtons = new Button[5];
     private readonly KeyCode[] baselineSkillKeys = new KeyCode[5];
     private readonly KeyCode[] draftSkillKeys = new KeyCode[5];
@@ -61,6 +67,8 @@ public class OptionMenuUI : MonoBehaviour
 
     private SoundManager.AudioVolumeSettings baselineAudioSettings;
     private SoundManager.AudioVolumeSettings draftAudioSettings;
+    private GraphicOptionSettings baselineGraphicSettings = GraphicOptionSettings.Default;
+    private GraphicOptionSettings draftGraphicSettings = GraphicOptionSettings.Default;
     private int capturingSkillIndex = -1;
     private bool uiReady;
     private bool callbacksRegistered;
@@ -69,6 +77,51 @@ public class OptionMenuUI : MonoBehaviour
 
     public bool IsOpen { get; private set; }
     public bool IsCapturingKey => capturingSkillIndex >= 0;
+
+    private struct GraphicOptionSettings
+    {
+        public string Resolution;
+        public bool VSync;
+        public string FrameLimit;
+        public string AntiAliasing;
+
+        public GraphicOptionSettings(string resolution, bool vSync, string frameLimit, string antiAliasing)
+        {
+            Resolution = resolution;
+            VSync = vSync;
+            FrameLimit = frameLimit;
+            AntiAliasing = antiAliasing;
+        }
+
+        public static GraphicOptionSettings Default => new GraphicOptionSettings(
+            "1920 x 1080",
+            false,
+            "Off",
+            "FXAA"
+        );
+    }
+
+    private static readonly List<string> ResolutionChoices = new List<string>
+    {
+        "1280 x 720",
+        "1920 x 1080",
+        "2560 x 1440"
+    };
+
+    private static readonly List<string> FrameLimitChoices = new List<string>
+    {
+        "60 FPS",
+        "90 FPS",
+        "144 FPS",
+        "Off"
+    };
+
+    private static readonly List<string> AntiAliasingChoices = new List<string>
+    {
+        "No AA",
+        "FXAA",
+        "TAA"
+    };
 
     private void Awake()
     {
@@ -116,6 +169,7 @@ public class OptionMenuUI : MonoBehaviour
 
         baselineAudioSettings = soundManager != null ? soundManager.CurrentAudioSettings : SoundManager.AudioVolumeSettings.Default;
         draftAudioSettings = baselineAudioSettings;
+        draftGraphicSettings = baselineGraphicSettings;
 
         for (int i = 0; i < DefaultSkillKeys.Length; i++)
         {
@@ -194,6 +248,12 @@ public class OptionMenuUI : MonoBehaviour
         sfxValueLabel = root.Q<Label>("SfxVolumeLabel");
         uiValueLabel = root.Q<Label>("UiVolumeLabel");
 
+        resolutionDropdown = root.Q<DropdownField>("ResolutionDropdown");
+        vSyncToggle = root.Q<Toggle>("VSyncToggle");
+        vSyncCheckmark = root.Q<Label>("VSyncCheckmark");
+        frameLimitDropdown = root.Q<DropdownField>("FrameLimitDropdown");
+        antiAliasingDropdown = root.Q<DropdownField>("AntiAliasingDropdown");
+
         for (int i = 0; i < skillKeyButtons.Length; i++)
         {
             skillKeyButtons[i] = root.Q<Button>($"Skill{i + 1}KeyButton");
@@ -206,7 +266,10 @@ public class OptionMenuUI : MonoBehaviour
             && resetButton != null && saveButton != null
             && bgmSlider != null && sfxSlider != null && uiSlider != null
             && bgmFill != null && sfxFill != null && uiFill != null
-            && bgmValueLabel != null && sfxValueLabel != null && uiValueLabel != null;
+            && bgmValueLabel != null && sfxValueLabel != null && uiValueLabel != null
+            && resolutionDropdown != null && vSyncToggle != null
+            && vSyncCheckmark != null
+            && frameLimitDropdown != null && antiAliasingDropdown != null;
 
         for (int i = 0; i < skillKeyButtons.Length; i++)
         {
@@ -216,6 +279,10 @@ public class OptionMenuUI : MonoBehaviour
         if (!foundAll)
         {
             Debug.LogError($"{name}: Required Option UI elements were not found in PauseMenu.uxml.", this);
+        }
+        else
+        {
+            ConfigureGraphicControls();
         }
 
         return foundAll;
@@ -237,6 +304,11 @@ public class OptionMenuUI : MonoBehaviour
         bgmSlider.RegisterValueChangedCallback(OnBgmVolumeChanged);
         sfxSlider.RegisterValueChangedCallback(OnSfxVolumeChanged);
         uiSlider.RegisterValueChangedCallback(OnUiVolumeChanged);
+
+        resolutionDropdown.RegisterValueChangedCallback(OnResolutionChanged);
+        vSyncToggle.RegisterValueChangedCallback(OnVSyncChanged);
+        frameLimitDropdown.RegisterValueChangedCallback(OnFrameLimitChanged);
+        antiAliasingDropdown.RegisterValueChangedCallback(OnAntiAliasingChanged);
 
         skillKeyButtons[0].clicked += BeginSkill1Capture;
         skillKeyButtons[1].clicked += BeginSkill2Capture;
@@ -264,6 +336,11 @@ public class OptionMenuUI : MonoBehaviour
         bgmSlider.UnregisterValueChangedCallback(OnBgmVolumeChanged);
         sfxSlider.UnregisterValueChangedCallback(OnSfxVolumeChanged);
         uiSlider.UnregisterValueChangedCallback(OnUiVolumeChanged);
+
+        resolutionDropdown.UnregisterValueChangedCallback(OnResolutionChanged);
+        vSyncToggle.UnregisterValueChangedCallback(OnVSyncChanged);
+        frameLimitDropdown.UnregisterValueChangedCallback(OnFrameLimitChanged);
+        antiAliasingDropdown.UnregisterValueChangedCallback(OnAntiAliasingChanged);
 
         skillKeyButtons[0].clicked -= BeginSkill1Capture;
         skillKeyButtons[1].clicked -= BeginSkill2Capture;
@@ -335,11 +412,33 @@ public class OptionMenuUI : MonoBehaviour
         SetVolumeControlWithoutNotify(uiSlider, uiFill, uiValueLabel, value);
     }
 
+    private void OnResolutionChanged(ChangeEvent<string> evt)
+    {
+        draftGraphicSettings.Resolution = evt.newValue;
+    }
+
+    private void OnVSyncChanged(ChangeEvent<bool> evt)
+    {
+        draftGraphicSettings.VSync = evt.newValue;
+        SetVSyncCheckmark(evt.newValue);
+    }
+
+    private void OnFrameLimitChanged(ChangeEvent<string> evt)
+    {
+        draftGraphicSettings.FrameLimit = evt.newValue;
+    }
+
+    private void OnAntiAliasingChanged(ChangeEvent<string> evt)
+    {
+        draftGraphicSettings.AntiAliasing = evt.newValue;
+    }
+
     private void ResetChanges()
     {
         CancelKeyCapture();
         
         draftAudioSettings = baselineAudioSettings;
+        draftGraphicSettings = baselineGraphicSettings;
         Array.Copy(baselineSkillKeys, draftSkillKeys, baselineSkillKeys.Length);
 
         RefreshAllControls();
@@ -348,6 +447,10 @@ public class OptionMenuUI : MonoBehaviour
     private void SaveChanges()
     {
         CancelKeyCapture();
+
+        // 그래픽 설정값은 현재 실행 세션의 UI 상태로만 유지합니다.
+        // 실제 그래픽 API와 PlayerPrefs 적용은 별도 구현에서 담당합니다.
+        baselineGraphicSettings = draftGraphicSettings;
 
         SoundManager soundManager = Managers.Instance != null ? Managers.Instance.SoundManager : null;
 
@@ -446,11 +549,35 @@ public class OptionMenuUI : MonoBehaviour
         SetVolumeControlWithoutNotify(bgmSlider, bgmFill, bgmValueLabel, draftAudioSettings.Bgm);
         SetVolumeControlWithoutNotify(sfxSlider, sfxFill, sfxValueLabel, draftAudioSettings.Sfx);
         SetVolumeControlWithoutNotify(uiSlider, uiFill, uiValueLabel, draftAudioSettings.Ui);
+        SetGraphicControlsWithoutNotify(draftGraphicSettings);
 
         for (int i = 0; i < skillKeyButtons.Length; i++)
         {
             skillKeyButtons[i].text = GetKeyDisplayName(draftSkillKeys[i]);
         }
+    }
+
+    private void ConfigureGraphicControls()
+    {
+        resolutionDropdown.choices = new List<string>(ResolutionChoices);
+        frameLimitDropdown.choices = new List<string>(FrameLimitChoices);
+        antiAliasingDropdown.choices = new List<string>(AntiAliasingChoices);
+
+        SetGraphicControlsWithoutNotify(baselineGraphicSettings);
+    }
+
+    private void SetGraphicControlsWithoutNotify(GraphicOptionSettings settings)
+    {
+        resolutionDropdown.SetValueWithoutNotify(settings.Resolution);
+        vSyncToggle.SetValueWithoutNotify(settings.VSync);
+        SetVSyncCheckmark(settings.VSync);
+        frameLimitDropdown.SetValueWithoutNotify(settings.FrameLimit);
+        antiAliasingDropdown.SetValueWithoutNotify(settings.AntiAliasing);
+    }
+
+    private void SetVSyncCheckmark(bool enabled)
+    {
+        vSyncCheckmark.text = enabled ? "✓" : string.Empty;
     }
 
     /// <summary>
