@@ -246,7 +246,7 @@ public class OptionManager : MonoBehaviour
     {
         for(int i = 0 ; i < SupportedFrameLimits.Length; i++)
         {
-            if(SupportedFrameLimits[i] == frameLimit) return false;
+            if(SupportedFrameLimits[i] == frameLimit) return true;
         }
 
         return false;
