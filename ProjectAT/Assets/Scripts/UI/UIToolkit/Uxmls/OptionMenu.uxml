@@ -1,0 +1,125 @@
+<ui:UXML
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    editor-extension-mode="False">
+
+    <Style src="project://database/Assets/Scripts/UI/UIToolkit/Uss/OptionMenu.uss" />
+
+    <ui:VisualElement name="OptionOverlay" class="option-overlay">
+        <ui:VisualElement name="OptionView" class="option-view">
+            <ui:VisualElement class="option-header">
+                <ui:Label text="Option" picking-mode="Ignore" class="option-title" />
+
+                <ui:VisualElement class="option-action-buttons">
+                    <ui:Button name="OptionResetButton" text="reset" class="option-action-button" />
+                    <ui:Button name= "OptionCancelButton" text="cancel" class="option-action-button" />
+                    <ui:Button name="OptionSaveButton" text="save" class="option-action-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="option-body">
+                <ui:VisualElement class="option-tabs">
+                    <ui:Button name="GraphicTabButton" class="option-tab">
+                        <ui:Label name="GraphicTabIndicator" class="option-tab-indicator" />
+                        <ui:Label text="Graphic" picking-mode="Ignore" class="option-tab-label" />
+                    </ui:Button>
+
+                    <ui:Button name="SoundTabButton" class="option-tab">
+                        <ui:Label name="SoundTabIndicator" class="option-tab-indicator" />
+                        <ui:Label text="Sound" picking-mode="Ignore" class="option-tab-label" />
+                    </ui:Button>
+
+                    <ui:Button name="ControlTabButton" class="option-tab">
+                        <ui:Label name="ControlTabIndicator" class="option-tab-indicator" />
+                        <ui:Label text="Control" picking-mode="Ignore" class="option-tab-label" />
+                    </ui:Button>
+                </ui:VisualElement>
+
+                <ui:ScrollView name="OptionScrollView" mode="Vertical" class="option-scroll-view">
+                    <ui:VisualElement name="GraphicContent" class="option-content graphic-content">
+                        <ui:VisualElement class="option-setting-row graphic-setting-row">
+                            <ui:Label text="Resolution" picking-mode="Ignore" class="option-setting-name graphic-setting-name" />
+                            <ui:DropdownField name="ResolutionDropdown" class="graphic-dropdown" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="option-setting-row graphic-setting-row">
+                            <ui:Label text="VSync" picking-mode="Ignore" class="option-setting-name graphic-setting-name" />
+                            <ui:VisualElement class="graphic-toggle-control">
+                                <ui:Toggle name="VSyncToggle" class="graphic-toggle" />
+                                <ui:Label name="VSyncCheckmark" picking-mode="Ignore" class="graphic-toggle-checkmark" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="option-setting-row graphic-setting-row">
+                            <ui:Label text="Frame Limit" picking-mode="Ignore" class="option-setting-name graphic-setting-name" />
+                            <ui:DropdownField name="FrameLimitDropdown" class="graphic-dropdown" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="option-setting-row graphic-setting-row">
+                            <ui:Label text="Anti-Aliasing" picking-mode="Ignore" class="option-setting-name graphic-setting-name" />
+                            <ui:DropdownField name="AntiAliasingDropdown" class="graphic-dropdown" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="SoundContent" class="option-content sound-content">
+                        <ui:VisualElement class="option-setting-row sound-setting-row">
+                            <ui:Label text="BGM" picking-mode="Ignore" class="option-setting-name" />
+                            <ui:VisualElement class="sound-volume-control">
+                                <ui:VisualElement picking-mode="Ignore" class="sound-slider-track">
+                                    <ui:VisualElement name="BgmVolumeFill" picking-mode="Ignore" class="sound-slider-fill" />
+                                    <ui:Label name="BgmVolumeLabel" text="100%" picking-mode="Ignore" class="sound-slider-value" />
+                                </ui:VisualElement>
+                                <ui:Slider name="BgmVolumeSlider" low-value="0" high-value="100" value="100" show-input-field="false" class="sound-slider" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="option-setting-row sound-setting-row">
+                            <ui:Label text="VFX" picking-mode="Ignore" class="option-setting-name" />
+                            <ui:VisualElement class="sound-volume-control">
+                                <ui:VisualElement picking-mode="Ignore" class="sound-slider-track">
+                                    <ui:VisualElement name="SfxVolumeFill" picking-mode="Ignore" class="sound-slider-fill" />
+                                    <ui:Label name="SfxVolumeLabel" text="100%" picking-mode="Ignore" class="sound-slider-value" />
+                                </ui:VisualElement>
+                                <ui:Slider name="SfxVolumeSlider" low-value="0" high-value="100" value="100" show-input-field="false" class="sound-slider" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement class="option-setting-row sound-setting-row">
+                            <ui:Label text="UI" picking-mode="Ignore" class="option-setting-name" />
+                            <ui:VisualElement class="sound-volume-control">
+                                <ui:VisualElement picking-mode="Ignore" class="sound-slider-track">
+                                    <ui:VisualElement name="UiVolumeFill" picking-mode="Ignore" class="sound-slider-fill" />
+                                    <ui:Label name="UiVolumeLabel" text="100%" picking-mode="Ignore" class="sound-slider-value" />
+                                </ui:VisualElement>
+                                <ui:Slider name="UiVolumeSlider" low-value="0" high-value="100" value="100" show-input-field="false" class="sound-slider" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="ControlContent" class="option-content control-content">
+                        <ui:VisualElement class="option-setting-row control-setting-row">
+                            <ui:Label text="Skill 1" picking-mode="Ignore" class="option-setting-name" />
+                            <ui:Button name="Skill1KeyButton" text="Q" class="control-key-button" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="option-setting-row control-setting-row">
+                            <ui:Label text="Skill 2" picking-mode="Ignore" class="option-setting-name" />
+                            <ui:Button name="Skill2KeyButton" text="W" class="control-key-button" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="option-setting-row control-setting-row">
+                            <ui:Label text="Skill 3" picking-mode="Ignore" class="option-setting-name" />
+                            <ui:Button name="Skill3KeyButton" text="E" class="control-key-button" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="option-setting-row control-setting-row">
+                            <ui:Label text="Skill 4" picking-mode="Ignore" class="option-setting-name" />
+                            <ui:Button name="Skill4KeyButton" text="D" class="control-key-button" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="option-setting-row control-setting-row">
+                            <ui:Label text="Skill 5" picking-mode="Ignore" class="option-setting-name" />
+                            <ui:Button name="Skill5KeyButton" text="A" class="control-key-button" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

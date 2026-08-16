@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Collections;
-using System.Collections.Generic;
+using ProjectAT.Option;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(UIDocument))]
@@ -24,15 +24,34 @@ public class OptionMenuUI : MonoBehaviour
         KeyCode.A
     };
 
-    #region UI Elements
+    private static readonly List<string> FrameLimitChoices = 
+        new List<string>
+        {
+            "60 FPS",
+            "90 FPS",
+            "144 FPS",
+            "Off"
+        };
+
+    private static readonly List<string> AntiAliasingChoices =
+        new List<string>
+        {
+            "No AA",
+            "FXAA",
+            "TAA"
+        };
+
     private UIDocument uiDocument;
+    private OptionManager optionManager;
+
     private VisualElement root;
-    private VisualElement optionView;
+    private VisualElement optionOverlay;
     private ScrollView optionScrollView;
 
     private Button graphicTabButton;
     private Button soundTabButton;
     private Button controlTabButton;
+
     private Label graphicTabIndicator;
     private Label soundTabIndicator;
     private Label controlTabIndicator;
@@ -42,14 +61,17 @@ public class OptionMenuUI : MonoBehaviour
     private VisualElement controlContent;
 
     private Button resetButton;
+    private Button cancelButton;
     private Button saveButton;
 
     private Slider bgmSlider;
     private Slider sfxSlider;
     private Slider uiSlider;
+
     private VisualElement bgmFill;
     private VisualElement sfxFill;
     private VisualElement uiFill;
+
     private Label bgmValueLabel;
     private Label sfxValueLabel;
     private Label uiValueLabel;
@@ -61,67 +83,29 @@ public class OptionMenuUI : MonoBehaviour
     private DropdownField antiAliasingDropdown;
 
     private readonly Button[] skillKeyButtons = new Button[5];
-    private readonly KeyCode[] baselineSkillKeys = new KeyCode[5];
-    private readonly KeyCode[] draftSkillKeys = new KeyCode[5];
-    #endregion =========================
 
-    private SoundManager.AudioVolumeSettings baselineAudioSettings;
-    private SoundManager.AudioVolumeSettings draftAudioSettings;
-    private GraphicOptionSettings baselineGraphicSettings = GraphicOptionSettings.Default;
-    private GraphicOptionSettings draftGraphicSettings = GraphicOptionSettings.Default;
+    private readonly Action[] skillKeyButtonActions = new Action[5];
+
+    private readonly KeyCode[] baselineSkillKeys = new KeyCode[5];
+
+    private readonly KeyCode[] draftSkillKeys = new KeyCode[5]; //키 세팅 임시저장용
+
+    private readonly List<Vector2Int> resolutionOptions = new List<Vector2Int>();
+
+    private OptionSetting baselineSettings;
+    private OptionSetting draftSettings;    //옵션 세팅 임시저장용
+
     private int capturingSkillIndex = -1;
+
     private bool uiReady;
     private bool callbacksRegistered;
 
     public event Action SaveCompleted;
+    public event Action CancelCompleted;
 
     public bool IsOpen { get; private set; }
+
     public bool IsCapturingKey => capturingSkillIndex >= 0;
-
-    private struct GraphicOptionSettings
-    {
-        public string Resolution;
-        public bool VSync;
-        public string FrameLimit;
-        public string AntiAliasing;
-
-        public GraphicOptionSettings(string resolution, bool vSync, string frameLimit, string antiAliasing)
-        {
-            Resolution = resolution;
-            VSync = vSync;
-            FrameLimit = frameLimit;
-            AntiAliasing = antiAliasing;
-        }
-
-        public static GraphicOptionSettings Default => new GraphicOptionSettings(
-            "1920 x 1080",
-            false,
-            "Off",
-            "FXAA"
-        );
-    }
-
-    private static readonly List<string> ResolutionChoices = new List<string>
-    {
-        "1280 x 720",
-        "1920 x 1080",
-        "2560 x 1440"
-    };
-
-    private static readonly List<string> FrameLimitChoices = new List<string>
-    {
-        "60 FPS",
-        "90 FPS",
-        "144 FPS",
-        "Off"
-    };
-
-    private static readonly List<string> AntiAliasingChoices = new List<string>
-    {
-        "No AA",
-        "FXAA",
-        "TAA"
-    };
 
     private void Awake()
     {
@@ -144,6 +128,7 @@ public class OptionMenuUI : MonoBehaviour
         if (!uiReady)
         {
             Debug.LogWarning($"{name}: Option UI elements are not ready.", this);
+
             return;
         }
 
@@ -155,6 +140,7 @@ public class OptionMenuUI : MonoBehaviour
     {
         UnregisterCallbacks();
         CancelKeyCapture();
+
         IsOpen = false;
     }
 
@@ -165,22 +151,31 @@ public class OptionMenuUI : MonoBehaviour
             return;
         }
 
-        SoundManager soundManager = Managers.Instance != null ? Managers.Instance.SoundManager : null;
+        Managers managers = Managers.Instance;
 
-        baselineAudioSettings = soundManager != null ? soundManager.CurrentAudioSettings : SoundManager.AudioVolumeSettings.Default;
-        draftAudioSettings = baselineAudioSettings;
-        draftGraphicSettings = baselineGraphicSettings;
-
-        for (int i = 0; i < DefaultSkillKeys.Length; i++)
+        if (managers == null || managers.OptionManager == null || !managers.OptionManager.IsInitialized)
         {
-            baselineSkillKeys[i] = DefaultSkillKeys[i];
-            draftSkillKeys[i] = DefaultSkillKeys[i]; //TODO : 나중에 저장된 키 객체를 정의하면 이를 이용해 초기화 할 것
+            Debug.LogError($"{name}: OptionManager is not ready.", this);
+
+            return;
         }
 
+        optionManager = managers.OptionManager;
+
+        baselineSettings = optionManager.GetSettingsSnapshot();
+
+        draftSettings = baselineSettings;
+
+        Array.Copy(DefaultSkillKeys, baselineSkillKeys, DefaultSkillKeys.Length);
+        Array.Copy(DefaultSkillKeys, draftSkillKeys, DefaultSkillKeys.Length);
+
+        ConfigureResolutionChoices();
         RefreshAllControls();
         SelectTab(OptionTab.Graphic);
+
         SetOptionVisible(true);
         IsOpen = true;
+
         graphicTabButton.Focus();
     }
 
@@ -192,8 +187,20 @@ public class OptionMenuUI : MonoBehaviour
         }
 
         CancelKeyCapture();
+
         IsOpen = false;
         SetOptionVisible(false);
+    }
+
+    public void Cancel()
+    {
+        if (!IsOpen)
+        {
+            return;
+        }
+
+        CloseWithoutSaving();
+        CancelCompleted?.Invoke();
     }
 
     public void CancelKeyCapture()
@@ -204,6 +211,7 @@ public class OptionMenuUI : MonoBehaviour
         }
 
         skillKeyButtons[capturingSkillIndex].text = GetKeyDisplayName(draftSkillKeys[capturingSkillIndex]);
+
         capturingSkillIndex = -1;
     }
 
@@ -221,23 +229,47 @@ public class OptionMenuUI : MonoBehaviour
         }
 
         root = uiDocument.rootVisualElement;
-        optionView = root.Q<VisualElement>("OptionView");
-        optionScrollView = root.Q<ScrollView>("OptionScrollView");
+        GetUIElements();
 
+        for (int i = 0; i < skillKeyButtons.Length; i++)
+        {
+            int capturedIndex = i;
+
+            skillKeyButtons[i] = root.Q<Button>($"Skill{i + 1}KeyButton");
+            skillKeyButtonActions[i] = () => BeginKeyCapture(capturedIndex);
+        }
+
+        bool foundAll = CheckUIElementReferences();
+
+        if (!foundAll)
+        {
+            Debug.LogError($"{name}: Required elements were not found in OptionMenu.uxml.", this);
+
+            return false;
+        }
+
+        frameLimitDropdown.choices = new List<string>(FrameLimitChoices);
+        antiAliasingDropdown.choices = new List<string>(AntiAliasingChoices);
+
+        return true;
+    }
+
+    private void GetUIElements()
+    {
+        optionOverlay = root.Q<VisualElement>("OptionOverlay");
+        optionScrollView = root.Q<ScrollView>("OptionScrollView");
         graphicTabButton = root.Q<Button>("GraphicTabButton");
         soundTabButton = root.Q<Button>("SoundTabButton");
         controlTabButton = root.Q<Button>("ControlTabButton");
         graphicTabIndicator = root.Q<Label>("GraphicTabIndicator");
         soundTabIndicator = root.Q<Label>("SoundTabIndicator");
         controlTabIndicator = root.Q<Label>("ControlTabIndicator");
-
         graphicContent = root.Q<VisualElement>("GraphicContent");
         soundContent = root.Q<VisualElement>("SoundContent");
         controlContent = root.Q<VisualElement>("ControlContent");
-
         resetButton = root.Q<Button>("OptionResetButton");
+        cancelButton = root.Q<Button>("OptionCancelButton");
         saveButton = root.Q<Button>("OptionSaveButton");
-
         bgmSlider = root.Q<Slider>("BgmVolumeSlider");
         sfxSlider = root.Q<Slider>("SfxVolumeSlider");
         uiSlider = root.Q<Slider>("UiVolumeSlider");
@@ -247,42 +279,48 @@ public class OptionMenuUI : MonoBehaviour
         bgmValueLabel = root.Q<Label>("BgmVolumeLabel");
         sfxValueLabel = root.Q<Label>("SfxVolumeLabel");
         uiValueLabel = root.Q<Label>("UiVolumeLabel");
-
         resolutionDropdown = root.Q<DropdownField>("ResolutionDropdown");
         vSyncToggle = root.Q<Toggle>("VSyncToggle");
         vSyncCheckmark = root.Q<Label>("VSyncCheckmark");
         frameLimitDropdown = root.Q<DropdownField>("FrameLimitDropdown");
         antiAliasingDropdown = root.Q<DropdownField>("AntiAliasingDropdown");
+    }
 
-        for (int i = 0; i < skillKeyButtons.Length; i++)
-        {
-            skillKeyButtons[i] = root.Q<Button>($"Skill{i + 1}KeyButton");
-        }
-
-        bool foundAll = optionView != null && optionScrollView != null
-            && graphicTabButton != null && soundTabButton != null && controlTabButton != null
-            && graphicTabIndicator != null && soundTabIndicator != null && controlTabIndicator != null
-            && graphicContent != null && soundContent != null && controlContent != null
-            && resetButton != null && saveButton != null
-            && bgmSlider != null && sfxSlider != null && uiSlider != null
-            && bgmFill != null && sfxFill != null && uiFill != null
-            && bgmValueLabel != null && sfxValueLabel != null && uiValueLabel != null
-            && resolutionDropdown != null && vSyncToggle != null
+    private bool CheckUIElementReferences()
+    {
+        bool foundAll 
+            =  optionOverlay != null
+            && optionScrollView != null
+            && graphicTabButton != null
+            && soundTabButton != null
+            && controlTabButton != null
+            && graphicTabIndicator != null
+            && soundTabIndicator != null
+            && controlTabIndicator != null
+            && graphicContent != null
+            && soundContent != null
+            && controlContent != null
+            && resetButton != null
+            && cancelButton != null
+            && saveButton != null
+            && bgmSlider != null
+            && sfxSlider != null
+            && uiSlider != null
+            && bgmFill != null
+            && sfxFill != null
+            && uiFill != null
+            && bgmValueLabel != null
+            && sfxValueLabel != null
+            && uiValueLabel != null
+            && resolutionDropdown != null
+            && vSyncToggle != null
             && vSyncCheckmark != null
-            && frameLimitDropdown != null && antiAliasingDropdown != null;
+            && frameLimitDropdown != null
+            && antiAliasingDropdown != null;
 
         for (int i = 0; i < skillKeyButtons.Length; i++)
         {
             foundAll &= skillKeyButtons[i] != null;
-        }
-
-        if (!foundAll)
-        {
-            Debug.LogError($"{name}: Required Option UI elements were not found in PauseMenu.uxml.", this);
-        }
-        else
-        {
-            ConfigureGraphicControls();
         }
 
         return foundAll;
@@ -298,23 +336,23 @@ public class OptionMenuUI : MonoBehaviour
         graphicTabButton.clicked += SelectGraphicTab;
         soundTabButton.clicked += SelectSoundTab;
         controlTabButton.clicked += SelectControlTab;
+
         resetButton.clicked += ResetChanges;
+        cancelButton.clicked += Cancel;
         saveButton.clicked += SaveChanges;
 
         bgmSlider.RegisterValueChangedCallback(OnBgmVolumeChanged);
         sfxSlider.RegisterValueChangedCallback(OnSfxVolumeChanged);
         uiSlider.RegisterValueChangedCallback(OnUiVolumeChanged);
-
         resolutionDropdown.RegisterValueChangedCallback(OnResolutionChanged);
         vSyncToggle.RegisterValueChangedCallback(OnVSyncChanged);
         frameLimitDropdown.RegisterValueChangedCallback(OnFrameLimitChanged);
         antiAliasingDropdown.RegisterValueChangedCallback(OnAntiAliasingChanged);
 
-        skillKeyButtons[0].clicked += BeginSkill1Capture;
-        skillKeyButtons[1].clicked += BeginSkill2Capture;
-        skillKeyButtons[2].clicked += BeginSkill3Capture;
-        skillKeyButtons[3].clicked += BeginSkill4Capture;
-        skillKeyButtons[4].clicked += BeginSkill5Capture;
+        for (int i = 0; i < skillKeyButtons.Length; i++)
+        {
+            skillKeyButtons[i].clicked += skillKeyButtonActions[i];
+        }
 
         root.RegisterCallback<KeyDownEvent>(OnKeyDown, TrickleDown.TrickleDown);
         callbacksRegistered = true;
@@ -330,23 +368,23 @@ public class OptionMenuUI : MonoBehaviour
         graphicTabButton.clicked -= SelectGraphicTab;
         soundTabButton.clicked -= SelectSoundTab;
         controlTabButton.clicked -= SelectControlTab;
+
         resetButton.clicked -= ResetChanges;
+        cancelButton.clicked -= Cancel;
         saveButton.clicked -= SaveChanges;
 
         bgmSlider.UnregisterValueChangedCallback(OnBgmVolumeChanged);
         sfxSlider.UnregisterValueChangedCallback(OnSfxVolumeChanged);
         uiSlider.UnregisterValueChangedCallback(OnUiVolumeChanged);
-
         resolutionDropdown.UnregisterValueChangedCallback(OnResolutionChanged);
         vSyncToggle.UnregisterValueChangedCallback(OnVSyncChanged);
         frameLimitDropdown.UnregisterValueChangedCallback(OnFrameLimitChanged);
         antiAliasingDropdown.UnregisterValueChangedCallback(OnAntiAliasingChanged);
 
-        skillKeyButtons[0].clicked -= BeginSkill1Capture;
-        skillKeyButtons[1].clicked -= BeginSkill2Capture;
-        skillKeyButtons[2].clicked -= BeginSkill3Capture;
-        skillKeyButtons[3].clicked -= BeginSkill4Capture;
-        skillKeyButtons[4].clicked -= BeginSkill5Capture;
+        for (int i = 0; i < skillKeyButtons.Length; i++)
+        {
+            skillKeyButtons[i].clicked -= skillKeyButtonActions[i];
+        }
 
         root.UnregisterCallback<KeyDownEvent>(OnKeyDown, TrickleDown.TrickleDown);
         callbacksRegistered = false;
@@ -388,59 +426,89 @@ public class OptionMenuUI : MonoBehaviour
     private static void SetTabSelected(Button button, Label indicator, bool selected)
     {
         button.EnableInClassList("option-tab--selected", selected);
-        indicator.text = selected ? "|" : string.Empty;
+        indicator.text = selected ? "|" : string.Empty; // "|" = tab indicator, displayed when the tab is selected
     }
 
     private void OnBgmVolumeChanged(ChangeEvent<float> evt)
     {
-        float value = NormalizePercentage(evt.newValue);
-        draftAudioSettings.Bgm = value;
-        SetVolumeControlWithoutNotify(bgmSlider, bgmFill, bgmValueLabel, value);
+        AudioOptionSetting audio = draftSettings.Audio;
+
+        audio.Bgm = NormalizePercentage(evt.newValue);
+        draftSettings.Audio = audio;
+        SetVolumeControlWithoutNotify(bgmSlider, bgmFill, bgmValueLabel, audio.Bgm);
     }
 
     private void OnSfxVolumeChanged(ChangeEvent<float> evt)
     {
-        float value = NormalizePercentage(evt.newValue);
-        draftAudioSettings.Sfx = value;
-        SetVolumeControlWithoutNotify(sfxSlider, sfxFill, sfxValueLabel, value);
+        AudioOptionSetting audio = draftSettings.Audio;
+
+        audio.Sfx = NormalizePercentage(evt.newValue);
+        draftSettings.Audio = audio;
+        SetVolumeControlWithoutNotify(sfxSlider, sfxFill, sfxValueLabel, audio.Sfx);
     }
 
     private void OnUiVolumeChanged(ChangeEvent<float> evt)
     {
-        float value = NormalizePercentage(evt.newValue);
-        draftAudioSettings.Ui = value;
-        SetVolumeControlWithoutNotify(uiSlider, uiFill, uiValueLabel, value);
+        AudioOptionSetting audio = draftSettings.Audio;
+
+        audio.Ui = NormalizePercentage(evt.newValue);
+        draftSettings.Audio = audio;
+        SetVolumeControlWithoutNotify(uiSlider, uiFill, uiValueLabel, audio.Ui);
     }
 
     private void OnResolutionChanged(ChangeEvent<string> evt)
     {
-        draftGraphicSettings.Resolution = evt.newValue;
+        for (int i = 0; i < resolutionOptions.Count; i++)
+        {
+            Vector2Int resolution = resolutionOptions[i];
+
+            if (GetResolutionText(resolution) != evt.newValue)
+            {
+                continue;
+            }
+
+            GraphicOptionSetting graphic = draftSettings.Graphic;
+
+            graphic.Width = resolution.x;
+            graphic.Height = resolution.y;
+
+            draftSettings.Graphic = graphic;
+            return;
+        }
     }
 
     private void OnVSyncChanged(ChangeEvent<bool> evt)
     {
-        draftGraphicSettings.VSync = evt.newValue;
+        GraphicOptionSetting graphic = draftSettings.Graphic;
+
+        graphic.VSync = evt.newValue;
+        draftSettings.Graphic = graphic;
+
         SetVSyncCheckmark(evt.newValue);
     }
 
     private void OnFrameLimitChanged(ChangeEvent<string> evt)
     {
-        draftGraphicSettings.FrameLimit = evt.newValue;
+        GraphicOptionSetting graphic = draftSettings.Graphic;
+
+        graphic.FrameLimit = ParseFrameLimit(evt.newValue);
+        draftSettings.Graphic = graphic;
     }
 
     private void OnAntiAliasingChanged(ChangeEvent<string> evt)
     {
-        draftGraphicSettings.AntiAliasing = evt.newValue;
+        GraphicOptionSetting graphic = draftSettings.Graphic;
+
+        graphic.AntiAliasing = ParseAntiAliasing(evt.newValue);
+        draftSettings.Graphic = graphic;
     }
 
     private void ResetChanges()
     {
         CancelKeyCapture();
-        
-        draftAudioSettings = baselineAudioSettings;
-        draftGraphicSettings = baselineGraphicSettings;
-        Array.Copy(baselineSkillKeys, draftSkillKeys, baselineSkillKeys.Length);
 
+        draftSettings = baselineSettings;
+        Array.Copy(baselineSkillKeys, draftSkillKeys, baselineSkillKeys.Length);
         RefreshAllControls();
     }
 
@@ -448,25 +516,21 @@ public class OptionMenuUI : MonoBehaviour
     {
         CancelKeyCapture();
 
-        // 그래픽 설정값은 현재 실행 세션의 UI 상태로만 유지합니다.
-        // 실제 그래픽 API와 PlayerPrefs 적용은 별도 구현에서 담당합니다.
-        baselineGraphicSettings = draftGraphicSettings;
-
-        SoundManager soundManager = Managers.Instance != null ? Managers.Instance.SoundManager : null;
-
-        if (soundManager == null)
+        if (optionManager == null)
         {
-            Debug.LogError("[Option] SoundManager was not found. Audio settings could not be applied.", this);
-        }
-        else
-        {
-            soundManager.ApplyAudioSettings(draftAudioSettings, true);
+            Debug.LogError($"{name}: OptionManager is missing.", this);
+
+            return;
         }
 
         if (HaveControlBindingsChanged())
         {
-            Debug.LogWarning("[Option] Control key saving is not implemented yet. The displayed key changes were not applied.", this);
+            Debug.LogWarning("[Option] Control key saving is not implemented yet. Displayed changes were not applied.", this);
         }
+
+        optionManager.ApplyAndSave(draftSettings);
+
+        baselineSettings = optionManager.GetSettingsSnapshot();
 
         IsOpen = false;
         SetOptionVisible(false);
@@ -487,41 +551,17 @@ public class OptionMenuUI : MonoBehaviour
         return false;
     }
 
-    private void BeginSkill1Capture()
-    {
-        BeginKeyCapture(0);
-    }
-
-    private void BeginSkill2Capture()
-    {
-        BeginKeyCapture(1);
-    }
-
-    private void BeginSkill3Capture()
-    {
-        BeginKeyCapture(2);
-    }
-
-    private void BeginSkill4Capture()
-    {
-        BeginKeyCapture(3);
-    }
-
-    private void BeginSkill5Capture()
-    {
-        BeginKeyCapture(4);
-    }
-
-    private void BeginKeyCapture(int skillIndex)
+    private void BeginKeyCapture(int index)
     {
         if (IsCapturingKey)
         {
             skillKeyButtons[capturingSkillIndex].text = GetKeyDisplayName(draftSkillKeys[capturingSkillIndex]);
         }
 
-        capturingSkillIndex = skillIndex;
-        skillKeyButtons[skillIndex].text = "Press Key...";
-        skillKeyButtons[skillIndex].Focus();
+        capturingSkillIndex = index;
+
+        skillKeyButtons[index].text = "Press Key...";
+        skillKeyButtons[index].Focus();
     }
 
     private void OnKeyDown(KeyDownEvent evt)
@@ -531,7 +571,7 @@ public class OptionMenuUI : MonoBehaviour
             return;
         }
 
-        evt.StopImmediatePropagation(); // 해당 이벤트가 다른 UI 요소에 전달되지 않도록 막음
+        evt.StopImmediatePropagation(); // 이벤트전파를 중단함으로써 로직을 여기서 처리.
 
         if (evt.keyCode == KeyCode.Escape)
         {
@@ -541,15 +581,47 @@ public class OptionMenuUI : MonoBehaviour
 
         draftSkillKeys[capturingSkillIndex] = evt.keyCode;
         skillKeyButtons[capturingSkillIndex].text = GetKeyDisplayName(evt.keyCode);
+
         capturingSkillIndex = -1;
+    }
+
+    /// <summary>
+    /// dropdown 메뉴에 표시할 해상도 선택지를 구성합니다.
+    /// </summary>
+    private void ConfigureResolutionChoices()
+    {
+        resolutionOptions.Clear();
+
+        IReadOnlyList<Vector2Int> available = optionManager.GetAvailableResolutions();
+        List<string> choices = new List<string>();
+
+        for (int i = 0; i < available.Count; i++)
+        {
+            Vector2Int resolution = available[i];
+
+            resolutionOptions.Add(resolution);
+            choices.Add(GetResolutionText(resolution));
+        }
+
+        resolutionDropdown.choices = choices;
     }
 
     private void RefreshAllControls()
     {
-        SetVolumeControlWithoutNotify(bgmSlider, bgmFill, bgmValueLabel, draftAudioSettings.Bgm);
-        SetVolumeControlWithoutNotify(sfxSlider, sfxFill, sfxValueLabel, draftAudioSettings.Sfx);
-        SetVolumeControlWithoutNotify(uiSlider, uiFill, uiValueLabel, draftAudioSettings.Ui);
-        SetGraphicControlsWithoutNotify(draftGraphicSettings);
+        GraphicOptionSetting graphic = draftSettings.Graphic;
+        AudioOptionSetting audio = draftSettings.Audio;
+
+        resolutionDropdown.SetValueWithoutNotify($"{graphic.Width} x {graphic.Height}");
+
+        vSyncToggle.SetValueWithoutNotify(graphic.VSync);
+        SetVSyncCheckmark(graphic.VSync);
+
+        frameLimitDropdown.SetValueWithoutNotify(GetFrameLimitText(graphic.FrameLimit));
+        antiAliasingDropdown.SetValueWithoutNotify(GetAntiAliasingText(graphic.AntiAliasing));
+
+        SetVolumeControlWithoutNotify(bgmSlider, bgmFill, bgmValueLabel, audio.Bgm);
+        SetVolumeControlWithoutNotify(sfxSlider, sfxFill, sfxValueLabel, audio.Sfx);
+        SetVolumeControlWithoutNotify(uiSlider, uiFill, uiValueLabel, audio.Ui);
 
         for (int i = 0; i < skillKeyButtons.Length; i++)
         {
@@ -557,55 +629,68 @@ public class OptionMenuUI : MonoBehaviour
         }
     }
 
-    private void ConfigureGraphicControls()
+    private static string GetResolutionText(Vector2Int resolution)
     {
-        resolutionDropdown.choices = new List<string>(ResolutionChoices);
-        frameLimitDropdown.choices = new List<string>(FrameLimitChoices);
-        antiAliasingDropdown.choices = new List<string>(AntiAliasingChoices);
-
-        SetGraphicControlsWithoutNotify(baselineGraphicSettings);
+        return $"{resolution.x} x {resolution.y}";
     }
 
-    private void SetGraphicControlsWithoutNotify(GraphicOptionSettings settings)
+    private static string GetFrameLimitText(int value)
     {
-        resolutionDropdown.SetValueWithoutNotify(settings.Resolution);
-        vSyncToggle.SetValueWithoutNotify(settings.VSync);
-        SetVSyncCheckmark(settings.VSync);
-        frameLimitDropdown.SetValueWithoutNotify(settings.FrameLimit);
-        antiAliasingDropdown.SetValueWithoutNotify(settings.AntiAliasing);
+        return value > 0? $"{value} FPS" : "Off";
+    }
+
+    private static int ParseFrameLimit(string value)
+    {
+        if (value == "Off")
+        {
+            return -1;
+        }
+
+        string numberText = value.Replace(" FPS", string.Empty);
+
+        return int.TryParse(numberText, out int result)? result : -1;
+    }
+
+    private static string GetAntiAliasingText(AntiAliasingOption value)
+    {
+        return value switch
+        {
+            AntiAliasingOption.Off => "No AA",
+            AntiAliasingOption.FXAA => "FXAA",
+            AntiAliasingOption.TAA => "TAA",
+            _ => "FXAA"
+        };
+    }
+
+    private static AntiAliasingOption ParseAntiAliasing(string value)
+    {
+        return value switch
+        {
+            "No AA" => AntiAliasingOption.Off,
+            "TAA" => AntiAliasingOption.TAA,
+            _ => AntiAliasingOption.FXAA
+        };
     }
 
     private void SetVSyncCheckmark(bool enabled)
     {
-        vSyncCheckmark.text = enabled ? "✓" : string.Empty;
+        vSyncCheckmark.text = enabled ? "\u2713" : string.Empty; //\u2713 = unicode checkmark icon
     }
 
-    /// <summary>
-    /// 볼륨 슬라이더, 채우기 요소, 값 레이블을 주어진 백분율 값으로 업데이트합니다. 슬라이더의 값은 알림 없이 설정됩니다.
-    /// </summary>
-    /// <param name="slider"> 볼륨 슬라이더 </param>
-    /// <param name="fill"> 채우기 요소 </param>
-    /// <param name="valueLabel"> 값 레이블 </param>
-    /// <param name="percentage"> 백분율 값 </param>
     private static void SetVolumeControlWithoutNotify(Slider slider, VisualElement fill, Label valueLabel, float percentage)
     {
         float normalized = NormalizePercentage(percentage);
-        slider.SetValueWithoutNotify(normalized);
 
+        slider.SetValueWithoutNotify(normalized);
         fill.style.width = Length.Percent(normalized);
         valueLabel.text = $"{Mathf.RoundToInt(normalized)}%";
     }
 
-    private static float NormalizePercentage(float value)
+    private static float NormalizePercentage( float value)
     {
         return Mathf.Round(Mathf.Clamp(value, 0f, 100f));
     }
 
-    /// <summary>
-    /// 해당 키코드의 표시 이름을 string으로 반환함.
-    /// </summary>
-    /// <param name="keyCode"> 원하는 키코드 </param>
-    /// <returns> 표시 이름 문자열</returns>
     private static string GetKeyDisplayName(KeyCode keyCode)
     {
         return keyCode.ToString();
@@ -613,11 +698,11 @@ public class OptionMenuUI : MonoBehaviour
 
     private void SetOptionVisible(bool visible)
     {
-        if (optionView == null)
+        if (optionOverlay == null)
         {
             return;
         }
 
-        optionView.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+        optionOverlay.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
     }
 }

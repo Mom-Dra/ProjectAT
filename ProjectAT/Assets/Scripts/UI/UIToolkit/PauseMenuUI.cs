@@ -3,11 +3,11 @@ using UnityEngine.UIElements;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(UIDocument))]
-[RequireComponent(typeof(OptionMenuUI))]
 public class PauseMenuUI : MonoBehaviour
 {
+
     private UIDocument uiDocument;
-    private OptionMenuUI optionMenuUI;
+    [SerializeField] private OptionMenuUI optionMenuUI;
 
     private VisualElement pauseOverlay;
     private VisualElement pauseView;
@@ -30,7 +30,9 @@ public class PauseMenuUI : MonoBehaviour
     private void Awake()
     {
         uiDocument = GetComponent<UIDocument>();
-        optionMenuUI = GetComponent<OptionMenuUI>();
+        if (optionMenuUI == null) {
+            optionMenuUI = GetComponentInChildren<OptionMenuUI>(true);
+        }
         uiReady = CacheUIElements();
 
         if (uiReady)
@@ -95,7 +97,7 @@ public class PauseMenuUI : MonoBehaviour
 
         if (optionMenuUI == null)
         {
-            optionMenuUI = GetComponent<OptionMenuUI>();
+            optionMenuUI = GetComponentInChildren<OptionMenuUI>(true);
         }
 
         if (uiDocument == null)
@@ -138,6 +140,7 @@ public class PauseMenuUI : MonoBehaviour
         optionsButton.clicked += OpenOptions;
         titleButton.clicked += GoToTitleScene;
         optionMenuUI.SaveCompleted += ReturnToPauseView;
+        optionMenuUI.CancelCompleted += ReturnToPauseView;
 
         callbacksRegistered = true;
     }
@@ -155,6 +158,7 @@ public class PauseMenuUI : MonoBehaviour
         optionsButton.clicked -= OpenOptions;
         titleButton.clicked -= GoToTitleScene;
         optionMenuUI.SaveCompleted -= ReturnToPauseView;
+        optionMenuUI.CancelCompleted -= ReturnToPauseView;
 
         callbacksRegistered = false;
     }
@@ -195,19 +199,29 @@ public class PauseMenuUI : MonoBehaviour
             return;
         }
 
-        if (isPauseMenuOpen && optionMenuUI.IsCapturingKey)
+        if (isPauseMenuOpen && optionMenuUI != null && optionMenuUI.IsOpen) //이미 열려있을 때
         {
-            optionMenuUI.CancelKeyCapture();
-            return;
-        }
+            if (optionMenuUI.IsCapturingKey)
+            {
+                optionMenuUI.CancelKeyCapture();
+            }
+            else
+            {
+                optionMenuUI.Cancel();
+            }
 
-        if (isPauseMenuOpen)
-        {
-            ClosePauseMenu();
+            return;
         }
         else
         {
-            OpenPauseMenu();
+            if (isPauseMenuOpen)
+            {
+                ClosePauseMenu();
+            }
+            else
+            {
+                OpenPauseMenu();            
+            }
         }
     }
 
@@ -249,6 +263,7 @@ public class PauseMenuUI : MonoBehaviour
 
         optionMenuUI?.CloseWithoutSaving();
         SetPauseViewVisible(true);
+        
         Time.timeScale = previousTimeScale;
 
         if (inputManager != null)
@@ -269,7 +284,16 @@ public class PauseMenuUI : MonoBehaviour
 
         SetButtonsEnabled(false);
         SetPauseViewVisible(false);
+        SetMenuVisible(false);
+
         optionMenuUI.Open();
+
+        if (!optionMenuUI.IsOpen)
+        {
+            SetMenuVisible(true);
+            SetPauseViewVisible(true);
+            SetButtonsEnabled(true);
+        }
     }
 
     private void ReturnToPauseView()
@@ -279,8 +303,10 @@ public class PauseMenuUI : MonoBehaviour
             return;
         }
 
+        SetMenuVisible(true);
         SetPauseViewVisible(true);
         SetButtonsEnabled(true);
+
         optionsButton.Focus();
     }
 

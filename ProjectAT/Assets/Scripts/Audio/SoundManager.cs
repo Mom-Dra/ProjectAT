@@ -1,37 +1,15 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using ProjectAT.Option;
 
 public class SoundManager : MonoBehaviour
 {
-    #region AudioVolumeSettings
-    /// <summary>
-    /// 각 오디오 볼륨 설정을 나타내는 구조체입니다. BGM, SFX, UI 볼륨을 퍼센트(0~100)로 저장합니다.
-    /// </summary>
-    public struct AudioVolumeSettings
-    {
-        public float Bgm;
-        public float Sfx;
-        public float Ui;
-
-        public AudioVolumeSettings(float bgm, float sfx, float ui)
-        {
-            Bgm = bgm;
-            Sfx = sfx;
-            Ui = ui;
-        }
-
-        public static AudioVolumeSettings Default => new AudioVolumeSettings(50f, 50f, 50f);
-    }
-    #endregion =========================
 
     #region Parameter Names
     private const string BgmVolumeParameter = "BGMVolume";
     private const string SfxVolumeParameter = "SFXVolume";
     private const string UiVolumeParameter = "UIVolume";
 
-    private const string BgmVolumePreference = "Option.Audio.BGM";
-    private const string SfxVolumePreference = "Option.Audio.SFX";
-    private const string UiVolumePreference = "Option.Audio.UI";
     #endregion =========================
 
     private const float MinimumDecibels = -80f;
@@ -52,9 +30,9 @@ public class SoundManager : MonoBehaviour
     private int channelCount;
     private int nextSfxSourceIndex;
     private int bgmIndex;
-    private AudioVolumeSettings currentAudioSettings = AudioVolumeSettings.Default;
 
-    public AudioVolumeSettings CurrentAudioSettings => currentAudioSettings;
+    private AudioOptionSetting currentAudioSettings = AudioOptionSetting.Default;
+    public AudioOptionSetting CurrentAudioSettings => currentAudioSettings;
 
     private void Awake()
     {
@@ -63,7 +41,6 @@ public class SoundManager : MonoBehaviour
 
         GenerateSfxSources(gameObject, 0, sfxSourceCount);
         GenerateBgmSources(gameObject, sfxSourceCount, channelCount);
-        LoadSavedAudioSettings();
     }
 
     private void Start()
@@ -71,42 +48,7 @@ public class SoundManager : MonoBehaviour
         // PlayBgm(bgmClip);
     }
 
-    /// <summary>
-    /// 현재 오디오 설정을 적용하고, 필요에 따라 PlayerPrefs에 저장합니다.
-    /// </summary>
-    /// <param name="settings"> 적용할 오디오 설정 </param>
-    /// <param name="saveToPreferences"> PlayerPrefs에 저장할지 여부 </param>
-    public void ApplyAudioSettings(AudioVolumeSettings settings, bool saveToPreferences)
-    {
-        currentAudioSettings = new AudioVolumeSettings(
-            NormalizePercentage(settings.Bgm), 
-            NormalizePercentage(settings.Sfx),
-            NormalizePercentage(settings.Ui)
-            );
 
-        SetMixerVolume(bgmMixerGroup, BgmVolumeParameter, currentAudioSettings.Bgm);
-        SetMixerVolume(sfxMixerGroup, SfxVolumeParameter, currentAudioSettings.Sfx);
-        SetMixerVolume(uiMixerGroup, UiVolumeParameter, currentAudioSettings.Ui);
-
-        if (saveToPreferences)
-        {
-            PlayerPrefs.SetFloat(BgmVolumePreference, currentAudioSettings.Bgm);
-            PlayerPrefs.SetFloat(SfxVolumePreference, currentAudioSettings.Sfx);
-            PlayerPrefs.SetFloat(UiVolumePreference, currentAudioSettings.Ui);
-            PlayerPrefs.Save();
-        }
-    }
-
-    private void LoadSavedAudioSettings()
-    {
-        AudioVolumeSettings savedSettings = new AudioVolumeSettings(
-            PlayerPrefs.GetFloat(BgmVolumePreference, AudioVolumeSettings.Default.Bgm),
-            PlayerPrefs.GetFloat(SfxVolumePreference, AudioVolumeSettings.Default.Sfx),
-            PlayerPrefs.GetFloat(UiVolumePreference, AudioVolumeSettings.Default.Ui)
-            );
-
-        ApplyAudioSettings(savedSettings, false);
-    }
 
     private static void SetMixerVolume(AudioMixerGroup mixerGroup, string parameterName, float percentage)
     {
@@ -160,6 +102,19 @@ public class SoundManager : MonoBehaviour
 
             oneShotSources[i] = source;
         }
+    }
+
+    public void ApplyAudioSettings(AudioOptionSetting settings)
+    {
+        currentAudioSettings = new AudioOptionSetting(
+            NormalizePercentage(settings.Bgm),
+            NormalizePercentage(settings.Sfx),
+            NormalizePercentage(settings.Ui)
+        );
+
+        SetMixerVolume(bgmMixerGroup, BgmVolumeParameter, currentAudioSettings.Bgm);
+        SetMixerVolume(sfxMixerGroup, SfxVolumeParameter, currentAudioSettings.Sfx);
+        SetMixerVolume(uiMixerGroup, UiVolumeParameter, currentAudioSettings.Ui);
     }
 
     public void PlaySfxOneShotAt(AudioClip requestedSoundClip, Vector3 position, float volume = 1f, float pitch = 1f)

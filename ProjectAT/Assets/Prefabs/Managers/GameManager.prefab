@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7586599461081094033}
   - component: {fileID: 8477500199416692078}
   - component: {fileID: 6913394200394204049}
+  - component: {fileID: 1005897329860208815}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -81,3 +82,15 @@ MonoBehaviour:
   sfxSourceCount: 8
   bgmSourceCount: 1
   bgmClip: {fileID: 8300000, guid: d63eab84e420290489281dbbdec01cff, type: 3}
+--- !u!114 &1005897329860208815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755490944018596935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d96398f05cbd61946898a39fff0b0350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

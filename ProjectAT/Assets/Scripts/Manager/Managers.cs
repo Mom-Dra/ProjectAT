@@ -5,21 +5,20 @@ using UnityEngine;
 
 public class Managers : Singleton<Managers>
 {
-    [SerializeField]
-    private InputReader inputReader;
-
-    [SerializeField]
-    private CursorSettings cursorSettings;
+    [SerializeField] private InputReader inputReader;
+    [SerializeField] private CursorSettings cursorSettings;
 
     private InputManager inputManager;
     private CursorManager cursorManager;
     private SceneManager sceneManager;
     private SoundManager soundManager;
+    private OptionManager optionManager;
 
     public InputManager InputManager => inputManager;
     public CursorManager CursorManager => cursorManager;
     public SceneManager SceneManager => sceneManager;
     public SoundManager SoundManager => soundManager;
+    public OptionManager OptionManager => optionManager;
 
     protected override void Awake()
     {
@@ -31,7 +30,9 @@ public class Managers : Singleton<Managers>
         cursorManager = new CursorManager(cursorSettings);
         sceneManager = new SceneManager();
         soundManager = GetComponent<SoundManager>();
+        optionManager = GetComponent<OptionManager>();
 
         sceneManager.Initialize();
+        optionManager.Initialize(soundManager);
     }
 }
