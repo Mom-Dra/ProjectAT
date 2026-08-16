@@ -1,48 +1,67 @@
-using System;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class MissionSelectUI : MonoBehaviour
 {
     [SerializeField] private GameObject boxUI;
-    [SerializeField] private StageData[] stageDatas;
+
+    [FormerlySerializedAs("stageDatas")]
+    [SerializeField] private StageInfo[] stageInfos;
+
     [SerializeField] private Transform contentTransform;
     [SerializeField] private Image thumbNaail;
     [SerializeField] private Button startButton;
 
-    private StageData selectedStage;
+    private StageInfo selectedStageInfo;
 
     private void Awake()
     {
         startButton.onClick.AddListener(StartButtonClicked);
-
         InitBoxUI();
     }
 
     private void InitBoxUI()
     {
-        foreach (StageData stageData in stageDatas)
+        if (stageInfos == null)
         {
+            return;
+        }
+
+        foreach (StageInfo stageInfo in stageInfos)
+        {
+            if (stageInfo == null)
+            {
+                continue;
+            }
+
             GameObject uiObject = Instantiate(boxUI, contentTransform);
 
             if (uiObject.TryGetComponent(out StageItemUI stageItemUI))
             {
-                stageItemUI.Setup(stageData, StageItemClicked);
+                stageItemUI.Setup(stageInfo, StageItemClicked);
             }
         }
     }
 
-    private void StageItemClicked(StageData stageData)
+    private void StageItemClicked(StageInfo stageInfo)
     {
-        thumbNaail.gameObject.SetActive(true);
+        selectedStageInfo = stageInfo;
 
-        selectedStage = stageData;
-        thumbNaail.sprite = stageData.thumbnail;
+        thumbNaail.gameObject.SetActive(true);
+        thumbNaail.sprite = stageInfo.StageThumbnail;
     }
 
     private void StartButtonClicked()
     {
-        Managers.Instance.SceneManager.LoadScene(selectedStage.stageNumber);
+        if (selectedStageInfo == null)
+        {
+            Debug.LogWarning(
+                $"{name}: 시작할 StageInfo가 선택되지 않았습니다.",
+                this);
+            return;
+        }
+
+        Managers.Instance.SceneManager.LoadScene(selectedStageInfo.StageNumber);
     }
 }

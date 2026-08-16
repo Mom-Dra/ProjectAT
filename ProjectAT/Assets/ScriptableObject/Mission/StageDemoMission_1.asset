@@ -12,13 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6e5821e293a224fb87201faf98f1a3, type: 3}
   m_Name: StageDemoMission_1
   m_EditorClassIdentifier: 
-  missionName: PrimaryMission
-  description: "\uD544\uB4DC \uC704\uC758 \uBAA8\uB4E0 \uC801\uAD70\uC744 \uCC98\uCE58\uD558\uACE0,
-    \uCEF4\uD4E8\uD130\uC640 \uC0C1\uD638\uC791\uC6A9 \uD558\uC2ED\uC2DC\uC624."
+  missionName: Kill All Enemies
+  description: "\uD544\uB4DC \uC704\uC758 \uBAA8\uB4E0 \uC801\uAD70\uC744 \uCC98\uCE58\uD558\uC2ED\uC2DC\uC624."
   objectives:
   - objectiveKey: {fileID: 11400000, guid: 4f5bf3fd75eb8c24e94199bbe851d697, type: 2}
     objectiveType: 1
     requiredAmount: 6
-  - objectiveKey: {fileID: 11400000, guid: 67332c0bd486c8f4a948a0a22beaed50, type: 2}
-    objectiveType: 0
-    requiredAmount: 1

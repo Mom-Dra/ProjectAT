@@ -8,8 +8,8 @@ public class StageItemUI : MonoBehaviour
     [SerializeField] private Button button;
     [SerializeField] private TextMeshProUGUI text;
 
-    private StageData stageData;
-    private Action<StageData> onClicked;
+    private StageInfo stageInfo;
+    private Action<StageInfo> onClicked;
 
     private void Awake()
     {
@@ -17,12 +17,14 @@ public class StageItemUI : MonoBehaviour
         text = GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public void Setup(StageData stageData, Action<StageData> stageClickedCallback)
+    public void Setup(
+        StageInfo targetStageInfo,
+        Action<StageInfo> stageClickedCallback)
     {
-        this.stageData = stageData;
+        stageInfo = targetStageInfo;
         onClicked = stageClickedCallback;
 
-        text.text = stageData.stageName;
+        text.text = stageInfo.StageName;
 
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(ButtonClicked);
@@ -30,6 +32,6 @@ public class StageItemUI : MonoBehaviour
 
     private void ButtonClicked()
     {
-        onClicked?.Invoke(stageData);
+        onClicked?.Invoke(stageInfo);
     }
 }

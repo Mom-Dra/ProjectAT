@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: StageData
   m_EditorClassIdentifier: 
   stageNumber: 1
-  stageName: Hi, Hello
-  thumbnail: {fileID: 21300000, guid: bddfc164a0fa0dc419c8583cce28d9b7, type: 3}
-  sceneName: 
+  stageName: Rescue Cheknova
+  stageDescription: Our friend "Checknova" got into danger. We must save him.
+  stageThumbnail: {fileID: 21300000, guid: bddfc164a0fa0dc419c8583cce28d9b7, type: 3}
+  stageBasicBgm: {fileID: 8300000, guid: d63eab84e420290489281dbbdec01cff, type: 3}
+  stageObjectives:
+  - {fileID: 11400000, guid: 9b0f45a128747e2459d65f061884ffd4, type: 2}
+  - {fileID: 11400000, guid: b71eed54a97a5d64c8a05bd346ee4b5f, type: 2}
+  - {fileID: 11400000, guid: 5cf84ef2f40e4af47b22886b4372e07d, type: 2}
