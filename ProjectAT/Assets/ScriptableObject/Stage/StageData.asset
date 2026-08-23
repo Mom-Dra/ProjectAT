@@ -15,7 +15,7 @@ MonoBehaviour:
   stageNumber: 1
   stageName: Rescue Cheknova
   stageDescription: Our friend "Checknova" got into danger. We must save him.
-  stageThumbnail: {fileID: 21300000, guid: bddfc164a0fa0dc419c8583cce28d9b7, type: 3}
+  stageThumbnail: {fileID: 21300000, guid: c4ce5df871da4f0419b2beb5fb79165a, type: 3}
   stageBasicBgm: {fileID: 8300000, guid: d63eab84e420290489281dbbdec01cff, type: 3}
   stageObjectives:
   - {fileID: 11400000, guid: 9b0f45a128747e2459d65f061884ffd4, type: 2}

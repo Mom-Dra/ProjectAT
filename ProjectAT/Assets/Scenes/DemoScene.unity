@@ -83902,6 +83902,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1680806429435750331, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionSequence.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1680806429435750331, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: 'missionSequence.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b71eed54a97a5d64c8a05bd346ee4b5f, type: 2}
+    - target: {fileID: 1680806429435750331, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: 'missionSequence.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5cf84ef2f40e4af47b22886b4372e07d, type: 2}
     - target: {fileID: 1839876626516176791, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -83947,9 +83959,57 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1535921219}
     - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[1].mission
+      value: 
+      objectReference: {fileID: 11400000, guid: b71eed54a97a5d64c8a05bd346ee4b5f, type: 2}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[2].mission
+      value: 
+      objectReference: {fileID: 11400000, guid: 5cf84ef2f40e4af47b22886b4372e07d, type: 2}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[1].onActivated.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[2].onActivated.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[2].onActivated.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
       propertyPath: missionActions.Array.data[1].onActivated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 526740229}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[2].onActivated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 526740229}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[2].onActivated.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[2].onActivated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[2].onActivated.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[2].onActivated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590150822600981994, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
+      propertyPath: missionActions.Array.data[2].onActivated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8224614952802984561, guid: e5381d6aa8947e741998959f64ffa074, type: 3}
       propertyPath: pooledPrefabs.Array.data[0].PoolParentTransform
       value: 

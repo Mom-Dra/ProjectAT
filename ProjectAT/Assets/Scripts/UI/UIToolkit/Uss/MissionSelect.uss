@@ -1,0 +1,499 @@
+.mission-select-root {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    background-image: url("project://database/Assets/Images/배경화면_lowpoly2.png");
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+.mission-background-shade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    background-color: rgba(0, 0, 0, 0.16);
+}
+
+.mission-window {
+    position: absolute;
+    left: 3.5%;
+    right: 3.5%;
+    top: 8%;
+    bottom: 6%;
+
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.mission-list-panel {
+    width: 25%;
+    flex-shrink: 0;
+    flex-direction: column;
+
+    padding-left: 48px;
+    padding-right: 34px;
+    padding-top: 32px;
+    padding-bottom: 34px;
+
+    background-color: rgba(62, 62, 62, 0.55);
+}
+
+.section-title-container {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.mission-list-title {
+    color: rgb(255, 255, 255);
+    font-size: 48px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 2px;
+
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.mission-list-title-underline {
+    width: 185px;
+    height: 4px;
+    background-color: rgb(255, 255, 255);
+}
+
+/* Stage 목록 */
+.stage-list-scroll-view {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.stage-list-scroll-view .unity-scroll-view__content-container {
+    padding-right: 18px;
+}
+
+.stage-list-scroll-view .unity-scroller--horizontal {
+    display: none;
+}
+
+.stage-list-scroll-view .unity-scroller--vertical {
+    width: 16px;
+    background-color: rgba(0, 0, 0, 0);
+
+    padding-top: 0;
+    padding-bottom: 0;
+
+    margin-top: 0;
+    margin-bottom: 0;
+
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+/* 스크롤러 내부 슬라이더의 상하 여백 제거(드래거 시작 위치 정렬) */
+.stage-list-scroll-view .unity-scroller--vertical .unity-base-slider {
+    flex-grow: 1;
+
+    padding-top: 0;
+    padding-bottom: 0;
+
+    margin-top: 0;
+    margin-bottom: 0;
+
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+.stage-list-scroll-view .unity-base-slider__tracker {
+    background-color: rgba(0, 0, 0, 0);
+
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.stage-list-scroll-view .unity-base-slider__dragger {
+    background-color: rgb(190, 190, 190);
+
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.stage-list-scroll-view .unity-scroller__low-button,
+.stage-list-scroll-view .unity-scroller__high-button {
+    display: none;
+}
+
+.stage-button {
+    height: 92px;
+    flex-shrink: 0;
+
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 22px;
+
+    color: rgb(255, 255, 255);
+    background-color: rgba(205, 205, 205, 0.72);
+    background-image: none;
+
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    font-size: 28px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+
+    transition-property: background-color, border-left-color,
+        border-right-color, border-top-color, border-bottom-color;
+    transition-duration: 0.1s;
+}
+
+/* 마지막 버튼 하단 여백 제거(스크롤 끝에서 드래그 바와 하단 정렬) */
+.stage-button--last {
+    margin-bottom: 0;
+}
+
+.stage-button:hover,
+.stage-button:focus {
+    background-color: rgba(225, 225, 225, 0.82);
+
+    border-left-color: rgb(255, 214, 0);
+    border-right-color: rgb(255, 214, 0);
+    border-top-color: rgb(255, 214, 0);
+    border-bottom-color: rgb(255, 214, 0);
+}
+
+.stage-button--selected,
+.stage-button--selected:hover,
+.stage-button--selected:focus {
+    background-color: rgba(200, 215, 205, 0.82);
+
+    border-left-color: rgb(0, 225, 95);
+    border-right-color: rgb(0, 225, 95);
+    border-top-color: rgb(0, 225, 95);
+    border-bottom-color: rgb(0, 225, 95);
+}
+
+.stage-list-empty-label {
+    margin-top: 30px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 24px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+/* 오른쪽 상세 패널 */
+.stage-description-panel {
+    flex-grow: 1;
+    min-width: 0;
+    flex-direction: column;
+
+    margin-left: 10px;
+    padding-left: 52px;
+    padding-right: 52px;
+    padding-top: 27px;
+    padding-bottom: 8px;
+
+    background-color: rgba(62, 62, 62, 0.55);
+}
+
+.stage-detail-content {
+    flex-grow: 1;
+    min-width: 0;
+    flex-direction: column;
+}
+
+.stage-name-label {
+    height: 68px;
+    flex-shrink: 0;
+
+    color: rgb(255, 255, 255);
+    font-size: 46px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.stage-overview-row {
+    height: 390px;
+    flex-shrink: 0;
+    flex-direction: row;
+    margin-top: 15px;
+}
+
+.stage-thumbnail {
+    width: 61%;
+    height: 100%;
+    flex-shrink: 0;
+
+    background-color: rgba(18, 18, 18, 0.82);
+}
+
+.stage-objectives-panel {
+    flex-grow: 1;
+    min-width: 0;
+    flex-direction: column;
+
+    margin-left: 38px;
+    padding-top: 10px;
+}
+
+.objectives-title-container {
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-bottom: 10px;
+}
+
+.objectives-title-underline {
+    width: 205px;
+    height: 3px;
+    background-color: rgb(255, 255, 255);
+}
+
+.stage-section-title {
+    color: rgb(255, 255, 255);
+    font-size: 36px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+}
+
+.objectives-scroll-view {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.objectives-box {
+    flex-grow: 1;
+
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 10px;
+    padding-bottom: 12px;
+
+    background-color: rgba(28, 28, 28, 0.72);
+}
+
+.objectives-scroll-view .unity-scroller--horizontal,
+.description-scroll-view .unity-scroller--horizontal {
+    display: none;
+}
+
+.objectives-scroll-view .unity-scroller--vertical,
+.description-scroll-view .unity-scroller--vertical {
+    width: 12px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.objectives-scroll-view .unity-scroller__low-button,
+.objectives-scroll-view .unity-scroller__high-button,
+.description-scroll-view .unity-scroller__low-button,
+.description-scroll-view .unity-scroller__high-button {
+    display: none;
+}
+
+.objective-label {
+    flex-shrink: 0;
+    margin-bottom: 6px;
+
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    white-space: normal;
+    -unity-text-align: upper-left;
+}
+
+.objective-empty-label {
+    flex-grow: 1;
+
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 23px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.description-empty-label {
+    flex-grow: 1;
+
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 24px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.description-title-container {
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.description-title {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 2px;
+
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.description-title-underline {
+    width: 205px;
+    height: 3px;
+    background-color: rgb(255, 255, 255);
+}
+
+.description-scroll-view {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.description-box {
+    height: 160px;
+    flex-shrink: 0;
+
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 10px;
+    padding-bottom: 12px;
+
+    background-color: rgba(28, 28, 28, 0.72);
+}
+
+.start-button-spacer {
+    flex-grow: 1;
+}
+
+.stage-description-label {
+    padding-right: 15px;
+
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    white-space: normal;
+    -unity-text-align: upper-left;
+}
+
+/* Start 버튼 */
+.mission-start-button {
+    width: 420px;
+    height: 80px;
+    flex-shrink: 0;
+    align-self: center;
+
+    margin-top: 18px;
+
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 77, 82);
+    background-image: none;
+
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    font-size: 46px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+
+    transition-property: background-color, scale;
+    transition-duration: 0.1s;
+}
+
+.mission-start-button:hover,
+.mission-start-button:focus {
+    background-color: rgb(255, 105, 108);
+    scale: 1.02 1.02;
+}
+
+.mission-start-button:active {
+    background-color: rgb(225, 55, 60);
+    scale: 0.98 0.98;
+}
+
+.mission-start-button:disabled {
+    color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(150, 65, 68, 0.6);
+}
+
+/* Return 버튼 */
+.mission-return-button {
+    position: absolute;
+    right: 24px;
+    top: 16px;
+
+    width: 76px;
+    height: 54px;
+
+    color: rgb(255, 255, 255);
+    background-color: rgba(86, 72, 76, 0.92);
+    background-image: none;
+
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    font-size: 32px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+
+    transition-property: background-color, translate;
+    transition-duration: 0.1s;
+}
+
+.mission-return-button:hover,
+.mission-return-button:focus {
+    background-color: rgba(120, 100, 105, 0.96);
+    translate: -3px 0;
+}
+
+.mission-return-button:active {
+    background-color: rgba(65, 55, 58, 0.96);
+}

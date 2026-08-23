@@ -7,7 +7,6 @@ public class StartSceneMenuUI : MonoBehaviour
 {
     [Header("UGUI Screens")]
     [SerializeField] private GameObject mainMenuScreen;
-    [SerializeField] private GameObject missionSelectScreen;
     [SerializeField] private GameObject loadGameScreen;
 
     [Header("UGUI Interaction")]
@@ -15,10 +14,12 @@ public class StartSceneMenuUI : MonoBehaviour
 
     [Header("UGUI Buttons")]
     [SerializeField] private Button newGameButton;
+    [SerializeField] private Button loadGameButton;
     [SerializeField] private Button optionButton;
     [SerializeField] private Button[] returnButtons;
 
     [Header("UI Toolkit")]
+    [SerializeField] private MissionSelectUI missionSelectScreenUI;
     [SerializeField] private OptionMenuUI optionMenuUI;
 
     private void OnEnable()
@@ -35,6 +36,7 @@ public class StartSceneMenuUI : MonoBehaviour
     {
         newGameButton.onClick.AddListener(ShowMissionSelect);
         optionButton.onClick.AddListener(ShowOption);
+        loadGameButton.onClick.AddListener(ShowLoadMissionSelect);
 
         foreach (Button button in returnButtons)
         {
@@ -46,12 +48,14 @@ public class StartSceneMenuUI : MonoBehaviour
 
         optionMenuUI.SaveCompleted += HandleOptionClosed;
         optionMenuUI.CancelCompleted += HandleOptionClosed;
+        missionSelectScreenUI.Closed += HandleMissionSelectClosed;
     }
 
     private void UnSubscribeEvents()
     {
         newGameButton.onClick.RemoveListener(ShowMissionSelect);
         optionButton.onClick.RemoveListener(ShowOption);
+        loadGameButton.onClick.RemoveListener(ShowLoadMissionSelect);
 
         foreach (Button button in returnButtons)
         {
@@ -63,20 +67,19 @@ public class StartSceneMenuUI : MonoBehaviour
 
         optionMenuUI.SaveCompleted -= HandleOptionClosed;
         optionMenuUI.CancelCompleted -= HandleOptionClosed;
+        missionSelectScreenUI.Closed -= HandleMissionSelectClosed;
     }
 
     private void ShowMissionSelect()
     {
         SetMainMenuInteractive(false);
 
-        missionSelectScreen.SetActive(true);
         loadGameScreen.SetActive(false);
     }
 
     private void ShowMainMenu()
     {
         mainMenuScreen.SetActive(true);
-        missionSelectScreen.SetActive(false);
         loadGameScreen.SetActive(false);
 
         SetMainMenuInteractive(true);
@@ -92,7 +95,6 @@ public class StartSceneMenuUI : MonoBehaviour
             return;
         }
 
-        missionSelectScreen.SetActive(false);
         loadGameScreen.SetActive(false);
 
         // 뒤쪽 UGUI가 키보드/마우스 입력을 받지 않게 한다.
@@ -102,6 +104,26 @@ public class StartSceneMenuUI : MonoBehaviour
     private void HandleOptionClosed()
     {
         ShowMainMenu();
+        StartCoroutine(RestoreOptionButtonFocus());
+    }
+
+    private void ShowLoadMissionSelect()
+    {
+        missionSelectScreenUI.Open();
+
+        // UI가 준비되지 않아 Open이 실패할 수도 있다.
+        if (!missionSelectScreenUI.IsOpen)
+        {
+            return;
+        }
+
+        // 뒤쪽 UGUI가 키보드/마우스 입력을 받지 않게 한다.
+        SetMainMenuInteractive(false);
+    }
+
+    private void HandleMissionSelectClosed()
+    {
+        SetMainMenuInteractive(true);
         StartCoroutine(RestoreOptionButtonFocus());
     }
 

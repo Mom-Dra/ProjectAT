@@ -1,0 +1,45 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/UIToolkit/Uss/MissionSelect.uss?fileID=7433441132597879392&amp;guid=ea68fa13561a3f84f9dda217331c1ee5&amp;type=3#MissionSelect" />
+    <ui:VisualElement name="MissionSelectRoot" class="mission-select-root">
+        <ui:VisualElement picking-mode="Ignore" class="mission-background-shade" />
+        <ui:Button name="ReturnButton" text="←" class="mission-return-button" />
+        <ui:VisualElement class="mission-window">
+            <ui:VisualElement class="mission-list-panel">
+                <ui:VisualElement picking-mode="Ignore" class="section-title-container" style="-unity-text-align: upper-left; align-items: center; justify-content: center;">
+                    <ui:Label text="Mission" picking-mode="Ignore" class="mission-list-title" style="-unity-text-align: middle-left;" />
+                    <ui:VisualElement picking-mode="Ignore" class="mission-list-title-underline" style="width: 192px;" />
+                </ui:VisualElement>
+                <ui:ScrollView name="StageListScrollView" mode="Vertical" class="stage-list-scroll-view" />
+            </ui:VisualElement>
+            <ui:VisualElement class="stage-description-panel">
+                <ui:VisualElement name="StageDetailContent" class="stage-detail-content">
+                    <ui:Label name="StageNameLabel" text="Stage Name" picking-mode="Ignore" class="stage-name-label" />
+                    <ui:VisualElement class="stage-overview-row">
+                        <ui:Image name="StageThumbnail" picking-mode="Ignore" class="stage-thumbnail" />
+                        <ui:VisualElement class="stage-objectives-panel">
+                            <ui:VisualElement picking-mode="Ignore" class="objectives-title-container">
+                                <ui:Label text="Objectives" picking-mode="Ignore" class="stage-section-title" />
+                                <ui:VisualElement picking-mode="Ignore" class="objectives-title-underline" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="ObjectivesBox" class="objectives-box">
+                                <ui:ScrollView name="ObjectivesScrollView" mode="Vertical" class="objectives-scroll-view" />
+                                <ui:Label name="ObjectivesEmptyLabel" text="No Objectives" picking-mode="Ignore" class="objective-empty-label" style="display: none;" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" class="description-title-container">
+                        <ui:Label text="Description" picking-mode="Ignore" class="stage-section-title description-title" />
+                        <ui:VisualElement picking-mode="Ignore" class="description-title-underline" style="width: 218px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="DescriptionBox" class="description-box" style="height: 216px;">
+                        <ui:ScrollView name="DescriptionScrollView" mode="Vertical" class="description-scroll-view">
+                            <ui:Label name="StageDescriptionLabel" picking-mode="Ignore" class="stage-description-label" />
+                        </ui:ScrollView>
+                        <ui:Label name="DescriptionEmptyLabel" text="No Description" picking-mode="Ignore" class="description-empty-label" style="display: none;" />
+                    </ui:VisualElement>
+                    <ui:Button name="StartButton" text="Start" class="mission-start-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
